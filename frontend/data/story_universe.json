@@ -1,0 +1,4820 @@
+{
+  "meta": {
+    "languageCount": 29,
+    "provinceCount": 34,
+    "minLangCount": 1,
+    "source": "derived_movies.csv",
+    "sampleFingerprint": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503"
+  },
+  "languages": [
+    {
+      "id": "粤语",
+      "name": "粤语",
+      "n": 2752,
+      "mean": 6.53,
+      "themes": [
+        "城市",
+        "商业",
+        "家庭",
+        "江湖"
+      ],
+      "language": "粤语及其城市口语传统",
+      "folk": [
+        "饮茶",
+        "醒狮",
+        "粤剧"
+      ],
+      "history": [
+        "港片工业",
+        "南来北往的迁徙与贸易"
+      ],
+      "stories": "都市身份、兄弟情义、家庭伦理、商业江湖",
+      "academicName": "粤方言",
+      "family": "汉藏语系 · 汉语族 · 粤语",
+      "aliases": [
+        "广州话"
+      ],
+      "films": [
+        {
+          "id": "30203557",
+          "title": "黄子华栋笃笑之金盆𠺘口",
+          "year": 2018,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "25810998",
+          "title": "越大镬越快乐",
+          "year": 2007,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "26794221",
+          "title": "黄子华栋笃笑之冇炭用",
+          "year": 2003,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "26582661",
+          "title": "黄子华栋笃笑之洗燥",
+          "year": 2012,
+          "rating": 9.4,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "26703286",
+          "title": "黄子华栋笃笑之儿童不宜成人之危",
+          "year": 2006,
+          "rating": 9.4,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "2170951",
+          "title": "集体回忆 - 张国荣",
+          "year": 2007,
+          "rating": 9.4,
+          "director": "未知",
+          "lang": "粤语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "闽南语",
+      "name": "闽南语",
+      "n": 143,
+      "mean": 7.36,
+      "themes": [
+        "海洋",
+        "漂泊",
+        "信仰",
+        "乡愁"
+      ],
+      "language": "闽南语 / 闽南方言",
+      "folk": [
+        "妈祖信仰",
+        "宗族祭祀",
+        "海港生活"
+      ],
+      "history": [
+        "海上迁徙",
+        "两岸与侨乡网络"
+      ],
+      "stories": "漂泊、乡愁、信仰与代际冲突",
+      "academicName": "闽南片",
+      "family": "汉藏语系 · 汉语族 · 闽语",
+      "aliases": [],
+      "films": [
+        {
+          "id": "1298944",
+          "title": "无言的山丘",
+          "year": 1992,
+          "rating": 9.2,
+          "director": "王童",
+          "lang": "闽南语"
+        },
+        {
+          "id": "900054",
+          "title": "饮食男女",
+          "year": 1994,
+          "rating": 9.1,
+          "director": "李安 Ang Lee",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1292434",
+          "title": "一一",
+          "year": 2017,
+          "rating": 9.1,
+          "director": "杨德昌",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1294194",
+          "title": "悲情城市",
+          "year": 1989,
+          "rating": 8.9,
+          "director": "侯孝贤",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1305261",
+          "title": "恐怖分子",
+          "year": 1986,
+          "rating": 8.9,
+          "director": "杨德昌",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1299227",
+          "title": "魔法阿妈",
+          "year": 1998,
+          "rating": 8.9,
+          "director": "王小棣",
+          "lang": "闽南语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "上海话",
+      "name": "上海话",
+      "n": 57,
+      "mean": 7.4,
+      "themes": [
+        "弄堂",
+        "摩登",
+        "变迁",
+        "人情"
+      ],
+      "language": "上海话（吴语代表）",
+      "folk": [
+        "弄堂生活",
+        "本帮饮食",
+        "地方曲艺"
+      ],
+      "history": [
+        "开埠与近现代都市史"
+      ],
+      "stories": "旧城记忆、阶层流动、都市人情",
+      "academicName": "吴语太湖片",
+      "family": "汉藏语系 · 汉语族 · 吴语",
+      "aliases": [],
+      "films": [
+        {
+          "id": "1915881",
+          "title": "一百年的歌声",
+          "year": 2004,
+          "rating": 9.0,
+          "director": "陈骞 / 乔艳琳 / 班映旭 / 金光宇 / 周亚玉 / 门欣熙",
+          "lang": "上海话"
+        },
+        {
+          "id": "1294194",
+          "title": "悲情城市",
+          "year": 1989,
+          "rating": 8.9,
+          "director": "侯孝贤",
+          "lang": "上海话"
+        },
+        {
+          "id": "900189",
+          "title": "牯岭街少年杀人事件",
+          "year": 1991,
+          "rating": 8.8,
+          "director": "杨德昌 Edward Yang",
+          "lang": "上海话"
+        },
+        {
+          "id": "1421278",
+          "title": "面子",
+          "year": 2004,
+          "rating": 8.8,
+          "director": "伍思薇",
+          "lang": "上海话"
+        },
+        {
+          "id": "900122",
+          "title": "岁月神偷",
+          "year": 2010,
+          "rating": 8.6,
+          "director": "罗启锐 Alex Law",
+          "lang": "上海话"
+        },
+        {
+          "id": "1293414",
+          "title": "阮玲玉",
+          "year": 1991,
+          "rating": 8.6,
+          "director": "关锦鹏",
+          "lang": "上海话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "藏语",
+      "name": "藏语",
+      "n": 43,
+      "mean": 7.27,
+      "themes": [
+        "高原",
+        "信仰",
+        "土地",
+        "仪式"
+      ],
+      "language": "藏语",
+      "folk": [
+        "转经",
+        "节庆",
+        "牧区生活"
+      ],
+      "history": [
+        "高原文明与现当代变迁"
+      ],
+      "stories": "信仰、土地、人与自然",
+      "academicName": "藏语",
+      "family": "汉藏语系 · 藏缅语族 · 藏语支",
+      "aliases": [],
+      "films": [
+        {
+          "id": "900180",
+          "title": "可可西里",
+          "year": 2004,
+          "rating": 8.7,
+          "director": "陆川 Chuan Lu",
+          "lang": "藏语"
+        },
+        {
+          "id": "1303017",
+          "title": "喜马拉雅",
+          "year": 1999,
+          "rating": 8.6,
+          "director": "埃里克·瓦力 / 米歇尔·德巴",
+          "lang": "藏语"
+        },
+        {
+          "id": "1305539",
+          "title": "高山上的世界杯",
+          "year": 2000,
+          "rating": 8.5,
+          "director": "宗萨蒋扬钦哲诺布",
+          "lang": "藏语"
+        },
+        {
+          "id": "11610684",
+          "title": "喜马拉雅大淘金",
+          "year": 2012,
+          "rating": 8.4,
+          "director": "埃里克·瓦力",
+          "lang": "藏语"
+        },
+        {
+          "id": "1756057",
+          "title": "静静的嘛呢石",
+          "year": 2005,
+          "rating": 8.2,
+          "director": "万玛才旦",
+          "lang": "藏语"
+        },
+        {
+          "id": "25732109",
+          "title": "扎溪卡的微笑",
+          "year": 2013,
+          "rating": 8.2,
+          "director": "王冲霄",
+          "lang": "藏语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "四川话",
+      "name": "四川话",
+      "n": 34,
+      "mean": 7.09,
+      "themes": [
+        "市井",
+        "幽默",
+        "生活",
+        "烟火"
+      ],
+      "language": "四川话与西南官话",
+      "folk": [
+        "茶馆",
+        "川剧",
+        "市井闲谈"
+      ],
+      "history": [
+        "移民文化",
+        "盆地市井传统"
+      ],
+      "stories": "普通人的命运、荒诞与烟火气",
+      "academicName": "西南官话成渝片",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "900072",
+          "title": "让子弹飞",
+          "year": 2010,
+          "rating": 8.7,
+          "director": "姜文 Wen Jiang",
+          "lang": "四川话"
+        },
+        {
+          "id": "2063528",
+          "title": "盲山",
+          "year": 2007,
+          "rating": 8.6,
+          "director": "李杨",
+          "lang": "四川话"
+        },
+        {
+          "id": "1872133",
+          "title": "三峡好人",
+          "year": 2006,
+          "rating": 8.3,
+          "director": "贾樟柯",
+          "lang": "四川话"
+        },
+        {
+          "id": "4102971",
+          "title": "归途列车",
+          "year": 2010,
+          "rating": 8.3,
+          "director": "范立欣",
+          "lang": "四川话"
+        },
+        {
+          "id": "4718232",
+          "title": "无蝉的夏天",
+          "year": 2010,
+          "rating": 8.3,
+          "director": "苗月",
+          "lang": "四川话"
+        },
+        {
+          "id": "2124703",
+          "title": "疯狂的赛车",
+          "year": 2009,
+          "rating": 8.2,
+          "director": "宁浩",
+          "lang": "四川话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "哈萨克语",
+      "name": "哈萨克语",
+      "n": 17,
+      "mean": 7.46,
+      "themes": [
+        "草原",
+        "迁徙",
+        "音乐"
+      ],
+      "language": "哈萨克语",
+      "folk": [
+        "冬不拉",
+        "游牧节庆"
+      ],
+      "history": [
+        "西北草原文化"
+      ],
+      "stories": "游牧生活、音乐与迁徙",
+      "academicName": "哈萨克语",
+      "family": "阿尔泰语系 · 突厥语族 · 钦察语支",
+      "aliases": [],
+      "films": [
+        {
+          "id": "3240529",
+          "title": "给斯大林的礼物",
+          "year": 2008,
+          "rating": 8.6,
+          "director": "鲁斯坦·阿卜杜拉舍夫",
+          "lang": "哈萨克语"
+        },
+        {
+          "id": "26951612",
+          "title": "哈萨克汗国：不败之剑",
+          "year": 2017,
+          "rating": 8.6,
+          "director": "鲁斯坦·阿卜杜拉舍夫",
+          "lang": "哈萨克语"
+        },
+        {
+          "id": "26681655",
+          "title": "女猎鹰人",
+          "year": 2016,
+          "rating": 8.2,
+          "director": "奥托·贝尔",
+          "lang": "哈萨克语"
+        },
+        {
+          "id": "21098725",
+          "title": "和谐课程",
+          "year": 2013,
+          "rating": 7.9,
+          "director": "埃米尔·拜加津",
+          "lang": "哈萨克语"
+        },
+        {
+          "id": "30331597",
+          "title": "托米莉斯女王",
+          "year": 2019,
+          "rating": 7.8,
+          "director": "阿坎·萨塔耶夫",
+          "lang": "哈萨克语"
+        },
+        {
+          "id": "2063546",
+          "title": "乌尔詹",
+          "year": 2007,
+          "rating": 7.8,
+          "director": "沃尔克·施隆多夫",
+          "lang": "哈萨克语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "台语",
+      "name": "台语",
+      "n": 15,
+      "mean": 7.08,
+      "themes": [
+        "家庭",
+        "时代",
+        "底层",
+        "乡愁"
+      ],
+      "language": "台语（闽南语台湾变体）",
+      "folk": [
+        "夜市",
+        "庙会",
+        "布袋戏"
+      ],
+      "history": [
+        "台湾新电影",
+        "乡土与现代性"
+      ],
+      "stories": "代际、城乡、身份与日常尊严",
+      "academicName": "闽南语台湾片",
+      "family": "汉藏语系 · 汉语族 · 闽语",
+      "aliases": [
+        "台湾闽南语"
+      ],
+      "films": [
+        {
+          "id": "1307561",
+          "title": "青少年哪吒",
+          "year": 1992,
+          "rating": 8.0,
+          "director": "蔡明亮",
+          "lang": "台语"
+        },
+        {
+          "id": "1294540",
+          "title": "你那边几点",
+          "year": 2001,
+          "rating": 7.9,
+          "director": "蔡明亮",
+          "lang": "台语"
+        },
+        {
+          "id": "1305046",
+          "title": "双瞳",
+          "year": 2002,
+          "rating": 7.7,
+          "director": "陈国富",
+          "lang": "台语"
+        },
+        {
+          "id": "1308553",
+          "title": "桂花巷",
+          "year": 1987,
+          "rating": 7.6,
+          "director": "陈坤厚",
+          "lang": "台语"
+        },
+        {
+          "id": "2375763",
+          "title": "漂浪青春",
+          "year": 2008,
+          "rating": 7.5,
+          "director": "周美玲",
+          "lang": "台语"
+        },
+        {
+          "id": "1457410",
+          "title": "黑狗来了",
+          "year": 2003,
+          "rating": 7.4,
+          "director": "尹祺",
+          "lang": "台语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "晋语",
+      "name": "晋语",
+      "n": 15,
+      "mean": 7.78,
+      "themes": [
+        "乡土",
+        "历史",
+        "家族",
+        "黄土地"
+      ],
+      "language": "晋语 / 山西方言",
+      "folk": [
+        "晋剧",
+        "窑洞生活",
+        "庙会"
+      ],
+      "history": [
+        "晋商传统",
+        "北方农耕文明"
+      ],
+      "stories": "乡土伦理、时代变迁、家族命运",
+      "academicName": "晋方言",
+      "family": "汉藏语系 · 汉语族 · 晋语",
+      "aliases": [
+        "山西话"
+      ],
+      "films": [
+        {
+          "id": "900072",
+          "title": "让子弹飞",
+          "year": 2010,
+          "rating": 8.7,
+          "director": "姜文 Wen Jiang",
+          "lang": "晋语"
+        },
+        {
+          "id": "1947270",
+          "title": "天狗",
+          "year": 2006,
+          "rating": 8.7,
+          "director": "戚健",
+          "lang": "晋语"
+        },
+        {
+          "id": "1291851",
+          "title": "小武",
+          "year": 1998,
+          "rating": 8.5,
+          "director": "贾樟柯",
+          "lang": "晋语"
+        },
+        {
+          "id": "1291850",
+          "title": "站台",
+          "year": 2000,
+          "rating": 8.4,
+          "director": "贾樟柯",
+          "lang": "晋语"
+        },
+        {
+          "id": "3036997",
+          "title": "立春",
+          "year": 2008,
+          "rating": 8.3,
+          "director": "顾长卫",
+          "lang": "晋语"
+        },
+        {
+          "id": "1872133",
+          "title": "三峡好人",
+          "year": 2006,
+          "rating": 8.3,
+          "director": "贾樟柯",
+          "lang": "晋语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "武汉话",
+      "name": "武汉话",
+      "n": 13,
+      "mean": 6.69,
+      "themes": [
+        "码头",
+        "江湖",
+        "湿热",
+        "底层"
+      ],
+      "language": "武汉话",
+      "folk": [
+        "过早",
+        "汉剧",
+        "码头文化"
+      ],
+      "history": [
+        "九省通衢",
+        "近代工业城市"
+      ],
+      "stories": "犯罪与命运、湿热城市里的小人物",
+      "academicName": "西南官话武天片",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "35000216",
+          "title": "武汉战疫纪",
+          "year": 2020,
+          "rating": 8.3,
+          "director": "葛云飞",
+          "lang": "武汉话"
+        },
+        {
+          "id": "2124703",
+          "title": "疯狂的赛车",
+          "year": 2009,
+          "rating": 8.2,
+          "director": "宁浩",
+          "lang": "武汉话"
+        },
+        {
+          "id": "4237879",
+          "title": "人在囧途",
+          "year": 2010,
+          "rating": 7.8,
+          "director": "叶伟民",
+          "lang": "武汉话"
+        },
+        {
+          "id": "19931352",
+          "title": "唐皇游地府",
+          "year": 2012,
+          "rating": 7.8,
+          "director": "李珞",
+          "lang": "武汉话"
+        },
+        {
+          "id": "5342082",
+          "title": "河流和我的父亲",
+          "year": 2010,
+          "rating": 7.6,
+          "director": "李珞",
+          "lang": "武汉话"
+        },
+        {
+          "id": "1794435",
+          "title": "姨妈的后现代生活",
+          "year": 2007,
+          "rating": 7.4,
+          "director": "许鞍华",
+          "lang": "武汉话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "维吾尔语",
+      "name": "维吾尔语",
+      "n": 13,
+      "mean": 7.58,
+      "themes": [
+        "丝路",
+        "歌舞",
+        "绿洲",
+        "日常"
+      ],
+      "language": "维吾尔语",
+      "folk": [
+        "麦西来甫",
+        "市集与饮食",
+        "口头文学"
+      ],
+      "history": [
+        "丝路绿洲城镇史"
+      ],
+      "stories": "日常尊严、文化相遇、地方生活",
+      "academicName": "维吾尔语",
+      "family": "阿尔泰语系 · 突厥语族 · 葛逻禄语支",
+      "aliases": [],
+      "films": [
+        {
+          "id": "26672579",
+          "title": "棱角杯",
+          "year": 1993,
+          "rating": 9.4,
+          "director": "迪力木拉提·穆罕穆德",
+          "lang": "维吾尔语"
+        },
+        {
+          "id": "26282656",
+          "title": "梦想，从心出发",
+          "year": 2014,
+          "rating": 8.4,
+          "director": "张荣吉",
+          "lang": "维吾尔语"
+        },
+        {
+          "id": "1766086",
+          "title": "太阳照常升起",
+          "year": 2007,
+          "rating": 8.3,
+          "director": "姜文",
+          "lang": "维吾尔语"
+        },
+        {
+          "id": "26811883",
+          "title": "最后的沙漠守望者",
+          "year": 2016,
+          "rating": 8.2,
+          "director": "池上达则 / 沈鹏飞",
+          "lang": "维吾尔语"
+        },
+        {
+          "id": "25803285",
+          "title": "吾守尔大爷的冰",
+          "year": 2013,
+          "rating": 7.9,
+          "director": "何明 / 李光华",
+          "lang": "维吾尔语"
+        },
+        {
+          "id": "26324974",
+          "title": "钱，这东西......",
+          "year": 1985,
+          "rating": 7.8,
+          "director": "金淑琪",
+          "lang": "维吾尔语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "重庆话",
+      "name": "重庆话",
+      "n": 13,
+      "mean": 7.1,
+      "themes": [
+        "江湖",
+        "码头",
+        "幽默",
+        "湿热"
+      ],
+      "language": "重庆话",
+      "folk": [
+        "火锅",
+        "山城步道",
+        "川剧变脸"
+      ],
+      "history": [
+        "开埠码头文化",
+        "三线建设记忆"
+      ],
+      "stories": "江湖义气、底层生存、城市性格",
+      "academicName": "西南官话成渝片",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [
+        "巴蜀官话"
+      ],
+      "films": [
+        {
+          "id": "900225",
+          "title": "疯狂的石头",
+          "year": 2006,
+          "rating": 8.3,
+          "director": "宁浩 Hao Ning",
+          "lang": "重庆话"
+        },
+        {
+          "id": "27089436",
+          "title": "侧耳倾听3",
+          "year": 2017,
+          "rating": 8.3,
+          "director": "李偲扬",
+          "lang": "重庆话"
+        },
+        {
+          "id": "26657126",
+          "title": "不成问题的问题",
+          "year": 2017,
+          "rating": 8.1,
+          "director": "梅峰",
+          "lang": "重庆话"
+        },
+        {
+          "id": "25775642",
+          "title": "嘿！小面",
+          "year": 2013,
+          "rating": 7.9,
+          "director": "曾磊",
+          "lang": "重庆话"
+        },
+        {
+          "id": "25926267",
+          "title": "一个勺子",
+          "year": 2015,
+          "rating": 7.7,
+          "director": "陈建斌",
+          "lang": "重庆话"
+        },
+        {
+          "id": "3194152",
+          "title": "新娘",
+          "year": 2009,
+          "rating": 7.7,
+          "director": "章明",
+          "lang": "重庆话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "客家话",
+      "name": "客家话",
+      "n": 10,
+      "mean": 7.88,
+      "themes": [
+        "迁徙",
+        "坚韧",
+        "家族",
+        "山地"
+      ],
+      "language": "客家话",
+      "folk": [
+        "围屋",
+        "山歌",
+        "宗族礼仪"
+      ],
+      "history": [
+        "多次大迁徙与定居史"
+      ],
+      "stories": "离乡、扎根、家族延续",
+      "academicName": "客家方言",
+      "family": "汉藏语系 · 汉语族 · 客家话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "1300572",
+          "title": "童年往事",
+          "year": 1985,
+          "rating": 8.8,
+          "director": "侯孝贤",
+          "lang": "客家话"
+        },
+        {
+          "id": "900152",
+          "title": "纵横四海",
+          "year": 1991,
+          "rating": 8.7,
+          "director": "吴宇森 John Woo",
+          "lang": "客家话"
+        },
+        {
+          "id": "1299103",
+          "title": "冬冬的假期",
+          "year": 1984,
+          "rating": 8.6,
+          "director": "侯孝贤",
+          "lang": "客家话"
+        },
+        {
+          "id": "3805953",
+          "title": "不能没有你",
+          "year": 2009,
+          "rating": 8.3,
+          "director": "戴立忍",
+          "lang": "客家话"
+        },
+        {
+          "id": "11599147",
+          "title": "逗阵儿",
+          "year": 2013,
+          "rating": 8.2,
+          "director": "卢金城",
+          "lang": "客家话"
+        },
+        {
+          "id": "1307054",
+          "title": "美丽时光",
+          "year": 2002,
+          "rating": 7.8,
+          "director": "张作骥",
+          "lang": "客家话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "河南话",
+      "name": "河南话",
+      "n": 10,
+      "mean": 6.42,
+      "themes": [
+        "乡土",
+        "出走",
+        "寻找",
+        "普通人"
+      ],
+      "language": "河南方言",
+      "folk": [
+        "豫剧",
+        "庙会",
+        "中原农耕"
+      ],
+      "history": [
+        "中原文明腹地",
+        "人口迁徙输出"
+      ],
+      "stories": "出走与回归、乡土中国、普通人尊严",
+      "academicName": "中原官话",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "1578723",
+          "title": "好死不如赖活着",
+          "year": 2003,
+          "rating": 8.4,
+          "director": "陈为军",
+          "lang": "河南话"
+        },
+        {
+          "id": "25757187",
+          "title": "我不是王毛",
+          "year": 2016,
+          "rating": 8.0,
+          "director": "赵小溪",
+          "lang": "河南话"
+        },
+        {
+          "id": "3609001",
+          "title": "米香",
+          "year": 2010,
+          "rating": 7.4,
+          "director": "王洪飞 / 白海滨",
+          "lang": "河南话"
+        },
+        {
+          "id": "30214059",
+          "title": "红毛皇帝",
+          "year": 2018,
+          "rating": 7.2,
+          "director": "岳廷",
+          "lang": "河南话"
+        },
+        {
+          "id": "1888671",
+          "title": "鸡犬不宁",
+          "year": 2006,
+          "rating": 6.7,
+          "director": "陈大明",
+          "lang": "河南话"
+        },
+        {
+          "id": "10416189",
+          "title": "就是闹着玩的",
+          "year": 2012,
+          "rating": 6.7,
+          "director": "卢卫国",
+          "lang": "河南话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "陕西话",
+      "name": "陕西话",
+      "n": 9,
+      "mean": 7.52,
+      "themes": [
+        "黄土",
+        "历史",
+        "乡土",
+        "厚重"
+      ],
+      "language": "陕西方言",
+      "folk": [
+        "秦腔",
+        "窑洞",
+        "关中饮食"
+      ],
+      "history": [
+        "周秦汉唐古都层累"
+      ],
+      "stories": "历史纵深、乡土伦理、时代裂变",
+      "academicName": "中原官话关中片",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "2063528",
+          "title": "盲山",
+          "year": 2007,
+          "rating": 8.6,
+          "director": "李杨",
+          "lang": "陕西话"
+        },
+        {
+          "id": "10467774",
+          "title": "孙子从美国来",
+          "year": 2012,
+          "rating": 8.5,
+          "director": "曲江涛",
+          "lang": "陕西话"
+        },
+        {
+          "id": "2124703",
+          "title": "疯狂的赛车",
+          "year": 2009,
+          "rating": 8.2,
+          "director": "宁浩",
+          "lang": "陕西话"
+        },
+        {
+          "id": "1300108",
+          "title": "秋菊打官司",
+          "year": 1992,
+          "rating": 8.1,
+          "director": "张艺谋",
+          "lang": "陕西话"
+        },
+        {
+          "id": "4290915",
+          "title": "纺织姑娘",
+          "year": 2010,
+          "rating": 7.3,
+          "director": "王全安",
+          "lang": "陕西话"
+        },
+        {
+          "id": "3024212",
+          "title": "阿妹的诺言",
+          "year": 2007,
+          "rating": 7.2,
+          "director": "丁黑",
+          "lang": "陕西话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "东北话",
+      "name": "东北话",
+      "n": 8,
+      "mean": 6.66,
+      "themes": [
+        "幽默",
+        "工业",
+        "寒冬",
+        "人情"
+      ],
+      "language": "东北官话",
+      "folk": [
+        "二人转",
+        "冻梨与炕头",
+        "厂矿生活"
+      ],
+      "history": [
+        "共和国工业记忆",
+        "闯关东"
+      ],
+      "stories": "小人物喜剧、工业遗存、东北性格",
+      "academicName": "东北官话",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "2256043",
+          "title": "千钧。一发",
+          "year": 2008,
+          "rating": 8.0,
+          "director": "高群书",
+          "lang": "东北话"
+        },
+        {
+          "id": "1794435",
+          "title": "姨妈的后现代生活",
+          "year": 2007,
+          "rating": 7.4,
+          "director": "许鞍华",
+          "lang": "东北话"
+        },
+        {
+          "id": "3053521",
+          "title": "二十四城记",
+          "year": 2009,
+          "rating": 7.4,
+          "director": "贾樟柯",
+          "lang": "东北话"
+        },
+        {
+          "id": "24854896",
+          "title": "锤子镰刀都休息",
+          "year": 2013,
+          "rating": 7.3,
+          "director": "耿军",
+          "lang": "东北话"
+        },
+        {
+          "id": "10776186",
+          "title": "飞机",
+          "year": 2012,
+          "rating": 6.9,
+          "director": "耿军",
+          "lang": "东北话"
+        },
+        {
+          "id": "6080775",
+          "title": "黄金大劫案",
+          "year": 2012,
+          "rating": 6.8,
+          "director": "宁浩",
+          "lang": "东北话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "南京话",
+      "name": "南京话",
+      "n": 5,
+      "mean": 6.66,
+      "themes": [
+        "古都",
+        "民国",
+        "市井"
+      ],
+      "language": "南京话（江淮官话）",
+      "folk": [
+        "秦淮文化",
+        "金陵饮食"
+      ],
+      "history": [
+        "六朝古都层累",
+        "民国首都记忆"
+      ],
+      "stories": "历史余绪、都市人情、时代断面",
+      "academicName": "江淮官话洪巢片",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "3649049",
+          "title": "金陵十三钗",
+          "year": 2011,
+          "rating": 8.2,
+          "director": "张艺谋",
+          "lang": "南京话"
+        },
+        {
+          "id": "10807880",
+          "title": "记忆望着我",
+          "year": 2012,
+          "rating": 6.8,
+          "director": "宋方",
+          "lang": "南京话"
+        },
+        {
+          "id": "30242177",
+          "title": "饿死诗人",
+          "year": 2018,
+          "rating": 6.7,
+          "director": "张新阳",
+          "lang": "南京话"
+        },
+        {
+          "id": "3732860",
+          "title": "多大事啊",
+          "year": 2009,
+          "rating": 6.1,
+          "director": "韩秋池",
+          "lang": "南京话"
+        },
+        {
+          "id": "25802582",
+          "title": "希望有个如你一般的人",
+          "year": 2014,
+          "rating": 5.5,
+          "director": "刘鸿志",
+          "lang": "南京话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "蒙语",
+      "name": "蒙语",
+      "n": 5,
+      "mean": 6.84,
+      "themes": [
+        "草原",
+        "游牧",
+        "信仰"
+      ],
+      "language": "蒙古语",
+      "folk": [
+        "那达慕",
+        "马头琴"
+      ],
+      "history": [
+        "草原帝国与游牧文明"
+      ],
+      "stories": "草原、游牧、人与自然",
+      "academicName": "蒙古语",
+      "family": "阿尔泰语系 · 蒙古语族",
+      "aliases": [],
+      "films": [
+        {
+          "id": "4707582",
+          "title": "斯琴杭茹",
+          "year": 2009,
+          "rating": 8.4,
+          "director": "巴音",
+          "lang": "蒙语"
+        },
+        {
+          "id": "3993565",
+          "title": "额吉",
+          "year": 2010,
+          "rating": 8.0,
+          "director": "宁才",
+          "lang": "蒙语"
+        },
+        {
+          "id": "30239139",
+          "title": "再别天堂",
+          "year": 2018,
+          "rating": 6.5,
+          "director": "巴特巴雅尔·绰格索姆",
+          "lang": "蒙语"
+        },
+        {
+          "id": "30255216",
+          "title": "您一定不要错过",
+          "year": 2018,
+          "rating": 5.7,
+          "director": "麦丽丝",
+          "lang": "蒙语"
+        },
+        {
+          "id": "25732105",
+          "title": "鄂尔多斯骑士",
+          "year": 2015,
+          "rating": 5.6,
+          "director": "禾家",
+          "lang": "蒙语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "天津话",
+      "name": "天津话",
+      "n": 4,
+      "mean": 7.15,
+      "themes": [
+        "幽默",
+        "码头",
+        "市井"
+      ],
+      "language": "天津话",
+      "folk": [
+        "相声",
+        "狗不理与早点"
+      ],
+      "history": [
+        "近代开埠",
+        "漕运码头"
+      ],
+      "stories": "市井喜剧、码头江湖、天津性格",
+      "academicName": "冀鲁官话天津小片",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "2148295",
+          "title": "奇迹世界",
+          "year": 2007,
+          "rating": 7.7,
+          "director": "宁浩",
+          "lang": "天津话"
+        },
+        {
+          "id": "10864754",
+          "title": "天津闲人",
+          "year": 2012,
+          "rating": 7.5,
+          "director": "郑大圣",
+          "lang": "天津话"
+        },
+        {
+          "id": "10833882",
+          "title": "危城之恋",
+          "year": 2012,
+          "rating": 6.9,
+          "director": "郑大圣",
+          "lang": "天津话"
+        },
+        {
+          "id": "26425088",
+          "title": "一切都好",
+          "year": 2016,
+          "rating": 6.5,
+          "director": "张猛",
+          "lang": "天津话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "山东话",
+      "name": "山东话",
+      "n": 4,
+      "mean": 7.62,
+      "themes": [
+        "豪爽",
+        "乡土",
+        "伦理",
+        "传统"
+      ],
+      "language": "山东方言",
+      "folk": [
+        "胶东秧歌",
+        "孔孟故里礼俗"
+      ],
+      "history": [
+        "齐鲁文化",
+        "近代开埠"
+      ],
+      "stories": "乡土伦理、家族、传统与现代",
+      "academicName": "冀鲁/胶辽官话",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "11226123",
+          "title": "生活而已2",
+          "year": 2012,
+          "rating": 7.9,
+          "director": "魏晓波",
+          "lang": "山东话"
+        },
+        {
+          "id": "33451881",
+          "title": "带妈妈出去玩",
+          "year": 2019,
+          "rating": 7.6,
+          "director": "隋淑芬",
+          "lang": "山东话"
+        },
+        {
+          "id": "6058567",
+          "title": "生活而已",
+          "year": 2011,
+          "rating": 7.6,
+          "director": "魏晓波",
+          "lang": "山东话"
+        },
+        {
+          "id": "6519580",
+          "title": "老家新家",
+          "year": 2011,
+          "rating": 7.4,
+          "director": "方刚亮",
+          "lang": "山东话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "吴语",
+      "name": "吴语",
+      "n": 3,
+      "mean": 7.83,
+      "themes": [
+        "江南",
+        "市井",
+        "家族",
+        "细腻"
+      ],
+      "language": "吴语（江浙片）",
+      "folk": [
+        "评弹",
+        "园林",
+        "水乡生活"
+      ],
+      "history": [
+        "江南市镇文化",
+        "近代工商传统"
+      ],
+      "stories": "人情世故、家族伦理、江南日常",
+      "academicName": "吴方言",
+      "family": "汉藏语系 · 汉语族 · 吴语",
+      "aliases": [],
+      "films": [
+        {
+          "id": "20491425",
+          "title": "逆流寻梦",
+          "year": 2015,
+          "rating": 8.9,
+          "director": "弗朗西斯科·贝洛 / 蒂姆·斯特恩伯格",
+          "lang": "吴语"
+        },
+        {
+          "id": "3113423",
+          "title": "我最后的秘密",
+          "year": 2007,
+          "rating": 7.7,
+          "director": "黎小锋 / 贾恺",
+          "lang": "吴语"
+        },
+        {
+          "id": "19995496",
+          "title": "兰亭",
+          "year": 2014,
+          "rating": 6.9,
+          "director": "肖风",
+          "lang": "吴语"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "唐山话",
+      "name": "唐山话",
+      "n": 3,
+      "mean": 8.0,
+      "themes": [
+        "乡土",
+        "日常",
+        "人物"
+      ],
+      "language": "唐山话",
+      "folk": [
+        "地方节庆",
+        "口头传统"
+      ],
+      "history": [
+        "地方历史待进一步讲述"
+      ],
+      "stories": "普通人的命运、地方记忆与文化相遇",
+      "academicName": "冀鲁官话保唐片",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "900030",
+          "title": "鬼子来了",
+          "year": 2000,
+          "rating": 9.2,
+          "director": "姜文 Wen Jiang",
+          "lang": "唐山话"
+        },
+        {
+          "id": "3596502",
+          "title": "唐山大地震",
+          "year": 2010,
+          "rating": 7.8,
+          "director": "冯小刚",
+          "lang": "唐山话"
+        },
+        {
+          "id": "3861839",
+          "title": "砸掉你的牙",
+          "year": 2008,
+          "rating": 7.0,
+          "director": "孟奇",
+          "lang": "唐山话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "湖南话",
+      "name": "湖南话",
+      "n": 3,
+      "mean": 7.5,
+      "themes": [
+        "辛辣",
+        "江湖",
+        "青春",
+        "躁动"
+      ],
+      "language": "湖南方言",
+      "folk": [
+        "湘菜",
+        "花鼓戏"
+      ],
+      "history": [
+        "湖湘文化",
+        "近代思潮"
+      ],
+      "stories": "青春、暴力、时代与个体",
+      "academicName": "湘语",
+      "family": "汉藏语系 · 汉语族 · 湘语",
+      "aliases": [],
+      "films": [
+        {
+          "id": "900054",
+          "title": "饮食男女",
+          "year": 1994,
+          "rating": 9.1,
+          "director": "李安 Ang Lee",
+          "lang": "湖南话"
+        },
+        {
+          "id": "6058567",
+          "title": "生活而已",
+          "year": 2011,
+          "rating": 7.6,
+          "director": "魏晓波",
+          "lang": "湖南话"
+        },
+        {
+          "id": "1483000",
+          "title": "我的美丽乡愁",
+          "year": 2002,
+          "rating": 5.8,
+          "director": "俞钟",
+          "lang": "湖南话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "潮汕话",
+      "name": "潮汕话",
+      "n": 2,
+      "mean": 7.9,
+      "themes": [
+        "家族",
+        "迁徙",
+        "亲情",
+        "乡土"
+      ],
+      "language": "潮汕话（闽南语支）",
+      "folk": [
+        "祭祖",
+        "婚嫁礼俗",
+        "饮食与拜神"
+      ],
+      "history": [
+        "海洋贸易",
+        "侨乡离散与回归"
+      ],
+      "stories": "家庭、身份、离散、回归",
+      "academicName": "闽南语潮汕片",
+      "family": "汉藏语系 · 汉语族 · 闽语",
+      "aliases": [],
+      "films": [
+        {
+          "id": "37116446",
+          "title": "给阿嬷的情书",
+          "year": 2026,
+          "rating": 9.3,
+          "director": "蓝鸿春",
+          "lang": "潮汕话"
+        },
+        {
+          "id": "35191327",
+          "title": "秘密基地",
+          "year": 2020,
+          "rating": 6.5,
+          "director": "林齐颖",
+          "lang": "潮汕话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "贵州话",
+      "name": "贵州话",
+      "n": 2,
+      "mean": 7.25,
+      "themes": [
+        "乡土",
+        "时间",
+        "诗意",
+        "边缘"
+      ],
+      "language": "贵州方言",
+      "folk": [
+        "侗族大歌",
+        "苗寨节庆"
+      ],
+      "history": [
+        "西南山地多民族交汇"
+      ],
+      "stories": "乡愁、时间、记忆与梦境",
+      "academicName": "西南官话贵昆片",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [
+        {
+          "id": "1305224",
+          "title": "寻枪",
+          "year": 2002,
+          "rating": 7.8,
+          "director": "陆川",
+          "lang": "贵州话"
+        },
+        {
+          "id": "4728518",
+          "title": "人山人海",
+          "year": 2012,
+          "rating": 6.7,
+          "director": "蔡尚君",
+          "lang": "贵州话"
+        }
+      ],
+      "status": "developed"
+    },
+    {
+      "id": "云南话",
+      "name": "云南话",
+      "n": 1,
+      "mean": 7.4,
+      "themes": [
+        "边地",
+        "多元",
+        "迁徙",
+        "日常"
+      ],
+      "language": "云南方言",
+      "folk": [
+        "泼水节",
+        "茶马古道"
+      ],
+      "history": [
+        "西南边地多民族共生"
+      ],
+      "stories": "边地身份、文化相遇、生活纹理",
+      "academicName": "西南官话滇方言",
+      "family": "汉藏语系 · 汉语族 · 官话",
+      "aliases": [],
+      "films": [],
+      "status": "pending"
+    },
+    {
+      "id": "手语",
+      "name": "手语",
+      "n": 1,
+      "mean": 8.7,
+      "themes": [
+        "乡土",
+        "日常",
+        "人物"
+      ],
+      "language": "手语",
+      "folk": [
+        "地方节庆",
+        "口头传统"
+      ],
+      "history": [
+        "地方历史待进一步讲述"
+      ],
+      "stories": "普通人的命运、地方记忆与文化相遇",
+      "academicName": "中国手语 / 地方自然手语",
+      "family": "视觉-手势语言",
+      "aliases": [],
+      "films": [],
+      "status": "pending"
+    },
+    {
+      "id": "壮语",
+      "name": "壮语",
+      "n": 0,
+      "mean": null,
+      "themes": [
+        "山歌",
+        "边地",
+        "日常"
+      ],
+      "language": "壮语",
+      "folk": [
+        "三月三",
+        "壮族山歌"
+      ],
+      "history": [
+        "岭南多民族共生"
+      ],
+      "stories": "山歌、爱情、地方日常",
+      "academicName": "壮语",
+      "family": "壮侗语系 · 壮傣语支",
+      "aliases": [],
+      "films": [],
+      "status": "pending"
+    },
+    {
+      "id": "彝语",
+      "name": "彝语",
+      "n": 0,
+      "mean": null,
+      "themes": [
+        "山地",
+        "火塘",
+        "仪式",
+        "家族"
+      ],
+      "language": "彝语",
+      "folk": [
+        "火把节",
+        "口传史诗"
+      ],
+      "history": [
+        "西南山地民族历史"
+      ],
+      "stories": "仪式、家族、山地生存",
+      "academicName": "彝语",
+      "family": "汉藏语系 · 藏缅语族 · 彝语支",
+      "aliases": [],
+      "films": [],
+      "status": "pending"
+    },
+    {
+      "id": "苗语",
+      "name": "苗语",
+      "n": 0,
+      "mean": null,
+      "themes": [
+        "山地",
+        "银饰",
+        "迁徙"
+      ],
+      "language": "苗语",
+      "folk": [
+        "芦笙节",
+        "银饰与服饰"
+      ],
+      "history": [
+        "苗族多次迁徙史"
+      ],
+      "stories": "山地生活、迁徙记忆、民族尊严",
+      "academicName": "苗语",
+      "family": "苗瑶语系 · 苗语支",
+      "aliases": [],
+      "films": [],
+      "status": "pending"
+    }
+  ],
+  "provinces": [
+    {
+      "id": "beijing",
+      "name": "北京",
+      "languages": [
+        "北京话",
+        "官话"
+      ],
+      "themes": [
+        "都城",
+        "胡同",
+        "时代"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "京味文化",
+            "desc": ""
+          },
+          {
+            "title": "胡同市井",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "京剧",
+            "desc": ""
+          },
+          {
+            "title": "庙会",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "炸酱面",
+            "desc": ""
+          },
+          {
+            "title": "豆汁",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "元明清帝都",
+            "desc": ""
+          },
+          {
+            "title": "近现代政治中心",
+            "desc": ""
+          }
+        ],
+        "myth": [
+          {
+            "title": "皇城叙事",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "故宫",
+            "desc": ""
+          },
+          {
+            "title": "颐和园",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "更多当代北京普通人故事"
+      ],
+      "intro": "帝都叙事从来不缺厚度：胡同市井与政治中心并置，让小人物故事也有大时代背景。",
+      "storyHooks": [
+        "胡同拆迁",
+        "北漂青年",
+        "京剧世家",
+        "大院记忆"
+      ],
+      "films": [],
+      "filmCount": 0
+    },
+    {
+      "id": "tianjin",
+      "name": "天津",
+      "languages": [
+        "北京官话",
+        "天津话"
+      ],
+      "themes": [
+        "幽默",
+        "码头",
+        "市井"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "相声文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "曲艺",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "狗不理",
+            "desc": ""
+          },
+          {
+            "title": "煎饼果子",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "近代开埠",
+            "desc": ""
+          },
+          {
+            "title": "漕运码头",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "海河风貌",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "天津方言电影仍偏少"
+      ],
+      "intro": "天津的故事，藏在幽默、码头、市井之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "幽默叙事",
+        "码头叙事",
+        "市井叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "2148295",
+          "title": "奇迹世界",
+          "year": 2007,
+          "rating": 7.7,
+          "director": "宁浩",
+          "lang": "天津话"
+        },
+        {
+          "id": "10864754",
+          "title": "天津闲人",
+          "year": 2012,
+          "rating": 7.5,
+          "director": "郑大圣",
+          "lang": "天津话"
+        },
+        {
+          "id": "10833882",
+          "title": "危城之恋",
+          "year": 2012,
+          "rating": 6.9,
+          "director": "郑大圣",
+          "lang": "天津话"
+        },
+        {
+          "id": "26425088",
+          "title": "一切都好",
+          "year": 2016,
+          "rating": 6.5,
+          "director": "张猛",
+          "lang": "天津话"
+        }
+      ],
+      "filmCount": 4
+    },
+    {
+      "id": "hebei",
+      "name": "河北",
+      "languages": [
+        "冀鲁官话",
+        "唐山话"
+      ],
+      "themes": [
+        "乡土",
+        "工业",
+        "平原"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "燕赵文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "皮影",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "燕赵故地",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "燕山",
+            "desc": ""
+          },
+          {
+            "title": "白洋淀",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "更多冀东方言叙事"
+      ],
+      "intro": "河北的故事，藏在乡土、工业、平原之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "乡土叙事",
+        "工业叙事",
+        "平原叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "900030",
+          "title": "鬼子来了",
+          "year": 2000,
+          "rating": 9.2,
+          "director": "姜文 Wen Jiang",
+          "lang": "唐山话"
+        },
+        {
+          "id": "3596502",
+          "title": "唐山大地震",
+          "year": 2010,
+          "rating": 7.8,
+          "director": "冯小刚",
+          "lang": "唐山话"
+        },
+        {
+          "id": "3861839",
+          "title": "砸掉你的牙",
+          "year": 2008,
+          "rating": 7.0,
+          "director": "孟奇",
+          "lang": "唐山话"
+        }
+      ],
+      "filmCount": 3
+    },
+    {
+      "id": "shanxi",
+      "name": "山西",
+      "languages": [
+        "晋语"
+      ],
+      "themes": [
+        "黄土",
+        "晋商",
+        "乡土"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "晋商文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "晋剧",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "刀削面",
+            "desc": ""
+          },
+          {
+            "title": "醋文化",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "晋商传统",
+            "desc": ""
+          },
+          {
+            "title": "古建遗存",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "平遥古城",
+            "desc": ""
+          },
+          {
+            "title": "云冈石窟",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "晋语电影可继续深耕"
+      ],
+      "intro": "山西的故事，藏在黄土、晋商、乡土之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "黄土叙事",
+        "晋商叙事",
+        "乡土叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "1947270",
+          "title": "天狗",
+          "year": 2006,
+          "rating": 8.7,
+          "director": "戚健",
+          "lang": "晋语"
+        },
+        {
+          "id": "900072",
+          "title": "让子弹飞",
+          "year": 2010,
+          "rating": 8.7,
+          "director": "姜文 Wen Jiang",
+          "lang": "晋语"
+        },
+        {
+          "id": "1291851",
+          "title": "小武",
+          "year": 1998,
+          "rating": 8.5,
+          "director": "贾樟柯",
+          "lang": "晋语"
+        },
+        {
+          "id": "1291850",
+          "title": "站台",
+          "year": 2000,
+          "rating": 8.4,
+          "director": "贾樟柯",
+          "lang": "晋语"
+        },
+        {
+          "id": "1872133",
+          "title": "三峡好人",
+          "year": 2006,
+          "rating": 8.3,
+          "director": "贾樟柯",
+          "lang": "晋语"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "inner_mongolia",
+      "name": "内蒙古",
+      "languages": [
+        "东北官话",
+        "蒙语"
+      ],
+      "themes": [
+        "草原",
+        "游牧",
+        "边疆"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "草原文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "那达慕",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "游牧帝国记忆",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "呼伦贝尔草原",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "蒙语电影叙事待扩展"
+      ],
+      "intro": "内蒙古的故事，藏在草原、游牧、边疆之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "草原叙事",
+        "游牧叙事",
+        "边疆叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "4707582",
+          "title": "斯琴杭茹",
+          "year": 2009,
+          "rating": 8.4,
+          "director": "巴音",
+          "lang": "蒙语"
+        },
+        {
+          "id": "3993565",
+          "title": "额吉",
+          "year": 2010,
+          "rating": 8.0,
+          "director": "宁才",
+          "lang": "蒙语"
+        },
+        {
+          "id": "30239139",
+          "title": "再别天堂",
+          "year": 2018,
+          "rating": 6.5,
+          "director": "巴特巴雅尔·绰格索姆",
+          "lang": "蒙语"
+        },
+        {
+          "id": "30255216",
+          "title": "您一定不要错过",
+          "year": 2018,
+          "rating": 5.7,
+          "director": "麦丽丝",
+          "lang": "蒙语"
+        },
+        {
+          "id": "25732105",
+          "title": "鄂尔多斯骑士",
+          "year": 2015,
+          "rating": 5.6,
+          "director": "禾家",
+          "lang": "蒙语"
+        }
+      ],
+      "filmCount": 5
+    },
+    {
+      "id": "liaoning",
+      "name": "辽宁",
+      "languages": [
+        "东北话"
+      ],
+      "themes": [
+        "工业",
+        "幽默",
+        "寒冬"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "东北工业文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "二人转",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "共和国工业长子",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "辽东半岛",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "辽宁的故事，藏在工业、幽默、寒冬之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "工业叙事",
+        "幽默叙事",
+        "寒冬叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "2256043",
+          "title": "千钧。一发",
+          "year": 2008,
+          "rating": 8.0,
+          "director": "高群书",
+          "lang": "东北话"
+        },
+        {
+          "id": "3053521",
+          "title": "二十四城记",
+          "year": 2009,
+          "rating": 7.4,
+          "director": "贾樟柯",
+          "lang": "东北话"
+        },
+        {
+          "id": "1794435",
+          "title": "姨妈的后现代生活",
+          "year": 2007,
+          "rating": 7.4,
+          "director": "许鞍华",
+          "lang": "东北话"
+        },
+        {
+          "id": "24854896",
+          "title": "锤子镰刀都休息",
+          "year": 2013,
+          "rating": 7.3,
+          "director": "耿军",
+          "lang": "东北话"
+        },
+        {
+          "id": "10776186",
+          "title": "飞机",
+          "year": 2012,
+          "rating": 6.9,
+          "director": "耿军",
+          "lang": "东北话"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "jilin",
+      "name": "吉林",
+      "languages": [
+        "东北话"
+      ],
+      "themes": [
+        "工业",
+        "边境",
+        "寒冬"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "东北乡土",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "林海雪原",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "长白山",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "吉林的故事，藏在工业、边境、寒冬之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "工业叙事",
+        "边境叙事",
+        "寒冬叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "2256043",
+          "title": "千钧。一发",
+          "year": 2008,
+          "rating": 8.0,
+          "director": "高群书",
+          "lang": "东北话"
+        },
+        {
+          "id": "3053521",
+          "title": "二十四城记",
+          "year": 2009,
+          "rating": 7.4,
+          "director": "贾樟柯",
+          "lang": "东北话"
+        },
+        {
+          "id": "1794435",
+          "title": "姨妈的后现代生活",
+          "year": 2007,
+          "rating": 7.4,
+          "director": "许鞍华",
+          "lang": "东北话"
+        },
+        {
+          "id": "24854896",
+          "title": "锤子镰刀都休息",
+          "year": 2013,
+          "rating": 7.3,
+          "director": "耿军",
+          "lang": "东北话"
+        },
+        {
+          "id": "10776186",
+          "title": "飞机",
+          "year": 2012,
+          "rating": 6.9,
+          "director": "耿军",
+          "lang": "东北话"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "heilongjiang",
+      "name": "黑龙江",
+      "languages": [
+        "东北话"
+      ],
+      "themes": [
+        "幽默",
+        "工业",
+        "移民"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "闯关东记忆",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "北大荒",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "冰雪风光",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "黑龙江的故事，藏在幽默、工业、移民之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "幽默叙事",
+        "工业叙事",
+        "移民叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "2256043",
+          "title": "千钧。一发",
+          "year": 2008,
+          "rating": 8.0,
+          "director": "高群书",
+          "lang": "东北话"
+        },
+        {
+          "id": "3053521",
+          "title": "二十四城记",
+          "year": 2009,
+          "rating": 7.4,
+          "director": "贾樟柯",
+          "lang": "东北话"
+        },
+        {
+          "id": "1794435",
+          "title": "姨妈的后现代生活",
+          "year": 2007,
+          "rating": 7.4,
+          "director": "许鞍华",
+          "lang": "东北话"
+        },
+        {
+          "id": "24854896",
+          "title": "锤子镰刀都休息",
+          "year": 2013,
+          "rating": 7.3,
+          "director": "耿军",
+          "lang": "东北话"
+        },
+        {
+          "id": "10776186",
+          "title": "飞机",
+          "year": 2012,
+          "rating": 6.9,
+          "director": "耿军",
+          "lang": "东北话"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "shanghai",
+      "name": "上海",
+      "languages": [
+        "上海话",
+        "吴语"
+      ],
+      "themes": [
+        "摩登",
+        "弄堂",
+        "商业"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "海派文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "弄堂生活",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "本帮菜",
+            "desc": ""
+          },
+          {
+            "title": "生煎",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "开埠史",
+            "desc": ""
+          },
+          {
+            "title": "远东都会",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "外滩",
+            "desc": ""
+          },
+          {
+            "title": "石库门",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "开埠百年塑造的海派都市：弄堂、摩登与阶层流动，是上海话电影最擅长的题材。",
+      "storyHooks": [
+        "石库门家庭",
+        "租界往事",
+        "弄堂拆迁",
+        "都市男女"
+      ],
+      "films": [
+        {
+          "id": "1915881",
+          "title": "一百年的歌声",
+          "year": 2004,
+          "rating": 9.0,
+          "director": "陈骞 / 乔艳琳 / 班映旭 / 金光宇 / 周亚玉 / 门欣熙",
+          "lang": "上海话"
+        },
+        {
+          "id": "1294194",
+          "title": "悲情城市",
+          "year": 1989,
+          "rating": 8.9,
+          "director": "侯孝贤",
+          "lang": "上海话"
+        },
+        {
+          "id": "20491425",
+          "title": "逆流寻梦",
+          "year": 2015,
+          "rating": 8.9,
+          "director": "弗朗西斯科·贝洛 / 蒂姆·斯特恩伯格",
+          "lang": "吴语"
+        },
+        {
+          "id": "900189",
+          "title": "牯岭街少年杀人事件",
+          "year": 1991,
+          "rating": 8.8,
+          "director": "杨德昌 Edward Yang",
+          "lang": "上海话"
+        },
+        {
+          "id": "1421278",
+          "title": "面子",
+          "year": 2004,
+          "rating": 8.8,
+          "director": "伍思薇",
+          "lang": "上海话"
+        }
+      ],
+      "filmCount": 9
+    },
+    {
+      "id": "jiangsu",
+      "name": "江苏",
+      "languages": [
+        "上海话",
+        "南京话",
+        "吴语"
+      ],
+      "themes": [
+        "江南",
+        "古都",
+        "细腻"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "江南文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "评弹",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "淮扬菜",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "六朝古都",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "苏州园林",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "江苏的故事，藏在江南、古都、细腻之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "江南叙事",
+        "古都叙事",
+        "细腻叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "1915881",
+          "title": "一百年的歌声",
+          "year": 2004,
+          "rating": 9.0,
+          "director": "陈骞 / 乔艳琳 / 班映旭 / 金光宇 / 周亚玉 / 门欣熙",
+          "lang": "上海话"
+        },
+        {
+          "id": "1294194",
+          "title": "悲情城市",
+          "year": 1989,
+          "rating": 8.9,
+          "director": "侯孝贤",
+          "lang": "上海话"
+        },
+        {
+          "id": "20491425",
+          "title": "逆流寻梦",
+          "year": 2015,
+          "rating": 8.9,
+          "director": "弗朗西斯科·贝洛 / 蒂姆·斯特恩伯格",
+          "lang": "吴语"
+        },
+        {
+          "id": "900189",
+          "title": "牯岭街少年杀人事件",
+          "year": 1991,
+          "rating": 8.8,
+          "director": "杨德昌 Edward Yang",
+          "lang": "上海话"
+        },
+        {
+          "id": "1421278",
+          "title": "面子",
+          "year": 2004,
+          "rating": 8.8,
+          "director": "伍思薇",
+          "lang": "上海话"
+        }
+      ],
+      "filmCount": 14
+    },
+    {
+      "id": "zhejiang",
+      "name": "浙江",
+      "languages": [
+        "上海话",
+        "吴语",
+        "浙江方言"
+      ],
+      "themes": [
+        "江南",
+        "商路",
+        "海洋"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "浙商文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "越剧",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "杭帮菜",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "海上丝路",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "西湖",
+            "desc": ""
+          },
+          {
+            "title": "海岛",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "浙江的故事，藏在江南、商路、海洋之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "江南叙事",
+        "商路叙事",
+        "海洋叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "1915881",
+          "title": "一百年的歌声",
+          "year": 2004,
+          "rating": 9.0,
+          "director": "陈骞 / 乔艳琳 / 班映旭 / 金光宇 / 周亚玉 / 门欣熙",
+          "lang": "上海话"
+        },
+        {
+          "id": "1294194",
+          "title": "悲情城市",
+          "year": 1989,
+          "rating": 8.9,
+          "director": "侯孝贤",
+          "lang": "上海话"
+        },
+        {
+          "id": "20491425",
+          "title": "逆流寻梦",
+          "year": 2015,
+          "rating": 8.9,
+          "director": "弗朗西斯科·贝洛 / 蒂姆·斯特恩伯格",
+          "lang": "吴语"
+        },
+        {
+          "id": "900189",
+          "title": "牯岭街少年杀人事件",
+          "year": 1991,
+          "rating": 8.8,
+          "director": "杨德昌 Edward Yang",
+          "lang": "上海话"
+        },
+        {
+          "id": "1421278",
+          "title": "面子",
+          "year": 2004,
+          "rating": 8.8,
+          "director": "伍思薇",
+          "lang": "上海话"
+        }
+      ],
+      "filmCount": 9
+    },
+    {
+      "id": "anhui",
+      "name": "安徽",
+      "languages": [
+        "徽语",
+        "江淮官话"
+      ],
+      "themes": [
+        "乡土",
+        "徽商",
+        "山地"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "徽文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "黄梅戏",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "徽商",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "黄山",
+            "desc": ""
+          },
+          {
+            "title": "古村落",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "徽语电影仍稀缺"
+      ],
+      "intro": "安徽的故事，藏在乡土、徽商、山地之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "乡土叙事",
+        "徽商叙事",
+        "山地叙事",
+        "普通人命运"
+      ],
+      "films": [],
+      "filmCount": 0
+    },
+    {
+      "id": "fujian",
+      "name": "福建",
+      "languages": [
+        "台语",
+        "客家话",
+        "潮汕话",
+        "闽南语"
+      ],
+      "themes": [
+        "海洋",
+        "侨乡",
+        "信仰"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "闽南文化",
+            "desc": "宗族、信仰与海洋迁徙缠在一起，是闽南语电影的核心母题。"
+          },
+          {
+            "title": "侨乡",
+            "desc": "出洋与汇款改写家庭权力，离散成为日常而不是例外。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "妈祖信仰",
+            "desc": "海神庇护把风险、告别与归乡收进仪式里。"
+          }
+        ],
+        "food": [
+          {
+            "title": "闽菜",
+            "desc": "海鲜与红糟，是港口城市味觉上的地方身份。"
+          }
+        ],
+        "history": [
+          {
+            "title": "海上丝路",
+            "desc": "从刺桐港到当代侨汇，福建的故事总是向外走。"
+          },
+          {
+            "title": "侨乡离散",
+            "desc": "南洋网络让一部家庭片也能写成跨国史。"
+          }
+        ],
+        "myth": [
+          {
+            "title": "妈祖",
+            "desc": "护航与招魂的传说，仍在渔村和城市庙宇里并行。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "鼓浪屿",
+            "desc": "租界遗存与钢琴、海风，适合拍阶层与乡愁。"
+          },
+          {
+            "title": "土楼",
+            "desc": "客家聚居的建筑本身就是宗族叙事的布景。"
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "面向海洋的省份：闽南语、客家话与潮汕话在此相遇，妈祖、土楼与侨乡网络构成独特叙事资源。",
+      "storyHooks": [
+        "出洋打工",
+        "宗族祭祀",
+        "海岛日常",
+        "两岸乡愁"
+      ],
+      "films": [
+        {
+          "id": "37116446",
+          "title": "给阿嬷的情书",
+          "year": 2026,
+          "rating": 9.3,
+          "director": "蓝鸿春",
+          "lang": "潮汕话"
+        },
+        {
+          "id": "1298944",
+          "title": "无言的山丘",
+          "year": 1992,
+          "rating": 9.2,
+          "director": "王童",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1292434",
+          "title": "一一",
+          "year": 2017,
+          "rating": 9.1,
+          "director": "杨德昌",
+          "lang": "闽南语"
+        },
+        {
+          "id": "900054",
+          "title": "饮食男女",
+          "year": 1994,
+          "rating": 9.1,
+          "director": "李安 Ang Lee",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1305261",
+          "title": "恐怖分子",
+          "year": 1986,
+          "rating": 8.9,
+          "director": "杨德昌",
+          "lang": "闽南语"
+        }
+      ],
+      "filmCount": 20
+    },
+    {
+      "id": "jiangxi",
+      "name": "江西",
+      "languages": [
+        "客家话",
+        "赣语"
+      ],
+      "themes": [
+        "山地",
+        "革命",
+        "宗族"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "赣鄱文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "采茶戏",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "红色根据地",
+            "desc": ""
+          },
+          {
+            "title": "景德镇瓷都",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "庐山",
+            "desc": ""
+          },
+          {
+            "title": "婺源",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "赣语电影待挖掘"
+      ],
+      "intro": "江西的故事，藏在山地、革命、宗族之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "山地叙事",
+        "革命叙事",
+        "宗族叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "1300572",
+          "title": "童年往事",
+          "year": 1985,
+          "rating": 8.8,
+          "director": "侯孝贤",
+          "lang": "客家话"
+        },
+        {
+          "id": "900152",
+          "title": "纵横四海",
+          "year": 1991,
+          "rating": 8.7,
+          "director": "吴宇森 John Woo",
+          "lang": "客家话"
+        },
+        {
+          "id": "1299103",
+          "title": "冬冬的假期",
+          "year": 1984,
+          "rating": 8.6,
+          "director": "侯孝贤",
+          "lang": "客家话"
+        },
+        {
+          "id": "3805953",
+          "title": "不能没有你",
+          "year": 2009,
+          "rating": 8.3,
+          "director": "戴立忍",
+          "lang": "客家话"
+        },
+        {
+          "id": "11599147",
+          "title": "逗阵儿",
+          "year": 2013,
+          "rating": 8.2,
+          "director": "卢金城",
+          "lang": "客家话"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "shandong",
+      "name": "山东",
+      "languages": [
+        "山东话",
+        "胶辽官话"
+      ],
+      "themes": [
+        "豪爽",
+        "乡土",
+        "海洋"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "齐鲁文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "胶东秧歌",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "鲁菜",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "孔孟故里",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "泰山",
+            "desc": ""
+          },
+          {
+            "title": "黄海",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "山东的故事，藏在豪爽、乡土、海洋之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "豪爽叙事",
+        "乡土叙事",
+        "海洋叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "11226123",
+          "title": "生活而已2",
+          "year": 2012,
+          "rating": 7.9,
+          "director": "魏晓波",
+          "lang": "山东话"
+        },
+        {
+          "id": "33451881",
+          "title": "带妈妈出去玩",
+          "year": 2019,
+          "rating": 7.6,
+          "director": "隋淑芬",
+          "lang": "山东话"
+        },
+        {
+          "id": "6058567",
+          "title": "生活而已",
+          "year": 2011,
+          "rating": 7.6,
+          "director": "魏晓波",
+          "lang": "山东话"
+        },
+        {
+          "id": "6519580",
+          "title": "老家新家",
+          "year": 2011,
+          "rating": 7.4,
+          "director": "方刚亮",
+          "lang": "山东话"
+        }
+      ],
+      "filmCount": 4
+    },
+    {
+      "id": "henan",
+      "name": "河南",
+      "languages": [
+        "河南话"
+      ],
+      "themes": [
+        "中原",
+        "乡土",
+        "出走"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "中原文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "豫剧",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "烩面",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "华夏文明腹地",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "龙门石窟",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "河南的故事，藏在中原、乡土、出走之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "中原叙事",
+        "乡土叙事",
+        "出走叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "1578723",
+          "title": "好死不如赖活着",
+          "year": 2003,
+          "rating": 8.4,
+          "director": "陈为军",
+          "lang": "河南话"
+        },
+        {
+          "id": "25757187",
+          "title": "我不是王毛",
+          "year": 2016,
+          "rating": 8.0,
+          "director": "赵小溪",
+          "lang": "河南话"
+        },
+        {
+          "id": "3609001",
+          "title": "米香",
+          "year": 2010,
+          "rating": 7.4,
+          "director": "王洪飞 / 白海滨",
+          "lang": "河南话"
+        },
+        {
+          "id": "30214059",
+          "title": "红毛皇帝",
+          "year": 2018,
+          "rating": 7.2,
+          "director": "岳廷",
+          "lang": "河南话"
+        },
+        {
+          "id": "10416189",
+          "title": "就是闹着玩的",
+          "year": 2012,
+          "rating": 6.7,
+          "director": "卢卫国",
+          "lang": "河南话"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "hubei",
+      "name": "湖北",
+      "languages": [
+        "武汉话"
+      ],
+      "themes": [
+        "码头",
+        "江湖",
+        "九省通衢"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "楚文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "汉剧",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "热干面",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "长江中游枢纽",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "黄鹤楼",
+            "desc": ""
+          },
+          {
+            "title": "长江",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "湖北的故事，藏在码头、江湖、九省通衢之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "码头叙事",
+        "江湖叙事",
+        "九省通衢叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "35000216",
+          "title": "武汉战疫纪",
+          "year": 2020,
+          "rating": 8.3,
+          "director": "葛云飞",
+          "lang": "武汉话"
+        },
+        {
+          "id": "2124703",
+          "title": "疯狂的赛车",
+          "year": 2009,
+          "rating": 8.2,
+          "director": "宁浩",
+          "lang": "武汉话"
+        },
+        {
+          "id": "4237879",
+          "title": "人在囧途",
+          "year": 2010,
+          "rating": 7.8,
+          "director": "叶伟民",
+          "lang": "武汉话"
+        },
+        {
+          "id": "19931352",
+          "title": "唐皇游地府",
+          "year": 2012,
+          "rating": 7.8,
+          "director": "李珞",
+          "lang": "武汉话"
+        },
+        {
+          "id": "5342082",
+          "title": "河流和我的父亲",
+          "year": 2010,
+          "rating": 7.6,
+          "director": "李珞",
+          "lang": "武汉话"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "hunan",
+      "name": "湖南",
+      "languages": [
+        "湖南话",
+        "湘语",
+        "苗语"
+      ],
+      "themes": [
+        "辛辣",
+        "江湖",
+        "青春"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "湖湘文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "花鼓戏",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "湘菜",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "近代思潮",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "张家界",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "湖南的故事，藏在辛辣、江湖、青春之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "辛辣叙事",
+        "江湖叙事",
+        "青春叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "900054",
+          "title": "饮食男女",
+          "year": 1994,
+          "rating": 9.1,
+          "director": "李安 Ang Lee",
+          "lang": "湖南话"
+        },
+        {
+          "id": "6058567",
+          "title": "生活而已",
+          "year": 2011,
+          "rating": 7.6,
+          "director": "魏晓波",
+          "lang": "湖南话"
+        },
+        {
+          "id": "1483000",
+          "title": "我的美丽乡愁",
+          "year": 2002,
+          "rating": 5.8,
+          "director": "俞钟",
+          "lang": "湖南话"
+        }
+      ],
+      "filmCount": 3
+    },
+    {
+      "id": "guangdong",
+      "name": "广东",
+      "languages": [
+        "客家话",
+        "潮汕话",
+        "粤语"
+      ],
+      "themes": [
+        "商业",
+        "家族",
+        "海洋"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "岭南文化",
+            "desc": "务实、市井与海洋性格并重，是粤语片商业伦理与家庭伦理的底色。"
+          },
+          {
+            "title": "侨乡",
+            "desc": "出洋、汇款与回乡盖楼，构成代际离散的经典情节骨架。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "醒狮",
+            "desc": "节庆与武馆传统进入电影，常作为社区认同的视觉符号。"
+          },
+          {
+            "title": "饮茶",
+            "desc": "早茶桌是谈生意、议婚事、摊开家族矛盾的固定场景。"
+          }
+        ],
+        "food": [
+          {
+            "title": "早茶",
+            "desc": "点心与一盅两件，是粤语日常戏最稳的空间锚点。"
+          },
+          {
+            "title": "粤菜",
+            "desc": "鲜味与时令，常被用来写城市生活的体面与压力。"
+          }
+        ],
+        "history": [
+          {
+            "title": "海上丝路",
+            "desc": "口岸贸易把广东写成出入口，而不是封闭的乡土。"
+          },
+          {
+            "title": "改革开放前沿",
+            "desc": "特区、民工与暴富神话，是当代粤语片的时代背景。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "珠江三角洲",
+            "desc": "厂区、城中村与河涌并置，适合拍流动人口的命运。"
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "岭南是中国方言电影产量最丰厚的地区之一：粤语、潮汕话、客家话在此交错，商业、家族与海洋叙事并存。",
+      "storyHooks": [
+        "早茶桌上的家族",
+        "侨乡离散",
+        "城中村变迁",
+        "潮汕宗族"
+      ],
+      "films": [
+        {
+          "id": "25810998",
+          "title": "越大镬越快乐",
+          "year": 2007,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "26794221",
+          "title": "黄子华栋笃笑之冇炭用",
+          "year": 2003,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "30203557",
+          "title": "黄子华栋笃笑之金盆𠺘口",
+          "year": 2018,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "2170951",
+          "title": "集体回忆 - 张国荣",
+          "year": 2007,
+          "rating": 9.4,
+          "director": "未知",
+          "lang": "粤语"
+        },
+        {
+          "id": "26703286",
+          "title": "黄子华栋笃笑之儿童不宜成人之危",
+          "year": 2006,
+          "rating": 9.4,
+          "director": "黄子华",
+          "lang": "粤语"
+        }
+      ],
+      "filmCount": 14
+    },
+    {
+      "id": "guangxi",
+      "name": "广西",
+      "languages": [
+        "壮语",
+        "客家话",
+        "桂柳话",
+        "粤语"
+      ],
+      "themes": [
+        "山歌",
+        "边地",
+        "多元"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "壮族文化",
+            "desc": "山歌与日常劳作相连，语言本身就是社交和求偶的媒介。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "三月三",
+            "desc": "歌圩把爱情、节庆与地方认同叠在同一天。"
+          }
+        ],
+        "food": [
+          {
+            "title": "螺蛳粉",
+            "desc": "城市小吃工业把地方味道送出省，也改变了本地自我想象。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "桂林山水",
+            "desc": "被观光写滥的山水，仍可用来拍边地生活的真实尺度。"
+          }
+        ]
+      },
+      "pending": [
+        "壮语电影叙事待扩展"
+      ],
+      "intro": "山歌、边地与多民族共生：壮语叙事资源丰厚，但电影样本仍明显不足。",
+      "storyHooks": [
+        "三月三歌圩",
+        "边关小镇",
+        "刘三姐传说的当代回声",
+        "粤语与壮语交错的家庭"
+      ],
+      "films": [
+        {
+          "id": "1300572",
+          "title": "童年往事",
+          "year": 1985,
+          "rating": 8.8,
+          "director": "侯孝贤",
+          "lang": "客家话"
+        },
+        {
+          "id": "900152",
+          "title": "纵横四海",
+          "year": 1991,
+          "rating": 8.7,
+          "director": "吴宇森 John Woo",
+          "lang": "客家话"
+        },
+        {
+          "id": "1299103",
+          "title": "冬冬的假期",
+          "year": 1984,
+          "rating": 8.6,
+          "director": "侯孝贤",
+          "lang": "客家话"
+        },
+        {
+          "id": "3805953",
+          "title": "不能没有你",
+          "year": 2009,
+          "rating": 8.3,
+          "director": "戴立忍",
+          "lang": "客家话"
+        },
+        {
+          "id": "11599147",
+          "title": "逗阵儿",
+          "year": 2013,
+          "rating": 8.2,
+          "director": "卢金城",
+          "lang": "客家话"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "hainan",
+      "name": "海南",
+      "languages": [
+        "闽南语",
+        "黎语"
+      ],
+      "themes": [
+        "海洋",
+        "热带",
+        "移民"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "海岛文化",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "海上丝路驿站",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "热带海岸",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "海南方言电影仍较少"
+      ],
+      "intro": "海南的故事，藏在海洋、热带、移民之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "海洋叙事",
+        "热带叙事",
+        "移民叙事",
+        "普通人命运"
+      ],
+      "films": [],
+      "filmCount": 0
+    },
+    {
+      "id": "chongqing",
+      "name": "重庆",
+      "languages": [
+        "四川话",
+        "重庆话"
+      ],
+      "themes": [
+        "江湖",
+        "码头",
+        "幽默"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "山城文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "火锅",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "开埠码头",
+            "desc": ""
+          },
+          {
+            "title": "三线建设",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "两江四岸",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "重庆的故事，藏在江湖、码头、幽默之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "江湖叙事",
+        "码头叙事",
+        "幽默叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "900072",
+          "title": "让子弹飞",
+          "year": 2010,
+          "rating": 8.7,
+          "director": "姜文 Wen Jiang",
+          "lang": "四川话"
+        },
+        {
+          "id": "2063528",
+          "title": "盲山",
+          "year": 2007,
+          "rating": 8.6,
+          "director": "李杨",
+          "lang": "四川话"
+        },
+        {
+          "id": "1872133",
+          "title": "三峡好人",
+          "year": 2006,
+          "rating": 8.3,
+          "director": "贾樟柯",
+          "lang": "四川话"
+        },
+        {
+          "id": "27089436",
+          "title": "侧耳倾听3",
+          "year": 2017,
+          "rating": 8.3,
+          "director": "李偲扬",
+          "lang": "重庆话"
+        },
+        {
+          "id": "4102971",
+          "title": "归途列车",
+          "year": 2010,
+          "rating": 8.3,
+          "director": "范立欣",
+          "lang": "四川话"
+        }
+      ],
+      "filmCount": 12
+    },
+    {
+      "id": "sichuan",
+      "name": "四川",
+      "languages": [
+        "四川话",
+        "彝语",
+        "藏语",
+        "重庆话"
+      ],
+      "themes": [
+        "市井",
+        "幽默",
+        "盆地"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "巴蜀文化",
+            "desc": "茶馆闲谈与市井幽默，让四川话电影擅长写小人物的体面。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "川剧变脸",
+            "desc": "戏曲绝活常被借用为身份、伪装与江湖的隐喻。"
+          }
+        ],
+        "food": [
+          {
+            "title": "火锅",
+            "desc": "围桌喧哗是盆地社交的基本单位，也是群戏的天然舞台。"
+          },
+          {
+            "title": "川菜",
+            "desc": "麻辣与市井烟火，用来写生活的热度和荒诞。"
+          }
+        ],
+        "history": [
+          {
+            "title": "蜀道",
+            "desc": "封闭与连通并存，盆地既是避世之所，也是迁徙走廊。"
+          },
+          {
+            "title": "移民填川",
+            "desc": "湖广填四川的层累移民，解释了方言混杂与家庭故事的来路。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "九寨沟",
+            "desc": "川西高原与藏地接壤，是多民族边地叙事的出口。"
+          },
+          {
+            "title": "都江堰",
+            "desc": "治水传统把人与土地的关系写成可拍的文明记忆。"
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "盆地市井孕育了中国最具幽默感的方言电影传统之一——普通人如何在荒诞里守住尊严。",
+      "storyHooks": [
+        "茶馆里的江湖",
+        "移民填川",
+        "小镇青年",
+        "多民族边地"
+      ],
+      "films": [
+        {
+          "id": "900180",
+          "title": "可可西里",
+          "year": 2004,
+          "rating": 8.7,
+          "director": "陆川 Chuan Lu",
+          "lang": "藏语"
+        },
+        {
+          "id": "900072",
+          "title": "让子弹飞",
+          "year": 2010,
+          "rating": 8.7,
+          "director": "姜文 Wen Jiang",
+          "lang": "四川话"
+        },
+        {
+          "id": "1303017",
+          "title": "喜马拉雅",
+          "year": 1999,
+          "rating": 8.6,
+          "director": "埃里克·瓦力 / 米歇尔·德巴",
+          "lang": "藏语"
+        },
+        {
+          "id": "2063528",
+          "title": "盲山",
+          "year": 2007,
+          "rating": 8.6,
+          "director": "李杨",
+          "lang": "四川话"
+        },
+        {
+          "id": "1305539",
+          "title": "高山上的世界杯",
+          "year": 2000,
+          "rating": 8.5,
+          "director": "宗萨蒋扬钦哲诺布",
+          "lang": "藏语"
+        }
+      ],
+      "filmCount": 18
+    },
+    {
+      "id": "guizhou",
+      "name": "贵州",
+      "languages": [
+        "苗语",
+        "贵州话"
+      ],
+      "themes": [
+        "山地",
+        "多民族",
+        "诗意"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "黔东南文化",
+            "desc": "苗、侗等民族的聚落结构，提供与平原官话完全不同的叙事节奏。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "侗族大歌",
+            "desc": "多声部无伴奏合唱，是共同体记忆的声音形式。"
+          }
+        ],
+        "history": [
+          {
+            "title": "山地多民族共生",
+            "desc": "迁徙与杂居写成的地方史，适合拍相遇而不是征服。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "黄果树",
+            "desc": "瀑布与喀斯特是观光符号，也可作角色命运的转场。"
+          },
+          {
+            "title": "苗寨",
+            "desc": "吊脚楼与银饰把日常生活摆上可拍摄的表面。"
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "山地与多民族交汇处，时间感被拉长：苗寨、侗歌与公路电影共享一种诗意的边缘位置。",
+      "storyHooks": [
+        "苗寨少年",
+        "公路与山路",
+        "侗族大歌",
+        "被遗忘的时间"
+      ],
+      "films": [
+        {
+          "id": "1305224",
+          "title": "寻枪",
+          "year": 2002,
+          "rating": 7.8,
+          "director": "陆川",
+          "lang": "贵州话"
+        },
+        {
+          "id": "4728518",
+          "title": "人山人海",
+          "year": 2012,
+          "rating": 6.7,
+          "director": "蔡尚君",
+          "lang": "贵州话"
+        }
+      ],
+      "filmCount": 2
+    },
+    {
+      "id": "yunnan",
+      "name": "云南",
+      "languages": [
+        "云南话",
+        "彝语",
+        "白语"
+      ],
+      "themes": [
+        "边地",
+        "多元",
+        "迁徙"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "西南边地文化",
+            "desc": "彝、白、傣等语言与云南话并存，边地不是背景板，而是叙事主体。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "泼水节",
+            "desc": "节庆把水源、祝福与族群边界变成可拍摄的公共场面。"
+          }
+        ],
+        "history": [
+          {
+            "title": "茶马古道",
+            "desc": "商路把云南写成连接藏地与东南亚的走廊，而不是封闭边疆。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "香格里拉",
+            "desc": "被旅游命名的地方，仍可用来拍高原上的信仰与生计。"
+          },
+          {
+            "title": "洱海",
+            "desc": "湖岸聚落适合写日常，而不是只写风景。"
+          }
+        ]
+      },
+      "pending": [
+        "更多地方故事待开发"
+      ],
+      "intro": "西南边地是中国叙事资源最丰富的省份之一：多民族、茶马古道与边贸日常交织。",
+      "storyHooks": [
+        "边贸小镇",
+        "民族节庆",
+        "生态迁徙",
+        "异域相遇"
+      ],
+      "films": [],
+      "filmCount": 0
+    },
+    {
+      "id": "tibet",
+      "name": "西藏",
+      "languages": [
+        "藏语"
+      ],
+      "themes": [
+        "高原",
+        "信仰",
+        "土地"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "藏文化",
+            "desc": "仪式、家族与土地伦理缠在一起，语言节奏本身就有电影性。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "转经",
+            "desc": "环绕与重复把信仰写成身体动作，而不是解说词。"
+          },
+          {
+            "title": "藏历节庆",
+            "desc": "节庆把牧区时间从生产里暂时拉开。"
+          }
+        ],
+        "history": [
+          {
+            "title": "高原文明",
+            "desc": "当代变迁与长时段信仰叠在同一空间里。"
+          }
+        ],
+        "myth": [
+          {
+            "title": "藏传佛教叙事",
+            "desc": "转世、护法与地方神祇，是许多藏语片不必发明的神话层。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "布达拉宫",
+            "desc": "地标会被观光吞掉，但作为信仰空间仍可拍人如何走近它。"
+          },
+          {
+            "title": "高原",
+            "desc": "海拔改变呼吸、行走与戏剧节奏。"
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "高原空间里，信仰、土地与仪式构成独特的电影语法，藏语片已证明其艺术高度。",
+      "storyHooks": [
+        "转经路上的少年",
+        "牧区家庭",
+        "信仰与世俗",
+        "高原生态"
+      ],
+      "films": [
+        {
+          "id": "900180",
+          "title": "可可西里",
+          "year": 2004,
+          "rating": 8.7,
+          "director": "陆川 Chuan Lu",
+          "lang": "藏语"
+        },
+        {
+          "id": "1303017",
+          "title": "喜马拉雅",
+          "year": 1999,
+          "rating": 8.6,
+          "director": "埃里克·瓦力 / 米歇尔·德巴",
+          "lang": "藏语"
+        },
+        {
+          "id": "1305539",
+          "title": "高山上的世界杯",
+          "year": 2000,
+          "rating": 8.5,
+          "director": "宗萨蒋扬钦哲诺布",
+          "lang": "藏语"
+        },
+        {
+          "id": "11610684",
+          "title": "喜马拉雅大淘金",
+          "year": 2012,
+          "rating": 8.4,
+          "director": "埃里克·瓦力",
+          "lang": "藏语"
+        },
+        {
+          "id": "25732109",
+          "title": "扎溪卡的微笑",
+          "year": 2013,
+          "rating": 8.2,
+          "director": "王冲霄",
+          "lang": "藏语"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "shaanxi",
+      "name": "陕西",
+      "languages": [
+        "陕北方言",
+        "陕西话"
+      ],
+      "themes": [
+        "黄土",
+        "历史",
+        "厚重"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "关中文化",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "秦腔",
+            "desc": ""
+          }
+        ],
+        "food": [
+          {
+            "title": "羊肉泡馍",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "周秦汉唐古都",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "兵马俑",
+            "desc": ""
+          },
+          {
+            "title": "黄土高原",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "陕西的故事，藏在黄土、历史、厚重之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "黄土叙事",
+        "历史叙事",
+        "厚重叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "2063528",
+          "title": "盲山",
+          "year": 2007,
+          "rating": 8.6,
+          "director": "李杨",
+          "lang": "陕西话"
+        },
+        {
+          "id": "10467774",
+          "title": "孙子从美国来",
+          "year": 2012,
+          "rating": 8.5,
+          "director": "曲江涛",
+          "lang": "陕西话"
+        },
+        {
+          "id": "2124703",
+          "title": "疯狂的赛车",
+          "year": 2009,
+          "rating": 8.2,
+          "director": "宁浩",
+          "lang": "陕西话"
+        },
+        {
+          "id": "1300108",
+          "title": "秋菊打官司",
+          "year": 1992,
+          "rating": 8.1,
+          "director": "张艺谋",
+          "lang": "陕西话"
+        },
+        {
+          "id": "4290915",
+          "title": "纺织姑娘",
+          "year": 2010,
+          "rating": 7.3,
+          "director": "王全安",
+          "lang": "陕西话"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "gansu",
+      "name": "甘肃",
+      "languages": [
+        "甘肃方言",
+        "西北方言"
+      ],
+      "themes": [
+        "丝路",
+        "边地",
+        "干旱"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "丝路文化",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "河西走廊",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "敦煌",
+            "desc": ""
+          },
+          {
+            "title": "戈壁",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "甘肃方言电影待挖掘"
+      ],
+      "intro": "甘肃的故事，藏在丝路、边地、干旱之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "丝路叙事",
+        "边地叙事",
+        "干旱叙事",
+        "普通人命运"
+      ],
+      "films": [],
+      "filmCount": 0
+    },
+    {
+      "id": "qinghai",
+      "name": "青海",
+      "languages": [
+        "藏语",
+        "西北方言"
+      ],
+      "themes": [
+        "高原",
+        "多民族",
+        "草原"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "高原文化",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "青藏文明交汇",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "青海湖",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "青海方言叙事偏少"
+      ],
+      "intro": "青海的故事，藏在高原、多民族、草原之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "高原叙事",
+        "多民族叙事",
+        "草原叙事",
+        "普通人命运"
+      ],
+      "films": [
+        {
+          "id": "900180",
+          "title": "可可西里",
+          "year": 2004,
+          "rating": 8.7,
+          "director": "陆川 Chuan Lu",
+          "lang": "藏语"
+        },
+        {
+          "id": "1303017",
+          "title": "喜马拉雅",
+          "year": 1999,
+          "rating": 8.6,
+          "director": "埃里克·瓦力 / 米歇尔·德巴",
+          "lang": "藏语"
+        },
+        {
+          "id": "1305539",
+          "title": "高山上的世界杯",
+          "year": 2000,
+          "rating": 8.5,
+          "director": "宗萨蒋扬钦哲诺布",
+          "lang": "藏语"
+        },
+        {
+          "id": "11610684",
+          "title": "喜马拉雅大淘金",
+          "year": 2012,
+          "rating": 8.4,
+          "director": "埃里克·瓦力",
+          "lang": "藏语"
+        },
+        {
+          "id": "25732109",
+          "title": "扎溪卡的微笑",
+          "year": 2013,
+          "rating": 8.2,
+          "director": "王冲霄",
+          "lang": "藏语"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "ningxia",
+      "name": "宁夏",
+      "languages": [
+        "西北方言"
+      ],
+      "themes": [
+        "黄河",
+        "回族",
+        "边地"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "回族文化",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "黄河灌溉农业",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "西夏王陵",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [
+        "宁夏方言电影待开发"
+      ],
+      "intro": "宁夏的故事，藏在黄河、回族、边地之中——地方语言、风俗与历史，都是尚未被充分讲述的叙事资源。",
+      "storyHooks": [
+        "黄河叙事",
+        "回族叙事",
+        "边地叙事",
+        "普通人命运"
+      ],
+      "films": [],
+      "filmCount": 0
+    },
+    {
+      "id": "xinjiang",
+      "name": "新疆",
+      "languages": [
+        "哈萨克语",
+        "维吾尔语"
+      ],
+      "themes": [
+        "丝路",
+        "绿洲",
+        "歌舞"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "西域文化",
+            "desc": "维吾尔、哈萨克等语言把丝路写成活着的日常，而不是博物馆。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "麦西来甫",
+            "desc": "歌舞集会是社交、节庆与共同体记忆的现场。"
+          }
+        ],
+        "history": [
+          {
+            "title": "丝路绿洲城镇",
+            "desc": "绿洲城市靠水利与贸易存活，适合拍迁徙与驻留。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "天山",
+            "desc": "山脉分割草原与绿洲，也分割不同的生计方式。"
+          },
+          {
+            "title": "沙漠绿洲",
+            "desc": "水源决定聚落，空间本身就会把戏剧推向前。"
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "丝路绿洲与草原文明交汇，歌舞、信仰与日常尊严都是尚未被充分讲述的故事矿脉。",
+      "storyHooks": [
+        "绿洲市集",
+        "草原迁徙",
+        "多语家庭",
+        "丝路记忆"
+      ],
+      "films": [
+        {
+          "id": "26672579",
+          "title": "棱角杯",
+          "year": 1993,
+          "rating": 9.4,
+          "director": "迪力木拉提·穆罕穆德",
+          "lang": "维吾尔语"
+        },
+        {
+          "id": "26951612",
+          "title": "哈萨克汗国：不败之剑",
+          "year": 2017,
+          "rating": 8.6,
+          "director": "鲁斯坦·阿卜杜拉舍夫",
+          "lang": "哈萨克语"
+        },
+        {
+          "id": "3240529",
+          "title": "给斯大林的礼物",
+          "year": 2008,
+          "rating": 8.6,
+          "director": "鲁斯坦·阿卜杜拉舍夫",
+          "lang": "哈萨克语"
+        },
+        {
+          "id": "26282656",
+          "title": "梦想，从心出发",
+          "year": 2014,
+          "rating": 8.4,
+          "director": "张荣吉",
+          "lang": "维吾尔语"
+        },
+        {
+          "id": "1766086",
+          "title": "太阳照常升起",
+          "year": 2007,
+          "rating": 8.3,
+          "director": "姜文",
+          "lang": "维吾尔语"
+        }
+      ],
+      "filmCount": 12
+    },
+    {
+      "id": "hongkong",
+      "name": "香港",
+      "languages": [
+        "粤语"
+      ],
+      "themes": [
+        "城市",
+        "江湖",
+        "商业"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "港片传统",
+            "desc": "黑帮、警匪、喜剧与文艺片并行，类型高度成熟。"
+          },
+          {
+            "title": "都市密度",
+            "desc": "电梯、茶餐厅、天台——空间越小，戏剧越满。"
+          }
+        ],
+        "history": [
+          {
+            "title": "殖民与回归",
+            "desc": "身份焦虑与本土认同是几代港片的母题。"
+          },
+          {
+            "title": "移民潮",
+            "desc": "南下打工、家族团聚与阶层流动。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "维多利亚港",
+            "desc": "霓虹天际线象征繁华，也反衬底层。"
+          },
+          {
+            "title": "重庆大厦",
+            "desc": "全球化微型社会的经典空间。"
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "高密度都市里藏着江湖、家庭与商业伦理。港片传统让粤语电影拥有全球最成熟的类型语法之一。",
+      "storyHooks": [
+        "警匪对峙",
+        "底层合租屋",
+        "移民家庭",
+        "金融时代的人性"
+      ],
+      "films": [
+        {
+          "id": "25810998",
+          "title": "越大镬越快乐",
+          "year": 2007,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "26794221",
+          "title": "黄子华栋笃笑之冇炭用",
+          "year": 2003,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "30203557",
+          "title": "黄子华栋笃笑之金盆𠺘口",
+          "year": 2018,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "2170951",
+          "title": "集体回忆 - 张国荣",
+          "year": 2007,
+          "rating": 9.4,
+          "director": "未知",
+          "lang": "粤语"
+        },
+        {
+          "id": "26703286",
+          "title": "黄子华栋笃笑之儿童不宜成人之危",
+          "year": 2006,
+          "rating": 9.4,
+          "director": "黄子华",
+          "lang": "粤语"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "macau",
+      "name": "澳门",
+      "languages": [
+        "粤语"
+      ],
+      "themes": [
+        "海洋",
+        "混杂",
+        "日常"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "中葡交汇",
+            "desc": "葡式瓷砖、天主教节庆与粤语市井并置，形成独特的混杂现代性。"
+          },
+          {
+            "title": "博彩之城",
+            "desc": "霓虹与旧街仅隔一条街，浮华与朴素同框。"
+          }
+        ],
+        "folk": [
+          {
+            "title": "妈祖巡游",
+            "desc": "海洋信仰与社区凝聚的年度仪式。"
+          },
+          {
+            "title": "土生节庆",
+            "desc": "葡式游行与华人庙会同日发生，是澳门最鲜明的文化切片。"
+          }
+        ],
+        "food": [
+          {
+            "title": "葡挞与猪扒包",
+            "desc": "殖民饮食本土化后，成为城市味觉名片。"
+          },
+          {
+            "title": "粥粉面店",
+            "desc": "街坊邻里社交的微型剧场。"
+          }
+        ],
+        "history": [
+          {
+            "title": "开埠贸易",
+            "desc": "从渔村到国际贸易港，再到回归后的微型城邦。"
+          },
+          {
+            "title": "历史城区",
+            "desc": "世界文化遗产所凝固的殖民与华人营建史。"
+          }
+        ],
+        "scenery": [
+          {
+            "title": "大三巴牌坊",
+            "desc": "废墟立面成为城市精神地标。"
+          },
+          {
+            "title": "氹仔旧巷",
+            "desc": "窄巷、骑楼与海风，适合拍离散与重逢。"
+          }
+        ]
+      },
+      "pending": [
+        "澳门本土方言电影样本仍较少",
+        "当前片单多为粤语共片，尚待更多澳门在地叙事"
+      ],
+      "intro": "中西交汇的口岸城市，街巷尺度与人情密度，都适合被拍成日常里的戏剧。澳门本土电影样本虽少，但粤语生活肌理同样浓郁。",
+      "storyHooks": [
+        "土生葡人家庭",
+        "口岸劳工与赌徒",
+        "旧城区改造",
+        "离散与回归"
+      ],
+      "films": [
+        {
+          "id": "25810998",
+          "title": "越大镬越快乐",
+          "year": 2007,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "26794221",
+          "title": "黄子华栋笃笑之冇炭用",
+          "year": 2003,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "30203557",
+          "title": "黄子华栋笃笑之金盆𠺘口",
+          "year": 2018,
+          "rating": 9.5,
+          "director": "黄子华",
+          "lang": "粤语"
+        },
+        {
+          "id": "2170951",
+          "title": "集体回忆 - 张国荣",
+          "year": 2007,
+          "rating": 9.4,
+          "director": "未知",
+          "lang": "粤语"
+        },
+        {
+          "id": "26703286",
+          "title": "黄子华栋笃笑之儿童不宜成人之危",
+          "year": 2006,
+          "rating": 9.4,
+          "director": "黄子华",
+          "lang": "粤语"
+        }
+      ],
+      "filmCount": 6
+    },
+    {
+      "id": "taiwan",
+      "name": "台湾",
+      "languages": [
+        "台语",
+        "闽南语"
+      ],
+      "themes": [
+        "家庭",
+        "时代",
+        "乡愁"
+      ],
+      "assets": {
+        "culture": [
+          {
+            "title": "台湾新电影传统",
+            "desc": ""
+          }
+        ],
+        "folk": [
+          {
+            "title": "夜市",
+            "desc": ""
+          },
+          {
+            "title": "庙会",
+            "desc": ""
+          }
+        ],
+        "history": [
+          {
+            "title": "乡土与现代性",
+            "desc": ""
+          }
+        ],
+        "scenery": [
+          {
+            "title": "阿里山",
+            "desc": ""
+          },
+          {
+            "title": "海岸线",
+            "desc": ""
+          }
+        ]
+      },
+      "pending": [],
+      "intro": "台湾新电影传统让台语片既有乡土质感，也有现代性的细腻凝视。",
+      "storyHooks": [
+        "代际冲突",
+        "乡村教会",
+        "都市孤独",
+        "历史伤痕"
+      ],
+      "films": [
+        {
+          "id": "1298944",
+          "title": "无言的山丘",
+          "year": 1992,
+          "rating": 9.2,
+          "director": "王童",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1292434",
+          "title": "一一",
+          "year": 2017,
+          "rating": 9.1,
+          "director": "杨德昌",
+          "lang": "闽南语"
+        },
+        {
+          "id": "900054",
+          "title": "饮食男女",
+          "year": 1994,
+          "rating": 9.1,
+          "director": "李安 Ang Lee",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1305261",
+          "title": "恐怖分子",
+          "year": 1986,
+          "rating": 8.9,
+          "director": "杨德昌",
+          "lang": "闽南语"
+        },
+        {
+          "id": "1294194",
+          "title": "悲情城市",
+          "year": 1989,
+          "rating": 8.9,
+          "director": "侯孝贤",
+          "lang": "闽南语"
+        }
+      ],
+      "filmCount": 12
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "total_comments": 1727053,
+  "unique_movies_covered": 44671,
+  "average_comment_length": 55.273650548072354,
+  "rating_star_distribution": {
+    "0.0": 112019,
+    "1.0": 205336,
+    "2.0": 303590,
+    "3.0": 524477,
+    "4.0": 375463,
+    "5.0": 206168
+  },
+  "top_10_most_commented_movies": [
+    {
+      "movie_id": 36851291,
+      "movie_title": "名侦探柯南：独眼的残像",
+      "comments": 125
+    },
+    {
+      "movie_id": 37868459,
+      "movie_title": "吉伊卡哇：人鱼之岛的秘密",
+      "comments": 125
+    },
+    {
+      "movie_id": 36877284,
+      "movie_title": "最后孤屋",
+      "comments": 124
+    },
+    {
+      "movie_id": 35811064,
+      "movie_title": "欢迎来龙餐馆",
+      "comments": 124
+    },
+    {
+      "movie_id": 36935883,
+      "movie_title": "灵魂伴侣",
+      "comments": 123
+    },
+    {
+      "movie_id": 37559942,
+      "movie_title": "利未记",
+      "comments": 122
+    },
+    {
+      "movie_id": 36962219,
+      "movie_title": "小黄人与大怪兽",
+      "comments": 122
+    },
+    {
+      "movie_id": 36415254,
+      "movie_title": "恶魔之口",
+      "comments": 122
+    },
+    {
+      "movie_id": 37381022,
+      "movie_title": "我住在凡尔赛的日子",
+      "comments": 121
+    },
+    {
+      "movie_id": 36486147,
+      "movie_title": "总统的蛋糕",
+      "comments": 121
+    }
+  ],
+  "top_10_highest_voted_comments": [
+    {
+      "movie_title": "好东西",
+      "user_name": "西楼尘",
+      "rating_star": 4.0,
+      "votes": 64388,
+      "comment_text": "戴新拳套打旧靶子，拿旧球拍磕新声音。母亲的煎蛋锅能制造暴雨，晾衣绳引发打雷，吸尘器刮起龙卷风。榨汁机能锯断木头，购物袋引发泥石流。砂锅粥爆发岩浆，遥控器启动飞船"
+    },
+    {
+      "movie_title": "好东西",
+      "user_name": "上网就是要发癫",
+      "rating_star": 5.0,
+      "votes": 57224,
+      "comment_text": "最爱小孩子猜声音那段，算得上看过的电影里相当浪漫的叙事了。很温和也很有爱。"
+    },
+    {
+      "movie_title": "周处除三害",
+      "user_name": "普拉蒂尼啃脆梨",
+      "rating_star": 4.0,
+      "votes": 50632,
+      "comment_text": "通缉榜榜一大哥果然有点东西 把榜三都给忽悠瘸了"
+    },
+    {
+      "movie_title": "热辣滚烫",
+      "user_name": "吴吴",
+      "rating_star": 4.0,
+      "votes": 50073,
+      "comment_text": "她拍这部片子的目的根本不是说她瘦了这个事，是告诉你，无论你这个人活的有多烂、多失败、多差劲，只要你找到一件事，哪怕只是很小的一件事，一直做、专注做、拼了命地做下"
+    },
+    {
+      "movie_title": "热辣滚烫",
+      "user_name": "清木辰光",
+      "rating_star": 4.0,
+      "votes": 49748,
+      "comment_text": "本片最大的成功是女主练了拳击后没有跟她的搭子在一起。"
+    },
+    {
+      "movie_title": "流浪地球2",
+      "user_name": "电子梦",
+      "rating_star": 5.0,
+      "votes": 48936,
+      "comment_text": "不必对比什么 作为里程碑他已经无敌"
+    },
+    {
+      "movie_title": "给阿嬷的情书",
+      "user_name": "莓猫饼",
+      "rating_star": 5.0,
+      "votes": 43914,
+      "comment_text": "如果女性主义的发展是让我们有武器去抨击和贬低被时代背景钳制的女性，那只能说中国的女性主义发展得很失败。每个时代都有自己追求的可贵品质，那个时代或许是忠诚，这个时"
+    },
+    {
+      "movie_title": "消失的她",
+      "user_name": "淹死海星的凶手",
+      "rating_star": 3.0,
+      "votes": 43540,
+      "comment_text": "如果一个谋杀老婆的男人却为了无意谋杀了自己的孩子而流泪，这不是很讽刺吗"
+    },
+    {
+      "movie_title": "好东西",
+      "user_name": "kkkk过马路",
+      "rating_star": 5.0,
+      "votes": 42693,
+      "comment_text": "我正直勇敢有阅读量，我有什么好可怜的！"
+    },
+    {
+      "movie_title": "挽救计划",
+      "user_name": "Consuela.W",
+      "rating_star": 4.0,
+      "votes": 41044,
+      "comment_text": "高司令不跟女主谈恋爱，此乃一胜。高司令不是自愿上太空的，此乃二胜。高司令最后没回地球，此乃三胜。"
+    }
+  ]
+}

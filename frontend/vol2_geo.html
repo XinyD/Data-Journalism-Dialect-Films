@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卷二：地区分布 | 方言电影为什么“赢”了？</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="description" content="从六万余部电影看地区与评分分布。回到《方言电影为什么“赢”了？》主故事。">
+    <meta property="og:title" content="卷二：地区分布 | 方言电影为什么“赢”了？">
+    <meta property="og:description" content="箱线图比较各地区评分分布，并点开具体电影。">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- build:og -->
+    <meta property="og:image" content="assets/og-cover.jpg">
+    <!-- endbuild -->
+    <!-- build:css -->
+    <link rel="stylesheet" href="build/style.c79102603c.css">
+    <!-- endbuild -->
+    <!-- build:js -->
+    <script defer src="build/echarts-volume.6d75e0bd14.js"></script>
+    <script defer src="build/vol2.70f133a956.js"></script>
+    <!-- endbuild -->
+</head>
+<body class="volume-page">
+    <noscript><p class="noscript-banner">本页面需要启用 JavaScript 才能浏览数据故事。请开启脚本后刷新页面。</p></noscript>
+    <div id="boot-error" class="boot-error" hidden>
+        <div class="boot-error-panel" role="alertdialog" aria-labelledby="boot-error-title" aria-describedby="boot-error-message">
+            <h2 id="boot-error-title">数据加载失败</h2>
+            <p id="boot-error-message">请通过本地服务器打开页面，不要直接双击 HTML。</p>
+            <button type="button" id="boot-error-retry">重试</button>
+        </div>
+    </div>
+    <nav class="sidebar">
+        <div class="sidebar-title">CINEMATIC TASTE</div>
+        <div class="sidebar-subtitle"><span data-publication-count>加载中</span> 部电影评分</div>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-item">导言：电影评分星图</a>
+            <a href="vol1_time.html" class="nav-item">Vol I. 年代变化</a>
+            <a href="vol2_geo.html" class="nav-item active">Vol II. 地区分布</a>
+            <a href="vol3_lang.html" class="nav-item">Vol III. 语言构成</a>
+            <a href="vol4_memory.html" class="nav-item">Vol IV. 交叉筛选</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <article class="academic-article">
+            <span class="theory-badge">比较地区的中位数、四分位数与离群值</span>
+            <h1>卷二：各地区的评分分布有何不同？</h1>
+            
+            <p>箱线图比较各地区电影的评分分布：箱体表示四分位距，线条表示中位数。电影数量标在地区名称下方，箱体宽度保持一致。</p>
+            <p>须线延伸到 1.5 倍四分位距范围内的最低值与最高值，范围外的散点标记为<strong>离群值</strong>。这些点距离分布中心较远。地区按第一制片国家／地区划分，年代、类型与跨地区传播也会影响分布。点击箱体或散点可查看对应电影。</p>
+        </article>
+
+        <div class="chart-card">
+            <h2>各地区电影评分分布</h2>
+            <div id="boxplotChart" class="chart-container"></div>
+        </div>
+
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2>按地区查看电影</h2>
+                <p class="subtitle" id="gallery-subtitle">点击上方箱体或散点查看电影</p>
+            </div>
+            <div class="movie-grid" id="movie-grid"></div>
+        </section>
+    </main>
+</body>
+</html>

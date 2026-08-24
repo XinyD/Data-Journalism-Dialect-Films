@@ -1,0 +1,47 @@
+node_modules/
+
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+output/
+.DS_Store
+Thumbs.db
+
+.env
+.env.*
+!.env.example
+.vercel/
+
+# Optional upstream source data is not required by the published story.
+data/source/
+
+# Local comment dumps and the delivery bundle (including crawlers) stay local.
+data/cleaned/douban_comments_clean.csv
+data/delivery_20260817/
+
+# Local scratch, process docs, and tool caches
+_scratch/
+docs/history/
+drafts/
+data/archive/probes/
+archive/reports/
+screenshot_*.png
+preview_*.png
+*.bak
+*.dialect-backup
+.qoder/
+.workbuddy/
+.lingma/
+.claude/
+.zcode/
+.cursor/
+canvases/
+
+# Large local backups stay on disk but are not tracked
+data/*_backup_*.csv
+data/**/*_backup_*.csv
+data/archive/backups/
+*.rar

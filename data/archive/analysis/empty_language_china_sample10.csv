@@ -1,0 +1,11 @@
+﻿movie_id,片名,年份,Region,豆瓣评分,评价人数,导演,类型,语言,豆瓣页面,复核结果,复核备注
+34964107,狄仁杰之深海龙宫,2020,China,3.3,958,童辉,古装,,https://movie.douban.com/subject/34964107/,非方言,语言：汉语普通话；普通话片
+5360240,我的童谣,2010,China,7.7,654,刘鼎业,,,https://movie.douban.com/subject/5360240/,非方言,马来西亚短片；Region=China 系错标（应为 Other）
+1937852,追鱼,1960,China,8.8,1312,应云卫,爱情 / 奇幻 / 戏曲,,https://movie.douban.com/subject/1937852/,非方言,越剧电影；戏曲声腔按 v2.1 排除范围不属于方言电影
+26826486,潘金莲就是我,2016,China,2.5,192,李亚,,,https://movie.douban.com/subject/26826486/,非方言,中国大陆农村题材；语言应为普通话
+26691266,记忆的红气球,2015,China,8.7,597,罗景壬,剧情 / 短片,,https://movie.douban.com/subject/26691266/,非方言,金士顿品牌微电影/广告短片；非方言片
+26309329,挖玉石的人,2015,China,6.2,131,赵德胤,纪录片,,https://movie.douban.com/subject/26309329/,非方言,缅甸/台湾纪录片；语言：缅甸语；Region=China 系错标（应为 Other）
+6905203,老虎,2011,China,6.3,120,毕赣,剧情,,https://movie.douban.com/subject/6905203/,非方言,毕赣早期学生作品（贵州凯里）；豆瓣未标注方言；一半素材无声音；无法确认方言标注
+2255686,"河内，河内",2007,China,5.9,143,李伟 / 张京 / 裴俊勇,,,https://movie.douban.com/subject/2255686/,非方言,中越合拍片；对白语言：汉语普通话
+34825877,看无风景,2019,China,6.7,140,詹博钧,动画 / 短片,,https://movie.douban.com/subject/34825877/,非方言,台湾动画短片；Region=China 系错标（应为 East_Asia）
+3713709,Q鱼的下午,2006,China,7.5,245,林哲乐,动画 / 短片,,https://movie.douban.com/subject/3713709/,非方言,中国大陆动画短片；语言：汉语普通话

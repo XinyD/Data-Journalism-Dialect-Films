@@ -1,0 +1,701 @@
+{
+  "meta": {
+    "record_count": 63025,
+    "minimum_vote_count": 100,
+    "sample_fingerprint": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503"
+  },
+  "decades": {
+    "1990s": {
+      "count": 5335,
+      "avg_rating": 7.2692,
+      "median_rating": 7.3,
+      "avg_votes": 15037.04,
+      "top_movies": [
+        {
+          "title": "The Court-Martial of Jackie Robinson",
+          "year": 1990,
+          "rating": 10.0,
+          "votes": 8140,
+          "genres": "剧情"
+        },
+        {
+          "title": "张国荣跨越97演唱会",
+          "year": 1996,
+          "rating": 9.8,
+          "votes": 3240,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "悲惨世界：十周年纪念演唱会",
+          "year": 1995,
+          "rating": 9.8,
+          "votes": 2373,
+          "genres": "剧情 / 歌舞"
+        },
+        {
+          "title": "涅磐纽约不插电演唱会",
+          "year": 1993,
+          "rating": 9.7,
+          "votes": 9151,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "鲍勃·迪伦：三十周年纪念演唱会",
+          "year": 1992,
+          "rating": 9.7,
+          "votes": 1447,
+          "genres": "纪录片 / 音乐"
+        }
+      ]
+    },
+    "2000s": {
+      "count": 13034,
+      "avg_rating": 7.0227,
+      "median_rating": 7.1,
+      "avg_votes": 13247.67,
+      "top_movies": [
+        {
+          "title": "张国荣热·情演唱会",
+          "year": 2000,
+          "rating": 9.8,
+          "votes": 3888,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "梅艳芳经典金曲演唱会",
+          "year": 2003,
+          "rating": 9.8,
+          "votes": 1120,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "久石让在武道馆：与宫崎骏动画一同走过的25年",
+          "year": 2008,
+          "rating": 9.7,
+          "votes": 13410,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "周杰伦无与伦比演唱会",
+          "year": 2004,
+          "rating": 9.7,
+          "votes": 3940,
+          "genres": "音乐"
+        },
+        {
+          "title": "迈克尔·杰克逊-危险之旅之布加勒斯特站",
+          "year": 2005,
+          "rating": 9.7,
+          "votes": 3400,
+          "genres": "纪录片 / 音乐"
+        }
+      ]
+    },
+    "2010s": {
+      "count": 23114,
+      "avg_rating": 6.5449,
+      "median_rating": 6.7,
+      "avg_votes": 15431.16,
+      "top_movies": [
+        {
+          "title": "Mando Diao: MTV不插电现场",
+          "year": 2010,
+          "rating": 9.8,
+          "votes": 323,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "剧院魅影：25周年纪念演出",
+          "year": 2011,
+          "rating": 9.7,
+          "votes": 19382,
+          "genres": "剧情 / 音乐 / 歌舞"
+        },
+        {
+          "title": "地球脉动2：奇迹世界",
+          "year": 2017,
+          "rating": 9.7,
+          "votes": 3316,
+          "genres": "纪录片"
+        },
+        {
+          "title": "故事未了",
+          "year": 2016,
+          "rating": 9.7,
+          "votes": 1615,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "KinKi Kids 你不在身边的夏天 songs",
+          "year": 2017,
+          "rating": 9.7,
+          "votes": 693,
+          "genres": "爱情 / 纪录片 / 音乐"
+        }
+      ]
+    },
+    "2020s": {
+      "count": 11269,
+      "avg_rating": 6.277,
+      "median_rating": 6.3,
+      "avg_votes": 13101.43,
+      "top_movies": [
+        {
+          "title": "坂本龙一特别线上钢琴独奏会2022",
+          "year": 2022,
+          "rating": 9.8,
+          "votes": 3478,
+          "genres": "纪录片 音乐"
+        },
+        {
+          "title": "陈奕迅线上慈善演唱会",
+          "year": 2020,
+          "rating": 9.7,
+          "votes": 12769,
+          "genres": "音乐 / 真人秀"
+        },
+        {
+          "title": "摩登家庭：摩登式告别",
+          "year": 2020,
+          "rating": 9.7,
+          "votes": 5843,
+          "genres": "纪录片 / 同性"
+        },
+        {
+          "title": "美丽人生",
+          "year": 2020,
+          "rating": 9.6,
+          "votes": 1154239,
+          "genres": "剧情 / 喜剧 / 爱情"
+        },
+        {
+          "title": "鱼丁糸Follow Me线上演唱会",
+          "year": 2020,
+          "rating": 9.6,
+          "votes": 631,
+          "genres": "音乐"
+        }
+      ]
+    },
+    "Pre-1990s": {
+      "count": 10273,
+      "avg_rating": 7.3463,
+      "median_rating": 7.4,
+      "avg_votes": 3969.49,
+      "top_movies": [
+        {
+          "title": "是，大臣 1984圣诞特辑",
+          "year": 1984,
+          "rating": 9.8,
+          "votes": 8494,
+          "genres": "喜剧"
+        },
+        {
+          "title": "张国荣告别演唱会",
+          "year": 1989,
+          "rating": 9.7,
+          "votes": 2097,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "拯救生命演唱会",
+          "year": 1985,
+          "rating": 9.7,
+          "votes": 2036,
+          "genres": "纪录片 / 音乐 / 舞台艺术"
+        },
+        {
+          "title": "卡拉扬指挥柏林爱乐乐团：贝多芬第九交响曲“合唱”",
+          "year": 1968,
+          "rating": 9.7,
+          "votes": 661,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "控方证人",
+          "year": 1957,
+          "rating": 9.6,
+          "votes": 411982,
+          "genres": "剧情 / 犯罪 / 悬疑"
+        }
+      ]
+    }
+  },
+  "regions": {
+    "China": {
+      "count": 12791,
+      "avg_rating": 6.2336,
+      "median_rating": 6.5,
+      "avg_votes": 21140.61,
+      "top_movies": [
+        {
+          "title": "张国荣热·情演唱会",
+          "year": 2000,
+          "rating": 9.8,
+          "votes": 3888,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "张国荣跨越97演唱会",
+          "year": 1996,
+          "rating": 9.8,
+          "votes": 3240,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "梅艳芳经典金曲演唱会",
+          "year": 2003,
+          "rating": 9.8,
+          "votes": 1120,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "陈奕迅线上慈善演唱会",
+          "year": 2020,
+          "rating": 9.7,
+          "votes": 12769,
+          "genres": "音乐 / 真人秀"
+        },
+        {
+          "title": "周杰伦无与伦比演唱会",
+          "year": 2004,
+          "rating": 9.7,
+          "votes": 3940,
+          "genres": "音乐"
+        }
+      ]
+    },
+    "East_Asia": {
+      "count": 11095,
+      "avg_rating": 6.9964,
+      "median_rating": 7.1,
+      "avg_votes": 8237.16,
+      "top_movies": [
+        {
+          "title": "坂本龙一特别线上钢琴独奏会2022",
+          "year": 2022,
+          "rating": 9.8,
+          "votes": 3478,
+          "genres": "纪录片 音乐"
+        },
+        {
+          "title": "久石让在武道馆：与宫崎骏动画一同走过的25年",
+          "year": 2008,
+          "rating": 9.7,
+          "votes": 13410,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "KinKi Kids 你不在身边的夏天 songs",
+          "year": 2017,
+          "rating": 9.7,
+          "votes": 693,
+          "genres": "爱情 / 纪录片 / 音乐"
+        },
+        {
+          "title": "中岛美雪LIVE 歌旅剧场版",
+          "year": 2012,
+          "rating": 9.7,
+          "votes": 455,
+          "genres": "纪录片"
+        },
+        {
+          "title": "星际牛仔总集篇・蓝调混搭",
+          "year": 1998,
+          "rating": 9.6,
+          "votes": 4181,
+          "genres": "科幻 / 动画 / 短片"
+        }
+      ]
+    },
+    "Europe": {
+      "count": 15874,
+      "avg_rating": 7.1608,
+      "median_rating": 7.3,
+      "avg_votes": 6560.95,
+      "top_movies": [
+        {
+          "title": "是，大臣 1984圣诞特辑",
+          "year": 1984,
+          "rating": 9.8,
+          "votes": 8494,
+          "genres": "喜剧"
+        },
+        {
+          "title": "悲惨世界：十周年纪念演唱会",
+          "year": 1995,
+          "rating": 9.8,
+          "votes": 2373,
+          "genres": "剧情 / 歌舞"
+        },
+        {
+          "title": "剧院魅影：25周年纪念演出",
+          "year": 2011,
+          "rating": 9.7,
+          "votes": 19382,
+          "genres": "剧情 / 音乐 / 歌舞"
+        },
+        {
+          "title": "地球脉动2：奇迹世界",
+          "year": 2017,
+          "rating": 9.7,
+          "votes": 3316,
+          "genres": "纪录片"
+        },
+        {
+          "title": "披头士精选辑",
+          "year": 1995,
+          "rating": 9.7,
+          "votes": 943,
+          "genres": "纪录片 / 音乐"
+        }
+      ]
+    },
+    "North_America": {
+      "count": 19298,
+      "avg_rating": 6.7593,
+      "median_rating": 6.9,
+      "avg_votes": 15960.09,
+      "top_movies": [
+        {
+          "title": "The Court-Martial of Jackie Robinson",
+          "year": 1990,
+          "rating": 10.0,
+          "votes": 8140,
+          "genres": "剧情"
+        },
+        {
+          "title": "Mando Diao: MTV不插电现场",
+          "year": 2010,
+          "rating": 9.8,
+          "votes": 323,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "涅磐纽约不插电演唱会",
+          "year": 1993,
+          "rating": 9.7,
+          "votes": 9151,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "摩登家庭：摩登式告别",
+          "year": 2020,
+          "rating": 9.7,
+          "votes": 5843,
+          "genres": "纪录片 / 同性"
+        },
+        {
+          "title": "迈克尔·杰克逊-危险之旅之布加勒斯特站",
+          "year": 2005,
+          "rating": 9.7,
+          "votes": 3400,
+          "genres": "纪录片 / 音乐"
+        }
+      ]
+    },
+    "Other": {
+      "count": 3967,
+      "avg_rating": 6.6366,
+      "median_rating": 6.8,
+      "avg_votes": 6060.0,
+      "top_movies": [
+        {
+          "title": "汉纳·盖茨比告别秀：娜娜",
+          "year": 2018,
+          "rating": 9.5,
+          "votes": 6911,
+          "genres": "喜剧 / 脱口秀"
+        },
+        {
+          "title": "可爱的动物",
+          "year": 1974,
+          "rating": 9.5,
+          "votes": 5665,
+          "genres": "喜剧 / 纪录片"
+        },
+        {
+          "title": "孙燕姿出道20周年直播Live",
+          "year": 2020,
+          "rating": 9.5,
+          "votes": 889,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "我不想失去状态",
+          "year": 2021,
+          "rating": 9.4,
+          "votes": 6595,
+          "genres": "喜剧 爱情 短片"
+        },
+        {
+          "title": "老鹰乐队冰封地狱演唱会",
+          "year": 1994,
+          "rating": 9.4,
+          "votes": 580,
+          "genres": "纪录片 / 音乐"
+        }
+      ]
+    }
+  },
+  "languages": {
+    "Chinese": {
+      "count": 13203,
+      "avg_rating": 6.245,
+      "median_rating": 6.5,
+      "avg_votes": 22202.91,
+      "top_movies": [
+        {
+          "title": "张国荣热·情演唱会",
+          "year": 2000,
+          "rating": 9.8,
+          "votes": 3888,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "张国荣跨越97演唱会",
+          "year": 1996,
+          "rating": 9.8,
+          "votes": 3240,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "梅艳芳经典金曲演唱会",
+          "year": 2003,
+          "rating": 9.8,
+          "votes": 1120,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        },
+        {
+          "title": "陈奕迅线上慈善演唱会",
+          "year": 2020,
+          "rating": 9.7,
+          "votes": 12769,
+          "genres": "音乐 / 真人秀"
+        },
+        {
+          "title": "周杰伦无与伦比演唱会",
+          "year": 2004,
+          "rating": 9.7,
+          "votes": 3940,
+          "genres": "音乐"
+        }
+      ]
+    },
+    "English": {
+      "count": 22914,
+      "avg_rating": 6.973,
+      "median_rating": 7.1,
+      "avg_votes": 14611.56,
+      "top_movies": [
+        {
+          "title": "The Court-Martial of Jackie Robinson",
+          "year": 1990,
+          "rating": 10.0,
+          "votes": 8140,
+          "genres": "剧情"
+        },
+        {
+          "title": "是，大臣 1984圣诞特辑",
+          "year": 1984,
+          "rating": 9.8,
+          "votes": 8494,
+          "genres": "喜剧"
+        },
+        {
+          "title": "悲惨世界：十周年纪念演唱会",
+          "year": 1995,
+          "rating": 9.8,
+          "votes": 2373,
+          "genres": "剧情 / 歌舞"
+        },
+        {
+          "title": "Mando Diao: MTV不插电现场",
+          "year": 2010,
+          "rating": 9.8,
+          "votes": 323,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "剧院魅影：25周年纪念演出",
+          "year": 2011,
+          "rating": 9.7,
+          "votes": 19382,
+          "genres": "剧情 / 音乐 / 歌舞"
+        }
+      ]
+    },
+    "European_Languages": {
+      "count": 6838,
+      "avg_rating": 7.1733,
+      "median_rating": 7.3,
+      "avg_votes": 3720.7,
+      "top_movies": [
+        {
+          "title": "伊丽莎白",
+          "year": 2005,
+          "rating": 9.6,
+          "votes": 6410,
+          "genres": "剧情 / 歌舞"
+        },
+        {
+          "title": "莫扎特！",
+          "year": 2015,
+          "rating": 9.5,
+          "votes": 6034,
+          "genres": "歌舞"
+        },
+        {
+          "title": "俄国人生七年3",
+          "year": 2005,
+          "rating": 9.5,
+          "votes": 1030,
+          "genres": "纪录片"
+        },
+        {
+          "title": "里赫特：谜",
+          "year": 1998,
+          "rating": 9.5,
+          "votes": 966,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "十冠之心",
+          "year": 2015,
+          "rating": 9.5,
+          "votes": 734,
+          "genres": "纪录片 / 运动"
+        }
+      ]
+    },
+    "Japanese": {
+      "count": 7266,
+      "avg_rating": 7.2016,
+      "median_rating": 7.3,
+      "avg_votes": 6669.17,
+      "top_movies": [
+        {
+          "title": "久石让在武道馆：与宫崎骏动画一同走过的25年",
+          "year": 2008,
+          "rating": 9.7,
+          "votes": 13410,
+          "genres": "纪录片 / 音乐"
+        },
+        {
+          "title": "KinKi Kids 你不在身边的夏天 songs",
+          "year": 2017,
+          "rating": 9.7,
+          "votes": 693,
+          "genres": "爱情 / 纪录片 / 音乐"
+        },
+        {
+          "title": "中岛美雪LIVE 歌旅剧场版",
+          "year": 2012,
+          "rating": 9.7,
+          "votes": 455,
+          "genres": "纪录片"
+        },
+        {
+          "title": "星际牛仔总集篇・蓝调混搭",
+          "year": 1998,
+          "rating": 9.6,
+          "votes": 4181,
+          "genres": "科幻 / 动画 / 短片"
+        },
+        {
+          "title": "岚：15周年的告白",
+          "year": 2014,
+          "rating": 9.6,
+          "votes": 2670,
+          "genres": "纪录片"
+        }
+      ]
+    },
+    "Korean": {
+      "count": 1802,
+      "avg_rating": 6.4504,
+      "median_rating": 6.6,
+      "avg_votes": 11916.43,
+      "top_movies": [
+        {
+          "title": "GOT7的HardCarry",
+          "year": 2016,
+          "rating": 9.4,
+          "votes": 1991,
+          "genres": "真人秀"
+        },
+        {
+          "title": "亲爱的，不要跨过那条江",
+          "year": 2014,
+          "rating": 9.3,
+          "votes": 37223,
+          "genres": "爱情 / 纪录片 / 家庭"
+        },
+        {
+          "title": "那天，大海",
+          "year": 2018,
+          "rating": 9.3,
+          "votes": 17758,
+          "genres": "纪录片"
+        },
+        {
+          "title": "共犯者们",
+          "year": 2017,
+          "rating": 9.3,
+          "votes": 9337,
+          "genres": "纪录片"
+        },
+        {
+          "title": "爱自己世界巡回演唱会",
+          "year": 2019,
+          "rating": 9.3,
+          "votes": 454,
+          "genres": "纪录片 / 音乐 / 歌舞"
+        }
+      ]
+    },
+    "Other": {
+      "count": 11002,
+      "avg_rating": 6.5958,
+      "median_rating": 6.7,
+      "avg_votes": 6785.95,
+      "top_movies": [
+        {
+          "title": "坂本龙一特别线上钢琴独奏会2022",
+          "year": 2022,
+          "rating": 9.8,
+          "votes": 3478,
+          "genres": "纪录片 音乐"
+        },
+        {
+          "title": "一生一次：阿根廷",
+          "year": 2024,
+          "rating": 9.6,
+          "votes": 540,
+          "genres": "纪录片"
+        },
+        {
+          "title": "初步举证",
+          "year": 2022,
+          "rating": 9.5,
+          "votes": 214477,
+          "genres": "剧情"
+        },
+        {
+          "title": "福尔摩斯二世",
+          "year": 1924,
+          "rating": 9.5,
+          "votes": 20499,
+          "genres": "喜剧 / 动作 / 爱情"
+        },
+        {
+          "title": "万物生灵：2021圣诞特别集",
+          "year": 2021,
+          "rating": 9.5,
+          "votes": 15036,
+          "genres": "剧情 喜剧"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卷三：语言构成 | 方言电影为什么“赢”了？</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="description" content="从六万余部电影看语言组与评分。回到《方言电影为什么“赢”了？》主故事。">
+    <meta property="og:title" content="卷三：语言构成 | 方言电影为什么“赢”了？">
+    <meta property="og:description" content="比较英语、日语、韩语、普通话、方言与其他语言组的数量与均分。">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- build:og -->
+    <meta property="og:image" content="assets/og-cover.jpg">
+    <!-- endbuild -->
+    <!-- build:css -->
+    <link rel="stylesheet" href="build/style.c79102603c.css">
+    <!-- endbuild -->
+    <!-- build:js -->
+    <script defer src="build/echarts-volume.6d75e0bd14.js"></script>
+    <script defer src="build/vol3.1ead872395.js"></script>
+    <!-- endbuild -->
+</head>
+<body class="volume-page">
+    <noscript><p class="noscript-banner">本页面需要启用 JavaScript 才能浏览数据故事。请开启脚本后刷新页面。</p></noscript>
+    <div id="boot-error" class="boot-error" hidden>
+        <div class="boot-error-panel" role="alertdialog" aria-labelledby="boot-error-title" aria-describedby="boot-error-message">
+            <h2 id="boot-error-title">数据加载失败</h2>
+            <p id="boot-error-message">请通过本地服务器打开页面，不要直接双击 HTML。</p>
+            <button type="button" id="boot-error-retry">重试</button>
+        </div>
+    </div>
+    <nav class="sidebar">
+        <div class="sidebar-title">CINEMATIC TASTE</div>
+        <div class="sidebar-subtitle"><span data-publication-count>加载中</span> 部电影评分</div>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-item">导言：电影评分星图</a>
+            <a href="vol1_time.html" class="nav-item">Vol I. 年代变化</a>
+            <a href="vol2_geo.html" class="nav-item">Vol II. 地区分布</a>
+            <a href="vol3_lang.html" class="nav-item active">Vol III. 语言构成</a>
+            <a href="vol4_memory.html" class="nav-item">Vol IV. 交叉筛选</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <article class="academic-article">
+            <span class="theory-badge">六个语言组的电影数量与占比</span>
+            <h1>卷三：哪些语言组收录电影最多？</h1>
+            
+            <p>横向条形图展示首页使用的六个语言组：条形越长，收录电影越多；虚线标出六组等额时的位置。</p>
+            <p>这些组由清洗规则建立。分组按主要语言，混合语种按片单首位归组；方言组沿用中国方言清单。组间均分同时受到地区、年代、类型与跨语言传播的影响。点击条形可查看每组电影。</p>
+        </article>
+
+        <div class="chart-card">
+            <h2>六个语言组的电影占比</h2>
+            <div id="languageChart" class="chart-container"></div>
+        </div>
+
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2>按语言组查看电影</h2>
+                <p class="subtitle" id="gallery-subtitle">点击上方条形查看对应电影</p>
+            </div>
+            <div class="movie-grid" id="movie-grid"></div>
+        </section>
+    </main>
+</body>
+</html>

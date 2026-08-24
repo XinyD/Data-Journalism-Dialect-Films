@@ -1,0 +1,21 @@
+{
+  "name": "movie-rating-data-story",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build-frontend.mjs",
+    "check": "npm run check:js && npm run check:budget && npm run check:contracts",
+    "check:js": "node scripts/check-js.mjs",
+    "check:budget": "node scripts/check-frontend-budget.mjs",
+    "check:contracts": "node scripts/check-contracts.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/noto-serif-sc": "^5.3.0",
+    "@fontsource/outfit": "^5.3.0",
+    "echarts": "^5.6.0",
+    "esbuild": "^0.25.9"
+  }
+}

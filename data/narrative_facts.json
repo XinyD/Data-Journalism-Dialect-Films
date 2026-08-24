@@ -1,0 +1,2442 @@
+{
+  "meta": {
+    "record_count": 63025,
+    "minimum_vote_count": 100,
+    "sample_fingerprint": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503",
+    "口径说明_20260814": "方言定义 v4.1.1 新基线（dialect_defs.py）：方案 A + Tier 2b 证据审查 + 审计排除名单 + 空语言回填（delivery_20260817 合并数据重应用，2026-08-18）：mandarin_dialect 块为 Region=China 口径（方言3,045 / 普通话9,746，与 gen_report_strict 报告一致）；languages 块为全量口径（按 Language_Code 分组）。"
+  },
+  "sample": {
+    "n": 63025,
+    "mean": 6.7878,
+    "median": 6.9,
+    "sd": 1.3252,
+    "q1": 6.0,
+    "high_share": 8.4601,
+    "below_five_share": 9.5787,
+    "mean_votes": 12661.44,
+    "year_min": 1888,
+    "year_max": 2026
+  },
+  "decades": {
+    "1990s": {
+      "n": 5335,
+      "mean": 7.2692,
+      "median": 7.3,
+      "sd": 0.995,
+      "q1": 6.6,
+      "high_share": 11.1903,
+      "below_five_share": 1.6307,
+      "mean_votes": 15037.04
+    },
+    "2000s": {
+      "n": 13034,
+      "mean": 7.0227,
+      "median": 7.1,
+      "sd": 1.1746,
+      "q1": 6.3,
+      "high_share": 9.8512,
+      "below_five_share": 5.2248,
+      "mean_votes": 13247.67
+    },
+    "2010s": {
+      "n": 23114,
+      "mean": 6.5449,
+      "median": 6.7,
+      "sd": 1.4749,
+      "q1": 5.7,
+      "high_share": 8.1812,
+      "below_five_share": 14.4544,
+      "mean_votes": 15431.16
+    },
+    "2020s": {
+      "n": 11269,
+      "mean": 6.277,
+      "median": 6.3,
+      "sd": 1.316,
+      "q1": 5.4,
+      "high_share": 4.5079,
+      "below_five_share": 16.5587,
+      "mean_votes": 13101.43
+    },
+    "Pre-1990s": {
+      "n": 10273,
+      "mean": 7.3463,
+      "median": 7.4,
+      "sd": 0.8909,
+      "q1": 6.7,
+      "high_share": 10.2404,
+      "below_five_share": 0.6035,
+      "mean_votes": 3969.49
+    }
+  },
+  "regions": {
+    "北美": {
+      "n": 19298,
+      "mean": 6.7593,
+      "median": 6.9,
+      "sd": 1.3377,
+      "q1": 5.9,
+      "high_share": 9.2652,
+      "below_five_share": 10.115,
+      "mean_votes": 15960.09
+    },
+    "欧洲": {
+      "n": 15874,
+      "mean": 7.1608,
+      "median": 7.3,
+      "sd": 1.066,
+      "q1": 6.5,
+      "high_share": 10.092,
+      "below_five_share": 3.2443,
+      "mean_votes": 6560.95
+    },
+    "东亚": {
+      "n": 11095,
+      "mean": 6.9964,
+      "median": 7.1,
+      "sd": 1.1945,
+      "q1": 6.3,
+      "high_share": 10.5994,
+      "below_five_share": 5.7684,
+      "mean_votes": 8237.16
+    },
+    "中国大陆": {
+      "n": 12791,
+      "mean": 6.2336,
+      "median": 6.5,
+      "sd": 1.5325,
+      "q1": 5.3,
+      "high_share": 4.7768,
+      "below_five_share": 20.147,
+      "mean_votes": 21140.61
+    },
+    "其他": {
+      "n": 3967,
+      "mean": 6.6366,
+      "median": 6.8,
+      "sd": 1.1792,
+      "q1": 5.8,
+      "high_share": 3.9072,
+      "below_five_share": 8.8984,
+      "mean_votes": 6060.0
+    }
+  },
+  "languages": {
+    "英语": {
+      "n": 22900,
+      "mean": 6.9728,
+      "median": 7.1,
+      "sd": 1.2889,
+      "q1": 6.2,
+      "high_share": 11.4672,
+      "below_five_share": 7.3013,
+      "mean_votes": 14603.8
+    },
+    "日语": {
+      "n": 7264,
+      "mean": 7.2014,
+      "median": 7.3,
+      "sd": 1.1187,
+      "q1": 6.5,
+      "high_share": 12.7616,
+      "below_five_share": 3.5105,
+      "mean_votes": 6670.1
+    },
+    "普通话": {
+      "n": 10027,
+      "mean": 6.1261,
+      "median": 6.4,
+      "sd": 1.6332,
+      "q1": 5.0,
+      "high_share": 5.196,
+      "below_five_share": 24.1049,
+      "mean_votes": 21250.45
+    },
+    "方言": {
+      "n": 3338,
+      "mean": 6.6556,
+      "median": 6.7,
+      "sd": 1.0587,
+      "q1": 6.025,
+      "high_share": 4.1043,
+      "below_five_share": 6.2612,
+      "mean_votes": 24517.32
+    },
+    "韩语": {
+      "n": 1800,
+      "mean": 6.4492,
+      "median": 6.6,
+      "sd": 1.2232,
+      "q1": 5.8,
+      "high_share": 4.0,
+      "below_five_share": 12.7222,
+      "mean_votes": 11908.88
+    },
+    "其他": {
+      "n": 17696,
+      "mean": 6.8128,
+      "median": 6.9,
+      "sd": 1.1567,
+      "q1": 6.1,
+      "high_share": 5.9279,
+      "below_five_share": 7.092,
+      "mean_votes": 5580.67
+    }
+  },
+  "genre_comparison": {
+    "剧情": {
+      "all": {
+        "n": 24407,
+        "mean": 6.8372,
+        "median": 7.0,
+        "sd": 1.14,
+        "q1": 6.2,
+        "high_share": 5.2731,
+        "below_five_share": 6.3834,
+        "mean_votes": 16360.4
+      },
+      "north_america": {
+        "n": 5483,
+        "mean": 6.8372,
+        "median": 6.9,
+        "sd": 1.0872,
+        "q1": 6.2,
+        "high_share": 5.5079,
+        "below_five_share": 5.4715,
+        "mean_votes": 22460.03
+      },
+      "other_regions": {
+        "n": 18924,
+        "mean": 6.8372,
+        "median": 7.0,
+        "sd": 1.1548,
+        "q1": 6.2,
+        "high_share": 5.205,
+        "below_five_share": 6.6476,
+        "mean_votes": 14593.1
+      }
+    },
+    "喜剧": {
+      "all": {
+        "n": 10151,
+        "mean": 6.6255,
+        "median": 6.7,
+        "sd": 1.2661,
+        "q1": 5.9,
+        "high_share": 5.1325,
+        "below_five_share": 9.7035,
+        "mean_votes": 14226.15
+      },
+      "north_america": {
+        "n": 4147,
+        "mean": 6.7695,
+        "median": 6.8,
+        "sd": 1.1164,
+        "q1": 6.1,
+        "high_share": 6.0526,
+        "below_five_share": 5.7873,
+        "mean_votes": 14205.05
+      },
+      "other_regions": {
+        "n": 6004,
+        "mean": 6.526,
+        "median": 6.7,
+        "sd": 1.351,
+        "q1": 5.8,
+        "high_share": 4.497,
+        "below_five_share": 12.4084,
+        "mean_votes": 14240.72
+      }
+    },
+    "动作/冒险": {
+      "all": {
+        "n": 6005,
+        "mean": 6.212,
+        "median": 6.4,
+        "sd": 1.3541,
+        "q1": 5.4,
+        "high_share": 2.6811,
+        "below_five_share": 17.6686,
+        "mean_votes": 21427.88
+      },
+      "north_america": {
+        "n": 2417,
+        "mean": 6.1629,
+        "median": 6.4,
+        "sd": 1.4349,
+        "q1": 5.3,
+        "high_share": 2.7307,
+        "below_five_share": 20.2317,
+        "mean_votes": 32207.67
+      },
+      "other_regions": {
+        "n": 3588,
+        "mean": 6.2451,
+        "median": 6.4,
+        "sd": 1.2957,
+        "q1": 5.5,
+        "high_share": 2.6477,
+        "below_five_share": 15.942,
+        "mean_votes": 14166.25
+      }
+    },
+    "爱情": {
+      "all": {
+        "n": 1430,
+        "mean": 6.3164,
+        "median": 6.5,
+        "sd": 1.3692,
+        "q1": 5.5,
+        "high_share": 3.3566,
+        "below_five_share": 16.0839,
+        "mean_votes": 12098.39
+      },
+      "north_america": {
+        "n": 197,
+        "mean": 6.5954,
+        "median": 6.5,
+        "sd": 1.059,
+        "q1": 5.9,
+        "high_share": 3.5533,
+        "below_five_share": 7.1066,
+        "mean_votes": 16109.05
+      },
+      "other_regions": {
+        "n": 1233,
+        "mean": 6.2719,
+        "median": 6.5,
+        "sd": 1.4073,
+        "q1": 5.4,
+        "high_share": 3.3252,
+        "below_five_share": 17.5182,
+        "mean_votes": 11457.6
+      }
+    },
+    "悬疑/惊悚": {
+      "all": {
+        "n": 6057,
+        "mean": 5.8111,
+        "median": 5.8,
+        "sd": 1.3151,
+        "q1": 4.9,
+        "high_share": 1.5189,
+        "below_five_share": 25.7058,
+        "mean_votes": 7284.12
+      },
+      "north_america": {
+        "n": 2518,
+        "mean": 5.7217,
+        "median": 5.7,
+        "sd": 1.2615,
+        "q1": 4.8,
+        "high_share": 0.9531,
+        "below_five_share": 28.4353,
+        "mean_votes": 8578.59
+      },
+      "other_regions": {
+        "n": 3539,
+        "mean": 5.8748,
+        "median": 5.9,
+        "sd": 1.3483,
+        "q1": 5.0,
+        "high_share": 1.9214,
+        "below_five_share": 23.7638,
+        "mean_votes": 6363.1
+      }
+    },
+    "科幻/奇幻": {
+      "all": {
+        "n": 1267,
+        "mean": 6.3408,
+        "median": 6.5,
+        "sd": 1.6183,
+        "q1": 5.3,
+        "high_share": 8.5241,
+        "below_five_share": 21.468,
+        "mean_votes": 14112.27
+      },
+      "north_america": {
+        "n": 510,
+        "mean": 5.9388,
+        "median": 6.1,
+        "sd": 1.6495,
+        "q1": 4.7,
+        "high_share": 4.7059,
+        "below_five_share": 29.4118,
+        "mean_votes": 18094.68
+      },
+      "other_regions": {
+        "n": 757,
+        "mean": 6.6116,
+        "median": 6.8,
+        "sd": 1.5388,
+        "q1": 5.6,
+        "high_share": 11.0964,
+        "below_five_share": 16.1162,
+        "mean_votes": 11429.27
+      }
+    },
+    "其他": {
+      "all": {
+        "n": 13708,
+        "mean": 7.5941,
+        "median": 7.7,
+        "sd": 1.134,
+        "q1": 7.0,
+        "high_share": 22.724,
+        "below_five_share": 2.7283,
+        "mean_votes": 3377.16
+      },
+      "north_america": {
+        "n": 4026,
+        "mean": 7.7618,
+        "median": 7.9,
+        "sd": 1.032,
+        "q1": 7.2,
+        "high_share": 27.6701,
+        "below_five_share": 1.0681,
+        "mean_votes": 3500.38
+      },
+      "other_regions": {
+        "n": 9682,
+        "mean": 7.5244,
+        "median": 7.7,
+        "sd": 1.1668,
+        "q1": 6.9,
+        "high_share": 20.6672,
+        "below_five_share": 3.4187,
+        "mean_votes": 3325.92
+      }
+    }
+  },
+  "year_1994": {
+    "n": 529,
+    "mean": 7.2388,
+    "median": 7.3,
+    "sd": 0.9953,
+    "q1": 6.6,
+    "high_share": 11.3422,
+    "below_five_share": 1.3233,
+    "mean_votes": 26960.24,
+    "top_movies": [
+      {
+        "title": "肖申克的救赎",
+        "year": 1994,
+        "rating": 9.6,
+        "votes": 2505540
+      },
+      {
+        "title": "摇滚中国乐势力演唱会",
+        "year": 1994,
+        "rating": 9.6,
+        "votes": 2571
+      },
+      {
+        "title": "背靠背，脸对脸",
+        "year": 1994,
+        "rating": 9.5,
+        "votes": 86819
+      },
+      {
+        "title": "这个杀手不太冷",
+        "year": 1994,
+        "rating": 9.4,
+        "votes": 2044168
+      },
+      {
+        "title": "阿甘正传",
+        "year": 1994,
+        "rating": 9.4,
+        "votes": 1882606
+      }
+    ]
+  },
+  "other_1990s_excluding_1994": {
+    "n": 4806,
+    "mean": 7.2726,
+    "median": 7.3,
+    "sd": 0.9949,
+    "q1": 6.6,
+    "high_share": 11.1735,
+    "below_five_share": 1.6646,
+    "mean_votes": 13724.65
+  },
+  "yearly_region_comparison": {
+    "1990": {
+      "north_america": {
+        "n": 140,
+        "mean": 7.2421,
+        "median": 7.2,
+        "sd": 0.8936,
+        "q1": 6.6,
+        "high_share": 12.1429,
+        "below_five_share": 0.7143,
+        "mean_votes": 18282.62
+      },
+      "east_asia_china": {
+        "n": 204,
+        "mean": 6.9387,
+        "median": 6.8,
+        "sd": 0.9179,
+        "q1": 6.3,
+        "high_share": 4.902,
+        "below_five_share": 0.9804,
+        "mean_votes": 8021.59
+      },
+      "delta": -0.3034
+    },
+    "1991": {
+      "north_america": {
+        "n": 145,
+        "mean": 7.1786,
+        "median": 7.3,
+        "sd": 0.9839,
+        "q1": 6.7,
+        "high_share": 10.3448,
+        "below_five_share": 2.7586,
+        "mean_votes": 12296.23
+      },
+      "east_asia_china": {
+        "n": 202,
+        "mean": 6.9361,
+        "median": 6.95,
+        "sd": 1.0846,
+        "q1": 6.225,
+        "high_share": 9.4059,
+        "below_five_share": 3.4653,
+        "mean_votes": 14862.57
+      },
+      "delta": -0.2425
+    },
+    "1992": {
+      "north_america": {
+        "n": 136,
+        "mean": 7.35,
+        "median": 7.4,
+        "sd": 0.9825,
+        "q1": 6.6,
+        "high_share": 12.5,
+        "below_five_share": 1.4706,
+        "mean_votes": 15527.49
+      },
+      "east_asia_china": {
+        "n": 252,
+        "mean": 6.9262,
+        "median": 6.85,
+        "sd": 1.1141,
+        "q1": 6.3,
+        "high_share": 8.7302,
+        "below_five_share": 3.5714,
+        "mean_votes": 16111.36
+      },
+      "delta": -0.4238
+    },
+    "1993": {
+      "north_america": {
+        "n": 160,
+        "mean": 7.2887,
+        "median": 7.3,
+        "sd": 0.9928,
+        "q1": 6.6,
+        "high_share": 15.0,
+        "below_five_share": 0.625,
+        "mean_votes": 15836.91
+      },
+      "east_asia_china": {
+        "n": 246,
+        "mean": 6.9122,
+        "median": 7.0,
+        "sd": 1.1159,
+        "q1": 6.2,
+        "high_share": 6.0976,
+        "below_five_share": 6.0976,
+        "mean_votes": 25183.04
+      },
+      "delta": -0.3766
+    },
+    "1994": {
+      "north_america": {
+        "n": 165,
+        "mean": 7.2133,
+        "median": 7.3,
+        "sd": 0.9679,
+        "q1": 6.6,
+        "high_share": 9.697,
+        "below_five_share": 1.8182,
+        "mean_votes": 39898.02
+      },
+      "east_asia_china": {
+        "n": 237,
+        "mean": 7.027,
+        "median": 6.9,
+        "sd": 0.9786,
+        "q1": 6.3,
+        "high_share": 8.4388,
+        "below_five_share": 1.2658,
+        "mean_votes": 21427.07
+      },
+      "delta": -0.1863
+    },
+    "1995": {
+      "north_america": {
+        "n": 207,
+        "mean": 7.2377,
+        "median": 7.2,
+        "sd": 1.015,
+        "q1": 6.5,
+        "high_share": 12.0773,
+        "below_five_share": 1.4493,
+        "mean_votes": 22592.21
+      },
+      "east_asia_china": {
+        "n": 221,
+        "mean": 7.2416,
+        "median": 7.4,
+        "sd": 1.0361,
+        "q1": 6.5,
+        "high_share": 12.6697,
+        "below_five_share": 1.81,
+        "mean_votes": 12989.61
+      },
+      "delta": 0.0039
+    },
+    "1996": {
+      "north_america": {
+        "n": 213,
+        "mean": 7.2221,
+        "median": 7.3,
+        "sd": 0.8516,
+        "q1": 6.6,
+        "high_share": 7.9812,
+        "below_five_share": 0.4695,
+        "mean_votes": 9731.56
+      },
+      "east_asia_china": {
+        "n": 194,
+        "mean": 7.1954,
+        "median": 7.3,
+        "sd": 0.9064,
+        "q1": 6.6,
+        "high_share": 8.2474,
+        "below_five_share": 1.0309,
+        "mean_votes": 10753.69
+      },
+      "delta": -0.0267
+    },
+    "1997": {
+      "north_america": {
+        "n": 208,
+        "mean": 7.3288,
+        "median": 7.5,
+        "sd": 0.8548,
+        "q1": 6.7,
+        "high_share": 7.6923,
+        "below_five_share": 0.0,
+        "mean_votes": 18398.89
+      },
+      "east_asia_china": {
+        "n": 186,
+        "mean": 7.3097,
+        "median": 7.4,
+        "sd": 0.9582,
+        "q1": 6.6,
+        "high_share": 10.2151,
+        "below_five_share": 0.0,
+        "mean_votes": 17171.43
+      },
+      "delta": -0.0192
+    },
+    "1998": {
+      "north_america": {
+        "n": 220,
+        "mean": 7.2477,
+        "median": 7.2,
+        "sd": 0.9131,
+        "q1": 6.7,
+        "high_share": 8.6364,
+        "below_five_share": 0.9091,
+        "mean_votes": 27628.17
+      },
+      "east_asia_china": {
+        "n": 199,
+        "mean": 7.1568,
+        "median": 7.3,
+        "sd": 1.1301,
+        "q1": 6.5,
+        "high_share": 8.0402,
+        "below_five_share": 5.0251,
+        "mean_votes": 9587.33
+      },
+      "delta": -0.0909
+    },
+    "1999": {
+      "north_america": {
+        "n": 221,
+        "mean": 7.2552,
+        "median": 7.3,
+        "sd": 0.9622,
+        "q1": 6.6,
+        "high_share": 11.7647,
+        "below_five_share": 1.3575,
+        "mean_votes": 17550.66
+      },
+      "east_asia_china": {
+        "n": 231,
+        "mean": 7.1355,
+        "median": 7.3,
+        "sd": 1.1744,
+        "q1": 6.4,
+        "high_share": 14.7186,
+        "below_five_share": 4.7619,
+        "mean_votes": 19256.73
+      },
+      "delta": -0.1197
+    },
+    "2000": {
+      "north_america": {
+        "n": 250,
+        "mean": 7.1544,
+        "median": 7.2,
+        "sd": 0.9927,
+        "q1": 6.5,
+        "high_share": 10.4,
+        "below_five_share": 2.0,
+        "mean_votes": 16131.7
+      },
+      "east_asia_china": {
+        "n": 277,
+        "mean": 6.9801,
+        "median": 7.1,
+        "sd": 1.1759,
+        "q1": 6.2,
+        "high_share": 8.3032,
+        "below_five_share": 5.4152,
+        "mean_votes": 12683.63
+      },
+      "delta": -0.1743
+    },
+    "2001": {
+      "north_america": {
+        "n": 283,
+        "mean": 7.1943,
+        "median": 7.1,
+        "sd": 1.0106,
+        "q1": 6.5,
+        "high_share": 12.3675,
+        "below_five_share": 1.7668,
+        "mean_votes": 18720.74
+      },
+      "east_asia_china": {
+        "n": 310,
+        "mean": 7.0239,
+        "median": 7.1,
+        "sd": 1.1289,
+        "q1": 6.3,
+        "high_share": 8.7097,
+        "below_five_share": 5.1613,
+        "mean_votes": 12438.45
+      },
+      "delta": -0.1705
+    },
+    "2002": {
+      "north_america": {
+        "n": 305,
+        "mean": 7.1239,
+        "median": 7.1,
+        "sd": 1.0481,
+        "q1": 6.4,
+        "high_share": 12.459,
+        "below_five_share": 2.623,
+        "mean_votes": 16839.97
+      },
+      "east_asia_china": {
+        "n": 307,
+        "mean": 6.9518,
+        "median": 7.1,
+        "sd": 1.208,
+        "q1": 6.3,
+        "high_share": 8.1433,
+        "below_five_share": 5.5375,
+        "mean_votes": 11945.99
+      },
+      "delta": -0.1721
+    },
+    "2003": {
+      "north_america": {
+        "n": 322,
+        "mean": 7.2562,
+        "median": 7.2,
+        "sd": 1.2155,
+        "q1": 6.5,
+        "high_share": 19.8758,
+        "below_five_share": 4.0373,
+        "mean_votes": 25772.68
+      },
+      "east_asia_china": {
+        "n": 300,
+        "mean": 7.025,
+        "median": 7.1,
+        "sd": 1.089,
+        "q1": 6.4,
+        "high_share": 9.0,
+        "below_five_share": 3.3333,
+        "mean_votes": 19009.88
+      },
+      "delta": -0.2312
+    },
+    "2004": {
+      "north_america": {
+        "n": 369,
+        "mean": 7.1799,
+        "median": 7.2,
+        "sd": 1.0142,
+        "q1": 6.4,
+        "high_share": 12.7371,
+        "below_five_share": 0.542,
+        "mean_votes": 23923.18
+      },
+      "east_asia_china": {
+        "n": 361,
+        "mean": 6.9127,
+        "median": 7.0,
+        "sd": 1.1085,
+        "q1": 6.2,
+        "high_share": 7.4792,
+        "below_five_share": 4.9861,
+        "mean_votes": 17610.33
+      },
+      "delta": -0.2672
+    },
+    "2005": {
+      "north_america": {
+        "n": 416,
+        "mean": 7.0236,
+        "median": 7.1,
+        "sd": 1.2275,
+        "q1": 6.3,
+        "high_share": 11.5385,
+        "below_five_share": 6.0096,
+        "mean_votes": 18551.78
+      },
+      "east_asia_china": {
+        "n": 438,
+        "mean": 6.937,
+        "median": 7.1,
+        "sd": 1.1387,
+        "q1": 6.3,
+        "high_share": 5.7078,
+        "below_five_share": 5.2511,
+        "mean_votes": 10510.91
+      },
+      "delta": -0.0866
+    },
+    "2006": {
+      "north_america": {
+        "n": 509,
+        "mean": 6.8358,
+        "median": 6.9,
+        "sd": 1.2331,
+        "q1": 6.1,
+        "high_share": 8.6444,
+        "below_five_share": 5.8939,
+        "mean_votes": 14364.59
+      },
+      "east_asia_china": {
+        "n": 548,
+        "mean": 6.985,
+        "median": 7.1,
+        "sd": 1.124,
+        "q1": 6.3,
+        "high_share": 8.5766,
+        "below_five_share": 4.7445,
+        "mean_votes": 13036.18
+      },
+      "delta": 0.1493
+    },
+    "2007": {
+      "north_america": {
+        "n": 632,
+        "mean": 6.7761,
+        "median": 6.9,
+        "sd": 1.3092,
+        "q1": 6.1,
+        "high_share": 8.0696,
+        "below_five_share": 9.4937,
+        "mean_votes": 15481.25
+      },
+      "east_asia_china": {
+        "n": 594,
+        "mean": 6.9214,
+        "median": 7.0,
+        "sd": 1.1658,
+        "q1": 6.2,
+        "high_share": 8.5859,
+        "below_five_share": 5.7239,
+        "mean_votes": 11188.56
+      },
+      "delta": 0.1453
+    },
+    "2008": {
+      "north_america": {
+        "n": 684,
+        "mean": 6.6741,
+        "median": 6.8,
+        "sd": 1.3743,
+        "q1": 5.8,
+        "high_share": 8.7719,
+        "below_five_share": 12.1345,
+        "mean_votes": 16463.43
+      },
+      "east_asia_china": {
+        "n": 599,
+        "mean": 6.7688,
+        "median": 6.8,
+        "sd": 1.2725,
+        "q1": 6.1,
+        "high_share": 8.3472,
+        "below_five_share": 9.182,
+        "mean_votes": 11753.16
+      },
+      "delta": 0.0947
+    },
+    "2009": {
+      "north_america": {
+        "n": 678,
+        "mean": 6.7003,
+        "median": 6.8,
+        "sd": 1.4401,
+        "q1": 5.8,
+        "high_share": 10.0295,
+        "below_five_share": 11.2094,
+        "mean_votes": 21432.76
+      },
+      "east_asia_china": {
+        "n": 674,
+        "mean": 6.8322,
+        "median": 7.0,
+        "sd": 1.2896,
+        "q1": 6.1,
+        "high_share": 8.457,
+        "below_five_share": 8.6053,
+        "mean_votes": 11318.88
+      },
+      "delta": 0.1319
+    },
+    "2010": {
+      "north_america": {
+        "n": 560,
+        "mean": 6.6996,
+        "median": 6.8,
+        "sd": 1.5035,
+        "q1": 5.8,
+        "high_share": 12.1429,
+        "below_five_share": 13.5714,
+        "mean_votes": 27375.22
+      },
+      "east_asia_china": {
+        "n": 791,
+        "mean": 6.7421,
+        "median": 6.9,
+        "sd": 1.3419,
+        "q1": 5.9,
+        "high_share": 8.976,
+        "below_five_share": 9.7345,
+        "mean_votes": 17087.07
+      },
+      "delta": 0.0425
+    },
+    "2011": {
+      "north_america": {
+        "n": 588,
+        "mean": 6.6509,
+        "median": 6.7,
+        "sd": 1.4358,
+        "q1": 5.8,
+        "high_share": 10.034,
+        "below_five_share": 12.415,
+        "mean_votes": 20902.84
+      },
+      "east_asia_china": {
+        "n": 821,
+        "mean": 6.584,
+        "median": 6.7,
+        "sd": 1.433,
+        "q1": 5.9,
+        "high_share": 7.7954,
+        "below_five_share": 13.3983,
+        "mean_votes": 14554.92
+      },
+      "delta": -0.0668
+    },
+    "2012": {
+      "north_america": {
+        "n": 566,
+        "mean": 6.5943,
+        "median": 6.7,
+        "sd": 1.5122,
+        "q1": 5.8,
+        "high_share": 9.7173,
+        "below_five_share": 13.4276,
+        "mean_votes": 18788.03
+      },
+      "east_asia_china": {
+        "n": 934,
+        "mean": 6.4161,
+        "median": 6.7,
+        "sd": 1.4696,
+        "q1": 5.6,
+        "high_share": 5.7816,
+        "below_five_share": 16.2741,
+        "mean_votes": 11903.12
+      },
+      "delta": -0.1783
+    },
+    "2013": {
+      "north_america": {
+        "n": 635,
+        "mean": 6.4946,
+        "median": 6.5,
+        "sd": 1.5148,
+        "q1": 5.6,
+        "high_share": 9.1339,
+        "below_five_share": 15.4331,
+        "mean_votes": 20214.09
+      },
+      "east_asia_china": {
+        "n": 971,
+        "mean": 6.4297,
+        "median": 6.6,
+        "sd": 1.6136,
+        "q1": 5.4,
+        "high_share": 8.7539,
+        "below_five_share": 18.9495,
+        "mean_votes": 16455.63
+      },
+      "delta": -0.065
+    },
+    "2014": {
+      "north_america": {
+        "n": 670,
+        "mean": 6.5458,
+        "median": 6.6,
+        "sd": 1.4036,
+        "q1": 5.7,
+        "high_share": 8.0597,
+        "below_five_share": 14.4776,
+        "mean_votes": 19324.76
+      },
+      "east_asia_china": {
+        "n": 1027,
+        "mean": 6.2368,
+        "median": 6.5,
+        "sd": 1.703,
+        "q1": 5.1,
+        "high_share": 7.5949,
+        "below_five_share": 23.7585,
+        "mean_votes": 14868.36
+      },
+      "delta": -0.309
+    },
+    "2015": {
+      "north_america": {
+        "n": 693,
+        "mean": 6.5773,
+        "median": 6.6,
+        "sd": 1.3794,
+        "q1": 5.6,
+        "high_share": 8.9466,
+        "below_five_share": 11.3997,
+        "mean_votes": 14608.15
+      },
+      "east_asia_china": {
+        "n": 1173,
+        "mean": 6.1621,
+        "median": 6.5,
+        "sd": 1.7688,
+        "q1": 4.8,
+        "high_share": 8.0989,
+        "below_five_share": 26.2575,
+        "mean_votes": 16463.93
+      },
+      "delta": -0.4152
+    },
+    "2016": {
+      "north_america": {
+        "n": 679,
+        "mean": 6.4919,
+        "median": 6.5,
+        "sd": 1.4018,
+        "q1": 5.6,
+        "high_share": 7.2165,
+        "below_five_share": 14.7275,
+        "mean_votes": 18038.73
+      },
+      "east_asia_china": {
+        "n": 1235,
+        "mean": 5.9806,
+        "median": 6.2,
+        "sd": 1.8045,
+        "q1": 4.6,
+        "high_share": 6.3158,
+        "below_five_share": 29.0688,
+        "mean_votes": 13947.36
+      },
+      "delta": -0.5113
+    },
+    "2017": {
+      "north_america": {
+        "n": 723,
+        "mean": 6.318,
+        "median": 6.4,
+        "sd": 1.452,
+        "q1": 5.4,
+        "high_share": 5.8091,
+        "below_five_share": 17.9806,
+        "mean_votes": 18266.41
+      },
+      "east_asia_china": {
+        "n": 958,
+        "mean": 6.2335,
+        "median": 6.5,
+        "sd": 1.688,
+        "q1": 5.2,
+        "high_share": 8.0376,
+        "below_five_share": 21.8163,
+        "mean_votes": 18751.62
+      },
+      "delta": -0.0845
+    },
+    "2018": {
+      "north_america": {
+        "n": 716,
+        "mean": 6.2756,
+        "median": 6.3,
+        "sd": 1.4772,
+        "q1": 5.3,
+        "high_share": 8.2402,
+        "below_five_share": 18.7151,
+        "mean_votes": 20714.53
+      },
+      "east_asia_china": {
+        "n": 908,
+        "mean": 6.1649,
+        "median": 6.3,
+        "sd": 1.5853,
+        "q1": 5.2,
+        "high_share": 7.1586,
+        "below_five_share": 21.9163,
+        "mean_votes": 25445.87
+      },
+      "delta": -0.1107
+    },
+    "2019": {
+      "north_america": {
+        "n": 687,
+        "mean": 6.344,
+        "median": 6.4,
+        "sd": 1.4472,
+        "q1": 5.5,
+        "high_share": 7.4236,
+        "below_five_share": 18.1951,
+        "mean_votes": 20758.97
+      },
+      "east_asia_china": {
+        "n": 928,
+        "mean": 6.3089,
+        "median": 6.5,
+        "sd": 1.5076,
+        "q1": 5.4,
+        "high_share": 7.6509,
+        "below_five_share": 18.319,
+        "mean_votes": 29231.97
+      },
+      "delta": -0.035
+    },
+    "2020": {
+      "north_america": {
+        "n": 555,
+        "mean": 6.2431,
+        "median": 6.2,
+        "sd": 1.4632,
+        "q1": 5.2,
+        "high_share": 6.1261,
+        "below_five_share": 20.3604,
+        "mean_votes": 11211.72
+      },
+      "east_asia_china": {
+        "n": 800,
+        "mean": 6.1805,
+        "median": 6.3,
+        "sd": 1.5949,
+        "q1": 5.1,
+        "high_share": 7.5,
+        "below_five_share": 22.75,
+        "mean_votes": 14849.07
+      },
+      "delta": -0.0626
+    },
+    "2021": {
+      "north_america": {
+        "n": 534,
+        "mean": 6.3066,
+        "median": 6.3,
+        "sd": 1.3746,
+        "q1": 5.4,
+        "high_share": 5.8052,
+        "below_five_share": 16.6667,
+        "mean_votes": 16283.04
+      },
+      "east_asia_china": {
+        "n": 904,
+        "mean": 6.2478,
+        "median": 6.4,
+        "sd": 1.552,
+        "q1": 5.1,
+        "high_share": 7.3009,
+        "below_five_share": 22.7876,
+        "mean_votes": 21332.61
+      },
+      "delta": -0.0588
+    },
+    "2022": {
+      "north_america": {
+        "n": 604,
+        "mean": 6.1083,
+        "median": 6.2,
+        "sd": 1.3387,
+        "q1": 5.2,
+        "high_share": 3.1457,
+        "below_five_share": 21.0265,
+        "mean_votes": 12511.34
+      },
+      "east_asia_china": {
+        "n": 684,
+        "mean": 6.0994,
+        "median": 6.3,
+        "sd": 1.4477,
+        "q1": 5.0,
+        "high_share": 4.6784,
+        "below_five_share": 24.269,
+        "mean_votes": 17444.53
+      },
+      "delta": -0.0089
+    },
+    "2023": {
+      "north_america": {
+        "n": 553,
+        "mean": 6.0859,
+        "median": 6.1,
+        "sd": 1.2348,
+        "q1": 5.2,
+        "high_share": 3.6166,
+        "below_five_share": 20.0723,
+        "mean_votes": 14831.86
+      },
+      "east_asia_china": {
+        "n": 635,
+        "mean": 6.1306,
+        "median": 6.2,
+        "sd": 1.3701,
+        "q1": 5.2,
+        "high_share": 4.4094,
+        "below_five_share": 20.1575,
+        "mean_votes": 28345.22
+      },
+      "delta": 0.0447
+    },
+    "2024": {
+      "north_america": {
+        "n": 455,
+        "mean": 5.9807,
+        "median": 5.9,
+        "sd": 1.2355,
+        "q1": 5.1,
+        "high_share": 2.8571,
+        "below_five_share": 20.8791,
+        "mean_votes": 10761.48
+      },
+      "east_asia_china": {
+        "n": 530,
+        "mean": 6.0766,
+        "median": 6.0,
+        "sd": 1.3229,
+        "q1": 5.2,
+        "high_share": 4.1509,
+        "below_five_share": 18.4906,
+        "mean_votes": 23857.83
+      },
+      "delta": 0.0959
+    },
+    "2025": {
+      "north_america": {
+        "n": 383,
+        "mean": 6.0308,
+        "median": 6.0,
+        "sd": 1.1978,
+        "q1": 5.2,
+        "high_share": 2.611,
+        "below_five_share": 19.0601,
+        "mean_votes": 13750.19
+      },
+      "east_asia_china": {
+        "n": 365,
+        "mean": 6.2564,
+        "median": 6.3,
+        "sd": 1.1371,
+        "q1": 5.4,
+        "high_share": 2.7397,
+        "below_five_share": 14.2466,
+        "mean_votes": 23725.66
+      },
+      "delta": 0.2256
+    },
+    "2026": {
+      "north_america": {
+        "n": 123,
+        "mean": 6.2732,
+        "median": 6.3,
+        "sd": 1.2116,
+        "q1": 5.4,
+        "high_share": 4.065,
+        "below_five_share": 13.0081,
+        "mean_votes": 18654.54
+      },
+      "east_asia_china": {
+        "n": 97,
+        "mean": 6.4433,
+        "median": 6.4,
+        "sd": 1.124,
+        "q1": 5.7,
+        "high_share": 3.0928,
+        "below_five_share": 9.2784,
+        "mean_votes": 40253.78
+      },
+      "delta": 0.1701
+    }
+  },
+  "year_2011": {
+    "north_america": {
+      "n": 588,
+      "mean": 6.6509,
+      "median": 6.7,
+      "sd": 1.4358,
+      "q1": 5.8,
+      "high_share": 10.034,
+      "below_five_share": 12.415,
+      "mean_votes": 20902.84
+    },
+    "east_asia_china": {
+      "n": 821,
+      "mean": 6.584,
+      "median": 6.7,
+      "sd": 1.433,
+      "q1": 5.9,
+      "high_share": 7.7954,
+      "below_five_share": 13.3983,
+      "mean_votes": 14554.92
+    },
+    "delta": -0.0668
+  },
+  "yearly_region_sign_changes_min_n_30": [
+    {
+      "from_year": 1994,
+      "to_year": 1995,
+      "from_delta": -0.1863,
+      "to_delta": 0.0039
+    },
+    {
+      "from_year": 1995,
+      "to_year": 1996,
+      "from_delta": 0.0039,
+      "to_delta": -0.0267
+    },
+    {
+      "from_year": 2005,
+      "to_year": 2006,
+      "from_delta": -0.0866,
+      "to_delta": 0.1493
+    },
+    {
+      "from_year": 2010,
+      "to_year": 2011,
+      "from_delta": 0.0425,
+      "to_delta": -0.0668
+    },
+    {
+      "from_year": 2022,
+      "to_year": 2023,
+      "from_delta": -0.0089,
+      "to_delta": 0.0447
+    }
+  ],
+  "cutoff_2010": {
+    "before": {
+      "n": 28642,
+      "mean": 7.1847,
+      "median": 7.3,
+      "sd": 1.0581,
+      "q1": 6.5,
+      "high_share": 10.2402,
+      "below_five_share": 2.8978,
+      "mean_votes": 10253.17
+    },
+    "after": {
+      "n": 34383,
+      "mean": 6.4571,
+      "median": 6.6,
+      "sd": 1.4303,
+      "q1": 5.6,
+      "high_share": 6.9773,
+      "below_five_share": 15.1441,
+      "mean_votes": 14667.59
+    }
+  },
+  "cutoff_sensitivity": {
+    "values": [
+      {
+        "cutoff": 1990,
+        "before": {
+          "n": 10273,
+          "mean": 7.3463,
+          "median": 7.4,
+          "sd": 0.8909,
+          "q1": 6.7,
+          "high_share": 10.2404,
+          "below_five_share": 0.6035,
+          "mean_votes": 3969.49
+        },
+        "after": {
+          "n": 52752,
+          "mean": 6.679,
+          "median": 6.8,
+          "sd": 1.3678,
+          "q1": 5.9,
+          "high_share": 8.1134,
+          "below_five_share": 11.3266,
+          "mean_votes": 14354.12
+        },
+        "mean_gap": 0.6673
+      },
+      {
+        "cutoff": 1991,
+        "before": {
+          "n": 10729,
+          "mean": 7.3393,
+          "median": 7.4,
+          "sd": 0.8932,
+          "q1": 6.7,
+          "high_share": 10.1967,
+          "below_five_share": 0.6058,
+          "mean_votes": 4208.39
+        },
+        "after": {
+          "n": 52296,
+          "mean": 6.6746,
+          "median": 6.8,
+          "sd": 1.3702,
+          "q1": 5.9,
+          "high_share": 8.1039,
+          "below_five_share": 11.4196,
+          "mean_votes": 14395.66
+        },
+        "mean_gap": 0.6647
+      },
+      {
+        "cutoff": 1992,
+        "before": {
+          "n": 11198,
+          "mean": 7.3333,
+          "median": 7.4,
+          "sd": 0.9008,
+          "q1": 6.7,
+          "high_share": 10.2608,
+          "below_five_share": 0.6876,
+          "mean_votes": 4491.21
+        },
+        "after": {
+          "n": 51827,
+          "mean": 6.6699,
+          "median": 6.8,
+          "sd": 1.3719,
+          "q1": 5.9,
+          "high_share": 8.0711,
+          "below_five_share": 11.4998,
+          "mean_votes": 14426.74
+        },
+        "mean_gap": 0.6634
+      },
+      {
+        "cutoff": 1993,
+        "before": {
+          "n": 11697,
+          "mean": 7.3286,
+          "median": 7.4,
+          "sd": 0.9096,
+          "q1": 6.7,
+          "high_share": 10.336,
+          "below_five_share": 0.7523,
+          "mean_votes": 4889.17
+        },
+        "after": {
+          "n": 51328,
+          "mean": 6.6645,
+          "median": 6.8,
+          "sd": 1.3733,
+          "q1": 5.8,
+          "high_share": 8.0327,
+          "below_five_share": 11.5902,
+          "mean_votes": 14432.64
+        },
+        "mean_gap": 0.6641
+      },
+      {
+        "cutoff": 1994,
+        "before": {
+          "n": 12200,
+          "mean": 7.3228,
+          "median": 7.4,
+          "sd": 0.9171,
+          "q1": 6.7,
+          "high_share": 10.3525,
+          "below_five_share": 0.8525,
+          "mean_votes": 5449.81
+        },
+        "after": {
+          "n": 50825,
+          "mean": 6.6593,
+          "median": 6.8,
+          "sd": 1.375,
+          "q1": 5.8,
+          "high_share": 8.0059,
+          "below_five_share": 11.6734,
+          "mean_votes": 14392.51
+        },
+        "mean_gap": 0.6635
+      },
+      {
+        "cutoff": 1995,
+        "before": {
+          "n": 12729,
+          "mean": 7.3193,
+          "median": 7.4,
+          "sd": 0.9206,
+          "q1": 6.7,
+          "high_share": 10.3936,
+          "below_five_share": 0.872,
+          "mean_votes": 6343.76
+        },
+        "after": {
+          "n": 50296,
+          "mean": 6.6533,
+          "median": 6.8,
+          "sd": 1.3771,
+          "q1": 5.8,
+          "high_share": 7.9708,
+          "below_five_share": 11.7822,
+          "mean_votes": 14260.33
+        },
+        "mean_gap": 0.666
+      },
+      {
+        "cutoff": 1996,
+        "before": {
+          "n": 13290,
+          "mean": 7.3209,
+          "median": 7.4,
+          "sd": 0.9243,
+          "q1": 6.7,
+          "high_share": 10.5267,
+          "below_five_share": 0.8879,
+          "mean_votes": 6700.14
+        },
+        "after": {
+          "n": 49735,
+          "mean": 6.6453,
+          "median": 6.8,
+          "sd": 1.3787,
+          "q1": 5.8,
+          "high_share": 7.9079,
+          "below_five_share": 11.9011,
+          "mean_votes": 14254.39
+        },
+        "mean_gap": 0.6756
+      },
+      {
+        "cutoff": 1997,
+        "before": {
+          "n": 13835,
+          "mean": 7.3198,
+          "median": 7.4,
+          "sd": 0.9225,
+          "q1": 6.7,
+          "high_share": 10.4662,
+          "below_five_share": 0.8746,
+          "mean_votes": 6788.26
+        },
+        "after": {
+          "n": 49190,
+          "mean": 6.6381,
+          "median": 6.8,
+          "sd": 1.3816,
+          "q1": 5.8,
+          "high_share": 7.8959,
+          "below_five_share": 12.0268,
+          "mean_votes": 14313.31
+        },
+        "mean_gap": 0.6817
+      },
+      {
+        "cutoff": 1998,
+        "before": {
+          "n": 14378,
+          "mean": 7.3225,
+          "median": 7.4,
+          "sd": 0.9209,
+          "q1": 6.7,
+          "high_share": 10.4396,
+          "below_five_share": 0.8416,
+          "mean_votes": 7090.07
+        },
+        "after": {
+          "n": 48647,
+          "mean": 6.6297,
+          "median": 6.8,
+          "sd": 1.3839,
+          "q1": 5.8,
+          "high_share": 7.8751,
+          "below_five_share": 12.1611,
+          "mean_votes": 14308.1
+        },
+        "mean_gap": 0.6928
+      },
+      {
+        "cutoff": 1999,
+        "before": {
+          "n": 14965,
+          "mean": 7.3214,
+          "median": 7.4,
+          "sd": 0.9245,
+          "q1": 6.7,
+          "high_share": 10.4577,
+          "below_five_share": 0.9021,
+          "mean_votes": 7460.9
+        },
+        "after": {
+          "n": 48060,
+          "mean": 6.6216,
+          "median": 6.7,
+          "sd": 1.3858,
+          "q1": 5.8,
+          "high_share": 7.8381,
+          "below_five_share": 12.2805,
+          "mean_votes": 14280.79
+        },
+        "mean_gap": 0.6998
+      },
+      {
+        "cutoff": 2000,
+        "before": {
+          "n": 15608,
+          "mean": 7.3199,
+          "median": 7.4,
+          "sd": 0.9285,
+          "q1": 6.7,
+          "high_share": 10.5651,
+          "below_five_share": 0.9546,
+          "mean_votes": 7752.51
+        },
+        "after": {
+          "n": 47417,
+          "mean": 6.6126,
+          "median": 6.7,
+          "sd": 1.388,
+          "q1": 5.8,
+          "high_share": 7.7673,
+          "below_five_share": 12.4175,
+          "mean_votes": 14277.28
+        },
+        "mean_gap": 0.7073
+      },
+      {
+        "cutoff": 2001,
+        "before": {
+          "n": 16359,
+          "mean": 7.3135,
+          "median": 7.4,
+          "sd": 0.935,
+          "q1": 6.7,
+          "high_share": 10.5569,
+          "below_five_share": 1.0453,
+          "mean_votes": 7963.57
+        },
+        "after": {
+          "n": 46666,
+          "mean": 6.6035,
+          "median": 6.7,
+          "sd": 1.3908,
+          "q1": 5.8,
+          "high_share": 7.7251,
+          "below_five_share": 12.5702,
+          "mean_votes": 14308.3
+        },
+        "mean_gap": 0.71
+      },
+      {
+        "cutoff": 2002,
+        "before": {
+          "n": 17195,
+          "mean": 7.3082,
+          "median": 7.4,
+          "sd": 0.9403,
+          "q1": 6.7,
+          "high_share": 10.5845,
+          "below_five_share": 1.1282,
+          "mean_votes": 8266.53
+        },
+        "after": {
+          "n": 45830,
+          "mean": 6.5925,
+          "median": 6.7,
+          "sd": 1.3941,
+          "q1": 5.8,
+          "high_share": 7.6631,
+          "below_five_share": 12.7493,
+          "mean_votes": 14310.37
+        },
+        "mean_gap": 0.7157
+      },
+      {
+        "cutoff": 2003,
+        "before": {
+          "n": 18104,
+          "mean": 7.301,
+          "median": 7.4,
+          "sd": 0.9482,
+          "q1": 6.7,
+          "high_share": 10.6054,
+          "below_five_share": 1.2207,
+          "mean_votes": 8491.11
+        },
+        "after": {
+          "n": 44921,
+          "mean": 6.5809,
+          "median": 6.7,
+          "sd": 1.3973,
+          "q1": 5.7,
+          "high_share": 7.5956,
+          "below_five_share": 12.9472,
+          "mean_votes": 14342.16
+        },
+        "mean_gap": 0.7201
+      },
+      {
+        "cutoff": 2004,
+        "before": {
+          "n": 19048,
+          "mean": 7.2966,
+          "median": 7.4,
+          "sd": 0.958,
+          "q1": 6.7,
+          "high_share": 10.7623,
+          "below_five_share": 1.3177,
+          "mean_votes": 8976.5
+        },
+        "after": {
+          "n": 43977,
+          "mean": 6.5674,
+          "median": 6.7,
+          "sd": 1.3995,
+          "q1": 5.7,
+          "high_share": 7.463,
+          "below_five_share": 13.1569,
+          "mean_votes": 14257.52
+        },
+        "mean_gap": 0.7292
+      },
+      {
+        "cutoff": 2005,
+        "before": {
+          "n": 20158,
+          "mean": 7.2886,
+          "median": 7.4,
+          "sd": 0.9637,
+          "q1": 6.7,
+          "high_share": 10.7501,
+          "below_five_share": 1.3692,
+          "mean_votes": 9450.08
+        },
+        "after": {
+          "n": 42867,
+          "mean": 6.5522,
+          "median": 6.7,
+          "sd": 1.4042,
+          "q1": 5.7,
+          "high_share": 7.3833,
+          "below_five_share": 13.4392,
+          "mean_votes": 14171.56
+        },
+        "mean_gap": 0.7364
+      },
+      {
+        "cutoff": 2006,
+        "before": {
+          "n": 21434,
+          "mean": 7.2765,
+          "median": 7.3,
+          "sd": 0.9756,
+          "q1": 6.6,
+          "high_share": 10.698,
+          "below_five_share": 1.5396,
+          "mean_votes": 9594.06
+        },
+        "after": {
+          "n": 41591,
+          "mean": 6.5359,
+          "median": 6.7,
+          "sd": 1.4086,
+          "q1": 5.7,
+          "high_share": 7.3069,
+          "below_five_share": 13.7217,
+          "mean_votes": 14242.22
+        },
+        "mean_gap": 0.7406
+      },
+      {
+        "cutoff": 2007,
+        "before": {
+          "n": 22998,
+          "mean": 7.2582,
+          "median": 7.3,
+          "sd": 0.9896,
+          "q1": 6.6,
+          "high_share": 10.5748,
+          "below_five_share": 1.7306,
+          "mean_votes": 9704.05
+        },
+        "after": {
+          "n": 40027,
+          "mean": 6.5175,
+          "median": 6.6,
+          "sd": 1.415,
+          "q1": 5.7,
+          "high_share": 7.2451,
+          "below_five_share": 14.088,
+          "mean_votes": 14360.64
+        },
+        "mean_gap": 0.7407
+      },
+      {
+        "cutoff": 2008,
+        "before": {
+          "n": 24776,
+          "mean": 7.2361,
+          "median": 7.3,
+          "sd": 1.009,
+          "q1": 6.6,
+          "high_share": 10.4294,
+          "below_five_share": 2.0463,
+          "mean_votes": 9828.87
+        },
+        "after": {
+          "n": 38249,
+          "mean": 6.4974,
+          "median": 6.6,
+          "sd": 1.4212,
+          "q1": 5.6,
+          "high_share": 7.1845,
+          "below_five_share": 14.4579,
+          "mean_votes": 14496.25
+        },
+        "mean_gap": 0.7387
+      },
+      {
+        "cutoff": 2009,
+        "before": {
+          "n": 26654,
+          "mean": 7.2085,
+          "median": 7.3,
+          "sd": 1.0337,
+          "q1": 6.6,
+          "high_share": 10.3174,
+          "below_five_share": 2.4987,
+          "mean_votes": 9978.2
+        },
+        "after": {
+          "n": 36371,
+          "mean": 6.4794,
+          "median": 6.6,
+          "sd": 1.4266,
+          "q1": 5.6,
+          "high_share": 7.0991,
+          "below_five_share": 14.7673,
+          "mean_votes": 14627.81
+        },
+        "mean_gap": 0.7291
+      },
+      {
+        "cutoff": 2010,
+        "before": {
+          "n": 28642,
+          "mean": 7.1847,
+          "median": 7.3,
+          "sd": 1.0581,
+          "q1": 6.5,
+          "high_share": 10.2402,
+          "below_five_share": 2.8978,
+          "mean_votes": 10253.17
+        },
+        "after": {
+          "n": 34383,
+          "mean": 6.4571,
+          "median": 6.6,
+          "sd": 1.4303,
+          "q1": 5.6,
+          "high_share": 6.9773,
+          "below_five_share": 15.1441,
+          "mean_votes": 14667.59
+        },
+        "mean_gap": 0.7276
+      },
+      {
+        "cutoff": 2011,
+        "before": {
+          "n": 30614,
+          "mean": 7.1633,
+          "median": 7.3,
+          "sd": 1.0812,
+          "q1": 6.5,
+          "high_share": 10.2437,
+          "below_five_share": 3.3024,
+          "mean_votes": 10636.82
+        },
+        "after": {
+          "n": 32411,
+          "mean": 6.4331,
+          "median": 6.6,
+          "sd": 1.4324,
+          "q1": 5.5,
+          "high_share": 6.7755,
+          "below_five_share": 15.5071,
+          "mean_votes": 14573.81
+        },
+        "mean_gap": 0.7302
+      },
+      {
+        "cutoff": 2012,
+        "before": {
+          "n": 32579,
+          "mean": 7.1375,
+          "median": 7.2,
+          "sd": 1.1049,
+          "q1": 6.5,
+          "high_share": 10.1476,
+          "below_five_share": 3.7263,
+          "mean_votes": 10907.43
+        },
+        "after": {
+          "n": 30446,
+          "mean": 6.4135,
+          "median": 6.5,
+          "sd": 1.4346,
+          "q1": 5.5,
+          "high_share": 6.6544,
+          "below_five_share": 15.8412,
+          "mean_votes": 14538.34
+        },
+        "mean_gap": 0.724
+      },
+      {
+        "cutoff": 2013,
+        "before": {
+          "n": 34698,
+          "mean": 7.1074,
+          "median": 7.2,
+          "sd": 1.1331,
+          "q1": 6.5,
+          "high_share": 10.015,
+          "below_five_share": 4.2452,
+          "mean_votes": 10992.4
+        },
+        "after": {
+          "n": 28327,
+          "mean": 6.3963,
+          "median": 6.5,
+          "sd": 1.434,
+          "q1": 5.5,
+          "high_share": 6.5556,
+          "below_five_share": 16.1118,
+          "mean_votes": 14705.87
+        },
+        "mean_gap": 0.7111
+      },
+      {
+        "cutoff": 2014,
+        "before": {
+          "n": 36959,
+          "mean": 7.0789,
+          "median": 7.2,
+          "sd": 1.1636,
+          "q1": 6.4,
+          "high_share": 10.0192,
+          "below_five_share": 4.8297,
+          "mean_votes": 11233.82
+        },
+        "after": {
+          "n": 26066,
+          "mean": 6.375,
+          "median": 6.5,
+          "sd": 1.4268,
+          "q1": 5.5,
+          "high_share": 6.2495,
+          "below_five_share": 16.3124,
+          "mean_votes": 14685.66
+        },
+        "mean_gap": 0.7039
+      },
+      {
+        "cutoff": 2015,
+        "before": {
+          "n": 39295,
+          "mean": 7.0472,
+          "median": 7.2,
+          "sd": 1.1935,
+          "q1": 6.4,
+          "high_share": 9.9071,
+          "below_five_share": 5.4663,
+          "mean_votes": 11388.39
+        },
+        "after": {
+          "n": 23730,
+          "mean": 6.3581,
+          "median": 6.5,
+          "sd": 1.4175,
+          "q1": 5.5,
+          "high_share": 6.0641,
+          "below_five_share": 16.3885,
+          "mean_votes": 14769.5
+        },
+        "mean_gap": 0.6891
+      },
+      {
+        "cutoff": 2016,
+        "before": {
+          "n": 41880,
+          "mean": 7.0144,
+          "median": 7.2,
+          "sd": 1.225,
+          "q1": 6.4,
+          "high_share": 9.84,
+          "below_five_share": 6.1032,
+          "mean_votes": 11568.65
+        },
+        "after": {
+          "n": 21145,
+          "mean": 6.3388,
+          "median": 6.4,
+          "sd": 1.3997,
+          "q1": 5.4,
+          "high_share": 5.7271,
+          "below_five_share": 16.4625,
+          "mean_votes": 14825.83
+        },
+        "mean_gap": 0.6756
+      },
+      {
+        "cutoff": 2017,
+        "before": {
+          "n": 44556,
+          "mean": 6.9763,
+          "median": 7.1,
+          "sd": 1.2579,
+          "q1": 6.3,
+          "high_share": 9.6508,
+          "below_five_share": 6.8319,
+          "mean_votes": 11636.99
+        },
+        "after": {
+          "n": 18469,
+          "mean": 6.3329,
+          "median": 6.4,
+          "sd": 1.3722,
+          "q1": 5.4,
+          "high_share": 5.5877,
+          "below_five_share": 16.2055,
+          "mean_votes": 15132.9
+        },
+        "mean_gap": 0.6434
+      },
+      {
+        "cutoff": 2018,
+        "before": {
+          "n": 46978,
+          "mean": 6.948,
+          "median": 7.1,
+          "sd": 1.2766,
+          "q1": 6.3,
+          "high_share": 9.5108,
+          "below_five_share": 7.3034,
+          "mean_votes": 11883.32
+        },
+        "after": {
+          "n": 16047,
+          "mean": 6.3186,
+          "median": 6.4,
+          "sd": 1.3531,
+          "q1": 5.4,
+          "high_share": 5.3842,
+          "below_five_share": 16.2398,
+          "mean_votes": 14939.41
+        },
+        "mean_gap": 0.6294
+      },
+      {
+        "cutoff": 2019,
+        "before": {
+          "n": 49390,
+          "mean": 6.9202,
+          "median": 7.1,
+          "sd": 1.2918,
+          "q1": 6.2,
+          "high_share": 9.4068,
+          "below_five_share": 7.7485,
+          "mean_votes": 12170.08
+        },
+        "after": {
+          "n": 13635,
+          "mean": 6.3082,
+          "median": 6.4,
+          "sd": 1.334,
+          "q1": 5.4,
+          "high_share": 5.0312,
+          "below_five_share": 16.2083,
+          "mean_votes": 14441.27
+        },
+        "mean_gap": 0.612
+      },
+      {
+        "cutoff": 2020,
+        "before": {
+          "n": 51756,
+          "mean": 6.899,
+          "median": 7.1,
+          "sd": 1.3009,
+          "q1": 6.2,
+          "high_share": 9.3207,
+          "below_five_share": 8.059,
+          "mean_votes": 12565.64
+        },
+        "after": {
+          "n": 11269,
+          "mean": 6.277,
+          "median": 6.3,
+          "sd": 1.316,
+          "q1": 5.4,
+          "high_share": 4.5079,
+          "below_five_share": 16.5587,
+          "mean_votes": 13101.43
+        },
+        "mean_gap": 0.622
+      }
+    ],
+    "minimum": {
+      "cutoff": 2019,
+      "before": {
+        "n": 49390,
+        "mean": 6.9202,
+        "median": 7.1,
+        "sd": 1.2918,
+        "q1": 6.2,
+        "high_share": 9.4068,
+        "below_five_share": 7.7485,
+        "mean_votes": 12170.08
+      },
+      "after": {
+        "n": 13635,
+        "mean": 6.3082,
+        "median": 6.4,
+        "sd": 1.334,
+        "q1": 5.4,
+        "high_share": 5.0312,
+        "below_five_share": 16.2083,
+        "mean_votes": 14441.27
+      },
+      "mean_gap": 0.612
+    },
+    "maximum": {
+      "cutoff": 2007,
+      "before": {
+        "n": 22998,
+        "mean": 7.2582,
+        "median": 7.3,
+        "sd": 0.9896,
+        "q1": 6.6,
+        "high_share": 10.5748,
+        "below_five_share": 1.7306,
+        "mean_votes": 9704.05
+      },
+      "after": {
+        "n": 40027,
+        "mean": 6.5175,
+        "median": 6.6,
+        "sd": 1.415,
+        "q1": 5.7,
+        "high_share": 7.2451,
+        "below_five_share": 14.088,
+        "mean_votes": 14360.64
+      },
+      "mean_gap": 0.7407
+    }
+  },
+  "europe": {
+    "n": 15874,
+    "mean": 7.1608,
+    "median": 7.3,
+    "sd": 1.066,
+    "q1": 6.5,
+    "high_share": 10.092,
+    "below_five_share": 3.2443,
+    "mean_votes": 6560.95,
+    "top_movies": [
+      {
+        "title": "是，大臣 1984圣诞特辑",
+        "year": 1984,
+        "rating": 9.8,
+        "votes": 8494
+      },
+      {
+        "title": "悲惨世界：十周年纪念演唱会",
+        "year": 1995,
+        "rating": 9.8,
+        "votes": 2373
+      },
+      {
+        "title": "剧院魅影：25周年纪念演出",
+        "year": 2011,
+        "rating": 9.7,
+        "votes": 19382
+      },
+      {
+        "title": "地球脉动2：奇迹世界",
+        "year": 2017,
+        "rating": 9.7,
+        "votes": 3316
+      },
+      {
+        "title": "披头士精选辑",
+        "year": 1995,
+        "rating": 9.7,
+        "votes": 943
+      }
+    ]
+  },
+  "europe_standardization": {
+    "dimensions": [
+      "Decade",
+      "Genre_Code"
+    ],
+    "reference": "all publication records",
+    "europe": {
+      "raw_mean": 7.1608,
+      "distribution": {
+        "n": 15874,
+        "mean": 7.1608,
+        "median": 7.3,
+        "sd": 1.066,
+        "q1": 6.5,
+        "high_share": 10.092,
+        "below_five_share": 3.2443,
+        "mean_votes": 6560.95
+      },
+      "standardized": {
+        "mean": 7.0828,
+        "reference_weight_coverage": 1.0,
+        "cells": 35
+      }
+    },
+    "non_europe": {
+      "raw_mean": 6.6622,
+      "distribution": {
+        "n": 47151,
+        "mean": 6.6622,
+        "median": 6.8,
+        "sd": 1.3792,
+        "q1": 5.9,
+        "high_share": 7.9108,
+        "below_five_share": 11.7113,
+        "mean_votes": 14715.25
+      },
+      "standardized": {
+        "mean": 6.697,
+        "reference_weight_coverage": 1.0,
+        "cells": 35
+      }
+    },
+    "raw_gap": 0.4986,
+    "standardized_gap": 0.3858,
+    "gap_reduction": 0.1128
+  },
+  "mandarin_dialect": {
+    "mandarin": {
+      "n": 9746,
+      "mean": 6.113,
+      "median": 6.4,
+      "sd": 1.6361,
+      "q1": 5.0,
+      "high_share": 5.12,
+      "below_five_share": 24.4408,
+      "mean_votes": 20154.33
+    },
+    "dialect_mixed": {
+      "n": 3045,
+      "mean": 6.6195,
+      "median": 6.6,
+      "sd": 1.0498,
+      "q1": 6.0,
+      "high_share": 3.6782,
+      "below_five_share": 6.4039,
+      "mean_votes": 24297.36
+    },
+    "mean_delta": 0.5065,
+    "by_decade": {
+      "1990s": {
+        "mandarin": {
+          "n": 524,
+          "mean": 7.0708,
+          "median": 7.2,
+          "sd": 1.1107,
+          "q1": 6.4,
+          "high_share": 8.2061,
+          "below_five_share": 3.8168,
+          "mean_votes": 15191.56
+        },
+        "dialect_mixed": {
+          "n": 938,
+          "mean": 6.6811,
+          "median": 6.6,
+          "sd": 0.9472,
+          "q1": 6.1,
+          "high_share": 3.5181,
+          "below_five_share": 4.0512,
+          "mean_votes": 21562.85
+        },
+        "mean_delta": -0.3897
+      },
+      "2000s": {
+        "mandarin": {
+          "n": 1261,
+          "mean": 6.7692,
+          "median": 7.0,
+          "sd": 1.36,
+          "q1": 6.0,
+          "high_share": 7.0579,
+          "below_five_share": 10.3093,
+          "mean_votes": 13853.08
+        },
+        "dialect_mixed": {
+          "n": 668,
+          "mean": 6.4409,
+          "median": 6.4,
+          "sd": 1.113,
+          "q1": 5.7,
+          "high_share": 3.4431,
+          "below_five_share": 8.8323,
+          "mean_votes": 26879.85
+        },
+        "mean_delta": -0.3283
+      },
+      "2010s": {
+        "mandarin": {
+          "n": 4286,
+          "mean": 5.6075,
+          "median": 5.7,
+          "sd": 1.7484,
+          "q1": 4.2,
+          "high_share": 3.9197,
+          "below_five_share": 36.0943,
+          "mean_votes": 22689.51
+        },
+        "dialect_mixed": {
+          "n": 627,
+          "mean": 6.5582,
+          "median": 6.7,
+          "sd": 1.3277,
+          "q1": 5.8,
+          "high_share": 5.2632,
+          "below_five_share": 13.3971,
+          "mean_votes": 47060.05
+        },
+        "mean_delta": 0.9507
+      },
+      "2020s": {
+        "mandarin": {
+          "n": 2041,
+          "mean": 5.7442,
+          "median": 5.7,
+          "sd": 1.5113,
+          "q1": 4.6,
+          "high_share": 3.8707,
+          "below_five_share": 32.6311,
+          "mean_votes": 33793.07
+        },
+        "dialect_mixed": {
+          "n": 57,
+          "mean": 6.3421,
+          "median": 6.5,
+          "sd": 1.3257,
+          "q1": 5.5,
+          "high_share": 5.2632,
+          "below_five_share": 15.7895,
+          "mean_votes": 36621.7
+        },
+        "mean_delta": 0.5979
+      },
+      "Pre-1990s": {
+        "mandarin": {
+          "n": 1634,
+          "mean": 7.0862,
+          "median": 7.1,
+          "sd": 0.9263,
+          "q1": 6.5,
+          "high_share": 7.3439,
+          "below_five_share": 1.1628,
+          "mean_votes": 2922.93
+        },
+        "dialect_mixed": {
+          "n": 755,
+          "mean": 6.7727,
+          "median": 6.7,
+          "sd": 0.7564,
+          "q1": 6.3,
+          "high_share": 2.649,
+          "below_five_share": 0.6623,
+          "mean_votes": 5575.72
+        },
+        "mean_delta": -0.3135
+      }
+    }
+  },
+  "largest_year_delta_min_n_30": {
+    "year": 2016,
+    "north_america": {
+      "n": 679,
+      "mean": 6.4919,
+      "median": 6.5,
+      "sd": 1.4018,
+      "q1": 5.6,
+      "high_share": 7.2165,
+      "below_five_share": 14.7275,
+      "mean_votes": 18038.73
+    },
+    "east_asia_china": {
+      "n": 1235,
+      "mean": 5.9806,
+      "median": 6.2,
+      "sd": 1.8045,
+      "q1": 4.6,
+      "high_share": 6.3158,
+      "below_five_share": 29.0688,
+      "mean_votes": 13947.36
+    },
+    "delta": -0.5113
+  }
+}

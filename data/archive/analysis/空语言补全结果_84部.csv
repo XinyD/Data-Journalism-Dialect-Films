@@ -1,0 +1,85 @@
+﻿movie_id,片名,年份,导演,类型,地区,豆瓣链接,百度百科URL,补全语言,置信度,提取依据,备注
+2133689,啼笑因缘,1932,张石川,喜剧 / 爱情,中国大陆,https://movie.douban.com/subject/2133689/,https://baike.baidu.com/item/啼笑因缘,普通话,人工复核（默认确认）,词条为2004年电视剧非1932年电影，infobox语言=普通话,词条与目标电影不匹配；非方言
+2136261,艺海风光二：话剧团,1938,贺孟斧,爱情 / 短片,中国大陆,https://movie.douban.com/subject/2136261/,https://baike.baidu.com/item/艺海风光二,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+26430667,几番风雨,1949,何兆璋,,中国大陆,https://movie.douban.com/subject/26430667/,https://baike.baidu.com/item/几番风雨,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+1937852,追鱼,1960,应云卫,爱情 / 奇幻 / 戏曲,中国大陆,https://movie.douban.com/subject/1937852/,https://baike.baidu.com/item/追鱼,越剧,人工复核,越剧戏曲片,非方言；戏曲声腔，按v4.1属排除范围
+2080226,国际大营救,1990,谢洪,动作 / 冒险,中国大陆,https://movie.douban.com/subject/2080226/,https://baike.baidu.com/item/国际大营救,普通话,人工复核（默认确认）,词条为2012年电视剧非1990年电影，infobox语言=普通话,词条与目标电影不匹配；非方言
+3598362,郑进一的鬼故事,1990,郑进一,剧情 / 恐怖,中国台湾,https://movie.douban.com/subject/3598362/,https://baike.baidu.com/item/郑进一的鬼故事,汉语普通话,人工复核（默认确认）,制片地区=中国台湾，无对白语言字段,从制片地区推测；非方言
+4133310,惊梦魂,1995,吴耀权,恐怖,中国香港,https://movie.douban.com/subject/4133310/,https://baike.baidu.com/item/惊梦魂,粤语/普通话,人工复核,"百度百科""普通话/粤语""，抖音百科""粤语/汉语""；粤语现场收音的香港片",方言电影；粤语为主要对白语言；Tier 1；Tier 2a（20260816修正）
+2129914,八廓南街16号,1997,段锦川,纪录片,中国大陆,https://movie.douban.com/subject/2129914/,https://baike.baidu.com/item/八廓南街16号,藏语,人工复核,"百度百科""语言：藏语""；直接电影手法，同期声记录拉萨八廓街居委会日常",方言电影；藏语由居委会工作人员与居民持续使用并承担核心叙事功能；Tier 1
+1763277,山有多高,2003,汤湘竹,纪录片,中国台湾,https://movie.douban.com/subject/1763277/,https://baike.baidu.com/item/山有多高,汉语普通话,人工复核（默认确认）,infobox: 对白语言=汉语普通话,制片地区=中国台湾；词条年份为2002年；非方言
+1308060,龙的深处―失落的拼图,2003,张婉婷,纪录片 / 传记,中国香港,https://movie.douban.com/subject/1308060/,https://baike.baidu.com/item/龙的深处,粤语/安徽方言,人工复核,粤语：成龙及香港家人的日常语言；安徽方言：成龙父亲房道龙及安徽老家亲人的语言,方言电影；纪录片多语言交织，国语旁白为框架但粤语和安徽方言占显著篇幅；Tier 2a或2b
+1776198,渴望一份真爱的感觉,2005,曾念平,爱情,中国大陆,https://movie.douban.com/subject/1776198/,https://baike.baidu.com/item/渴望一份真爱的感觉,汉语普通话,人工复核（默认确认）,infobox: 对白语言=汉语普通话,非方言
+3713709,Q鱼的下午,2006,林哲乐,动画 / 短片,中国大陆,https://movie.douban.com/subject/3713709/,https://baike.baidu.com/item/Q鱼的下午,汉语普通话,人工复核（默认确认）,infobox: 语言=汉语普通话; 制片地区=中国大陆,非方言
+1980643,天上掉馅饼,2006,喻维宏,喜剧,中国大陆,https://movie.douban.com/subject/1980643/,https://baike.baidu.com/item/天上掉馅饼,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+2255686,河内，河内,2007,李伟 / 张京 / 裴俊勇,,中国 / 越南,https://movie.douban.com/subject/2255686/,https://baike.baidu.com/item/河内河内,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+5360240,我的童谣,2010,刘鼎业,,中国大陆,https://movie.douban.com/subject/5360240/,https://baike.baidu.com/item/我的童谣,普通话,人工复核（默认确认）,infobox: 对白语言=普通话,非方言
+20435136,巴别塔,2011,周圣崴,动画,中国大陆,https://movie.douban.com/subject/20435136/,https://baike.baidu.com/item/巴别塔,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+33425521,张学友1/2世纪世界巡回演唱会,2011,,音乐,中国大陆 / 中国香港,https://movie.douban.com/subject/33425521/,https://baike.baidu.com/item/张学友1/2世纪世界巡回演唱会,普通话/粤语,人工复核,演唱会,非方言；演唱会类型
+6905203,老虎,2011,毕赣,剧情,中国大陆,https://movie.douban.com/subject/6905203/,https://baike.baidu.com/item/老虎,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+11519187,我的中学时代,2012,林旭坚,剧情 / 爱情,中国大陆,https://movie.douban.com/subject/11519187/,https://baike.baidu.com/item/我的中学时代,中文,人工复核（默认确认）,infobox: 对白语言=中文,非方言
+10518931,猎人与骷髅怪,2012,白斌,动画 / 冒险 / 短片,中国大陆,https://movie.douban.com/subject/10518931/,https://baike.baidu.com/item/猎人与骷髅怪,藏语（甘孜方言）,人工复核,"百度百科""语言：藏语（甘孜方言）""；影片对白全程使用康巴地区东部甘孜方言",方言电影；Tier 1；藏语属于项目定义涵盖的少数民族语言
+19931629,痛苦的信仰,2012,胡涂,纪录片,中国大陆,https://movie.douban.com/subject/19931629/,https://baike.baidu.com/item/痛苦的信仰,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+26980826,双城记,2013,陈国辉,爱情,中国香港,https://movie.douban.com/subject/26980826/,https://baike.baidu.com/item/双城记,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+19899635,穷人·榴莲·麻药·偷渡客,2013,赵德胤,剧情,中国台湾 / 缅甸,https://movie.douban.com/subject/19899635/,https://baike.baidu.com/item/穷人·榴莲·麻药·偷渡客,云南方言/缅语,人工复核,"该片语言为""云南方言、缅语的混合""",方言电影；云南方言属汉语西南官话，缅语为外语不影响方言定性；Tier 2a
+26617033,娘惹肉,2014,王文博,,中国大陆,https://movie.douban.com/subject/26617033/,https://baike.baidu.com/item/娘惹肉,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+25945400,爱情终结战,2014,于承琳,剧情 / 爱情,中国大陆,https://movie.douban.com/subject/25945400/,https://baike.baidu.com/item/爱情终结战,普通话,人工复核（默认确认）,无infobox语言字段；制片地区=中国大陆,从制片地区推测；非方言
+26680840,夜袭寡妇村,2015,金毅,,中国大陆,https://movie.douban.com/subject/26680840/,https://baike.baidu.com/item/夜袭寡妇村,普通话,人工复核（默认确认）,infobox: 对白语言=普通话,非方言
+26716393,女导演连环杀人案,2015,姚祖妍,,中国大陆,https://movie.douban.com/subject/26716393/,https://baike.baidu.com/item/女导演连环杀人案,普通话,人工复核（默认确认）,infobox: 对白语言=普通话；制片地区=中国大陆,非方言
+30419995,把乐带回家2015,2015,韦正,,中国大陆,https://movie.douban.com/subject/30419995/,https://baike.baidu.com/item/把乐带回家2015,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+26309329,挖玉石的人,2015,赵德胤,纪录片,中国台湾 / 缅甸 Myanmar,https://movie.douban.com/subject/26309329/,https://baike.baidu.com/item/挖玉石的人,缅甸语,人工复核（默认确认）,infobox: 对白语言=缅甸语,制片地区=缅甸、中国台湾；疑似错标Region；非方言
+26411402,社交情圣,2015,吕磊,喜剧 / 爱情,中国大陆,https://movie.douban.com/subject/26411402/,https://baike.baidu.com/item/社交情圣,汉语普通话,人工复核（默认确认）,infobox: 对白语言=汉语普通话,制片地区=北京；非方言
+26370403,缺角一族,2015,江丰宏,喜剧,中国台湾,https://movie.douban.com/subject/26370403/,https://baike.baidu.com/item/缺角一族,普通话,人工复核（默认确认）,infobox: 对白语言=普通话；制片地区=中国台湾,非方言
+26691266,记忆的红气球,2015,罗景壬,剧情 / 短片,中国台湾,https://movie.douban.com/subject/26691266/,https://baike.baidu.com/item/记忆的红气球,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+26581767,钢管侠,2015,南鑫,动作,中国大陆,https://movie.douban.com/subject/26581767/,https://baike.baidu.com/item/钢管侠,汉语普通话,人工复核（默认确认）,infobox: 对白语言=汉语普通话,制片地区=中国北京；非方言
+26710701,僵尸侠,2016,邓安东,,中国大陆,https://movie.douban.com/subject/26710701/,https://baike.baidu.com/item/僵尸侠/18776811,汉语普通话,人工复核（默认确认）,制片地区=中国大陆，无对白语言字段,从制片地区推测；非方言
+26821317,永夜球场,2016,李昂 / 蔡采贝,动画 / 短片,中国大陆,https://movie.douban.com/subject/26821317/,https://baike.baidu.com/item/永夜球场,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+26826486,潘金莲就是我,2016,李亚,,中国大陆,https://movie.douban.com/subject/26826486/,https://baike.baidu.com/item/潘金莲就是我,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+27059170,王菲：幻乐一场,2016,Jennifer Chan,音乐 / 真人秀,中国大陆 / 中国香港,https://movie.douban.com/subject/27059170/,https://baike.baidu.com/item/王菲幻乐一场,普通话,人工复核,普通话演唱会纪录片；上海梅赛德斯-奔驰文化中心唯一一场个人演唱会,非方言；演唱会纪录片
+26367888,老摇滚,2016,侯祖辛,纪录片,中国大陆,https://movie.douban.com/subject/26367888/,https://baike.baidu.com/item/老摇滚,普通话,人工复核（默认确认）,infobox: 对白语言=普通话,制片地区=中国大陆；非方言
+26946396,苹果树下,2016,李汝建,纪录片,中国大陆,https://movie.douban.com/subject/26946396/,https://baike.baidu.com/item/苹果树下,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+26946692,解忧杂货铺,2016,富淞皓,,中国大陆,https://movie.douban.com/subject/26946692/,https://baike.baidu.com/item/解忧杂货铺,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+27047923,一刻邂逅,2017,夏永康,爱情 / 短片,中国大陆,https://movie.douban.com/subject/27047923/,https://baike.baidu.com/item/一刻邂逅,普通话,人工复核（默认确认）,无infobox语言字段；制片地区=中国大陆,从制片地区推测；非方言
+27062853,汉字,2017,蔡牧民,纪录片,中国台湾,https://movie.douban.com/subject/27062853/,https://baike.baidu.com/item/汉字,标准国语（台湾普通话）,人工复核,标准国语纪录片,非方言
+27174453,钢铁麦克,2017,Billy Starman,纪录片 / 音乐,中国大陆,https://movie.douban.com/subject/27174453/,https://baike.baidu.com/item/钢铁麦克,普通话,人工复核,普通话纪录片；可能涉及带口音的普通话或个别方言说唱片段，但不构成方言电影,非方言；音乐纪录片
+30397897,2018最美表演,2018,秦海璐 / 大飞 / 霍猛 / 文牧野 / 郭帆 / 毕赣 / 白雪 / 张大磊,短片,中国大陆,https://movie.douban.com/subject/30397897/,https://baike.baidu.com/item/2018最美表演,普通话,人工复核,标准普通话短片合集,非方言
+30413048,2019把乐带回家——摘星者,2018,郑思杰,短片,中国大陆,https://movie.douban.com/subject/30413048/,https://baike.baidu.com/item/把乐带回家,汉语普通话,人工复核（默认确认）,"infobox: 对白语言=汉语普通话（为""把乐带回家""IP系列通用词条，非2019摘星者专条）",词条为2011年版通用词条，2019摘星者为同IP系列作品；非方言
+30215020,不曾消失的台灣省,2018,傅榆,紀錄片 Documentary,台灣 Taiwan,https://movie.douban.com/subject/30215020/,https://baike.baidu.com/item/不曾消失的台湾省,台湾国语,人工复核,用户复核确认,台湾国语纪录片，非方言
+30359983,咚咚呛,2018,折瑞涛,动画 / 短片,中国大陆,https://movie.douban.com/subject/30359983/,https://baike.baidu.com/item/咚咚呛,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+30300095,姊姊,2018,阮凤仪,短片,中国台湾 / 美国,https://movie.douban.com/subject/30300095/,https://baike.baidu.com/item/姊姊,台湾国语/英语,人工复核,台湾国语和英语,非方言
+30279858,寒露,2018,陈莲华 / 安旭,动画 / 短片,中国大陆,https://movie.douban.com/subject/30279858/,https://baike.baidu.com/item/寒露,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+30355654,幕后,2018,赵德胤,短片,中国台湾,https://movie.douban.com/subject/30355654/,https://baike.baidu.com/item/幕后,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+26425018,幸福定格,2018,沈可尚 / 卢元奇,纪录片,中国台湾,https://movie.douban.com/subject/26425018/,https://baike.baidu.com/item/幸福定格,普通话,人工复核（默认确认）,infobox: 对白语言=普通话；制片地区=中国台湾,非方言
+30367789,我的爷爷奶奶,2018,周天一,纪录片 / 短片,中国大陆,https://movie.douban.com/subject/30367789/,https://baike.baidu.com/item/我的爷爷奶奶/14811768,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+27180883,沙海番外之蚌人,2018,,悬疑,中国大陆,https://movie.douban.com/subject/27180883/,https://baike.baidu.com/item/沙海番外之蚌人,普通话,人工复核（默认确认）,无infobox语言字段；腾讯视频独家上映，出品公司为南派泛娱/奇树有鱼/精鹰传媒（中国大陆）,从出品公司和播出平台推测；导演为秦榛；非方言
+27175979,洞两洞六,2018,王逸帆,短片,中国台湾,https://movie.douban.com/subject/27175979/,https://baike.baidu.com/item/洞两洞六,汉语普通话,人工复核（默认确认）,制片地区=中国台湾，无对白语言字段,从制片地区推测；非方言
+27017321,白鸟谷,2018,人狼 / 不思凡,动画 / 短片,中国大陆,https://movie.douban.com/subject/27017321/,https://baike.baidu.com/item/白鸟谷,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+30441138,监狱建筑师,2018,曹斐,短片,中国大陆 / 中国香港,https://movie.douban.com/subject/30441138/,https://baike.baidu.com/item/监狱建筑师,粤语,人工复核,"百度百科""语言：粤语""；""作品借助粤语对白和流行文化元素""展开叙事",方言电影；香港大馆当代美术馆委约创作，香港取景，主演周嘉玲、关尚智粤语演绎；Tier 1
+30253124,腐草为萤,2018,张宇旋,短片,中国大陆 / 法国,https://movie.douban.com/subject/30253124/,https://baike.baidu.com/item/腐草为萤,无语言,人工复核,没有语言信息,非方言
+30355660,董仔的人,2018,李中,短片,中国台湾,https://movie.douban.com/subject/30355660/,https://baike.baidu.com/item/董仔的人,汉语普通话,人工复核（默认确认）,制片地区=中国台湾，无对白语言字段,从制片地区推测；非方言
+27617283,超级大山炮之海岛奇遇,2018,崔俊杰,喜剧 / 爱情,中国大陆,https://movie.douban.com/subject/27617283/,https://baike.baidu.com/item/超级大山炮之海岛奇遇,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+30253123,运转法则,2018,蔡俊彬,短片,中国台湾,https://movie.douban.com/subject/30253123/,https://baike.baidu.com/item/运转法则,汉语普通话,人工复核（默认确认）,"infobox: 对白语言=普通话, 制片地区=中国台湾; 经典台词段说明'本片为一部无台词影片'",非方言
+30262110,闺蜜的战争,2018,王俊翔,剧情 / 喜剧 / 爱情,中国大陆,https://movie.douban.com/subject/30262110/,https://baike.baidu.com/item/闺蜜的战争,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+30263962,黄飞鸿之怒海雄风,2018,麦子善,爱情,中国大陆,https://movie.douban.com/subject/30263962/,https://baike.baidu.com/item/黄飞鸿之怒海雄风,普通话,人工复核（默认确认）,infobox: 对白语言=普通话,制片地区=中国大陆；非方言
+30396250,公交车,2019,李文愉,动画 / 短片,中国大陆,https://movie.douban.com/subject/30396250/,https://baike.baidu.com/item/公交车,无语言,人工复核,没有语言信息,非方言
+34436895,出花园,2019,张雨桐,短片,中国大陆,https://movie.douban.com/subject/34436895/,https://baike.baidu.com/item/出花园,普通话/潮汕方言,人工复核,"中国网""青春光影""标注""语言：中文/潮汕方言""；主演郑鹏生为汕头潮阳人",方言电影；Tier 2b（20260816修正）
+33716833,初潮,2019,李怡慧,剧情 / 短片,中国台湾,https://movie.douban.com/subject/33716833/,https://baike.baidu.com/item/初潮,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+30437755,动物方言,2019,雷磊,动画,中国大陆,https://movie.douban.com/subject/30437755/,https://baike.baidu.com/item/动物方言/24310211,普通话,人工复核（默认确认）,infobox: 对白语言=普通话,制片地区=美国，导演雷磊为中国导演，对白为普通话；非方言
+34436813,放映家,2019,郭仲杰,动画 / 短片,中国大陆,https://movie.douban.com/subject/34436813/,https://baike.baidu.com/item/放映家,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+33464211,消逝在雨中,2019,薄文 / 陈泽乾,短片,中国大陆,https://movie.douban.com/subject/33464211/,https://baike.baidu.com/item/消逝在雨中,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+34436898,生于意志与硝烟,2019,郭依菲,纪录片 / 短片,中国大陆,https://movie.douban.com/subject/34436898/,https://baike.baidu.com/item/生于意志与硝烟,阿拉伯语,人工复核,"西湖国际纪录片大会官方资料标注""语言：阿拉伯语""",非方言
+34825877,看无风景,2019,詹博钧,动画 / 短片,中国台湾,https://movie.douban.com/subject/34825877/,https://baike.baidu.com/item/看无风景,汉语普通话,人工复核（默认确认）,制片地区=中国台湾，无对白语言字段,从制片地区推测；非方言
+33464201,课间午餐,2019,马丽亚·包尔汉,剧情 / 短片,中国大陆,https://movie.douban.com/subject/33464201/,https://baike.baidu.com/item/课间午餐,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+34869004,遥望繁星,2019,韩萌,纪录片,中国大陆,https://movie.douban.com/subject/34869004/,https://baike.baidu.com/item/遥望繁星,汉语普通话,人工复核,只有汉语普通话标签,非方言
+33465026,面包车怎么办？,2019,邓为奇,短片,中国大陆,https://movie.douban.com/subject/33465026/,https://baike.baidu.com/item/面包车怎么办,汉语普通话,人工复核,用户人工复核：未提及，按汉语普通话处理,非方言
+35135457,Beasty,2020,殷千雅,动画,中国大陆,https://movie.douban.com/subject/35135457/,https://baike.baidu.com/item/Beasty,汉语普通话,人工复核（默认确认）,infobox: 对白语言=汉语普通话,制片地区=中国大陆；非方言
+35112693,哈啰少女,2020,王威翔,剧情,中国台湾,https://movie.douban.com/subject/35112693/,https://baike.baidu.com/item/哈啰少女,普通话,人工复核（默认确认）,infobox: 对白语言=普通话；制片地区=中国台湾,非方言
+34438659,家庭会议,2020,顾雪,纪录片 / 家庭,中国大陆,https://movie.douban.com/subject/34438659/,https://baike.baidu.com/item/家庭会议,汉语普通话,人工复核,只有汉语普通话标签,非方言
+34953763,巴依尔的春节,2020,宁浩,剧情 / 短片,中国大陆,https://movie.douban.com/subject/34953763/,https://baike.baidu.com/item/巴依尔的春节,普通话,人工复核,"搜狗百科""对白语言：普通话""；""山西口音""指口音非独立方言系统",非方言；撤销之前的方言判定（原山西方言→普通话）
+35230368,异兽觉醒,2020,林云翔,剧情 / 动作 / 科幻,中国大陆,https://movie.douban.com/subject/35230368/,https://baike.baidu.com/item/异兽觉醒,普通话,人工复核（默认确认）,infobox: 对白语言=普通话,非方言
+35376928,张敬轩x香港中乐团《盛乐》演唱会,2020,,纪录片 / 音乐 / 歌舞,中国香港,https://movie.douban.com/subject/35376928/,https://baike.baidu.com/item/张敬轩x香港中乐团盛乐演唱会,普通话/粤语,人工复核,演唱会、音乐片,非方言；演唱会
+35145653,武动乾坤,2020,霍穗强,,中国大陆,https://movie.douban.com/subject/35145653/,https://baike.baidu.com/item/武动乾坤,汉语普通话,人工复核,语言字段是汉语普通话,非方言
+35049670,牧野诡事之秦岭龙窟,2020,郑凯君,动作,中国大陆,https://movie.douban.com/subject/35049670/,https://baike.baidu.com/item/牧野诡事之秦岭龙窟,普通话,人工复核（默认确认）,infobox: 对白语言=普通话,优酷视频独家上映；非方言
+34964107,狄仁杰之深海龙宫,2020,童辉,古装,中国大陆,https://movie.douban.com/subject/34964107/,https://baike.baidu.com/item/狄仁杰之深海龙宫,普通话,人工复核（默认确认）,infobox: 对白语言=普通话,制片地区=中国大陆；非方言
+34847185,阿紫,2020,吴郁莹,纪录片,中国台湾,https://movie.douban.com/subject/34847185/,https://baike.baidu.com/item/阿紫,闽南语（台语）,人工复核,"搜狐影评""影片主要语言也以台湾这边的国、台语为主""",方言电影；台语=闽南语属闽语分支，中国境内语言变体；Tier 2a或2b
+35234380,额温枪女孩,2020,郭容非,短片,中国大陆,https://movie.douban.com/subject/35234380/,https://baike.baidu.com/item/额温枪女孩,汉语普通话,人工复核,语言字段是汉语普通话,非方言

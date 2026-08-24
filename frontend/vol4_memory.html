@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卷四：交叉筛选 | 方言电影为什么“赢”了？</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="description" content="组合年代、地区与语言条件，核对平均分背后的具体电影。回到《方言电影为什么“赢”了？》主故事。">
+    <meta property="og:title" content="卷四：交叉筛选 | 方言电影为什么“赢”了？">
+    <meta property="og:description" content="交叉筛选后查看匹配电影数与高分片目。">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- build:og -->
+    <meta property="og:image" content="assets/og-cover.jpg">
+    <!-- endbuild -->
+    <!-- build:css -->
+    <link rel="stylesheet" href="build/style.c79102603c.css">
+    <!-- endbuild -->
+    <!-- build:js -->
+    <script defer src="build/vol4.65fffd2020.js"></script>
+    <!-- endbuild -->
+</head>
+<body class="volume-page">
+    <noscript><p class="noscript-banner">本页面需要启用 JavaScript 才能浏览数据故事。请开启脚本后刷新页面。</p></noscript>
+    <div id="boot-error" class="boot-error" hidden>
+        <div class="boot-error-panel" role="alertdialog" aria-labelledby="boot-error-title" aria-describedby="boot-error-message">
+            <h2 id="boot-error-title">数据加载失败</h2>
+            <p id="boot-error-message">请通过本地服务器打开页面，不要直接双击 HTML。</p>
+            <button type="button" id="boot-error-retry">重试</button>
+        </div>
+    </div>
+    <nav class="sidebar">
+        <div class="sidebar-title">CINEMATIC TASTE</div>
+        <div class="sidebar-subtitle"><span data-publication-count>加载中</span> 部电影评分</div>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-item">导言：电影评分星图</a>
+            <a href="vol1_time.html" class="nav-item">Vol I. 年代变化</a>
+            <a href="vol2_geo.html" class="nav-item">Vol II. 地区分布</a>
+            <a href="vol3_lang.html" class="nav-item">Vol III. 语言构成</a>
+            <a href="vol4_memory.html" class="nav-item active">Vol IV. 交叉筛选</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <article class="academic-article">
+            <span class="theory-badge">组合年代、地区和语言条件</span>
+            <h1>卷四：筛选条件改变后，还剩哪些电影？</h1>
+            
+            <p>将年代、地区与语言条件组合起来，可以看到结果数量如何变化，也可以检查平均分背后由哪些电影构成。</p>
+            <p>结果按评分排序，最多展示 50 部。地区和语言沿用首页的清洗分类，页面顶部会实时显示匹配电影数。</p>
+        </article>
+
+        <div class="filter-controls">
+            <div class="filter-group">
+                <label for="filter-decade">年代</label>
+                <select id="filter-decade">
+                    <option value="All">全部年代</option>
+                    <option value="2020s">2020s</option>
+                    <option value="2010s">2010s</option>
+                    <option value="2000s">2000s</option>
+                    <option value="1990s">1990s</option>
+                    <option value="Pre-1990s">Pre-1990s</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-region">地区</label>
+                <select id="filter-region">
+                    <option value="All">全部地区</option>
+                    <option value="North_America">北美</option>
+                    <option value="Europe">欧洲</option>
+                    <option value="East_Asia">东亚</option>
+                    <option value="China">中国大陆</option>
+                    <option value="Other">其他</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="filter-language">语言组</label>
+                <select id="filter-language">
+                    <option value="All">全部语言组</option>
+                    <option value="0">英语</option>
+                    <option value="1">日语</option>
+                    <option value="4">韩语</option>
+                    <option value="2">普通话</option>
+                    <option value="3">方言</option>
+                    <option value="5">其他</option>
+                </select>
+            </div>
+        </div>
+
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2>筛选结果</h2>
+                <p class="subtitle" id="gallery-subtitle">电影数据加载中…</p>
+            </div>
+            <div class="movie-grid" id="movie-grid"></div>
+        </section>
+    </main>
+</body>
+</html>

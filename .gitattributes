@@ -1,0 +1,2 @@
+# Keep the canonical publication snapshot in regular Git (not Git LFS).
+data/cleaned/derived_movies.csv -filter -diff -merge -text

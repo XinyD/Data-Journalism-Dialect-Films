@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>空语言补全结果_84部_人工复核版</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Microsoft YaHei","Segoe UI",sans-serif; background:#f5f5f5; color:#333; line-height:1.6; }
+.container { max-width:1400px; margin:0 auto; padding:20px; }
+h1 { text-align:center; margin:20px 0 10px; font-size:24px; color:#1a1a2e; }
+.subtitle { text-align:center; color:#888; font-size:13px; margin-bottom:20px; }
+.stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:24px; }
+.stat-card { background:#fff; border-radius:8px; padding:16px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.stat-card .num { font-size:28px; font-weight:700; }
+.stat-card .label { font-size:12px; color:#888; margin-top:4px; }
+.stat-dialect .num { color:#e74c3c; }
+.stat-nondialect .num { color:#2ecc71; }
+.stat-total .num { color:#9b59b6; }
+.section-title { font-size:18px; font-weight:600; margin:24px 0 12px; padding-left:12px; border-left:4px solid #4a90d9; }
+.dialect-list { background:#fff; border-radius:8px; padding:16px; margin-bottom:16px; box-shadow:0 2px 4px rgba(0,0,0,0.06); overflow-x:auto; }
+.dialect-list table { width:100%; border-collapse:collapse; font-size:13px; }
+.dialect-list th { background:#4a90d9; color:#fff; padding:8px 10px; text-align:left; white-space:nowrap; }
+.dialect-list td { padding:6px 10px; border-bottom:1px solid #eee; vertical-align:top; }
+.dialect-list tr:hover { background:#f0f7ff; }
+.lang-dialect { color:#e74c3c; font-weight:600; }
+.lang-nondialect { color:#2ecc71; }
+.controls { display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+.controls input, .controls select { padding:6px 12px; border:1px solid #ddd; border-radius:6px; font-size:13px; }
+.controls input { flex:1; min-width:200px; }
+.detail-table { width:100%; border-collapse:collapse; font-size:12px; }
+.detail-table th { background:#34495e; color:#fff; padding:8px; text-align:left; position:sticky; top:0; z-index:10; white-space:nowrap; }
+.detail-table td { padding:6px 8px; border-bottom:1px solid #eee; vertical-align:top; }
+.detail-table tr:hover { background:#f0f7ff; }
+.table-wrap { max-height:600px; overflow:auto; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.06); background:#fff; }
+a { color:#4a90d9; text-decoration:none; }
+a:hover { text-decoration:underline; }
+.note-box { background:#fff3cd; border:1px solid #ffe08a; border-radius:8px; padding:12px 16px; margin:16px 0; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>空语言补全结果 — 84部人工复核版</h1>
+<p class="subtitle">derived_movies.csv 中语言字段为空 且 Region=China 的84部电影 | 人工复核日期：2026-08-16 | 已回填</p>
+
+<div class="note-box">
+<strong>说明：</strong>本文件为用户人工复核后的补全结果，已回填 derived_movies.csv。<br>
+1. <strong>方言电影</strong>（8部）：惊梦魂、八廓南街16号、龙的深处、猎人与骷髅怪、穷人·榴莲·麻药·偷渡客、监狱建筑师、出花园、阿紫<br>
+2. <strong>巴依尔的春节</strong>：撤销方言判定，改为普通话（非方言）<br>
+6. <strong>Tier修正（20260816）</strong>：惊梦魂 Tier 1→<strong>Tier 2a</strong>（粤语/普通话）；出花园 Tier 1→<strong>Tier 2b</strong>（普通话/潮汕方言，证据补回）<br>
+3. <strong>不曾消失的台湾省</strong>：语言=台湾国语，非方言（不删除）<br>
+4. <strong>其他</strong>：补全语言按"汉语普通话"或保留原值，均为非方言
+</div>
+
+<div class="stats-grid">
+<div class="stat-card stat-dialect"><div class="num">8</div><div class="label">方言电影</div></div>
+<div class="stat-card stat-nondialect"><div class="num">76</div><div class="label">非方言</div></div>
+<div class="stat-card stat-total"><div class="num">84</div><div class="label">总计</div></div>
+</div>
+
+<div class="section-title">方言电影清单（8部）</div>
+<div class="dialect-list">
+<table>
+<thead><tr><th>片名</th><th>年份</th><th>补全语言</th><th>地区</th><th>提取依据</th><th>备注</th></tr></thead>
+<tbody><tr>
+<td><a href="https://movie.douban.com/subject/4133310/" target="_blank">惊梦魂</a></td>
+<td>1995</td>
+<td class="lang-dialect">粤语/普通话</td>
+<td>中国香港</td>
+<td>百度百科"普通话/粤语"，抖音百科"粤语/汉语"；粤语现场收音的香港片</td>
+<td>方言电影；粤语为主要对白语言；Tier 2a（20260816修正）</td>
+</tr><tr>
+<td><a href="https://movie.douban.com/subject/2129914/" target="_blank">八廓南街16号</a></td>
+<td>1997</td>
+<td class="lang-dialect">藏语</td>
+<td>中国大陆</td>
+<td>百度百科"语言：藏语"；直接电影手法，同期声记录拉萨八廓街居委会日常</td>
+<td>方言电影；藏语由居委会工作人员与居民持续使用并承担核心叙事功能；Tier 1</td>
+</tr><tr>
+<td><a href="https://movie.douban.com/subject/1308060/" target="_blank">龙的深处―失落的拼图</a></td>
+<td>2003</td>
+<td class="lang-dialect">粤语/安徽方言</td>
+<td>中国香港</td>
+<td>粤语：成龙及香港家人的日常语言；安徽方言：成龙父亲房道龙及安徽老家亲人的语言</td>
+<td>方言电影；纪录片多语言交织，国语旁白为框架但粤语和安徽方言占显著篇幅；Tier 2a或2b</td>
+</tr><tr>
+<td><a href="https://movie.douban.com/subject/10518931/" target="_blank">猎人与骷髅怪</a></td>
+<td>2012</td>
+<td class="lang-dialect">藏语（甘孜方言）</td>
+<td>中国大陆</td>
+<td>百度百科"语言：藏语（甘孜方言）"；影片对白全程使用康巴地区东部甘孜方言</td>
+<td>方言电影；Tier 1；藏语属于项目定义涵盖的少数民族语言</td>
+</tr><tr>
+<td><a href="https://movie.douban.com/subject/19899635/" target="_blank">穷人·榴莲·麻药·偷渡客</a></td>
+<td>2013</td>
+<td class="lang-dialect">云南方言/缅语</td>
+<td>中国台湾 / 缅甸</td>
+<td>该片语言为"云南方言、缅语的混合"</td>
+<td>方言电影；云南方言属汉语西南官话，缅语为外语不影响方言定性；Tier 2a</td>
+</tr><tr>
+<td><a href="https://movie.douban.com/subject/30441138/" target="_blank">监狱建筑师</a></td>
+<td>2018</td>
+<td class="lang-dialect">粤语</td>
+<td>中国大陆 / 中国香港</td>
+<td>百度百科"语言：粤语"；"作品借助粤语对白和流行文化元素"展开叙事</td>
+<td>方言电影；香港大馆当代美术馆委约创作，香港取景，主演周嘉玲、关尚智粤语演绎；Tier 1</td>
+</tr><tr>
+<td><a href="https://movie.douban.com/subject/34436895/" target="_blank">出花园</a></td>
+<td>2019</td>
+<td class="lang-dialect">普通话/潮汕方言</td>
+<td>中国大陆</td>
+<td>中国网"青春光影"标注"语言：中文/潮汕方言"；主演郑鹏生为汕头潮阳人</td>
+<td>方言电影；Tier 2b·证据补回（20260816修正）</td>
+</tr><tr>
+<td><a href="https://movie.douban.com/subject/34847185/" target="_blank">阿紫</a></td>
+<td>2020</td>
+<td class="lang-dialect">闽南语（台语）</td>
+<td>中国台湾</td>
+<td>搜狐影评"影片主要语言也以台湾这边的国、台语为主"</td>
+<td>方言电影；台语=闽南语属闽语分支，中国境内语言变体；Tier 2a或2b</td>
+</tr></tbody></table>
+</div>
+
+<div class="section-title">全量明细表（84部，可搜索/筛选）</div>
+<div class="controls">
+<input type="text" id="search" placeholder="搜索片名/导演/语言..." oninput="filterTable()">
+<select id="filterLang" onchange="filterTable()">
+<option value="">全部语言</option><option value="中文">中文</option><option value="云南方言/缅语">云南方言/缅语</option><option value="台湾国语">台湾国语</option><option value="台湾国语/英语">台湾国语/英语</option><option value="无语言">无语言</option><option value="普通话">普通话</option><option value="普通话/粤语">普通话/粤语</option><option value="标准国语（台湾普通话）">标准国语（台湾普通话）</option><option value="汉语普通话">汉语普通话</option><option value="潮汕方言">潮汕方言</option><option value="粤语">粤语</option><option value="粤语/安徽方言">粤语/安徽方言</option><option value="缅甸语">缅甸语</option><option value="藏语">藏语</option><option value="藏语（甘孜方言）">藏语（甘孜方言）</option><option value="越剧">越剧</option><option value="闽南语（台语）">闽南语（台语）</option><option value="阿拉伯语">阿拉伯语</option></select>
+</div>
+<div class="table-wrap">
+<table class="detail-table" id="mainTable">
+<thead><tr>
+<th>片名</th><th>年份</th><th>导演</th><th>类型</th><th>地区</th>
+<th>补全语言</th><th>置信度</th><th>提取依据</th><th>备注</th><th>豆瓣</th>
+</tr></thead>
+<tbody><tr>
+<td>啼笑因缘</td>
+<td>1932</td>
+<td>张石川</td>
+<td>喜剧 / 爱情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>词条为2004年电视剧非1932年电影，infobox语言=普通话</td>
+<td>词条与目标电影不匹配；非方言</td>
+<td><a href="https://movie.douban.com/subject/2133689/" target="_blank">链接</a></td>
+</tr><tr>
+<td>艺海风光二：话剧团</td>
+<td>1938</td>
+<td>贺孟斧</td>
+<td>爱情 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/2136261/" target="_blank">链接</a></td>
+</tr><tr>
+<td>几番风雨</td>
+<td>1949</td>
+<td>何兆璋</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26430667/" target="_blank">链接</a></td>
+</tr><tr>
+<td>追鱼</td>
+<td>1960</td>
+<td>应云卫</td>
+<td>爱情 / 奇幻 / 戏曲</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">越剧</td>
+<td>人工复核</td>
+<td>越剧戏曲片</td>
+<td>非方言；戏曲声腔，按v4.1属排除范围</td>
+<td><a href="https://movie.douban.com/subject/1937852/" target="_blank">链接</a></td>
+</tr><tr>
+<td>国际大营救</td>
+<td>1990</td>
+<td>谢洪</td>
+<td>动作 / 冒险</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>词条为2012年电视剧非1990年电影，infobox语言=普通话</td>
+<td>词条与目标电影不匹配；非方言</td>
+<td><a href="https://movie.douban.com/subject/2080226/" target="_blank">链接</a></td>
+</tr><tr>
+<td>郑进一的鬼故事</td>
+<td>1990</td>
+<td>郑进一</td>
+<td>剧情 / 恐怖</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>制片地区=中国台湾，无对白语言字段</td>
+<td>从制片地区推测；非方言</td>
+<td><a href="https://movie.douban.com/subject/3598362/" target="_blank">链接</a></td>
+</tr><tr>
+<td>惊梦魂</td>
+<td>1995</td>
+<td>吴耀权</td>
+<td>恐怖</td>
+<td>中国香港</td>
+<td class="lang-dialect">粤语/普通话</td>
+<td>人工复核</td>
+<td>百度百科"普通话/粤语"，抖音百科"粤语/汉语"；粤语现场收音的香港片</td>
+<td>方言电影；粤语为主要对白语言；Tier 2a（20260816修正）</td>
+<td><a href="https://movie.douban.com/subject/4133310/" target="_blank">链接</a></td>
+</tr><tr>
+<td>八廓南街16号</td>
+<td>1997</td>
+<td>段锦川</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="lang-dialect">藏语</td>
+<td>人工复核</td>
+<td>百度百科"语言：藏语"；直接电影手法，同期声记录拉萨八廓街居委会日常</td>
+<td>方言电影；藏语由居委会工作人员与居民持续使用并承担核心叙事功能；Tier 1</td>
+<td><a href="https://movie.douban.com/subject/2129914/" target="_blank">链接</a></td>
+</tr><tr>
+<td>山有多高</td>
+<td>2003</td>
+<td>汤湘竹</td>
+<td>纪录片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=汉语普通话</td>
+<td>制片地区=中国台湾；词条年份为2002年；非方言</td>
+<td><a href="https://movie.douban.com/subject/1763277/" target="_blank">链接</a></td>
+</tr><tr>
+<td>龙的深处―失落的拼图</td>
+<td>2003</td>
+<td>张婉婷</td>
+<td>纪录片 / 传记</td>
+<td>中国香港</td>
+<td class="lang-nondialect">粤语/安徽方言</td>
+<td>人工复核</td>
+<td>粤语：成龙及香港家人的日常语言；安徽方言：成龙父亲房道龙及安徽老家亲人的语言</td>
+<td>方言电影；纪录片多语言交织，国语旁白为框架但粤语和安徽方言占显著篇幅；Tier 2a或2b</td>
+<td><a href="https://movie.douban.com/subject/1308060/" target="_blank">链接</a></td>
+</tr><tr>
+<td>渴望一份真爱的感觉</td>
+<td>2005</td>
+<td>曾念平</td>
+<td>爱情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=汉语普通话</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/1776198/" target="_blank">链接</a></td>
+</tr><tr>
+<td>Q鱼的下午</td>
+<td>2006</td>
+<td>林哲乐</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 语言=汉语普通话; 制片地区=中国大陆</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/3713709/" target="_blank">链接</a></td>
+</tr><tr>
+<td>天上掉馅饼</td>
+<td>2006</td>
+<td>喻维宏</td>
+<td>喜剧</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/1980643/" target="_blank">链接</a></td>
+</tr><tr>
+<td>河内，河内</td>
+<td>2007</td>
+<td>李伟 / 张京 / 裴俊勇</td>
+<td></td>
+<td>中国 / 越南</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/2255686/" target="_blank">链接</a></td>
+</tr><tr>
+<td>我的童谣</td>
+<td>2010</td>
+<td>刘鼎业</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/5360240/" target="_blank">链接</a></td>
+</tr><tr>
+<td>巴别塔</td>
+<td>2011</td>
+<td>周圣崴</td>
+<td>动画</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/20435136/" target="_blank">链接</a></td>
+</tr><tr>
+<td>张学友1/2世纪世界巡回演唱会</td>
+<td>2011</td>
+<td></td>
+<td>音乐</td>
+<td>中国大陆 / 中国香港</td>
+<td class="lang-nondialect">普通话/粤语</td>
+<td>人工复核</td>
+<td>演唱会</td>
+<td>非方言；演唱会类型</td>
+<td><a href="https://movie.douban.com/subject/33425521/" target="_blank">链接</a></td>
+</tr><tr>
+<td>老虎</td>
+<td>2011</td>
+<td>毕赣</td>
+<td>剧情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/6905203/" target="_blank">链接</a></td>
+</tr><tr>
+<td>我的中学时代</td>
+<td>2012</td>
+<td>林旭坚</td>
+<td>剧情 / 爱情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">中文</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=中文</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/11519187/" target="_blank">链接</a></td>
+</tr><tr>
+<td>猎人与骷髅怪</td>
+<td>2012</td>
+<td>白斌</td>
+<td>动画 / 冒险 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">藏语（甘孜方言）</td>
+<td>人工复核</td>
+<td>百度百科"语言：藏语（甘孜方言）"；影片对白全程使用康巴地区东部甘孜方言</td>
+<td>方言电影；Tier 1；藏语属于项目定义涵盖的少数民族语言</td>
+<td><a href="https://movie.douban.com/subject/10518931/" target="_blank">链接</a></td>
+</tr><tr>
+<td>痛苦的信仰</td>
+<td>2012</td>
+<td>胡涂</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/19931629/" target="_blank">链接</a></td>
+</tr><tr>
+<td>双城记</td>
+<td>2013</td>
+<td>陈国辉</td>
+<td>爱情</td>
+<td>中国香港</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26980826/" target="_blank">链接</a></td>
+</tr><tr>
+<td>穷人·榴莲·麻药·偷渡客</td>
+<td>2013</td>
+<td>赵德胤</td>
+<td>剧情</td>
+<td>中国台湾 / 缅甸</td>
+<td class="lang-nondialect">云南方言/缅语</td>
+<td>人工复核</td>
+<td>该片语言为"云南方言、缅语的混合"</td>
+<td>方言电影；云南方言属汉语西南官话，缅语为外语不影响方言定性；Tier 2a</td>
+<td><a href="https://movie.douban.com/subject/19899635/" target="_blank">链接</a></td>
+</tr><tr>
+<td>娘惹肉</td>
+<td>2014</td>
+<td>王文博</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26617033/" target="_blank">链接</a></td>
+</tr><tr>
+<td>爱情终结战</td>
+<td>2014</td>
+<td>于承琳</td>
+<td>剧情 / 爱情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>无infobox语言字段；制片地区=中国大陆</td>
+<td>从制片地区推测；非方言</td>
+<td><a href="https://movie.douban.com/subject/25945400/" target="_blank">链接</a></td>
+</tr><tr>
+<td>夜袭寡妇村</td>
+<td>2015</td>
+<td>金毅</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26680840/" target="_blank">链接</a></td>
+</tr><tr>
+<td>女导演连环杀人案</td>
+<td>2015</td>
+<td>姚祖妍</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话；制片地区=中国大陆</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26716393/" target="_blank">链接</a></td>
+</tr><tr>
+<td>把乐带回家2015</td>
+<td>2015</td>
+<td>韦正</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30419995/" target="_blank">链接</a></td>
+</tr><tr>
+<td>挖玉石的人</td>
+<td>2015</td>
+<td>赵德胤</td>
+<td>纪录片</td>
+<td>中国台湾 / 缅甸 Myanmar</td>
+<td class="lang-nondialect">缅甸语</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=缅甸语</td>
+<td>制片地区=缅甸、中国台湾；疑似错标Region；非方言</td>
+<td><a href="https://movie.douban.com/subject/26309329/" target="_blank">链接</a></td>
+</tr><tr>
+<td>社交情圣</td>
+<td>2015</td>
+<td>吕磊</td>
+<td>喜剧 / 爱情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=汉语普通话</td>
+<td>制片地区=北京；非方言</td>
+<td><a href="https://movie.douban.com/subject/26411402/" target="_blank">链接</a></td>
+</tr><tr>
+<td>缺角一族</td>
+<td>2015</td>
+<td>江丰宏</td>
+<td>喜剧</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话；制片地区=中国台湾</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26370403/" target="_blank">链接</a></td>
+</tr><tr>
+<td>记忆的红气球</td>
+<td>2015</td>
+<td>罗景壬</td>
+<td>剧情 / 短片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26691266/" target="_blank">链接</a></td>
+</tr><tr>
+<td>钢管侠</td>
+<td>2015</td>
+<td>南鑫</td>
+<td>动作</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=汉语普通话</td>
+<td>制片地区=中国北京；非方言</td>
+<td><a href="https://movie.douban.com/subject/26581767/" target="_blank">链接</a></td>
+</tr><tr>
+<td>僵尸侠</td>
+<td>2016</td>
+<td>邓安东</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>制片地区=中国大陆，无对白语言字段</td>
+<td>从制片地区推测；非方言</td>
+<td><a href="https://movie.douban.com/subject/26710701/" target="_blank">链接</a></td>
+</tr><tr>
+<td>永夜球场</td>
+<td>2016</td>
+<td>李昂 / 蔡采贝</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26821317/" target="_blank">链接</a></td>
+</tr><tr>
+<td>潘金莲就是我</td>
+<td>2016</td>
+<td>李亚</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26826486/" target="_blank">链接</a></td>
+</tr><tr>
+<td>王菲：幻乐一场</td>
+<td>2016</td>
+<td>Jennifer Chan</td>
+<td>音乐 / 真人秀</td>
+<td>中国大陆 / 中国香港</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核</td>
+<td>普通话演唱会纪录片；上海梅赛德斯-奔驰文化中心唯一一场个人演唱会</td>
+<td>非方言；演唱会纪录片</td>
+<td><a href="https://movie.douban.com/subject/27059170/" target="_blank">链接</a></td>
+</tr><tr>
+<td>老摇滚</td>
+<td>2016</td>
+<td>侯祖辛</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话</td>
+<td>制片地区=中国大陆；非方言</td>
+<td><a href="https://movie.douban.com/subject/26367888/" target="_blank">链接</a></td>
+</tr><tr>
+<td>苹果树下</td>
+<td>2016</td>
+<td>李汝建</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26946396/" target="_blank">链接</a></td>
+</tr><tr>
+<td>解忧杂货铺</td>
+<td>2016</td>
+<td>富淞皓</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26946692/" target="_blank">链接</a></td>
+</tr><tr>
+<td>一刻邂逅</td>
+<td>2017</td>
+<td>夏永康</td>
+<td>爱情 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>无infobox语言字段；制片地区=中国大陆</td>
+<td>从制片地区推测；非方言</td>
+<td><a href="https://movie.douban.com/subject/27047923/" target="_blank">链接</a></td>
+</tr><tr>
+<td>汉字</td>
+<td>2017</td>
+<td>蔡牧民</td>
+<td>纪录片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">标准国语（台湾普通话）</td>
+<td>人工复核</td>
+<td>标准国语纪录片</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/27062853/" target="_blank">链接</a></td>
+</tr><tr>
+<td>钢铁麦克</td>
+<td>2017</td>
+<td>Billy Starman</td>
+<td>纪录片 / 音乐</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核</td>
+<td>普通话纪录片；可能涉及带口音的普通话或个别方言说唱片段，但不构成方言电影</td>
+<td>非方言；音乐纪录片</td>
+<td><a href="https://movie.douban.com/subject/27174453/" target="_blank">链接</a></td>
+</tr><tr>
+<td>2018最美表演</td>
+<td>2018</td>
+<td>秦海璐 / 大飞 / 霍猛 / 文牧野 / 郭帆 / 毕赣 / 白雪 / 张大磊</td>
+<td>短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核</td>
+<td>标准普通话短片合集</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30397897/" target="_blank">链接</a></td>
+</tr><tr>
+<td>2019把乐带回家——摘星者</td>
+<td>2018</td>
+<td>郑思杰</td>
+<td>短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=汉语普通话（为"把乐带回家"IP系列通用词条，非2019摘星者专条）</td>
+<td>词条为2011年版通用词条，2019摘星者为同IP系列作品；非方言</td>
+<td><a href="https://movie.douban.com/subject/30413048/" target="_blank">链接</a></td>
+</tr><tr>
+<td>不曾消失的台灣省</td>
+<td>2018</td>
+<td>傅榆</td>
+<td>紀錄片 Documentary</td>
+<td>台灣 Taiwan</td>
+<td class="lang-nondialect">台湾国语</td>
+<td>人工复核</td>
+<td>用户复核确认</td>
+<td>台湾国语纪录片，非方言</td>
+<td><a href="https://movie.douban.com/subject/30215020/" target="_blank">链接</a></td>
+</tr><tr>
+<td>咚咚呛</td>
+<td>2018</td>
+<td>折瑞涛</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30359983/" target="_blank">链接</a></td>
+</tr><tr>
+<td>姊姊</td>
+<td>2018</td>
+<td>阮凤仪</td>
+<td>短片</td>
+<td>中国台湾 / 美国</td>
+<td class="lang-nondialect">台湾国语/英语</td>
+<td>人工复核</td>
+<td>台湾国语和英语</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30300095/" target="_blank">链接</a></td>
+</tr><tr>
+<td>寒露</td>
+<td>2018</td>
+<td>陈莲华 / 安旭</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30279858/" target="_blank">链接</a></td>
+</tr><tr>
+<td>幕后</td>
+<td>2018</td>
+<td>赵德胤</td>
+<td>短片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30355654/" target="_blank">链接</a></td>
+</tr><tr>
+<td>幸福定格</td>
+<td>2018</td>
+<td>沈可尚 / 卢元奇</td>
+<td>纪录片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话；制片地区=中国台湾</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/26425018/" target="_blank">链接</a></td>
+</tr><tr>
+<td>我的爷爷奶奶</td>
+<td>2018</td>
+<td>周天一</td>
+<td>纪录片 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30367789/" target="_blank">链接</a></td>
+</tr><tr>
+<td>沙海番外之蚌人</td>
+<td>2018</td>
+<td></td>
+<td>悬疑</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>无infobox语言字段；腾讯视频独家上映，出品公司为南派泛娱/奇树有鱼/精鹰传媒（中国大陆）</td>
+<td>从出品公司和播出平台推测；导演为秦榛；非方言</td>
+<td><a href="https://movie.douban.com/subject/27180883/" target="_blank">链接</a></td>
+</tr><tr>
+<td>洞两洞六</td>
+<td>2018</td>
+<td>王逸帆</td>
+<td>短片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>制片地区=中国台湾，无对白语言字段</td>
+<td>从制片地区推测；非方言</td>
+<td><a href="https://movie.douban.com/subject/27175979/" target="_blank">链接</a></td>
+</tr><tr>
+<td>白鸟谷</td>
+<td>2018</td>
+<td>人狼 / 不思凡</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/27017321/" target="_blank">链接</a></td>
+</tr><tr>
+<td>监狱建筑师</td>
+<td>2018</td>
+<td>曹斐</td>
+<td>短片</td>
+<td>中国大陆 / 中国香港</td>
+<td class="lang-dialect">粤语</td>
+<td>人工复核</td>
+<td>百度百科"语言：粤语"；"作品借助粤语对白和流行文化元素"展开叙事</td>
+<td>方言电影；香港大馆当代美术馆委约创作，香港取景，主演周嘉玲、关尚智粤语演绎；Tier 1</td>
+<td><a href="https://movie.douban.com/subject/30441138/" target="_blank">链接</a></td>
+</tr><tr>
+<td>腐草为萤</td>
+<td>2018</td>
+<td>张宇旋</td>
+<td>短片</td>
+<td>中国大陆 / 法国</td>
+<td class="lang-nondialect">无语言</td>
+<td>人工复核</td>
+<td>没有语言信息</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30253124/" target="_blank">链接</a></td>
+</tr><tr>
+<td>董仔的人</td>
+<td>2018</td>
+<td>李中</td>
+<td>短片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>制片地区=中国台湾，无对白语言字段</td>
+<td>从制片地区推测；非方言</td>
+<td><a href="https://movie.douban.com/subject/30355660/" target="_blank">链接</a></td>
+</tr><tr>
+<td>超级大山炮之海岛奇遇</td>
+<td>2018</td>
+<td>崔俊杰</td>
+<td>喜剧 / 爱情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/27617283/" target="_blank">链接</a></td>
+</tr><tr>
+<td>运转法则</td>
+<td>2018</td>
+<td>蔡俊彬</td>
+<td>短片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话, 制片地区=中国台湾; 经典台词段说明'本片为一部无台词影片'</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30253123/" target="_blank">链接</a></td>
+</tr><tr>
+<td>闺蜜的战争</td>
+<td>2018</td>
+<td>王俊翔</td>
+<td>剧情 / 喜剧 / 爱情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30262110/" target="_blank">链接</a></td>
+</tr><tr>
+<td>黄飞鸿之怒海雄风</td>
+<td>2018</td>
+<td>麦子善</td>
+<td>爱情</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话</td>
+<td>制片地区=中国大陆；非方言</td>
+<td><a href="https://movie.douban.com/subject/30263962/" target="_blank">链接</a></td>
+</tr><tr>
+<td>公交车</td>
+<td>2019</td>
+<td>李文愉</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">无语言</td>
+<td>人工复核</td>
+<td>没有语言信息</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/30396250/" target="_blank">链接</a></td>
+</tr><tr>
+<td>出花园</td>
+<td>2019</td>
+<td>张雨桐</td>
+<td>短片</td>
+<td>中国大陆</td>
+<td class="lang-dialect">普通话/潮汕方言</td>
+<td>人工复核</td>
+<td>中国网"青春光影"标注"语言：中文/潮汕方言"；主演郑鹏生为汕头潮阳人</td>
+<td>方言电影；Tier 2b·证据补回（20260816修正）</td>
+<td><a href="https://movie.douban.com/subject/34436895/" target="_blank">链接</a></td>
+</tr><tr>
+<td>初潮</td>
+<td>2019</td>
+<td>李怡慧</td>
+<td>剧情 / 短片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/33716833/" target="_blank">链接</a></td>
+</tr><tr>
+<td>动物方言</td>
+<td>2019</td>
+<td>雷磊</td>
+<td>动画</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话</td>
+<td>制片地区=美国，导演雷磊为中国导演，对白为普通话；非方言</td>
+<td><a href="https://movie.douban.com/subject/30437755/" target="_blank">链接</a></td>
+</tr><tr>
+<td>放映家</td>
+<td>2019</td>
+<td>郭仲杰</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/34436813/" target="_blank">链接</a></td>
+</tr><tr>
+<td>消逝在雨中</td>
+<td>2019</td>
+<td>薄文 / 陈泽乾</td>
+<td>短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/33464211/" target="_blank">链接</a></td>
+</tr><tr>
+<td>生于意志与硝烟</td>
+<td>2019</td>
+<td>郭依菲</td>
+<td>纪录片 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">阿拉伯语</td>
+<td>人工复核</td>
+<td>西湖国际纪录片大会官方资料标注"语言：阿拉伯语"</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/34436898/" target="_blank">链接</a></td>
+</tr><tr>
+<td>看无风景</td>
+<td>2019</td>
+<td>詹博钧</td>
+<td>动画 / 短片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>制片地区=中国台湾，无对白语言字段</td>
+<td>从制片地区推测；非方言</td>
+<td><a href="https://movie.douban.com/subject/34825877/" target="_blank">链接</a></td>
+</tr><tr>
+<td>课间午餐</td>
+<td>2019</td>
+<td>马丽亚·包尔汉</td>
+<td>剧情 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/33464201/" target="_blank">链接</a></td>
+</tr><tr>
+<td>遥望繁星</td>
+<td>2019</td>
+<td>韩萌</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>只有汉语普通话标签</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/34869004/" target="_blank">链接</a></td>
+</tr><tr>
+<td>面包车怎么办？</td>
+<td>2019</td>
+<td>邓为奇</td>
+<td>短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>用户人工复核：未提及，按汉语普通话处理</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/33465026/" target="_blank">链接</a></td>
+</tr><tr>
+<td>Beasty</td>
+<td>2020</td>
+<td>殷千雅</td>
+<td>动画</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=汉语普通话</td>
+<td>制片地区=中国大陆；非方言</td>
+<td><a href="https://movie.douban.com/subject/35135457/" target="_blank">链接</a></td>
+</tr><tr>
+<td>哈啰少女</td>
+<td>2020</td>
+<td>王威翔</td>
+<td>剧情</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话；制片地区=中国台湾</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/35112693/" target="_blank">链接</a></td>
+</tr><tr>
+<td>家庭会议</td>
+<td>2020</td>
+<td>顾雪</td>
+<td>纪录片 / 家庭</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>只有汉语普通话标签</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/34438659/" target="_blank">链接</a></td>
+</tr><tr>
+<td>巴依尔的春节</td>
+<td>2020</td>
+<td>宁浩</td>
+<td>剧情 / 短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核</td>
+<td>搜狗百科"对白语言：普通话"；"山西口音"指口音非独立方言系统</td>
+<td>非方言；撤销之前的方言判定（原山西方言→普通话）</td>
+<td><a href="https://movie.douban.com/subject/34953763/" target="_blank">链接</a></td>
+</tr><tr>
+<td>异兽觉醒</td>
+<td>2020</td>
+<td>林云翔</td>
+<td>剧情 / 动作 / 科幻</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/35230368/" target="_blank">链接</a></td>
+</tr><tr>
+<td>张敬轩x香港中乐团《盛乐》演唱会</td>
+<td>2020</td>
+<td></td>
+<td>纪录片 / 音乐 / 歌舞</td>
+<td>中国香港</td>
+<td class="lang-nondialect">普通话/粤语</td>
+<td>人工复核</td>
+<td>演唱会、音乐片</td>
+<td>非方言；演唱会</td>
+<td><a href="https://movie.douban.com/subject/35376928/" target="_blank">链接</a></td>
+</tr><tr>
+<td>武动乾坤</td>
+<td>2020</td>
+<td>霍穗强</td>
+<td></td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>语言字段是汉语普通话</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/35145653/" target="_blank">链接</a></td>
+</tr><tr>
+<td>牧野诡事之秦岭龙窟</td>
+<td>2020</td>
+<td>郑凯君</td>
+<td>动作</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话</td>
+<td>优酷视频独家上映；非方言</td>
+<td><a href="https://movie.douban.com/subject/35049670/" target="_blank">链接</a></td>
+</tr><tr>
+<td>狄仁杰之深海龙宫</td>
+<td>2020</td>
+<td>童辉</td>
+<td>古装</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">普通话</td>
+<td>人工复核（默认确认）</td>
+<td>infobox: 对白语言=普通话</td>
+<td>制片地区=中国大陆；非方言</td>
+<td><a href="https://movie.douban.com/subject/34964107/" target="_blank">链接</a></td>
+</tr><tr>
+<td>阿紫</td>
+<td>2020</td>
+<td>吴郁莹</td>
+<td>纪录片</td>
+<td>中国台湾</td>
+<td class="lang-nondialect">闽南语（台语）</td>
+<td>人工复核</td>
+<td>搜狐影评"影片主要语言也以台湾这边的国、台语为主"</td>
+<td>方言电影；台语=闽南语属闽语分支，中国境内语言变体；Tier 2a或2b</td>
+<td><a href="https://movie.douban.com/subject/34847185/" target="_blank">链接</a></td>
+</tr><tr>
+<td>额温枪女孩</td>
+<td>2020</td>
+<td>郭容非</td>
+<td>短片</td>
+<td>中国大陆</td>
+<td class="lang-nondialect">汉语普通话</td>
+<td>人工复核</td>
+<td>语言字段是汉语普通话</td>
+<td>非方言</td>
+<td><a href="https://movie.douban.com/subject/35234380/" target="_blank">链接</a></td>
+</tr></tbody></table>
+</div>
+
+<script>
+function filterTable() {
+    const search = document.getElementById('search').value.toLowerCase();
+    const lang = document.getElementById('filterLang').value;
+    const rows = document.querySelectorAll('#mainTable tbody tr');
+    rows.forEach(r => {
+        const text = r.innerText.toLowerCase();
+        const langCell = r.cells[5]?.textContent || '';
+        const matchSearch = !search || text.includes(search);
+        const matchLang = !lang || langCell === lang;
+        r.style.display = (matchSearch && matchLang) ? '' : 'none';
+    });
+}
+</script>
+</div>
+</body></html>

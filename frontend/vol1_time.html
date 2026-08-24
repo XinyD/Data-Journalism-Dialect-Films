@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卷一：年代与评分 | 方言电影为什么“赢”了？</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="description" content="从六万余部电影看年代与评分：越早的片子均分更高。回到《方言电影为什么“赢”了？》主故事。">
+    <meta property="og:title" content="卷一：年代与评分 | 方言电影为什么“赢”了？">
+    <meta property="og:description" content="气泡图以年代为横轴、平均分为纵轴，观察经典片留存与评分坡度。">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- build:og -->
+    <meta property="og:image" content="assets/og-cover.jpg">
+    <!-- endbuild -->
+    <!-- build:css -->
+    <link rel="stylesheet" href="build/style.c79102603c.css">
+    <!-- endbuild -->
+    <!-- build:js -->
+    <script defer src="build/echarts-volume.6d75e0bd14.js"></script>
+    <script defer src="build/vol1.6b8a895bfa.js"></script>
+    <!-- endbuild -->
+</head>
+<body class="volume-page">
+    <noscript><p class="noscript-banner">本页面需要启用 JavaScript 才能浏览数据故事。请开启脚本后刷新页面。</p></noscript>
+    <div id="boot-error" class="boot-error" hidden>
+        <div class="boot-error-panel" role="alertdialog" aria-labelledby="boot-error-title" aria-describedby="boot-error-message">
+            <h2 id="boot-error-title">数据加载失败</h2>
+            <p id="boot-error-message">请通过本地服务器打开页面，不要直接双击 HTML。</p>
+            <button type="button" id="boot-error-retry">重试</button>
+        </div>
+    </div>
+    <nav class="sidebar">
+        <div class="sidebar-title">CINEMATIC TASTE</div>
+        <div class="sidebar-subtitle"><span data-publication-count>加载中</span> 部电影评分</div>
+        <div class="nav-menu">
+            <a href="index.html" class="nav-item">导言：电影评分星图</a>
+            <a href="vol1_time.html" class="nav-item active">Vol I. 年代变化</a>
+            <a href="vol2_geo.html" class="nav-item">Vol II. 地区分布</a>
+            <a href="vol3_lang.html" class="nav-item">Vol III. 语言构成</a>
+            <a href="vol4_memory.html" class="nav-item">Vol IV. 交叉筛选</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <article class="academic-article">
+            <span class="theory-badge">按年代查看电影数量与评分</span>
+            <h1>卷一：老电影为什么平均分更高？</h1>
+            
+            <p>气泡图以年代为横轴、平均分为纵轴、电影数量为气泡大小。越早年代的电影数量更少、均分更高；这个走势与经典电影更容易长期留存和传播的机制一致。</p>
+            <p>平台用户、类型构成、评价人数和收录范围也随年代变化。点击气泡，可以查看每个年代由哪些电影构成。</p>
+        </article>
+
+        <div class="chart-card">
+            <h2>各年代电影数与平均评分</h2>
+            <div id="bubbleChart" class="chart-container"></div>
+        </div>
+
+        <section class="gallery-section">
+            <div class="gallery-header">
+                <h2>按年代查看电影</h2>
+                <p class="subtitle" id="gallery-subtitle">点击上方年代点查看电影</p>
+            </div>
+            <div class="movie-grid" id="movie-grid"></div>
+        </section>
+    </main>
+</body>
+</html>

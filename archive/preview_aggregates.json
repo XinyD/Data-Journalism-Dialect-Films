@@ -1,0 +1,1669 @@
+{
+ "group_sizes": {
+  "dialect": 3386,
+  "mandarin": 8243,
+  "china_dialect": 3090,
+  "china_mandarin": 7789
+ },
+ "by_decade_china": {
+  "Pre-1990s": {
+   "mandarin": {
+    "n": 1578,
+    "mean": 7.05,
+    "median": 7.0,
+    "sd": 0.9,
+    "q1": 6.4,
+    "below5_pct": 1.2,
+    "below6_pct": 8.7,
+    "high8_pct": 16.0,
+    "mean_votes": 2894.0
+   },
+   "dialect": {
+    "n": 767,
+    "mean": 6.81,
+    "median": 6.7,
+    "sd": 0.8,
+    "q1": 6.3,
+    "below5_pct": 0.7,
+    "below6_pct": 11.9,
+    "high8_pct": 8.6,
+    "mean_votes": 5499.0
+   },
+   "delta": -0.24
+  },
+  "1990s": {
+   "mandarin": {
+    "n": 514,
+    "mean": 7.05,
+    "median": 7.1,
+    "sd": 1.1,
+    "q1": 6.4,
+    "below5_pct": 3.9,
+    "below6_pct": 15.2,
+    "high8_pct": 20.4,
+    "mean_votes": 15468.0
+   },
+   "dialect": {
+    "n": 942,
+    "mean": 6.69,
+    "median": 6.6,
+    "sd": 0.96,
+    "q1": 6.1,
+    "below5_pct": 4.0,
+    "below6_pct": 21.1,
+    "high8_pct": 9.8,
+    "mean_votes": 21479.0
+   },
+   "delta": -0.36
+  },
+  "2000s": {
+   "mandarin": {
+    "n": 1209,
+    "mean": 6.74,
+    "median": 6.9,
+    "sd": 1.35,
+    "q1": 6.0,
+    "below5_pct": 10.4,
+    "below6_pct": 24.6,
+    "high8_pct": 17.0,
+    "mean_votes": 14269.0
+   },
+   "dialect": {
+    "n": 680,
+    "mean": 6.49,
+    "median": 6.45,
+    "sd": 1.16,
+    "q1": 5.8,
+    "below5_pct": 8.7,
+    "below6_pct": 31.3,
+    "high8_pct": 10.4,
+    "mean_votes": 26419.0
+   },
+   "delta": -0.25
+  },
+  "2010s": {
+   "mandarin": {
+    "n": 4126,
+    "mean": 5.55,
+    "median": 5.7,
+    "sd": 1.75,
+    "q1": 4.1,
+    "below5_pct": 37.3,
+    "below6_pct": 56.2,
+    "high8_pct": 8.5,
+    "mean_votes": 23363.0
+   },
+   "dialect": {
+    "n": 642,
+    "mean": 6.59,
+    "median": 6.7,
+    "sd": 1.34,
+    "q1": 5.8,
+    "below5_pct": 13.1,
+    "below6_pct": 29.0,
+    "high8_pct": 13.7,
+    "mean_votes": 45969.0
+   },
+   "delta": 1.04
+  },
+  "2020s": {
+   "mandarin": {
+    "n": 362,
+    "mean": 5.59,
+    "median": 5.6,
+    "sd": 1.73,
+    "q1": 4.12,
+    "below5_pct": 39.0,
+    "below6_pct": 55.8,
+    "high8_pct": 8.6,
+    "mean_votes": 28386.0
+   },
+   "dialect": {
+    "n": 59,
+    "mean": 6.37,
+    "median": 6.5,
+    "sd": 1.38,
+    "q1": 5.4,
+    "below5_pct": 15.3,
+    "below6_pct": 39.0,
+    "high8_pct": 11.9,
+    "mean_votes": 19860.0
+   },
+   "delta": 0.78
+  }
+ },
+ "china_overall": {
+  "dialect": {
+   "n": 3090,
+   "mean": 6.65,
+   "median": 6.6,
+   "sd": 1.08,
+   "q1": 6.0,
+   "below5_pct": 6.3,
+   "below6_pct": 23.0,
+   "high8_pct": 10.5,
+   "mean_votes": 23657.0
+  },
+  "mandarin": {
+   "n": 7789,
+   "mean": 6.14,
+   "median": 6.4,
+   "sd": 1.66,
+   "q1": 5.1,
+   "below5_pct": 23.7,
+   "below6_pct": 38.9,
+   "high8_pct": 12.2,
+   "mean_votes": 17517.0
+  }
+ },
+ "all_overall": {
+  "dialect": {
+   "n": 3386,
+   "mean": 6.68,
+   "median": 6.7,
+   "sd": 1.09,
+   "q1": 6.1,
+   "below5_pct": 6.2,
+   "below6_pct": 22.3,
+   "high8_pct": 11.3,
+   "mean_votes": 23908.0
+  },
+  "mandarin": {
+   "n": 8243,
+   "mean": 6.18,
+   "median": 6.5,
+   "sd": 1.65,
+   "q1": 5.1,
+   "below5_pct": 22.9,
+   "below6_pct": 37.9,
+   "high8_pct": 12.7,
+   "mean_votes": 18586.0
+  }
+ },
+ "type_controlled": {
+  "dialect": {
+   "raw": {
+    "n": 3090,
+    "mean": 6.65,
+    "median": 6.6,
+    "sd": 1.08,
+    "q1": 6.0,
+    "below5_pct": 6.3,
+    "below6_pct": 23.0,
+    "high8_pct": 10.5,
+    "mean_votes": 23657.0
+   },
+   "exclude_mixed": {
+    "n": 2958,
+    "mean": 6.6,
+    "median": 6.6,
+    "sd": 1.05,
+    "q1": 6.0,
+    "below5_pct": 6.6,
+    "below6_pct": 23.8,
+    "high8_pct": 9.1,
+    "mean_votes": 24568.0
+   },
+   "drama_only": {
+    "n": 1282,
+    "mean": 6.86,
+    "median": 6.9,
+    "sd": 1.03,
+    "q1": 6.3,
+    "below5_pct": 5.1,
+    "below6_pct": 16.3,
+    "high8_pct": 13.4,
+    "mean_votes": 33795.0
+   }
+  },
+  "mandarin": {
+   "raw": {
+    "n": 7789,
+    "mean": 6.14,
+    "median": 6.4,
+    "sd": 1.66,
+    "q1": 5.1,
+    "below5_pct": 23.7,
+    "below6_pct": 38.9,
+    "high8_pct": 12.2,
+    "mean_votes": 17517.0
+   },
+   "exclude_mixed": {
+    "n": 7212,
+    "mean": 6.01,
+    "median": 6.3,
+    "sd": 1.63,
+    "q1": 4.9,
+    "below5_pct": 25.5,
+    "below6_pct": 41.7,
+    "high8_pct": 9.5,
+    "mean_votes": 18703.0
+   },
+   "drama_only": {
+    "n": 3427,
+    "mean": 6.3,
+    "median": 6.6,
+    "sd": 1.45,
+    "q1": 5.5,
+    "below5_pct": 17.5,
+    "below6_pct": 33.6,
+    "high8_pct": 9.4,
+    "mean_votes": 22143.0
+   }
+  }
+ },
+ "cantonese_vs_non": {
+  "cantonese": {
+   "n": 2604,
+   "mean": 6.54,
+   "median": 6.5,
+   "sd": 1.06,
+   "q1": 5.9,
+   "below5_pct": 7.1,
+   "below6_pct": 25.4,
+   "high8_pct": 8.1,
+   "mean_votes": 21252.0
+  },
+  "non_cantonese": {
+   "n": 486,
+   "mean": 7.23,
+   "median": 7.3,
+   "sd": 0.99,
+   "q1": 6.7,
+   "below5_pct": 2.1,
+   "below6_pct": 10.5,
+   "high8_pct": 23.3,
+   "mean_votes": 36541.0
+  }
+ },
+ "global_layers": {
+  "eu_english": {
+   "n": 6008,
+   "mean": 7.31,
+   "median": 7.4,
+   "sd": 1.16,
+   "q1": 6.6,
+   "below5_pct": 3.6,
+   "below6_pct": 11.5,
+   "high8_pct": 29.3,
+   "mean_votes": 10375.0
+  },
+  "eu_non_dom": {
+   "n": 6005,
+   "mean": 7.18,
+   "median": 7.3,
+   "sd": 0.91,
+   "q1": 6.6,
+   "below5_pct": 1.5,
+   "below6_pct": 9.3,
+   "high8_pct": 19.3,
+   "mean_votes": 3837.0
+  },
+  "na_english": {
+   "n": 15681,
+   "mean": 6.84,
+   "median": 7.0,
+   "sd": 1.32,
+   "q1": 6.1,
+   "below5_pct": 8.8,
+   "below6_pct": 22.3,
+   "high8_pct": 19.7,
+   "mean_votes": 16104.0
+  },
+  "jp_kr": {
+   "n": 9055,
+   "mean": 7.05,
+   "median": 7.2,
+   "sd": 1.18,
+   "q1": 6.4,
+   "below5_pct": 5.3,
+   "below6_pct": 16.4,
+   "high8_pct": 23.1,
+   "mean_votes": 7726.0
+  },
+  "china_mandarin": {
+   "n": 7789,
+   "mean": 6.14,
+   "median": 6.4,
+   "sd": 1.66,
+   "q1": 5.1,
+   "below5_pct": 23.7,
+   "below6_pct": 38.9,
+   "high8_pct": 12.2,
+   "mean_votes": 17517.0
+  },
+  "china_dialect": {
+   "n": 3090,
+   "mean": 6.65,
+   "median": 6.6,
+   "sd": 1.08,
+   "q1": 6.0,
+   "below5_pct": 6.3,
+   "below6_pct": 23.0,
+   "high8_pct": 10.5,
+   "mean_votes": 23657.0
+  },
+  "europe_all": {
+   "n": 13231,
+   "mean": 7.26,
+   "median": 7.3,
+   "sd": 1.03,
+   "q1": 6.6,
+   "below5_pct": 2.5,
+   "below6_pct": 10.1,
+   "high8_pct": 24.3,
+   "mean_votes": 6926.0
+  },
+  "na_all": {
+   "n": 16612,
+   "mean": 6.86,
+   "median": 7.0,
+   "sd": 1.32,
+   "q1": 6.1,
+   "below5_pct": 8.6,
+   "below6_pct": 21.8,
+   "high8_pct": 20.1,
+   "mean_votes": 16304.0
+  }
+ },
+ "yearly_cross": {
+  "1990": {
+   "dialect": {
+    "n": 91,
+    "mean": 6.7,
+    "median": 6.6,
+    "sd": 0.7,
+    "q1": 6.2,
+    "below5_pct": 0.0,
+    "below6_pct": 11.0,
+    "high8_pct": 5.5,
+    "mean_votes": 13040.0
+   },
+   "mandarin": {
+    "n": 69,
+    "mean": 6.93,
+    "median": 6.9,
+    "sd": 1.06,
+    "q1": 6.2,
+    "below5_pct": 2.9,
+    "below6_pct": 18.8,
+    "high8_pct": 21.7,
+    "mean_votes": 5345.0
+   },
+   "delta": -0.23
+  },
+  "1991": {
+   "dialect": {
+    "n": 101,
+    "mean": 6.68,
+    "median": 6.5,
+    "sd": 0.99,
+    "q1": 6.0,
+    "below5_pct": 2.0,
+    "below6_pct": 24.8,
+    "high8_pct": 9.9,
+    "mean_votes": 22301.0
+   },
+   "mandarin": {
+    "n": 49,
+    "mean": 6.91,
+    "median": 7.1,
+    "sd": 1.21,
+    "q1": 6.3,
+    "below5_pct": 10.2,
+    "below6_pct": 16.3,
+    "high8_pct": 16.3,
+    "mean_votes": 10407.0
+   },
+   "delta": -0.23
+  },
+  "1992": {
+   "dialect": {
+    "n": 135,
+    "mean": 6.61,
+    "median": 6.6,
+    "sd": 0.91,
+    "q1": 6.0,
+    "below5_pct": 3.0,
+    "below6_pct": 23.0,
+    "high8_pct": 9.6,
+    "mean_votes": 18644.0
+   },
+   "mandarin": {
+    "n": 56,
+    "mean": 7.0,
+    "median": 7.25,
+    "sd": 1.4,
+    "q1": 6.47,
+    "below5_pct": 7.1,
+    "below6_pct": 17.9,
+    "high8_pct": 30.4,
+    "mean_votes": 4660.0
+   },
+   "delta": -0.39
+  },
+  "1993": {
+   "dialect": {
+    "n": 132,
+    "mean": 6.55,
+    "median": 6.55,
+    "sd": 0.96,
+    "q1": 5.9,
+    "below5_pct": 8.3,
+    "below6_pct": 27.3,
+    "high8_pct": 6.8,
+    "mean_votes": 28163.0
+   },
+   "mandarin": {
+    "n": 56,
+    "mean": 6.81,
+    "median": 7.0,
+    "sd": 1.21,
+    "q1": 6.1,
+    "below5_pct": 7.1,
+    "below6_pct": 21.4,
+    "high8_pct": 14.3,
+    "mean_votes": 41162.0
+   },
+   "delta": -0.26
+  },
+  "1994": {
+   "dialect": {
+    "n": 119,
+    "mean": 6.77,
+    "median": 6.7,
+    "sd": 0.97,
+    "q1": 6.1,
+    "below5_pct": 1.7,
+    "below6_pct": 20.2,
+    "high8_pct": 11.8,
+    "mean_votes": 28736.0
+   },
+   "mandarin": {
+    "n": 55,
+    "mean": 7.16,
+    "median": 7.2,
+    "sd": 0.96,
+    "q1": 6.6,
+    "below5_pct": 1.8,
+    "below6_pct": 14.5,
+    "high8_pct": 23.6,
+    "mean_votes": 26998.0
+   },
+   "delta": -0.39
+  },
+  "1995": {
+   "dialect": {
+    "n": 90,
+    "mean": 6.75,
+    "median": 6.7,
+    "sd": 0.87,
+    "q1": 6.2,
+    "below5_pct": 3.3,
+    "below6_pct": 18.9,
+    "high8_pct": 6.7,
+    "mean_votes": 13989.0
+   },
+   "mandarin": {
+    "n": 56,
+    "mean": 7.27,
+    "median": 7.45,
+    "sd": 1.01,
+    "q1": 6.6,
+    "below5_pct": 1.8,
+    "below6_pct": 12.5,
+    "high8_pct": 30.4,
+    "mean_votes": 15549.0
+   },
+   "delta": -0.52
+  },
+  "1996": {
+   "dialect": {
+    "n": 70,
+    "mean": 6.82,
+    "median": 6.7,
+    "sd": 0.9,
+    "q1": 6.3,
+    "below5_pct": 1.4,
+    "below6_pct": 14.3,
+    "high8_pct": 8.6,
+    "mean_votes": 20041.0
+   },
+   "mandarin": {
+    "n": 52,
+    "mean": 7.08,
+    "median": 7.2,
+    "sd": 0.82,
+    "q1": 6.6,
+    "below5_pct": 1.9,
+    "below6_pct": 9.6,
+    "high8_pct": 9.6,
+    "mean_votes": 5330.0
+   },
+   "delta": -0.26
+  },
+  "1997": {
+   "dialect": {
+    "n": 69,
+    "mean": 6.93,
+    "median": 6.9,
+    "sd": 0.92,
+    "q1": 6.3,
+    "below5_pct": 0.0,
+    "below6_pct": 14.5,
+    "high8_pct": 13.0,
+    "mean_votes": 19980.0
+   },
+   "mandarin": {
+    "n": 31,
+    "mean": 7.31,
+    "median": 7.4,
+    "sd": 0.81,
+    "q1": 6.7,
+    "below5_pct": 0.0,
+    "below6_pct": 6.5,
+    "high8_pct": 16.1,
+    "mean_votes": 18987.0
+   },
+   "delta": -0.38
+  },
+  "1998": {
+   "dialect": {
+    "n": 63,
+    "mean": 6.46,
+    "median": 6.7,
+    "sd": 1.17,
+    "q1": 5.55,
+    "below5_pct": 12.7,
+    "below6_pct": 31.7,
+    "high8_pct": 11.1,
+    "mean_votes": 13729.0
+   },
+   "mandarin": {
+    "n": 42,
+    "mean": 7.18,
+    "median": 7.35,
+    "sd": 0.98,
+    "q1": 6.8,
+    "below5_pct": 2.4,
+    "below6_pct": 14.3,
+    "high8_pct": 19.0,
+    "mean_votes": 11248.0
+   },
+   "delta": -0.72
+  },
+  "1999": {
+   "dialect": {
+    "n": 72,
+    "mean": 6.79,
+    "median": 6.75,
+    "sd": 1.19,
+    "q1": 6.17,
+    "below5_pct": 9.7,
+    "below6_pct": 22.2,
+    "high8_pct": 18.1,
+    "mean_votes": 31031.0
+   },
+   "mandarin": {
+    "n": 48,
+    "mean": 6.99,
+    "median": 6.9,
+    "sd": 1.14,
+    "q1": 6.15,
+    "below5_pct": 2.1,
+    "below6_pct": 14.6,
+    "high8_pct": 18.8,
+    "mean_votes": 16922.0
+   },
+   "delta": -0.2
+  },
+  "2000": {
+   "dialect": {
+    "n": 77,
+    "mean": 6.44,
+    "median": 6.3,
+    "sd": 1.22,
+    "q1": 5.7,
+    "below5_pct": 9.1,
+    "below6_pct": 36.4,
+    "high8_pct": 11.7,
+    "mean_votes": 23110.0
+   },
+   "mandarin": {
+    "n": 73,
+    "mean": 7.11,
+    "median": 7.4,
+    "sd": 1.17,
+    "q1": 6.5,
+    "below5_pct": 6.8,
+    "below6_pct": 17.8,
+    "high8_pct": 23.3,
+    "mean_votes": 13263.0
+   },
+   "delta": -0.67
+  },
+  "2001": {
+   "dialect": {
+    "n": 91,
+    "mean": 6.36,
+    "median": 6.4,
+    "sd": 0.92,
+    "q1": 5.8,
+    "below5_pct": 11.0,
+    "below6_pct": 28.6,
+    "high8_pct": 4.4,
+    "mean_votes": 15054.0
+   },
+   "mandarin": {
+    "n": 70,
+    "mean": 6.98,
+    "median": 7.15,
+    "sd": 1.3,
+    "q1": 6.33,
+    "below5_pct": 5.7,
+    "below6_pct": 20.0,
+    "high8_pct": 17.1,
+    "mean_votes": 14279.0
+   },
+   "delta": -0.62
+  },
+  "2002": {
+   "dialect": {
+    "n": 82,
+    "mean": 6.21,
+    "median": 6.3,
+    "sd": 1.21,
+    "q1": 5.4,
+    "below5_pct": 12.2,
+    "below6_pct": 42.7,
+    "high8_pct": 6.1,
+    "mean_votes": 16000.0
+   },
+   "mandarin": {
+    "n": 70,
+    "mean": 6.91,
+    "median": 7.1,
+    "sd": 1.29,
+    "q1": 6.5,
+    "below5_pct": 8.6,
+    "below6_pct": 17.1,
+    "high8_pct": 15.7,
+    "mean_votes": 16683.0
+   },
+   "delta": -0.7
+  },
+  "2003": {
+   "dialect": {
+    "n": 63,
+    "mean": 6.63,
+    "median": 6.6,
+    "sd": 1.22,
+    "q1": 5.8,
+    "below5_pct": 4.8,
+    "below6_pct": 28.6,
+    "high8_pct": 11.1,
+    "mean_votes": 37856.0
+   },
+   "mandarin": {
+    "n": 69,
+    "mean": 6.9,
+    "median": 7.1,
+    "sd": 1.21,
+    "q1": 6.3,
+    "below5_pct": 7.2,
+    "below6_pct": 18.8,
+    "high8_pct": 18.8,
+    "mean_votes": 15019.0
+   },
+   "delta": -0.27
+  },
+  "2004": {
+   "dialect": {
+    "n": 59,
+    "mean": 6.47,
+    "median": 6.2,
+    "sd": 1.15,
+    "q1": 5.8,
+    "below5_pct": 5.1,
+    "below6_pct": 33.9,
+    "high8_pct": 13.6,
+    "mean_votes": 31432.0
+   },
+   "mandarin": {
+    "n": 89,
+    "mean": 6.79,
+    "median": 6.9,
+    "sd": 1.28,
+    "q1": 6.2,
+    "below5_pct": 10.1,
+    "below6_pct": 19.1,
+    "high8_pct": 15.7,
+    "mean_votes": 15277.0
+   },
+   "delta": -0.32
+  },
+  "2005": {
+   "dialect": {
+    "n": 56,
+    "mean": 6.62,
+    "median": 6.7,
+    "sd": 1.08,
+    "q1": 5.9,
+    "below5_pct": 5.4,
+    "below6_pct": 26.8,
+    "high8_pct": 8.9,
+    "mean_votes": 27060.0
+   },
+   "mandarin": {
+    "n": 118,
+    "mean": 6.54,
+    "median": 6.7,
+    "sd": 1.42,
+    "q1": 5.62,
+    "below5_pct": 12.7,
+    "below6_pct": 31.4,
+    "high8_pct": 16.9,
+    "mean_votes": 13840.0
+   },
+   "delta": 0.08
+  },
+  "2006": {
+   "dialect": {
+    "n": 55,
+    "mean": 6.43,
+    "median": 6.3,
+    "sd": 1.19,
+    "q1": 5.7,
+    "below5_pct": 10.9,
+    "below6_pct": 32.7,
+    "high8_pct": 12.7,
+    "mean_votes": 28240.0
+   },
+   "mandarin": {
+    "n": 139,
+    "mean": 6.81,
+    "median": 7.1,
+    "sd": 1.31,
+    "q1": 6.0,
+    "below5_pct": 8.6,
+    "below6_pct": 23.7,
+    "high8_pct": 20.1,
+    "mean_votes": 14298.0
+   },
+   "delta": -0.38
+  },
+  "2007": {
+   "dialect": {
+    "n": 71,
+    "mean": 6.62,
+    "median": 6.7,
+    "sd": 1.32,
+    "q1": 5.8,
+    "below5_pct": 9.9,
+    "below6_pct": 29.6,
+    "high8_pct": 15.5,
+    "mean_votes": 28954.0
+   },
+   "mandarin": {
+    "n": 170,
+    "mean": 6.67,
+    "median": 6.9,
+    "sd": 1.31,
+    "q1": 5.9,
+    "below5_pct": 10.6,
+    "below6_pct": 27.1,
+    "high8_pct": 14.7,
+    "mean_votes": 12787.0
+   },
+   "delta": -0.05
+  },
+  "2008": {
+   "dialect": {
+    "n": 63,
+    "mean": 6.61,
+    "median": 6.5,
+    "sd": 1.18,
+    "q1": 5.85,
+    "below5_pct": 12.7,
+    "below6_pct": 28.6,
+    "high8_pct": 15.9,
+    "mean_votes": 25260.0
+   },
+   "mandarin": {
+    "n": 172,
+    "mean": 6.62,
+    "median": 6.85,
+    "sd": 1.4,
+    "q1": 5.88,
+    "below5_pct": 12.8,
+    "below6_pct": 26.2,
+    "high8_pct": 16.3,
+    "mean_votes": 18635.0
+   },
+   "delta": -0.01
+  },
+  "2009": {
+   "dialect": {
+    "n": 63,
+    "mean": 6.63,
+    "median": 6.5,
+    "sd": 0.98,
+    "q1": 6.05,
+    "below5_pct": 3.2,
+    "below6_pct": 22.2,
+    "high8_pct": 7.9,
+    "mean_votes": 40446.0
+   },
+   "mandarin": {
+    "n": 239,
+    "mean": 6.66,
+    "median": 6.8,
+    "sd": 1.44,
+    "q1": 5.7,
+    "below5_pct": 12.6,
+    "below6_pct": 28.5,
+    "high8_pct": 15.9,
+    "mean_votes": 11379.0
+   },
+   "delta": -0.03
+  },
+  "2010": {
+   "dialect": {
+    "n": 81,
+    "mean": 6.83,
+    "median": 7.1,
+    "sd": 1.12,
+    "q1": 6.1,
+    "below5_pct": 6.2,
+    "below6_pct": 19.8,
+    "high8_pct": 13.6,
+    "mean_votes": 71049.0
+   },
+   "mandarin": {
+    "n": 289,
+    "mean": 6.24,
+    "median": 6.4,
+    "sd": 1.46,
+    "q1": 5.4,
+    "below5_pct": 18.3,
+    "below6_pct": 36.3,
+    "high8_pct": 9.0,
+    "mean_votes": 13786.0
+   },
+   "delta": 0.59
+  },
+  "2011": {
+   "dialect": {
+    "n": 67,
+    "mean": 6.79,
+    "median": 7.1,
+    "sd": 1.28,
+    "q1": 6.05,
+    "below5_pct": 10.4,
+    "below6_pct": 23.9,
+    "high8_pct": 16.4,
+    "mean_votes": 37456.0
+   },
+   "mandarin": {
+    "n": 314,
+    "mean": 6.07,
+    "median": 6.3,
+    "sd": 1.53,
+    "q1": 5.03,
+    "below5_pct": 22.9,
+    "below6_pct": 43.0,
+    "high8_pct": 10.8,
+    "mean_votes": 15982.0
+   },
+   "delta": 0.72
+  },
+  "2012": {
+   "dialect": {
+    "n": 74,
+    "mean": 6.87,
+    "median": 6.9,
+    "sd": 1.27,
+    "q1": 6.4,
+    "below5_pct": 9.5,
+    "below6_pct": 16.2,
+    "high8_pct": 12.2,
+    "mean_votes": 38616.0
+   },
+   "mandarin": {
+    "n": 413,
+    "mean": 5.79,
+    "median": 5.9,
+    "sd": 1.53,
+    "q1": 4.8,
+    "below5_pct": 27.6,
+    "below6_pct": 50.6,
+    "high8_pct": 6.3,
+    "mean_votes": 13699.0
+   },
+   "delta": 1.08
+  },
+  "2013": {
+   "dialect": {
+    "n": 52,
+    "mean": 7.13,
+    "median": 7.3,
+    "sd": 1.22,
+    "q1": 6.6,
+    "below5_pct": 5.8,
+    "below6_pct": 15.4,
+    "high8_pct": 23.1,
+    "mean_votes": 37969.0
+   },
+   "mandarin": {
+    "n": 414,
+    "mean": 5.7,
+    "median": 5.8,
+    "sd": 1.75,
+    "q1": 4.33,
+    "below5_pct": 34.5,
+    "below6_pct": 53.6,
+    "high8_pct": 12.1,
+    "mean_votes": 18363.0
+   },
+   "delta": 1.43
+  },
+  "2014": {
+   "dialect": {
+    "n": 48,
+    "mean": 6.62,
+    "median": 6.7,
+    "sd": 1.37,
+    "q1": 5.6,
+    "below5_pct": 14.6,
+    "below6_pct": 33.3,
+    "high8_pct": 18.8,
+    "mean_votes": 87273.0
+   },
+   "mandarin": {
+    "n": 434,
+    "mean": 5.34,
+    "median": 5.5,
+    "sd": 1.76,
+    "q1": 3.73,
+    "below5_pct": 43.5,
+    "below6_pct": 62.4,
+    "high8_pct": 7.1,
+    "mean_votes": 17132.0
+   },
+   "delta": 1.28
+  },
+  "2015": {
+   "dialect": {
+    "n": 55,
+    "mean": 6.33,
+    "median": 6.5,
+    "sd": 1.42,
+    "q1": 5.45,
+    "below5_pct": 16.4,
+    "below6_pct": 41.8,
+    "high8_pct": 12.7,
+    "mean_votes": 27159.0
+   },
+   "mandarin": {
+    "n": 501,
+    "mean": 5.37,
+    "median": 5.2,
+    "sd": 1.95,
+    "q1": 3.6,
+    "below5_pct": 46.7,
+    "below6_pct": 59.5,
+    "high8_pct": 10.8,
+    "mean_votes": 28423.0
+   },
+   "delta": 0.96
+  },
+  "2016": {
+   "dialect": {
+    "n": 50,
+    "mean": 6.49,
+    "median": 6.95,
+    "sd": 1.45,
+    "q1": 5.48,
+    "below5_pct": 22.0,
+    "below6_pct": 32.0,
+    "high8_pct": 12.0,
+    "mean_votes": 34324.0
+   },
+   "mandarin": {
+    "n": 595,
+    "mean": 5.15,
+    "median": 5.1,
+    "sd": 1.86,
+    "q1": 3.5,
+    "below5_pct": 47.4,
+    "below6_pct": 66.7,
+    "high8_pct": 8.4,
+    "mean_votes": 15595.0
+   },
+   "delta": 1.34
+  },
+  "2017": {
+   "dialect": {
+    "n": 77,
+    "mean": 6.51,
+    "median": 6.6,
+    "sd": 1.35,
+    "q1": 5.7,
+    "below5_pct": 13.0,
+    "below6_pct": 31.2,
+    "high8_pct": 15.6,
+    "mean_votes": 39224.0
+   },
+   "mandarin": {
+    "n": 387,
+    "mean": 5.23,
+    "median": 5.3,
+    "sd": 1.73,
+    "q1": 3.8,
+    "below5_pct": 43.9,
+    "below6_pct": 61.8,
+    "high8_pct": 4.9,
+    "mean_votes": 29146.0
+   },
+   "delta": 1.28
+  },
+  "2018": {
+   "dialect": {
+    "n": 70,
+    "mean": 6.06,
+    "median": 6.1,
+    "sd": 1.4,
+    "q1": 5.12,
+    "below5_pct": 22.9,
+    "below6_pct": 44.3,
+    "high8_pct": 10.0,
+    "mean_votes": 39817.0
+   },
+   "mandarin": {
+    "n": 389,
+    "mean": 5.47,
+    "median": 5.6,
+    "sd": 1.66,
+    "q1": 4.1,
+    "below5_pct": 39.6,
+    "below6_pct": 57.8,
+    "high8_pct": 7.2,
+    "mean_votes": 39284.0
+   },
+   "delta": 0.59
+  },
+  "2019": {
+   "dialect": {
+    "n": 68,
+    "mean": 6.32,
+    "median": 6.6,
+    "sd": 1.26,
+    "q1": 5.67,
+    "below5_pct": 13.2,
+    "below6_pct": 35.3,
+    "high8_pct": 5.9,
+    "mean_votes": 47190.0
+   },
+   "mandarin": {
+    "n": 390,
+    "mean": 5.68,
+    "median": 5.7,
+    "sd": 1.62,
+    "q1": 4.43,
+    "below5_pct": 33.1,
+    "below6_pct": 55.4,
+    "high8_pct": 8.7,
+    "mean_votes": 42614.0
+   },
+   "delta": 0.64
+  },
+  "2020": {
+   "dialect": {
+    "n": 59,
+    "mean": 6.37,
+    "median": 6.5,
+    "sd": 1.38,
+    "q1": 5.4,
+    "below5_pct": 15.3,
+    "below6_pct": 39.0,
+    "high8_pct": 11.9,
+    "mean_votes": 19860.0
+   },
+   "mandarin": {
+    "n": 356,
+    "mean": 5.57,
+    "median": 5.6,
+    "sd": 1.74,
+    "q1": 4.1,
+    "below5_pct": 39.6,
+    "below6_pct": 56.2,
+    "high8_pct": 8.7,
+    "mean_votes": 19277.0
+   },
+   "delta": 0.8
+  }
+ },
+ "wave_hk": [
+  {
+   "title": "梅艳芳经典金曲演唱会",
+   "year": 2003,
+   "rating": 9.8,
+   "votes": 1120,
+   "genres": "纪录片 / 音乐 / 歌舞",
+   "lang": "粤语 / 汉语普通话",
+   "id": "30470561"
+  },
+  {
+   "title": "张国荣热·情演唱会",
+   "year": 2000,
+   "rating": 9.8,
+   "votes": 3888,
+   "genres": "纪录片 / 音乐 / 歌舞",
+   "lang": "粤语 / 汉语普通话 / 英语",
+   "id": "30466847"
+  },
+  {
+   "title": "张国荣跨越97演唱会",
+   "year": 1996,
+   "rating": 9.8,
+   "votes": 3240,
+   "genres": "纪录片 / 音乐 / 歌舞",
+   "lang": "粤语 / 汉语普通话 / 英语",
+   "id": "30468860"
+  },
+  {
+   "title": "张国荣告别演唱会",
+   "year": 1989,
+   "rating": 9.7,
+   "votes": 2097,
+   "genres": "纪录片 / 音乐 / 歌舞",
+   "lang": "粤语 / 汉语普通话 / 英语",
+   "id": "30468861"
+  },
+  {
+   "title": "张国荣拉阔音乐会",
+   "year": 2000,
+   "rating": 9.7,
+   "votes": 1278,
+   "genres": "纪录片 / 音乐 / 歌舞",
+   "lang": "粤语 / 汉语普通话 / 英语",
+   "id": "30468862"
+  },
+  {
+   "title": "BeyondLive1991生命接触演唱会",
+   "year": 1991,
+   "rating": 9.6,
+   "votes": 865,
+   "genres": "音乐 / 歌舞",
+   "lang": "粤语",
+   "id": "30474677"
+  },
+  {
+   "title": "张国荣86浓情演唱会",
+   "year": 1986,
+   "rating": 9.6,
+   "votes": 339,
+   "genres": "纪录片 / 音乐 / 歌舞",
+   "lang": "粤语 / 汉语普通话 / 英语",
+   "id": "30468873"
+  },
+  {
+   "title": "张国荣88演唱会",
+   "year": 1988,
+   "rating": 9.6,
+   "votes": 499,
+   "genres": "纪录片 / 音乐",
+   "lang": "粤语 / 汉语普通话 / 英语",
+   "id": "30468929"
+  },
+  {
+   "title": "摇滚中国乐势力演唱会",
+   "year": 1994,
+   "rating": 9.6,
+   "votes": 2571,
+   "genres": "纪录片 / 音乐",
+   "lang": "粤语 / 汉语普通话",
+   "id": "33414398"
+  },
+  {
+   "title": "梅艳芳极梦幻演唱会",
+   "year": 2002,
+   "rating": 9.6,
+   "votes": 363,
+   "genres": "纪录片 / 音乐 / 歌舞",
+   "lang": "粤语",
+   "id": "30481783"
+  }
+ ],
+ "wave_southwest": [
+  {
+   "title": "四个春天",
+   "year": 2019,
+   "rating": 8.8,
+   "votes": 147340,
+   "genres": "纪录片 / 家庭",
+   "lang": "贵州独山话",
+   "id": "27191492"
+  },
+  {
+   "title": "让子弹飞",
+   "year": 2010,
+   "rating": 8.7,
+   "votes": 1438181,
+   "genres": "剧情 / 喜剧 / 动作 / 西部",
+   "lang": "汉语普通话 / 四川话 / 山西话",
+   "id": "900072"
+  },
+  {
+   "title": "侧耳倾听3",
+   "year": 2017,
+   "rating": 8.3,
+   "votes": 102,
+   "genres": "剧情",
+   "lang": "重庆话 / 汉语普通话",
+   "id": "27089436"
+  },
+  {
+   "title": "无蝉的夏天",
+   "year": 2010,
+   "rating": 8.3,
+   "votes": 1597,
+   "genres": "nan",
+   "lang": "汉语普通话 / 四川话",
+   "id": "4718232"
+  },
+  {
+   "title": "不成问题的问题",
+   "year": 2017,
+   "rating": 8.1,
+   "votes": 92254,
+   "genres": "剧情",
+   "lang": "汉语普通话 / 北京话 / 重庆话 / 上海话",
+   "id": "26657126"
+  },
+  {
+   "title": "无名之辈",
+   "year": 2018,
+   "rating": 8.0,
+   "votes": 927485,
+   "genres": "剧情 / 喜剧",
+   "lang": "汉语普通话 / 贵州方言",
+   "id": "27110296"
+  },
+  {
+   "title": "嘿！小面",
+   "year": 2013,
+   "rating": 7.9,
+   "votes": 3814,
+   "genres": "纪录片",
+   "lang": "汉语普通话 / 重庆话",
+   "id": "25775642"
+  },
+  {
+   "title": "路边野餐",
+   "year": 2016,
+   "rating": 7.9,
+   "votes": 146141,
+   "genres": "剧情",
+   "lang": "贵州方言",
+   "id": "26337866"
+  },
+  {
+   "title": "杀生",
+   "year": 2012,
+   "rating": 7.8,
+   "votes": 204106,
+   "genres": "剧情 / 悬疑",
+   "lang": "汉语普通话 / 四川话",
+   "id": "4176542"
+  },
+  {
+   "title": "边境风云",
+   "year": 2012,
+   "rating": 7.8,
+   "votes": 98756,
+   "genres": "剧情 / 犯罪",
+   "lang": "汉语普通话 / 四川话 / 缅甸语",
+   "id": "11501396"
+  }
+ ],
+ "wave_minnan": [
+  {
+   "title": "一一",
+   "year": 2017,
+   "rating": 9.1,
+   "votes": 313439,
+   "genres": "剧情 / 爱情 / 家庭",
+   "lang": "汉语普通话 / 闽南语 / 英语 / 日语",
+   "id": "1292434"
+  },
+  {
+   "title": "不老骑士：欧兜迈环台日记",
+   "year": 2012,
+   "rating": 8.9,
+   "votes": 6038,
+   "genres": "纪录片",
+   "lang": "汉语普通话 / 闽南语",
+   "id": "11510453"
+  },
+  {
+   "title": "赛德克·巴莱",
+   "year": 2012,
+   "rating": 8.8,
+   "votes": 161142,
+   "genres": "剧情 / 历史 / 战争",
+   "lang": "赛德克语 / 闽南语 / 日语",
+   "id": "3993559"
+  },
+  {
+   "title": "长假",
+   "year": 2008,
+   "rating": 8.7,
+   "votes": 293,
+   "genres": "剧情 / 家庭",
+   "lang": "汉语普通话 / 闽南话",
+   "id": "3098844"
+  },
+  {
+   "title": "如果早知道男生也会被性侵",
+   "year": 2013,
+   "rating": 8.7,
+   "votes": 3261,
+   "genres": "剧情 / 短片",
+   "lang": "汉语普通话 / 闽南语",
+   "id": "30200085"
+  },
+  {
+   "title": "大佛普拉斯",
+   "year": 2017,
+   "rating": 8.7,
+   "votes": 367886,
+   "genres": "剧情 / 喜剧",
+   "lang": "闽南语 / 汉语普通话",
+   "id": "27059130"
+  },
+  {
+   "title": "血观音",
+   "year": 2017,
+   "rating": 8.5,
+   "votes": 329884,
+   "genres": "剧情 / 悬疑",
+   "lang": "汉语普通话 / 粤语 / 闽南语 / 日语",
+   "id": "27113517"
+  },
+  {
+   "title": "阳光普照",
+   "year": 2019,
+   "rating": 8.5,
+   "votes": 270757,
+   "genres": "剧情 / 犯罪 / 家庭",
+   "lang": "汉语普通话 / 闽南语",
+   "id": "30292777"
+  },
+  {
+   "title": "日常对话",
+   "year": 2017,
+   "rating": 8.3,
+   "votes": 13592,
+   "genres": "纪录片 / 同性",
+   "lang": "闽南语 / 汉语普通话",
+   "id": "26884826"
+  },
+  {
+   "title": "艾草",
+   "year": 2008,
+   "rating": 8.3,
+   "votes": 6377,
+   "genres": "剧情 / 同性 / 家庭",
+   "lang": "闽南语 / 汉语普通话",
+   "id": "3113588"
+  }
+ ],
+ "lang_diversity": {
+  "粤语": {
+   "n": 2603,
+   "mean": 6.54,
+   "median": 6.5,
+   "sd": 1.06,
+   "q1": 5.9,
+   "below5_pct": 7.1,
+   "below6_pct": 25.4,
+   "high8_pct": 8.1,
+   "mean_votes": 21260.0
+  },
+  "四川方言": {
+   "n": 12,
+   "mean": 6.72,
+   "median": 7.15,
+   "sd": 1.35,
+   "q1": 5.45,
+   "below5_pct": 8.3,
+   "below6_pct": 33.3,
+   "high8_pct": 25.0,
+   "mean_votes": 3857.0
+  },
+  "英语": {
+   "n": 215,
+   "mean": 7.02,
+   "median": 7.0,
+   "sd": 1.14,
+   "q1": 6.3,
+   "below5_pct": 3.3,
+   "below6_pct": 13.5,
+   "high8_pct": 17.7,
+   "mean_votes": 67386.0
+  },
+  "闽南语": {
+   "n": 117,
+   "mean": 7.39,
+   "median": 7.5,
+   "sd": 1.01,
+   "q1": 6.6,
+   "below5_pct": 1.7,
+   "below6_pct": 11.1,
+   "high8_pct": 30.8,
+   "mean_votes": 41508.0
+  },
+  "河南话": {
+   "n": 13,
+   "mean": 6.96,
+   "median": 7.2,
+   "sd": 1.63,
+   "q1": 6.0,
+   "below5_pct": 7.7,
+   "below6_pct": 23.1,
+   "high8_pct": 38.5,
+   "mean_votes": 6754.0
+  },
+  "日语": {
+   "n": 92,
+   "mean": 7.03,
+   "median": 6.95,
+   "sd": 1.11,
+   "q1": 6.4,
+   "below5_pct": 5.4,
+   "below6_pct": 12.0,
+   "high8_pct": 20.7,
+   "mean_votes": 80716.0
+  },
+  "法语": {
+   "n": 20,
+   "mean": 7.44,
+   "median": 7.4,
+   "sd": 0.94,
+   "q1": 6.57,
+   "below5_pct": 0.0,
+   "below6_pct": 5.0,
+   "high8_pct": 40.0,
+   "mean_votes": 110114.0
+  },
+  "客家话": {
+   "n": 10,
+   "mean": 7.88,
+   "median": 8.0,
+   "sd": 0.7,
+   "q1": 7.17,
+   "below5_pct": 0.0,
+   "below6_pct": 0.0,
+   "high8_pct": 50.0,
+   "mean_votes": 47977.0
+  },
+  "上海话": {
+   "n": 50,
+   "mean": 7.44,
+   "median": 7.4,
+   "sd": 0.94,
+   "q1": 7.1,
+   "below5_pct": 2.0,
+   "below6_pct": 8.0,
+   "high8_pct": 30.0,
+   "mean_votes": 97866.0
+  },
+  "河南方言": {
+   "n": 10,
+   "mean": 7.13,
+   "median": 7.3,
+   "sd": 1.18,
+   "q1": 6.4,
+   "below5_pct": 0.0,
+   "below6_pct": 20.0,
+   "high8_pct": 20.0,
+   "mean_votes": 30189.0
+  },
+  "维吾尔语": {
+   "n": 13,
+   "mean": 7.58,
+   "median": 7.6,
+   "sd": 0.87,
+   "q1": 7.1,
+   "below5_pct": 0.0,
+   "below6_pct": 7.7,
+   "high8_pct": 30.8,
+   "mean_votes": 19683.0
+  },
+  "藏语": {
+   "n": 35,
+   "mean": 7.2,
+   "median": 7.3,
+   "sd": 0.72,
+   "q1": 6.75,
+   "below5_pct": 0.0,
+   "below6_pct": 8.6,
+   "high8_pct": 11.4,
+   "mean_votes": 38936.0
+  },
+  "台语": {
+   "n": 13,
+   "mean": 7.05,
+   "median": 7.3,
+   "sd": 0.65,
+   "q1": 6.8,
+   "below5_pct": 0.0,
+   "below6_pct": 7.7,
+   "high8_pct": 7.7,
+   "mean_votes": 15555.0
+  },
+  "四川话": {
+   "n": 33,
+   "mean": 7.06,
+   "median": 7.3,
+   "sd": 1.16,
+   "q1": 6.7,
+   "below5_pct": 6.1,
+   "below6_pct": 12.1,
+   "high8_pct": 15.2,
+   "mean_votes": 108376.0
+  },
+  "泰语": {
+   "n": 22,
+   "mean": 6.76,
+   "median": 6.65,
+   "sd": 1.04,
+   "q1": 5.9,
+   "below5_pct": 0.0,
+   "below6_pct": 27.3,
+   "high8_pct": 9.1,
+   "mean_votes": 66214.0
+  },
+  "晋语": {
+   "n": 14,
+   "mean": 7.71,
+   "median": 7.75,
+   "sd": 0.7,
+   "q1": 7.25,
+   "below5_pct": 0.0,
+   "below6_pct": 0.0,
+   "high8_pct": 42.9,
+   "mean_votes": 55524.0
+  },
+  "重庆话": {
+   "n": 13,
+   "mean": 7.1,
+   "median": 7.3,
+   "sd": 1.23,
+   "q1": 6.9,
+   "below5_pct": 7.7,
+   "below6_pct": 15.4,
+   "high8_pct": 23.1,
+   "mean_votes": 98037.0
+  },
+  "武汉话": {
+   "n": 12,
+   "mean": 6.6,
+   "median": 7.1,
+   "sd": 1.52,
+   "q1": 5.8,
+   "below5_pct": 25.0,
+   "below6_pct": 25.0,
+   "high8_pct": 16.7,
+   "mean_votes": 90918.0
+  }
+ },
+ "lang_tag_count_total": 169,
+ "group_vs_west": {
+  "dialect_all": {
+   "n": 3386,
+   "mean": 6.68,
+   "median": 6.7,
+   "sd": 1.09,
+   "q1": 6.1,
+   "below5_pct": 6.2,
+   "below6_pct": 22.3,
+   "high8_pct": 11.3,
+   "mean_votes": 23908.0
+  },
+  "china_non_dialect": {
+   "n": 8031,
+   "mean": 6.17,
+   "median": 6.5,
+   "sd": 1.66,
+   "q1": 5.1,
+   "below5_pct": 23.1,
+   "below6_pct": 38.2,
+   "high8_pct": 12.4,
+   "mean_votes": 17150.0
+  },
+  "europe": {
+   "n": 13231,
+   "mean": 7.26,
+   "median": 7.3,
+   "sd": 1.03,
+   "q1": 6.6,
+   "below5_pct": 2.5,
+   "below6_pct": 10.1,
+   "high8_pct": 24.3,
+   "mean_votes": 6926.0
+  },
+  "north_america": {
+   "n": 16612,
+   "mean": 6.86,
+   "median": 7.0,
+   "sd": 1.32,
+   "q1": 6.1,
+   "below5_pct": 8.6,
+   "below6_pct": 21.8,
+   "high8_pct": 20.1,
+   "mean_votes": 16304.0
+  }
+ }
+}

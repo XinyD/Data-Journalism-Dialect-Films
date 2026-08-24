@@ -1,0 +1,184 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-08-18T02:09:13.018772+00:00",
+  "source": "data/source/movies_info_merged.csv",
+  "source_bytes": 264892355,
+  "inclusion_criteria": {
+    "minimum_vote_count": 100,
+    "year_range": [
+      1888,
+      2026
+    ],
+    "rating_range": {
+      "minimum_exclusive": 0,
+      "maximum_inclusive": 10
+    },
+    "requires_title": true,
+    "deduplication_key": [
+      "canonical Douban subject URL",
+      "normalized title",
+      "年份"
+    ],
+    "region_rule": "first listed production country/region"
+  },
+  "stages": {
+    "source_rows": 371962,
+    "valid_title_year_rating": 116796,
+    "minimum_vote_count": 63062,
+    "deduplicated_records": 63025,
+    "duplicates_removed_by_source_url": 2,
+    "duplicates_removed_by_normalized_title_year": 35,
+    "duplicates_removed": 37
+  },
+  "publication_records": 63025,
+  "sample_fingerprint_sha256": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503",
+  "counts": {
+    "decade": {
+      "2010s": 23114,
+      "2000s": 13034,
+      "2020s": 11269,
+      "Pre-1990s": 10273,
+      "1990s": 5335
+    },
+    "region": {
+      "China": 12791,
+      "East_Asia": 11095,
+      "Europe": 15874,
+      "North_America": 19298,
+      "Other": 3967
+    },
+    "language": {
+      "Chinese": 13203,
+      "English": 22914,
+      "European_Languages": 6838,
+      "Japanese": 7266,
+      "Korean": 1802,
+      "Other": 11002
+    },
+    "source": {
+      "douban_all_data": 53058,
+      "douban_delivery_20260817": 9541,
+      "current_project": 426
+    }
+  },
+  "tier2b_20260818": {
+    "applied_by": "scripts/apply_tier2b_reclassify_20260815.py",
+    "rule": "v4.1 Tier 2b 证据审查：普通话排首+方言标签默认排除，经证据漏斗/补判白名单补回",
+    "pipeline": [
+      "scripts/score_tier2b.py -> data/tier2b_evidence.csv (702 = 63 auto_recover + 424 gray_zone + 215 exclude)",
+      "scripts/llm_judge_tier2b.py --apply data/tier2b_gray_zone_review.csv -> data/tier2b_recovered.csv (286 yes)"
+    ],
+    "tier2b_total": 702,
+    "recovered_kept": 349,
+    "excluded_default": 353,
+    "china_dialect_movies_before": 3436,
+    "china_dialect_movies_after": 3083,
+    "new_column": "Dialect_Evidence（E:E1/E2/…=规则引擎证据, BENCHMARK/LLM_JUDGE=补判, TIER2B_EXCLUDED=默认排除）",
+    "trace_files": [
+      "data/tier2b_evidence.csv",
+      "data/tier2b_gray_zone_review.csv",
+      "data/tier2b_recovered.csv",
+      "data/cleaned/review_queue.csv",
+      "data/derived_movies_v41_tier2b_backup_20260818.csv"
+    ],
+    "note": "行集与行数不变（63,025）；指纹变化因 353 行 Is_Dialect 1→0、Language_Code 3→2。"
+  },
+  "empty_lang_backfill_20260818": {
+    "applied_by": "scripts/apply_empty_lang_backfill_20260818.py",
+    "rule": "Re-apply v4.1.1 backfills + default remaining to 汉语普通话",
+    "dialect_films": 8,
+    "revert_films": 1,
+    "nondialect_fix": 4,
+    "defaulted_to_mandarin": 0,
+    "china_dialect_after": 3045,
+    "china_empty_after": 0,
+    "backup": "derived_movies_empty_lang_backup_20260818.csv"
+  },
+  "audit_exclude_applied_20260818": {
+    "applied_by": "scripts/apply_audit_exclude_20260818.py",
+    "rule": "DIALECT_AUDIT_EXCLUDE_MOVIE_IDS: 22 films excluded from dialect count",
+    "fixed_count": 0,
+    "exclude_list_size": 22
+  },
+  "f7_region_fix_20260818": {
+    "applied_by": "scripts/apply_f7_region_fix_20260818.py",
+    "movie_id": "10478122",
+    "change": "Region China -> East_Asia（平壤之约，中朝合拍朝鲜语题材，2026-08-15 决定重应用）",
+    "dialect_impact": "无（Is_Dialect=0，China 方言计数不变 3090）"
+  },
+  "opera_concert_exclude_20260818": {
+    "applied_by": "scripts/apply_opera_concert_exclude_20260818.py",
+    "rule": "OPERA_CONCERT_EXCLUDE_MOVIE_IDS: 戏曲片(E4)与演唱会/音乐纪录片/颁奖典礼(E8)排除方言口径",
+    "exclude_list_size": 49,
+    "fixed_count": 0,
+    "already_d0": [
+      "10462938",
+      "1903720",
+      "1918697",
+      "21372232",
+      "2238915",
+      "2305317",
+      "2340946",
+      "24526150",
+      "26636158",
+      "26740516",
+      "26740526",
+      "26740528",
+      "26740529",
+      "26740530",
+      "26919586",
+      "26923119",
+      "27175992",
+      "30377813",
+      "30439539",
+      "30466847",
+      "30468860",
+      "30468861",
+      "30468862",
+      "30468873",
+      "30468874",
+      "30468929",
+      "30470314",
+      "30470561",
+      "30474677",
+      "30481783",
+      "32568945",
+      "33211868",
+      "33412940",
+      "33414398",
+      "33414399",
+      "33425520",
+      "33425522",
+      "34970291",
+      "35044539",
+      "35068044",
+      "35132844",
+      "35376944",
+      "3642305",
+      "3804286",
+      "4018191",
+      "4047730",
+      "4307305",
+      "4728526",
+      "5919317"
+    ],
+    "candidate_list": "data/opera_concert_exclude_candidates_20260818.csv",
+    "backup": "derived_movies_opera_concert_backup_20260818.csv",
+    "note": "fixed_count 为本次运行改动数，非累计值；影片保留在数据集中（普通话组）；language_code_healed 为纯方言语言行 Language_Code 2→1 自愈数（对齐 data_processor.language_code 语义）",
+    "first_run_fixed_count": 49,
+    "language_code_healed": 0
+  },
+  "ama_lang_fix_20260819": {
+    "applied_by": "scripts/apply_ama_lang_fix_20260819.py",
+    "rule": "《给阿嬷的情书》(37116446)：delivery_20260817 无语言列，空语言回填默认普通话致假阴性；按豆瓣现页修正语言字段为 潮汕话/汉语普通话/泰语/英语，补收为方言片",
+    "baseline": "(3045, 2289, 410, 346)",
+    "previous_fingerprint": "3049f41485d4922965f7acb596fbdb3c8908fefc71540c47b6d51607d1b50da9",
+    "backup": "derived_movies_ama_lang_fix_backup_20260819.csv",
+    "date": "2026-08-19"
+  },
+  "first_listed_region_20260824": {
+    "applied_by": "scripts/apply_first_listed_region_20260824.py",
+    "rows_changed": 801,
+    "rule": "first listed country; CJK space-separated lists split; 西德/东德 → Europe; F7 平壤之约 stays East_Asia"
+  }
+}

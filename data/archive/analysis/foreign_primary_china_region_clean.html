@@ -1,0 +1,5701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清理后数据 — 中国制片地区外语为主影片</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --card-bg: #fff; --text: #1a1a2e; --text-muted: #6c757d;
+    --border: #dee2e6; --accent: #e63946; --accent-light: #fde8ea;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 14px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 36px 24px; border-radius: 0 0 24px 24px; margin-bottom: 24px; }
+  .header h1 { font-size: 22px; margin-bottom: 8px; }
+  .header .meta { font-size: 13px; opacity: 0.8; margin-top: 8px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; text-align: center; }
+  .stat .label { font-size: 12px; color: var(--text-muted); }
+  .stat .value { font-size: 24px; font-weight: 700; color: var(--accent); }
+  .filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .filter-bar input, .filter-bar select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; }
+  .filter-bar input { flex: 1; min-width: 200px; }
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); max-height: 700px; overflow-y: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th { background: #1a1a2e; color: white; padding: 10px 12px; text-align: left; font-weight: 600; position: sticky; top: 0; white-space: nowrap; }
+  tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:hover { background: #f8f9fa; }
+  .title-cell { font-weight: 600; max-width: 180px; }
+  .lang-cell { max-width: 200px; word-break: break-all; }
+  .dp-cell { max-width: 300px; font-size: 12px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .badge-first { background: #fde8ea; color: #e63946; }
+  .badge-dom { background: #fff3cd; color: #856404; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="container">
+    <h1>清理后数据 — 中国制片地区·外语为主影片</h1>
+    <div class="meta">筛选规则：制片地区含"中国"/"中国香港"/"中国台湾" | 共 350 部 | 生成日期：2026-08-14</div>
+  </div>
+</div>
+<div class="container">
+  <div class="stats">
+    <div class="stat"><div class="label">原始外语为主影片</div><div class="value">742</div></div>
+    <div class="stat"><div class="label">保留（中国制片）</div><div class="value">350</div></div>
+    <div class="stat"><div class="label">删除（非中国制片）</div><div class="value">392</div></div>
+    <div class="stat"><div class="label">在完整版报告中匹配</div><div class="value">245</div></div>
+  </div>
+  <div class="filter-bar">
+    <input type="text" id="search" placeholder="搜索片名、导演、语言..." oninput="filterTable()">
+    <select id="reason-filter" onchange="filterTable()">
+      <option value="">全部筛选原因</option>
+      <option value="外语为第一语言">外语为第一语言</option>
+      <option value="外语为主">外语为主</option>
+    </select>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:36px">#</th>
+          <th>片名</th>
+          <th>年份</th>
+          <th>评分</th>
+          <th>评价人数</th>
+          <th>语言字段（原始）</th>
+          <th>第一语言</th>
+          <th>筛选原因</th>
+          <th>导演</th>
+          <th>类型</th>
+          <th>制片地区</th>
+          <th>剧情简介</th>
+          <th>报告层级</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+
+<tr data-search="四万万人民|尤里斯·伊文思|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">1</td>
+<td class="title-cell">四万万人民</td>
+<td>1939</td>
+<td>8.3</td>
+<td>2562</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>尤里斯·伊文思</td>
+<td>纪录片 / 历史 / 战争</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">简介：在世界电影史上，尤里斯·伊文思被称为纪录电影的先驱，与美国的罗伯特·弗拉哈迪、英国的约翰·格里尔逊和苏联的吉加·维尔托夫并称为四大纪录电影之父，与其他三位不同的是，伊文思的创作生涯最长，在长达60余年的创作生涯中拍摄了60余部影片，一...</td>
+<td></td>
+</tr>
+
+<tr data-search="春江遗恨|稻垣浩 / 岳枫 / 胡心灵|汉语普通话 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">2</td>
+<td class="title-cell">春江遗恨</td>
+<td>1944</td>
+<td>6.6</td>
+<td>126</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>稻垣浩 / 岳枫 / 胡心灵</td>
+<td>剧情 / 历史 / 战争</td>
+<td>日本 / 中国</td>
+<td class="dp-cell">清朝同治元年（1862年），日本武士高杉晋作（坂东妻三郎饰）搭乘幕府首航的交易船，来华了解大清国现状。船抵上海，高杉与同伴在旅馆主人的侄女玉瑛（李丽华饰）的陪同下，看到了被英国统治的租界，吴淞要塞炮台，以及成千上万吸食鸦片的民众，看清了英美...</td>
+<td></td>
+</tr>
+
+<tr data-search="座头市与独臂刀|安田公义|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">3</td>
+<td class="title-cell">座头市与独臂刀</td>
+<td>1971</td>
+<td>6.0</td>
+<td>529</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>安田公义</td>
+<td>剧情 / 动作 / 冒险</td>
+<td>日本 / 中国香港</td>
+<td class="dp-cell">影片讲述独臂刀王刚赴日访友，路遇中国遗孤，并与座头市结识，两人之间因言语不通闹出许多笑话，最后更因误会难解，不得不性命相搏。瞎子座头市以闪电般的拔刀术著称，而独臂大侠王刚则以独门金刀刀法和轻功与之对抗。最后误会消除，王刚不禁慨叹“你是个好人...</td>
+<td></td>
+</tr>
+
+<tr data-search="亚洲秘密警察|松尾昭典|日语 / 汉语普通话 / 英语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">4</td>
+<td class="title-cell">亚洲秘密警察</td>
+<td>1972</td>
+<td>5.3</td>
+<td>165</td>
+<td class="lang-cell">日语 / 汉语普通话 / 英语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>松尾昭典</td>
+<td>剧情</td>
+<td>中国香港 / 日本</td>
+<td class="dp-cell">本片乃邵氏与日本日活公司合作拍摄的占士邦式动作片。走私黄金的犯罪组织首领乔治伊顿(宾户锭 饰)潜逃香港，亚洲秘密警察日本支部探员杨明轩(王羽饰)远赴香港缉凶，期间结识香港密探赖雨田(王侠 饰)，更周旋于美女杏子(浅丘琉璃子 饰)、春子(滨川...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="龙争虎斗|罗伯特·高洛斯|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">5</td>
+<td class="title-cell">龙争虎斗</td>
+<td>1973</td>
+<td>8.3</td>
+<td>24606</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗伯特·高洛斯</td>
+<td>动作 / 犯罪</td>
+<td>美国 / 中国香港</td>
+<td class="dp-cell">少林叛徒韩先生（石坚 饰）背叛少林后，斥资买下一座小岛将其改造成私人王国，韩先生及一干手下在岛上制贩毒品，强迫女性卖淫，警方欲将其绳之以法却苦无证据。少林高徒李（李小龙 饰）的功夫已经超越有形境界，他受师傅与政府请托，准备参加三年一度由韩先...</td>
+<td></td>
+</tr>
+
+<tr data-search="七金尸|罗伊·沃德·贝克 / 张彻|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">6</td>
+<td class="title-cell">七金尸</td>
+<td>1974</td>
+<td>5.2</td>
+<td>580</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗伊·沃德·贝克 / 张彻</td>
+<td>动作 / 奇幻 / 恐怖</td>
+<td>英国 / 中国香港</td>
+<td class="dp-cell">邵氏公司和英国咸马公司合作拍摄的这部结合了西方的吸血鬼故事和中国的“湘西赶尸”传说的影片是香港的僵尸片之祖。在中国湘西，七金尸古庙的大法师借由吸血鬼Dracula的力量使七金尸复活，以便再次控制湘西村落。想不到Dracula却杀了法师，附上...</td>
+<td></td>
+</tr>
+
+<tr data-search="洋妓|桂治洪 / 恩斯特·霍夫鲍尔|英语 / 德语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">7</td>
+<td class="title-cell">洋妓</td>
+<td>1974</td>
+<td>5.3</td>
+<td>266</td>
+<td class="lang-cell">英语 / 德语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>桂治洪 / 恩斯特·霍夫鲍尔</td>
+<td>动作 / 喜剧</td>
+<td>中国香港 / 西德</td>
+<td class="dp-cell">五个西方女孩是由中国海盗绑架并卖到妓院。而他们被训练成为妓女，一对夫妇当地居民采取怜悯他们，并教他们功夫绘出他们逃跑。这五个衣着暴露的女孩，用他们的新发现的武术技能，然后....</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="八百壮士|丁善玺|汉语普通话 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">8</td>
+<td class="title-cell">八百壮士</td>
+<td>1976</td>
+<td>7.3</td>
+<td>2996</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>丁善玺</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国台湾</td>
+<td class="dp-cell">丁善玺编导的本片，继《英烈千秋》后，叙述1937年8月13日日寇侵略上海，中国88师524团团长谢晋元，为牵制日军，掩护中国军队后撤，率领480青年军官，号称八百壮士，固守四行仓库，达三个月之久。军人英勇杀敌，女童子军冒着生命危险给守军输送...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="俏探女娇娃|鲍学礼|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">9</td>
+<td class="title-cell">俏探女娇娃</td>
+<td>1977</td>
+<td>5.3</td>
+<td>118</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>鲍学礼</td>
+<td>动作 / 剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">走私集團主腦沙福天利用少女偷運鑽石， 事成後由飛刀手方風殺人滅口. 蘇格蘭場警官伊芙蓮受命來港成立特別調查小組， 港日韓三地女幹探楊潔新、呂冰和高真真應邀加入. 新男友李浩的父親在一宗珠寶劫案中被風殺死， 浩誓報此仇. 新混入天的夜總會當飛...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="卖身契|许冠文|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">10</td>
+<td class="title-cell">卖身契</td>
+<td>1978</td>
+<td>7.8</td>
+<td>6017</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>许冠文</td>
+<td>喜剧</td>
+<td>中国香港</td>
+<td class="dp-cell">志文（许冠文 饰）是电视台一名跑龙套，自认为很有才华，所以一直郁郁不得志。志文的弟弟志新（许冠英 饰）是一个天才发明家，最近他发明了一部笑弹机，能让人大笑不止。正当志文得过且过之时，另外一家电视台请他去客窜一回主持，志文信心十足、带着弟弟的...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="死亡游戏|罗伯特·高洛斯|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">11</td>
+<td class="title-cell">死亡游戏</td>
+<td>1978</td>
+<td>7.8</td>
+<td>14386</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗伯特·高洛斯</td>
+<td>动作 / 犯罪 / 剧情</td>
+<td>中国香港 / 美国</td>
+<td class="dp-cell">动作片明星比利（李小龙&amp;唐龙 饰）最近频频遭遇骚扰，原来邪恶集团头领兰德博士有意掌控在澳门举办的国际搏击大赛，希望比利能够入伙，然而比利的拒绝令他们怒火中烧。比利与歌星女友安一同出行，被兰德一伙截路殴打，比利决定奋起反抗，由于担心女友的安危...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="炮弹飞车|哈尔·尼达姆|英语 / 粤语 / 日语 / 阿拉伯语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">12</td>
+<td class="title-cell">炮弹飞车</td>
+<td>1981</td>
+<td>5.7</td>
+<td>957</td>
+<td class="lang-cell">英语 / 粤语 / 日语 / 阿拉伯语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>哈尔·尼达姆</td>
+<td>动作 / 喜剧</td>
+<td>美国 / 中国香港</td>
+<td class="dp-cell">一群来自世界各地的赛车手，参加一场由美国东岸横跨至西岸的非法赛车，各选手勾心斗角力求得胜。因其中有反对此项赛车的人掳走政客助理为人质，导致警方追查，全体选手乃合力突破警方路障。</td>
+<td></td>
+</tr>
+
+<tr data-search="一盘没有下完的棋|佐藤纯弥 / 段吉顺|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">13</td>
+<td class="title-cell">一盘没有下完的棋</td>
+<td>1982</td>
+<td>7.5</td>
+<td>1217</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>佐藤纯弥 / 段吉顺</td>
+<td>剧情</td>
+<td>日本 / 中国大陆</td>
+<td class="dp-cell">1920年代，北平。在一次军阀寿宴棋会上，日本围棋高手松波（三国连太郎 饰）与江南棋王况易山（孙道临 饰）相遇。无意中松波发现况子阿明（沈冠初 饰）天资聪慧，有意收其为徒，松波刚在“天元”位摆下一子，不料，况易山被突然登门的警察抓走。松波救...</td>
+<td></td>
+</tr>
+
+<tr data-search="投奔怒海|许鞍华|粤语 / 日语 / 法语 / 越南语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">14</td>
+<td class="title-cell">投奔怒海</td>
+<td>1982</td>
+<td>8.5</td>
+<td>16202</td>
+<td class="lang-cell">粤语 / 日语 / 法语 / 越南语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>许鞍华</td>
+<td>剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">日本摄影记者芥川（林子祥）三年后重返刚刚解放的越南采访，遍地的生机令他心生欢喜，但当他无意间走进城市的另一隅结识当地女孩琴娘（马斯晨）后，方知之前所见不过是越共政府特意为他这样的外国记者安排的粉饰太平的假像。在琴娘并非刻意的“导游”下，越南...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="龙之忍者|元奎|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">15</td>
+<td class="title-cell">龙之忍者</td>
+<td>1982</td>
+<td>7.0</td>
+<td>203</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>元奎</td>
+<td>动作 / 喜剧</td>
+<td>中国香港</td>
+<td class="dp-cell">1977年，吳思遠和袁和平合作拍《蛇形刁手》，找到一個成龍，再拍《醉拳》成龍從此飛黃騰達，然後袁和平再找，要為影壇再創出一個成龍式的動作巨星，袁和平金睛火眼的全 先找來一個美國華裔大隻仔李元霸，再請日本巨星級的千葉真一，「極真派」空手道徒弟...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="两只老虎|吴宇森|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">16</td>
+<td class="title-cell">两只老虎</td>
+<td>1985</td>
+<td>6.3</td>
+<td>729</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>吴宇森</td>
+<td>家庭 / 喜剧 / 奇幻</td>
+<td>中国台湾 / 中国香港 / 美国</td>
+<td class="dp-cell">亿万富翁范进宾（徐克 饰）的儿子和儿媳在一场车祸中双双身亡，只留下可怜的孙子小宝贝（温兆宇 饰）陪在身旁，范因此对孙子格外关爱，养成了他任性骄傲的坏毛病。新来的家庭女教师玛丽（潘迎紫 饰）与小宝贝一番大战之后，成为了亲密无间的好朋友。范的侄...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="威龙猛探|詹姆斯·格利肯豪斯|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">17</td>
+<td class="title-cell">威龙猛探</td>
+<td>1985</td>
+<td>6.3</td>
+<td>4253</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>詹姆斯·格利肯豪斯</td>
+<td>剧情 / 动作 / 犯罪</td>
+<td>中国香港 / 美国</td>
+<td class="dp-cell">当夜色笼罩纽约，这里又变成了一座犯罪猖獗的城市。华人警察黄比利（成龙 饰）和同事来到酒吧庆祝来美十周年，不料同事却被一群闯入的劫匪杀死，愤怒的比利将凶手正法，因此激怒了上司，被惩罚性质的派到大亨沙比路的时装展上维持治安，表演期间，沙比路的女...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="中华英雄|李连杰|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">18</td>
+<td class="title-cell">中华英雄</td>
+<td>1986</td>
+<td>6.4</td>
+<td>5628</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>李连杰</td>
+<td>动作 / 战争</td>
+<td>中国香港 / 中国大陆</td>
+<td class="dp-cell">国军的抗日战士小杰（李连杰 饰）经浴血奋战终于迎来抗战胜利，但是英雄的荣誉却属于美国军人。小杰赶到青岛投奔自己在军中的救命恩人张大哥（赵尔康 饰），其时张大哥刚把做陪酒女郎的女儿小蕊（宋佳 饰）赶出家门，小杰与张二人靠拉黄包车度日。在中国的...</td>
+<td>Tier 2a</td>
+</tr>
+
+<tr data-search="北京故事|王正方|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">19</td>
+<td class="title-cell">北京故事</td>
+<td>1986</td>
+<td>7.6</td>
+<td>1355</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>王正方</td>
+<td>剧情 / 喜剧 / 家庭</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">一转眼，方立群（王正方 饰）在美国已经生活了快三十年了，虽然生活已经全盘西化，但在朋友和上司的眼里，方立群始终都是“异类”。因为老板对华人的歧视，方立群一怒之下辞了职，带着老婆格蕾丝（沙龙·艾瓦伊 Sharon Iwai 饰）和儿子保罗（余...</td>
+<td></td>
+</tr>
+
+<tr data-search="火龙|李翰祥|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">20</td>
+<td class="title-cell">火龙</td>
+<td>1986</td>
+<td>7.4</td>
+<td>1456</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>李翰祥</td>
+<td>剧情 / 传记 / 历史</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">朝代更迭，沧桑巨变。当年高高在上的大清帝国宣统皇帝——爱新觉罗·溥仪（梁家辉 饰）有心重铸辉煌，无奈历史的车轮滚滚向前，无可阻拦。在中国的大地上，清朝、民国、辫子军、军阀、日本侵略者、共产党，你方唱罢我登场，昔日的皇帝沦为阶下囚，不复当年辉...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="黑炮事件|黄建新|汉语普通话 / 德语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">21</td>
+<td class="title-cell">黑炮事件</td>
+<td>1986</td>
+<td>8.5</td>
+<td>22105</td>
+<td class="lang-cell">汉语普通话 / 德语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>黄建新</td>
+<td>剧情 / 喜剧</td>
+<td>中国大陆</td>
+<td class="dp-cell">赵书信（刘子枫 饰）是某矿山公司的工程师，为人忠厚，工作勤勉。下棋是赵书信为数不多的爱好之一，他对自己那副棋子也格外珍惜，却于一次出差归来时发现丢失了一枚，情急之下冒雨前往邮局，发了一封“黑炮丢失301找赵”的电报给旅馆，寻找棋子。岂料这封...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="末代皇帝|贝纳尔多·贝托鲁奇 bernardo bertolucci|英语 / 汉语普通话 / 日语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">22</td>
+<td class="title-cell">末代皇帝</td>
+<td>1987</td>
+<td>9.0</td>
+<td>726866</td>
+<td class="lang-cell">英语 / 汉语普通话 / 日语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>贝纳尔多·贝托鲁奇 Bernardo Bertolucci</td>
+<td>剧情 / 传记 / 历史</td>
+<td>意大利 / 中国大陆 / 英国 / 法国</td>
+<td class="dp-cell">经典电影暂无简介。</td>
+<td></td>
+</tr>
+
+<tr data-search="秋天的童话|张婉婷|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">23</td>
+<td class="title-cell">秋天的童话</td>
+<td>1987</td>
+<td>8.5</td>
+<td>81053</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>张婉婷</td>
+<td>剧情 / 爱情</td>
+<td>中国香港</td>
+<td class="dp-cell">留学生李琪（钟楚红 饰）独自一人从香港到纽约读书，满心以为接机的会是自己的男友（陈百强 饰），来到却是一位远方亲戚和一位在唐人街打工的船头尺（周润发 饰）。原来自己的男友已经移情别恋了，令李琪伤心不已，把自己关在房内。船头尺不放心前往询问，...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="义胆红唇|孙仲|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">24</td>
+<td class="title-cell">义胆红唇</td>
+<td>1988</td>
+<td>6.6</td>
+<td>2412</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>孙仲</td>
+<td>动作</td>
+<td>中国香港 / 美国</td>
+<td class="dp-cell">李志超（周润发）与周强（狄龙）乃一对任职警界多年的好朋友。十年前，强与搭档将毒贩姚达（徐少强）绳之于法。达甫出狱即向强之拍档下毒手，强也不能幸免，先是遭受纪律处分，后更被杀手伏击。强虽然侥幸逃脱，但家人却难逃厄运。超本替强出头，向达提出希望...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="最后的贵族|谢晋|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">25</td>
+<td class="title-cell">最后的贵族</td>
+<td>1989</td>
+<td>7.4</td>
+<td>3306</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>谢晋</td>
+<td>剧情 / 爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">1940年代后期，出身望族的李彤（潘虹 饰）、黄惠芬（李克纯 饰）、雷芷苓（肖雄 饰）和张嘉行（卢玲 饰）四姐妹远渡重洋，来到美国留学。49年元旦，她们在学校联谊会上，用歌声抒发对祖国亲人的思念和祝福。不久，李彤因家中巨大变故离开三个女友，...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="秦始皇|托尼·安齐洛 / 刘浩学|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">26</td>
+<td class="title-cell">秦始皇</td>
+<td>1989</td>
+<td>5.8</td>
+<td>172</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>托尼·安齐洛 / 刘浩学</td>
+<td>纪录片 / 短片</td>
+<td>加拿大 / 中国大陆</td>
+<td class="dp-cell">揭开秦始皇不为人知的秘密，耗资700万美元，拍摄五个月，难得一见。其中有真实的纪录部分，观众可以亲眼目睹1947年西安秦始皇兵马俑地下陵墓及其发掘情形，7000个面貌不同、栩栩如生的陪葬品的兵马俑一一搬上镜头。</td>
+<td></td>
+</tr>
+
+<tr data-search="赌神|王晶|粤语 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">27</td>
+<td class="title-cell">赌神</td>
+<td>1989</td>
+<td>8.4</td>
+<td>212127</td>
+<td class="lang-cell">粤语 / 日语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>王晶</td>
+<td>喜剧 / 剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">高进（周润发 饰）前来香港与赌魔决斗，怎料刚抵港，便被南哥（杨泽霖 饰）追杀，结果堕入陷阱而失忆。幸得刀仔（刘德华 饰）和其女友珍（王祖贤 饰）相救，他们把高进带回家中疗养，发现高进精通赌术后，兴奋不已，想利用他来挣大钱，却反而因为高进发挥...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="咖喱辣椒|柯受良|粤语 / 英语 / 马来语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">28</td>
+<td class="title-cell">咖喱辣椒</td>
+<td>1990</td>
+<td>7.3</td>
+<td>53403</td>
+<td class="lang-cell">粤语 / 英语 / 马来语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>柯受良</td>
+<td>犯罪 / 动作 / 爱情</td>
+<td>中国香港</td>
+<td class="dp-cell">咖喱（张学友 饰）与辣椒（周星驰 饰）从小就是一对好友，后来又一起加入了警队。两人看起来吊儿郎当的，可是他们的工作表现突出，生活上工作上都是彼此的好搭档。但主播祖儿（柏安妮 饰）的出现让两人的友情遇到了考验。祖儿到警局为咖喱与辣椒做专访，而...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="喋血街头|吴宇森|粤语 / 英语 / 越南语 / 法语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">29</td>
+<td class="title-cell">喋血街头</td>
+<td>1990</td>
+<td>8.2</td>
+<td>43322</td>
+<td class="lang-cell">粤语 / 英语 / 越南语 / 法语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>吴宇森</td>
+<td>剧情 / 动作 / 犯罪</td>
+<td>中国香港</td>
+<td class="dp-cell">细荣(李子雄饰）、阿B（梁朝伟饰），辉仔（张学友饰）在石殎尾陡置区一同成长，三人情同手足，虽然各人家境贫困，年轻的心从没有失去对将来的幻想与憧憬。阿B因要与女友小珍（袁洁莹饰）结婚，众人各出奇谋为阿B筹钱。辉仔借来高利贷途中被劫，辉仔负伤往...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="圣战风云|林岭东|粤语 / 英语 / 波兰语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">30</td>
+<td class="title-cell">圣战风云</td>
+<td>1990</td>
+<td>5.8</td>
+<td>516</td>
+<td class="lang-cell">粤语 / 英语 / 波兰语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>林岭东</td>
+<td>动作 / 犯罪 / 惊悚</td>
+<td>中国香港</td>
+<td class="dp-cell">波兰华沙的解放同盟军其实是个打着革命旗号的恐怖组织，为了显示自己的力量，他们准备在美国商务代表团访问香港时制造爆炸事件，借此达到他们的政治目的。美国中央情报局掌握这一线索后派干探域拿赴港阻止这场阴谋，由于事关政治因素，故香港政治部亦派出李督...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="太阳之子|钱升玮 / 华山|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">31</td>
+<td class="title-cell">太阳之子</td>
+<td>1990</td>
+<td>6.2</td>
+<td>1067</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>钱升玮 / 华山</td>
+<td>动作</td>
+<td>中国香港</td>
+<td class="dp-cell">大限将至，老宗主向徒弟格弄（林正英 饰）和格西讲述天地世间正邪交替的道理，随后圆寂。肉身焚化后的舍利子，心术不正的格西抢夺舍利子，打伤格弄。受伤的格弄与徒儿班卓（罗芙洛 饰）逃走，在一家孤儿院找到宗主转世的小活佛，欲将其护送回布达拉宫。格西...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="安乐战场|曾志伟|粤语 / 英语 / 塔加路语 / 菲律宾语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">32</td>
+<td class="title-cell">安乐战场</td>
+<td>1990</td>
+<td>6.6</td>
+<td>2510</td>
+<td class="lang-cell">粤语 / 英语 / 塔加路语 / 菲律宾语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>曾志伟</td>
+<td>剧情 / 动作 / 恐怖</td>
+<td>中国香港</td>
+<td class="dp-cell">某年夏天，来自香港各个阶层的一群人组成了一支菲律宾旅游团。在美丽女孩Candy（温碧霞 饰）的带队下，他们来到了这个温暖的热带国度。当地导游阿卜（曾志伟 饰）带领香港游客们四处游玩购物，度过了愉快的一天。入夜，游客们在一家餐厅欣赏了别开生面...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="客途秋恨|许鞍华|英语 / 汉语普通话 / 粤语 / 日语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">33</td>
+<td class="title-cell">客途秋恨</td>
+<td>1990</td>
+<td>8.5</td>
+<td>16068</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语 / 日语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>许鞍华</td>
+<td>剧情 / 家庭</td>
+<td>中国香港 / 中国台湾</td>
+<td class="dp-cell">晓恩（张曼玉 饰）留学归来参加妹妹的婚礼，期间发觉与母亲葵子（陆小芬 饰）的隔阂与矛盾只增不减。直到陪母亲回日本探亲时，她才真正开始了解自己的母亲。原来在抗日期间到满洲投靠哥哥的母亲，结识了当时身为军官的父亲（李子雄 饰），并与其结婚，战后...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="浪漫杀手自由人|高飞|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">34</td>
+<td class="title-cell">浪漫杀手自由人</td>
+<td>1990</td>
+<td>6.2</td>
+<td>573</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>高飞</td>
+<td>动作</td>
+<td>中国香港 / 英国</td>
+<td class="dp-cell">留学英国的珍，过着平静快乐的校园生活，因一次无意间目击山口组杀手自由人枪杀一老者，卷入黑社会仇杀的旋涡中，而改变了她的一生。当自由人再杀唐人街头号首领大窿时，再次巧遇珍，警方发觉珍似乎认识自由人，便将珍带回警署问话。同时大窿之助手二窿也派手...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="老虎出更2|刘家良|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">35</td>
+<td class="title-cell">老虎出更2</td>
+<td>1990</td>
+<td>5.9</td>
+<td>2241</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>刘家良</td>
+<td>剧情 / 喜剧 / 动作</td>
+<td>中国香港</td>
+<td class="dp-cell">林益当年差多年，仍是散仔一名，心有不甘，时欲“发围”。此时林的外甥水牛从美国回来渡假，因帮助在酒吧邂逅的席梦思。因而令林、思及自己卷入一宗侵吞军火交易的罪行之中……</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="阿修罗|蓝乃才 / 刘仕裕|日语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">36</td>
+<td class="title-cell">阿修罗</td>
+<td>1990</td>
+<td>6.3</td>
+<td>3422</td>
+<td class="lang-cell">日语 / 粤语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>蓝乃才 / 刘仕裕</td>
+<td>动作 / 冒险 / 奇幻</td>
+<td>中国香港 / 日本</td>
+<td class="dp-cell">神魔之争绵延千年，地狱圣女阿修罗（叶蕴仪 饰）被卷入两界相争，但是她爱上了明媚快乐的人界，恳请慈空大师（胜新太郎 饰）给予她滞留人间的机会，慈空慈悲为怀，遂派出徒弟吉祥果（阿部宽 饰）和孔雀（元彪 饰）在一周时间内护卫阿修罗，直到他重返魔界...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="上海1920|梁普智|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">37</td>
+<td class="title-cell">上海1920</td>
+<td>1991</td>
+<td>7.1</td>
+<td>454</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>梁普智</td>
+<td>剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">故事发生在1910年的上海，美国富家子弟高道生（亚德里安·帕斯达 Adrian Pasdar 饰）结识了名为方林（尊龙 饰）的流浪儿，两人之间建立起了非常坚实的友谊。一次偶然中，两人在误打误撞之下发现了大毒枭藏匿毒品的地窖，因而引来了杀身之...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="惊天12小时|王晶|粤语 / 英语 / 汉语普通话 / 日语 / 泰语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">38</td>
+<td class="title-cell">惊天12小时</td>
+<td>1991</td>
+<td>6.7</td>
+<td>1647</td>
+<td class="lang-cell">粤语 / 英语 / 汉语普通话 / 日语 / 泰语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>王晶</td>
+<td>动作 / 喜剧</td>
+<td>中国香港</td>
+<td class="dp-cell">8月8日新加坡25周年国庆之际，国际知名的达卡喇嘛访新，日本赤军方面则计划暗杀达卡。香港国际刑警雷泰（谭咏麟 饰）奉命卫护达卡，将赤军领导北岛三郎支部歼灭。在达卡所乘坐飞往新加坡的客机上，黑道人物大B（刘德华 饰）与女友阿玲（罗美薇 饰）偶...</td>
+<td>Tier 2a</td>
+</tr>
+
+<tr data-search="秋月|罗卓瑶|粤语 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">39</td>
+<td class="title-cell">秋月</td>
+<td>1992</td>
+<td>7.7</td>
+<td>516</td>
+<td class="lang-cell">粤语 / 日语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>罗卓瑶</td>
+<td>喜剧 / 剧情</td>
+<td>中国香港 / 日本</td>
+<td class="dp-cell">日本青年时夫暂时抛开刻板的工作，独自来到香港，企图在美食与美色中找出人生的真谛。直至遇上天真俏皮的中学生慧后，才真正找到自己所希望了解的东西，两人虽碍于言语隔膜，却发展出一段纯真的友情。慧的父母带其兄移居加拿大，留下慧与祖母同住，在与慧的祖...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="警察故事3：超级警察|唐季礼|粤语 / 英语 / 汉语普通话 / 马来语 / 泰语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">40</td>
+<td class="title-cell">警察故事3：超级警察</td>
+<td>1992</td>
+<td>7.8</td>
+<td>54595</td>
+<td class="lang-cell">粤语 / 英语 / 汉语普通话 / 马来语 / 泰语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>唐季礼</td>
+<td>喜剧 / 动作 / 犯罪</td>
+<td>中国香港</td>
+<td class="dp-cell">这集，神勇干探陈家驹（成龙 饰）将远赴大陆，化身囚犯打入国际军火毒品走私集团的内部。在大陆美女公安杨建华（杨紫琼 饰）的帮助下，家驹顺利接近了正在服刑的集团成员豹强（元华 饰）。豹强视家驹为心腹，和他策划越狱行动。为了放长线，家驹爽快应承了...</td>
+<td>Tier 2a</td>
+</tr>
+
+<tr data-search="多桑|nien-jen wu|日语 / 闽南语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">41</td>
+<td class="title-cell">多桑</td>
+<td>1994</td>
+<td>8.6</td>
+<td>4257</td>
+<td class="lang-cell">日语 / 闽南语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Nien-Jen Wu</td>
+<td>剧情</td>
+<td>中国台湾</td>
+<td class="dp-cell">故事发生在1929年的台湾，那一年，多桑（蔡振南 饰）来到了这个世界。成年之后，多桑结婚成家，并有了三个可爱的孩子。然而，生活对于多桑来说是贫困而艰苦的，他在金矿场工作所得根本无法承担起家中巨大的开支，为此，多桑的妻子不得不外出做木工，以补...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="精武英雄|陈嘉上|英语 / 粤语 / 日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">42</td>
+<td class="title-cell">精武英雄</td>
+<td>1994</td>
+<td>8.5</td>
+<td>114625</td>
+<td class="lang-cell">英语 / 粤语 / 日语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈嘉上</td>
+<td>动作 / 剧情</td>
+<td>中国香港 / 中国大陆</td>
+<td class="dp-cell">20年代末，为完成师父的志愿，陈真（李连杰 饰）到东洋学先进技术，他喜欢着日本女孩山田光子（中山忍 饰）。因为师父霍元甲之死，陈真回到中国，协助师父之子霍廷恩（钱小豪 饰）主持精武门的业务，不料却引起了他的妒忌，师兄弟之间引发权力之争。另一...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="绝境逢生|张建亚|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">43</td>
+<td class="title-cell">绝境逢生</td>
+<td>1994</td>
+<td>7.4</td>
+<td>4302</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张建亚</td>
+<td>喜剧 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">二次大战期间，一艘美国潜艇遭到日本军舰伏击，部分美国官兵为中国渔家女莲妹子和铁匠陈正救下，藏匿村中。另一方面，渔民老万（魏宗万 饰）带领的游击部队与日军发生冲突，虽然并未成功，却偶然救下服役美军的日裔女子春子。她是一个密码专家，掌握着日军的...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="香港沦陷|钱文锜|粤语 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">44</td>
+<td class="title-cell">香港沦陷</td>
+<td>1994</td>
+<td>6.4</td>
+<td>2377</td>
+<td class="lang-cell">粤语 / 日语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>钱文锜</td>
+<td>剧情 / 战争</td>
+<td>中国香港</td>
+<td class="dp-cell">故事发生在1941年，香港上下被战争的阴影笼罩着，唯利是图的商人开叔（罗家英 饰）有三个女儿信弟（叶玉卿 饰），望弟（邱淑贞 饰）和爱弟（陈少霞），穷凶极恶的继母不喜欢信弟和望弟，因为她们并非她所生。思想开放的望弟喜欢隔壁的先进青年沈放（庹...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="南京1937|吴子牛|汉语普通话 / 日语 / 英语 / 德语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">45</td>
+<td class="title-cell">南京1937</td>
+<td>1995</td>
+<td>7.5</td>
+<td>3839</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语 / 德语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>吴子牛</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">1937年深秋，为躲避战乱，中国医生成贤（秦汉 饰）携带怀有身孕的日本妻子理惠子（早乙女爱 饰）和孩子从上海逃到南京老家，他没想到南京也差不多快被侵华日军夷为废墟。被告知可以进入欧美列强势力保护的安全区避难时，成贤认为自己与难民身份不同没做...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="妖街皇后|杨凡|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">46</td>
+<td class="title-cell">妖街皇后</td>
+<td>1995</td>
+<td>7.3</td>
+<td>1389</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>杨凡</td>
+<td>剧情</td>
+<td>新加坡 / 中国香港</td>
+<td class="dp-cell">17岁的莲本是马来西亚一个富家女仆，天真无邪。然而无忧无虑的生活很快便被打了个粉碎，莲被送到了紧挨着新加坡的Bugis街上的一家小酒店做工。在这条住满了人妖的街上，莲从各人的生存打拼中开始慢慢懂得了生活的含义。本片透过一个天真无邪的十六岁女...</td>
+<td></td>
+</tr>
+
+<tr data-search="怒海威龙|元彬 / 徐忠信|菲律宾语 / 汉语普通话 / 塔加路语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">47</td>
+<td class="title-cell">怒海威龙</td>
+<td>1995</td>
+<td>5.7</td>
+<td>248</td>
+<td class="lang-cell">菲律宾语 / 汉语普通话 / 塔加路语</td>
+<td>菲律宾语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>元彬 / 徐忠信</td>
+<td>动作</td>
+<td>中国大陆 / 菲律宾</td>
+<td class="dp-cell">广东省公安厅女刑警杨向东在深圳缉查香港黑帮时，缴获巨额假人民币。据分析，这些假币来自菲律宾，是用来购买毒品的。杨向东奉命化装成一个到菲律宾投亲的中国女孩，被海关查出携毒关进监狱，得以接近涉嫌贩毒的小祺。向东设法携小祺越狱，并找到小祺的男友黑...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="旺角的天空|陈木胜 / 郑伟文|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">48</td>
+<td class="title-cell">旺角的天空</td>
+<td>1995</td>
+<td>6.6</td>
+<td>990</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈木胜 / 郑伟文</td>
+<td>犯罪 / 动作 / 剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">帮派分子乐文华（任达华 饰）与大哥陆乘风（于荣光 饰）纵横香港，风头正盛。是日，陆、乐二人于码头接货，不想被警察团团包围。乐文华亮明卧底身份要求陆乘风投降，后者却冲入大海不知死所……一年后，经历了复职、受伤、升职的乐文华已经习惯了警队生活，...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="虎猛威龙|袁和平|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">49</td>
+<td class="title-cell">虎猛威龙</td>
+<td>1995</td>
+<td>5.8</td>
+<td>1142</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>袁和平</td>
+<td>动作</td>
+<td>中国香港</td>
+<td class="dp-cell">新游轮“白鲸号”豪富云集，正举行除夕联欢会，热闹非凡。女侍应Chrisy于客人中穿梭往来，船上保安由不苟言笑的红狼负责。突然一艘快艇靠近游轮，匪徒迅速登船与早在船上乔装的汤臣里应外合。凭借先进的武器和狠毒的令人心寒的手段，匪徒们很快就取得了...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="霹雳火|陈嘉上|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">50</td>
+<td class="title-cell">霹雳火</td>
+<td>1995</td>
+<td>7.0</td>
+<td>29192</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>陈嘉上</td>
+<td>动作</td>
+<td>中国香港</td>
+<td class="dp-cell">车房修理工阿火(成龙 饰)脾气火爆，他不仅身手敏捷，而且开车技术一流，只因家中贫穷才一直没有实现当赛车手梦想。这天，警方找到他希望他能帮忙逮捕偷车集团的首脑库克。因为库克开车技术一流，警方多次设路障追截都一无所获。阿火欣然答应。在阿火的帮助...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="太平天国|nien-jen wu|汉语普通话 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">51</td>
+<td class="title-cell">太平天国</td>
+<td>1996</td>
+<td>8.2</td>
+<td>660</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>Nien-Jen Wu</td>
+<td>喜剧</td>
+<td>中国台湾</td>
+<td class="dp-cell">在一个台湾小村庄，美国军队将举行军事演习。虽然这会对农田造成破坏，但政府答应给予一定的赔偿，村民需要钱所以最终接受了。林文是村里的教师，他的弟弟因日本人的工厂里的操作事故而失去了两个手指，他们把手指浸腌在罐子里。林文和弟弟希望美国军队里的外...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="红樱桃|叶大鹰|俄语 / 德语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">52</td>
+<td class="title-cell">红樱桃</td>
+<td>1996</td>
+<td>7.5</td>
+<td>31441</td>
+<td class="lang-cell">俄语 / 德语 / 汉语普通话</td>
+<td>俄语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>叶大鹰</td>
+<td>剧情 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">1940年的冬天，中国孤儿楚楚（郭柯宇）和罗小蛮（徐啸力）被送入莫斯科近郊的伊万诺夫国际儿童院学习。课堂上，当楚楚讲述自己亲眼目睹父亲惨遭法西斯刽子手杀害的情景时，老师和同学都震惊不已，随后，她和罗小蛮过上一段相对平静的日子，两人后来因夏令...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="警察故事4：简单任务|唐季礼|英语 / 粤语 / 汉语普通话 / 俄语 / 乌克兰语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">53</td>
+<td class="title-cell">警察故事4：简单任务</td>
+<td>1996</td>
+<td>7.5</td>
+<td>35261</td>
+<td class="lang-cell">英语 / 粤语 / 汉语普通话 / 俄语 / 乌克兰语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>唐季礼</td>
+<td>喜剧 / 动作 / 犯罪</td>
+<td>中国香港</td>
+<td class="dp-cell">这次，国际警察陈家驹（成龙 饰）受到美国中央情报局的委托，调查一个国际核子武器的贩卖集团。上司与家驹开始都以为是天荒夜谈，他们根本不相信有什么组织能从黑市里搞来核子武器，认为调查的只是一群乌合之众。然而，当家驹跟踪疑犯徐杰进行交易，进而意外...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="飞虎|陈嘉上|粤语 / 英语 / 泰语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">54</td>
+<td class="title-cell">飞虎</td>
+<td>1996</td>
+<td>6.6</td>
+<td>1754</td>
+<td class="lang-cell">粤语 / 英语 / 泰语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>陈嘉上</td>
+<td>动作</td>
+<td>中国香港</td>
+<td class="dp-cell">米妮（梁咏琪 饰）是海关督察，近日里，她获得消息，得知大量毒品即将抵达香港，于是决心调查此案，然而却遭到了毒贩“冰后”强大的火力抵抗，败下阵来。飞虎队队长王东（王敏德 饰）带领队员们进驻海关，王东更是坦言海关方面根本不是毒贩的对手，这让米妮...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="一个好人|洪金宝|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">55</td>
+<td class="title-cell">一个好人</td>
+<td>1997</td>
+<td>7.2</td>
+<td>30645</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>洪金宝</td>
+<td>动作 / 喜剧 / 犯罪</td>
+<td>中国香港</td>
+<td class="dp-cell">澳大利亚墨尔本，华裔厨师积奇（成龙 饰）是当地小有名气的人物，定期在电视上主持烹饪节目。毒枭金·卡洛（Richard Norton 饰）集团颇有势力，金·卡洛本人残暴冷酷，清除了敌对帮派的卧底之后率众和对方在仓库大打出手，而枪战全过程被记者...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="五行战士|于仁泰|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">56</td>
+<td class="title-cell">五行战士</td>
+<td>1997</td>
+<td>6.6</td>
+<td>262</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>于仁泰</td>
+<td>动作 / 奇幻 / 冒险</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell"></td>
+<td></td>
+</tr>
+
+<tr data-search="侯孝贤画像|奥利维耶·阿萨亚斯|法语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">57</td>
+<td class="title-cell">侯孝贤画像</td>
+<td>1997</td>
+<td>8.5</td>
+<td>2190</td>
+<td class="lang-cell">法语 / 汉语普通话</td>
+<td>法语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>奥利维耶·阿萨亚斯</td>
+<td>纪录片</td>
+<td>法国 / 中国台湾</td>
+<td class="dp-cell">阿萨亚斯八十年代曾到达台湾，在那里结识了杨德昌、侯孝贤等“刚出学校校门”的新导演。那一时期也正是大陆陈凯歌、张艺谋等年轻导演登上影坛之际。同是一代青年艺术家，心灵有许多共通之处。阿萨亚斯曾经拍过一部纪录片《侯孝贤画像》，用来向侯孝贤致敬。他...</td>
+<td></td>
+</tr>
+
+<tr data-search="98古惑仔之龙争虎斗|刘伟强|粤语 / 英语 / 马来语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">58</td>
+<td class="title-cell">98古惑仔之龙争虎斗</td>
+<td>1998</td>
+<td>7.3</td>
+<td>54471</td>
+<td class="lang-cell">粤语 / 英语 / 马来语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>刘伟强</td>
+<td>动作</td>
+<td>中国香港</td>
+<td class="dp-cell">1998年，香港回归后发生了天翻地覆的变化。而此时的铜锣湾亦发生了天翻地覆的变化，这个洪兴设陈浩南（郑伊健 饰）揸Fit的地盘来了两个新人物，一个是东升社的司徒浩南（郑浩南 饰），一个是湾仔区的新任高级督察李Sir( 李修贤 饰) 。 司徒...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="b计划|罗礼贤|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">59</td>
+<td class="title-cell">B计划</td>
+<td>1998</td>
+<td>6.4</td>
+<td>1699</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>罗礼贤</td>
+<td>动作</td>
+<td>中国香港</td>
+<td class="dp-cell">日本第一通缉犯、恐怖组织“圣众之道”头脑吉永英明在香港被扣留，香港督察Ken（张智霖 饰）与女友Anita（舒淇 饰）在回家路程中偶遇吉永英明手下盗取化学品后遗弃的卡车在路面失控，Ken因此而卷入这次国际犯罪事件。为了引渡吉永，曾经在吉永手...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="不夜城|李志毅|日语 / 普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">60</td>
+<td class="title-cell">不夜城</td>
+<td>1998</td>
+<td>8.2</td>
+<td>23881</td>
+<td class="lang-cell">日语 / 普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>李志毅</td>
+<td>剧情 / 爱情</td>
+<td>中国香港 / 日本</td>
+<td class="dp-cell">刘健一（金城武饰）是新宿歌舞伎町的混混，身为台湾与日本人的残留孤儿，混血的他被叫作半唐番，不为社会所容纳。歌舞伎町有着上海帮、福建帮、北京帮、台湾帮等，各方力量形成复杂的角力形势。年关将至，似乎是因为健一的前度拍档吴富春（椎名桔平饰）返回歌...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="我是谁|陈木胜 / 成龙|英语 / 粤语 / 荷兰语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">61</td>
+<td class="title-cell">我是谁</td>
+<td>1998</td>
+<td>7.7</td>
+<td>130264</td>
+<td class="lang-cell">英语 / 粤语 / 荷兰语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈木胜 / 成龙</td>
+<td>喜剧 / 动作 / 科幻</td>
+<td>中国香港</td>
+<td class="dp-cell">三名科学家在非洲大陆发现了一种神秘的矿石，这种矿石具有极强的杀伤力。就在这三名科学家携带矿石返回的途中，美国中央情报局派出了由11名来自不同国家的特种兵组成的特别行动小队将科学家和他们成果劫持了。情报局内部出现了内鬼，想把这一成果据为己有。...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="新恋爱世纪|王晶 / 叶伟民|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">62</td>
+<td class="title-cell">新恋爱世纪</td>
+<td>1998</td>
+<td>6.5</td>
+<td>1984</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>王晶 / 叶伟民</td>
+<td>爱情</td>
+<td>中国香港</td>
+<td class="dp-cell">气质不俗的美穗（刘嘉玲）虽只是一名普通的化妆品销售员，却有满怀抱负，当生活中遭遇不顺心的事时，一想起一表人才将来定会出人头地的男友比尔（黎明）就会重拾信心。但比尔空有经济头脑始终寻不到机遇，辛苦多年仍是普通小职员一名，终令美穗彻底失望离他而...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="玻璃之城|张婉婷|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">63</td>
+<td class="title-cell">玻璃之城</td>
+<td>1998</td>
+<td>7.9</td>
+<td>63918</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张婉婷</td>
+<td>剧情 / 爱情</td>
+<td>中国香港</td>
+<td class="dp-cell">在1997年的除夕夜，英国伦敦的人们都在准备迎接新年的到来，为新年的到来欢呼庆祝。此时一辆汽车失事撞毁了，港生（黎明 饰）和韵文（舒淇 饰）是车上的一对中年男女，他们在人们的欢呼声中逝去。经调查发现，原来他们是一对偷情的爱侣，由于各自都有家...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="红色恋人|叶大鹰|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">64</td>
+<td class="title-cell">红色恋人</td>
+<td>1998</td>
+<td>7.2</td>
+<td>13521</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>叶大鹰</td>
+<td>剧情 / 爱情 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">佩恩（泰德·巴勃考克 Todd Babcock 饰）是生活在上海租界里的一名美国医生，一次偶尔的机会，他认识了国民党特务皓明（陶泽如 饰）。皓明年轻时受十月革命的感召也曾有过伟大的红色理想，但白色恐怖的残酷却让他改变初衷，拿起了屠杀共产党的...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="顾城别恋|陈丽英|英语 / 汉语普通话 / 德语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">65</td>
+<td class="title-cell">顾城别恋</td>
+<td>1998</td>
+<td>5.5</td>
+<td>1705</td>
+<td class="lang-cell">英语 / 汉语普通话 / 德语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈丽英</td>
+<td>传记 / 剧情 / 爱情</td>
+<td>中国香港</td>
+<td class="dp-cell">风景如画的新西兰威克岛，像孩子一样天真又像孩子一样疯狂的诗人古城（冯德伦 饰），在山顶以特有的韵律吟诵着生命的诗歌，他在学校的铁栏外急切地呼唤着儿子的名字，却在冷酷的法律面前败退下来。古城生长在被狂热运动席卷的新中国，作为坏分子被批斗的父母...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="三条人|杜可风|英语 / 日语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">66</td>
+<td class="title-cell">三条人</td>
+<td>1999</td>
+<td>7.3</td>
+<td>789</td>
+<td class="lang-cell">英语 / 日语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>杜可风</td>
+<td></td>
+<td>美国 / 日本 / 中国香港 / 新加坡</td>
+<td class="dp-cell">浅野在冲绳。他有著异于常人的忆，对他来说，每个字有生命、有触觉、有味觉和颜色，他决定带著这些负载过重的回忆逃向大海。恍惚间，漂浮到一座「闻起来不坏」的城市－－香港。 凯文在香港有一家酒吧，他用go-to-hell的心情迎接每一天，虽然，总随...</td>
+<td></td>
+</tr>
+
+<tr data-search="化骨龙与千年虫|张敏|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">67</td>
+<td class="title-cell">化骨龙与千年虫</td>
+<td>1999</td>
+<td>6.0</td>
+<td>2733</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张敏</td>
+<td>喜剧 / 犯罪</td>
+<td>中国香港</td>
+<td class="dp-cell">小混混“化骨龙”（张家辉 饰）与母亲（罗兰 饰）相依为命，因一次撞车，化骨龙被老差骨“千年虫”（李修贤 饰）扣下，所幸龙母的装傻技巧助其脱身。四处欠下高利贷的化骨龙母子二人为了躲债不得不时常做戏躲避追债，这日龙母赌马命中，收利的化骨龙却遇上...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="我的1919|黄健中|英语 / 法语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">68</td>
+<td class="title-cell">我的1919</td>
+<td>1999</td>
+<td>8.5</td>
+<td>35712</td>
+<td class="lang-cell">英语 / 法语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>黄健中</td>
+<td>剧情 / 传记 / 历史</td>
+<td>中国大陆</td>
+<td class="dp-cell">1919年，随着第一次世界大战结束，被战火蹂躏的欧洲尚未恢复元气，旨在解决战争遗留问题和奠定和平基础的巴黎和会准备召开，中国作为战胜国之一，派出了时任驻美公使、全权代表顾维钧（陈道明 饰）等五人组成的代表团参加和会。然而在欧美各国以及日本等...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="无问题|张坚庭 (alfred cheung)|日语 / 粤语 / 英语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">69</td>
+<td class="title-cell">无问题</td>
+<td>1999</td>
+<td>5.3</td>
+<td>184</td>
+<td class="lang-cell">日语 / 粤语 / 英语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张坚庭 (Alfred Cheung)</td>
+<td>喜剧 / 爱情</td>
+<td>日本 / 中国香港</td>
+<td class="dp-cell">大二郎(冈村隆史饰)是个个子矮小丶不起眼的男人，某天被身为功夫迷的漂亮女朋友玲子(佐藤康惠饰)留书分手并前往香港工作。伤心欲绝的大二郎下定决心，要到香港找回玲子。到了香港，透过朋友健一的介绍到摄影棚工作，建一并且告诉完全不会说广东话的大二郎...</td>
+<td></td>
+</tr>
+
+<tr data-search="疯狂英语|张元|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">70</td>
+<td class="title-cell">疯狂英语</td>
+<td>1999</td>
+<td>6.6</td>
+<td>854</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张元</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="dp-cell"></td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="红河谷|冯小宁|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">71</td>
+<td class="title-cell">红河谷</td>
+<td>1999</td>
+<td>7.8</td>
+<td>52501</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>冯小宁</td>
+<td>剧情 / 历史 / 爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">一个男子（邵兵饰）救下了被乡民准备供奉给雨神的女子（应真饰），两个人一起流落到了一个藏族部落，开始了他们新的生活。在这里，他们认识了美丽的藏族公主（宁静饰）。后来，英国探险队在雪山遇险，琼斯（尼克饰）和罗克曼（波尔饰）也被藏民救下，留在西藏...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="上海正午|汤姆·戴伊|英语 / 汉语普通话 / 西班牙语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">72</td>
+<td class="title-cell">上海正午</td>
+<td>2000</td>
+<td>6.4</td>
+<td>27706</td>
+<td class="lang-cell">英语 / 汉语普通话 / 西班牙语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>汤姆·戴伊</td>
+<td>动作 / 冒险 / 喜剧</td>
+<td>美国 / 中国香港</td>
+<td class="dp-cell">故事发生在清朝，蓓蓓公主（刘玉玲 饰）由皇帝主婚，必须嫁给皇族亲王，公主心里十万分的不愿意。这时，不怀好意的英文教师安德鲁看出了公主心意，怂恿她出逃美国。公主出逃后，安德鲁留下了一封勒索信给皇帝，所要赎金十万金条。这下皇帝慌了神，马上派出三...</td>
+<td></td>
+</tr>
+
+<tr data-search="东京攻略|马楚成|粤语 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">73</td>
+<td class="title-cell">东京攻略</td>
+<td>2000</td>
+<td>6.4</td>
+<td>63180</td>
+<td class="lang-cell">粤语 / 日语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>马楚成</td>
+<td>动作 / 喜剧 / 剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">Maise（陈慧琳 饰）与男友高桥裕二（仲村亨 饰）相恋多时，高桥却在结婚当天突然失踪了。Maise决定前往东京寻找高桥，同时装修师父毕大勇（郑伊健 饰）为了追逃Maise欠下的装修费用，便决定跟着她前往东京。互相不信任的二人到了高桥在东京...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="公元2000 ad|陈嘉上|英语 / 粤语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">74</td>
+<td class="title-cell">公元2000 AD</td>
+<td>2000</td>
+<td>5.4</td>
+<td>3078</td>
+<td class="lang-cell">英语 / 粤语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈嘉上</td>
+<td>动作 / 惊悚</td>
+<td>中国香港 / 新加坡</td>
+<td class="dp-cell">皮特（郭富城 饰）自幼失去了父母，和哥哥格瑞高（黄文永 饰）过着相依为命的生活。皮特一直生活在哥哥无微不至的照顾之下，从来不用为生计苦恼。格瑞高的真实身份，是专攻网络的黑客特工，让皮特没有想到的是，哥哥竟然因为参与了攻击国防安全系统，出卖情...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="有时跳舞|关锦鹏|英语 / 汉语普通话 / 日语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">75</td>
+<td class="title-cell">有时跳舞</td>
+<td>2000</td>
+<td>6.7</td>
+<td>904</td>
+<td class="lang-cell">英语 / 汉语普通话 / 日语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>关锦鹏</td>
+<td>剧情</td>
+<td>日本 / 中国香港 / 中国大陆</td>
+<td class="dp-cell">五个不同城市不同身份的人各怀目的抵达一个叫浮游州的小岛。Haruki（大泽隆夫）原是日本某杂志的撰稿人，因患上肺病，来到小岛休养生息。Sharon（李嘉欣）是美国银行界的女强人，偕好友Marianne（桃井熏）到小岛只为游玩，偶尔那段不愿回...</td>
+<td></td>
+</tr>
+
+<tr data-search="李小龙：勇士的旅程|李小龙 / 约翰·利特尔|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">76</td>
+<td class="title-cell">李小龙：勇士的旅程</td>
+<td>2000</td>
+<td>9.1</td>
+<td>1656</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>李小龙 / 约翰·利特尔</td>
+<td>纪录片</td>
+<td>美国 / 英国 / 中国香港</td>
+<td class="dp-cell">李小龙的遗作《死亡游戏》于一九七八年公映，当中只有约十一分钟的片断有他亲自拍摄。一九九四年一次偶然的机会下，约翰。力图先生与李小龙遗孀李莲达女士在李氏爱达荷州的故居中，发现李小龙筹拍《死亡游戏》的武术设计手稿及剧本等，其中部分片段，并没有在...</td>
+<td></td>
+</tr>
+
+<tr data-search="死亡的游戏|大串利一|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">77</td>
+<td class="title-cell">死亡的游戏</td>
+<td>2000</td>
+<td>8.6</td>
+<td>4507</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>大串利一</td>
+<td>动作</td>
+<td>日本 / 中国香港</td>
+<td class="dp-cell">李小龙真正的遗作：《死亡的游戏》（比《死亡游戏》多了个“的”字，主角叫“海天”，而不是“卢比利”）《死亡的游戏》于2000年发布，收录于《勇士的旅程》当中。《勇》是一部半纪录片半电影片。数十年来流传的“李小龙的最后之作”《死亡游戏》，其实真...</td>
+<td></td>
+</tr>
+
+<tr data-search="西洋镜|胡安|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">78</td>
+<td class="title-cell">西洋镜</td>
+<td>2000</td>
+<td>7.5</td>
+<td>4863</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>胡安</td>
+<td>剧情 / 历史 / 爱情</td>
+<td>中国大陆 / 德国 / 中国台湾 / 美国</td>
+<td class="dp-cell">喜欢捣鼓新鲜玩意的刘京伦（夏雨 饰）是丰泰照相馆的伙计，偶然一次机会认识了来北京放影戏的英国人雷门，银幕上的会动的影像使让这个年轻人着了迷，于是他便背着掌柜和亲人跟着雷门一起拍影戏放影戏。影戏的放映抢了伶界大王“谭贝勒”的热闹，不过他依然对...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="黄连.厚朴|丁荫楠 yinnan ding|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">79</td>
+<td class="title-cell">黄连.厚朴</td>
+<td>2000</td>
+<td>8.1</td>
+<td>834</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>丁荫楠 Yinnan Ding</td>
+<td>剧情</td>
+<td>中国大陆</td>
+<td class="dp-cell">老北京四合院中，住着世代名医龚老太爷（朱旭 饰）一家。虽说儿媳于莲舫（王之夏 饰）与儿子离了婚，但碍于师徒关系他仍象以前一样对待她。一天，老爷子正在座诊，女婿任大伟带自己的老总来瞧病，把完脉，老爷子面无表情地仍出一句吓人的话：不用开药了，回...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="龙火|葛民辉|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">80</td>
+<td class="title-cell">龙火</td>
+<td>2000</td>
+<td>6.1</td>
+<td>121</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>葛民辉</td>
+<td>剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">讲述一男一女的故事：男的来自香港——中国的南部，说广东话；女的来自札幌——日本的北部，说日本语。虽然两人来自不同的角落，却在东京邂逅相识，并且因为同一个念头：“希望可以在天安门前拍摄一张照片</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="不死情谜|刘伟强|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">81</td>
+<td class="title-cell">不死情谜</td>
+<td>2001</td>
+<td>6.4</td>
+<td>893</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>刘伟强</td>
+<td>剧情 / 爱情 / 犯罪</td>
+<td>中国香港</td>
+<td class="dp-cell">香港重案组督察Sam（黎明）率众捣毁了某跨国犯罪组织的巢穴，并把该组织首脑之一Night（尹子维）捸捕归案，但他没想到的是， Night会在其花重金聘请的能言善辩的律师团的帮助下仅以协助偷运人蛇罪被判3年监禁，对此Sam虽很失望，但仍暂时舒...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="与查理斯午餐|迈克尔·帕克|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">82</td>
+<td class="title-cell">与查理斯午餐</td>
+<td>2001</td>
+<td>7.1</td>
+<td>166</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>迈克尔·帕克</td>
+<td>剧情 / 喜剧 / 爱情</td>
+<td>加拿大/中国香港</td>
+<td class="dp-cell">阿唐与爱宝结婚三年了，两人却因为工作原因分居香港和加拿大两地。爱宝为了让阿唐移民过去陪她，谎称自己正在与一个白种人约会，让阿唐坐立不安，只能前往语言不通的加拿大寻找爱宝。</td>
+<td></td>
+</tr>
+
+<tr data-search="买凶拍人|彭浩翔|粤语 / 法语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">83</td>
+<td class="title-cell">买凶拍人</td>
+<td>2001</td>
+<td>8.2</td>
+<td>131422</td>
+<td class="lang-cell">粤语 / 法语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>彭浩翔</td>
+<td>犯罪 / 动作 / 喜剧</td>
+<td>中国香港</td>
+<td class="dp-cell">职业杀手Bart（葛民辉饰）技艺高超，雇主很多，收入不俗。他与妻子阿玲（方子璇饰）居于高级住宅区，小日子过的非常滋润。可惜好景不长，金融风暴后夫妻二人陷入经济危机。Bart迫于无奈，便为有钱太太杀人服务，不想有钱太太要求苛刻，要Bart在杀...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="你那边几点|蔡明亮|英语 / 法语 / 汉语普通话 / 台语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">84</td>
+<td class="title-cell">你那边几点</td>
+<td>2001</td>
+<td>7.9</td>
+<td>10873</td>
+<td class="lang-cell">英语 / 法语 / 汉语普通话 / 台语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>蔡明亮</td>
+<td>剧情 / 爱情</td>
+<td>法国 / 中国台湾</td>
+<td class="dp-cell">父亲离世后，来到天桥摆摊卖手表的小康（李康生）同母亲一样，虽自觉与其并无多少情感，却无法摆脱其在精神上的无处不在。因为一块可以显示出巴黎与台北时差的手表，小康结识要去巴黎的湘琪（陈湘琪 饰），自此，精神抑压的他以为同巴黎（湘琪 饰）取得了某...</td>
+<td></td>
+</tr>
+
+<tr data-search="候鸟|丁亚民|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">85</td>
+<td class="title-cell">候鸟</td>
+<td>2001</td>
+<td>7.0</td>
+<td>1688</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>丁亚民</td>
+<td>剧情 / 爱情</td>
+<td>中国台湾</td>
+<td class="dp-cell">方宁（刘若英 饰）带着五岁的儿子和丈夫郭文亮（黄品源 饰）移民来到了加拿大，为了维持生计，郭文亮整日在外工作，被忽视的方宁则同许多和她有着一样遭遇的“移民太太”们待在一起打发着时间。郭文亮的父母也来到了加拿大，没想到两人却成为了矛盾的导火索...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="刮痧|郑晓龙|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">86</td>
+<td class="title-cell">刮痧</td>
+<td>2001</td>
+<td>7.5</td>
+<td>32341</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>郑晓龙</td>
+<td>剧情 / 家庭</td>
+<td>中国大陆</td>
+<td class="dp-cell">电脑游戏设计师许大同（梁家辉 饰）与妻子简宁（蒋雯丽 饰）在美国奋斗了8年，事业有成。一次意外却令美好的家庭变得愁云惨雾：5岁的儿子生病了，老父亲（朱旭 饰）用传统的中国民间刮痧帮孙子治病。大同夫妻继而被控告虐待儿童，一个又一个物证人证令夫...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="千禧曼波|侯孝贤|汉语普通话 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">87</td>
+<td class="title-cell">千禧曼波</td>
+<td>2001</td>
+<td>7.2</td>
+<td>24625</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>侯孝贤</td>
+<td>剧情 / 爱情</td>
+<td>中国台湾 / 法国</td>
+<td class="dp-cell">年轻生命的消耗像是一首风驰电掣的摇滚乐，以热情洋溢的节奏，疯狂起始，然後又在某个浑然忘我的时刻，曳然而止。电音感官的放纵、暗夜生涯的浪荡、过渡爱情的沈沦、江湖义气的不归路，都是多少热血灵魂曾经走过的无悔无憾。一个年轻女孩活在她自己的异世界里...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="庭院里的女人|严浩|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">88</td>
+<td class="title-cell">庭院里的女人</td>
+<td>2001</td>
+<td>6.8</td>
+<td>1237</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>严浩</td>
+<td>冒险 / 剧情 / 爱情</td>
+<td>中国大陆 / 美国</td>
+<td class="dp-cell">1938年，日军的铁蹄蹂躏中华大地，而江南水乡的吴府却宛如立身桃花之源，过着与世隔绝的安逸生活。吴府女主人吴太太（罗燕 饰）40岁寿宴那天，其好友康太太难产，命悬一线。吴太太匆匆赶往好友处，在此偶遇孤儿院的洋人医生安德鲁（Willem Da...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="新十字街头|蒋晓真|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">89</td>
+<td class="title-cell">新十字街头</td>
+<td>2001</td>
+<td>5.7</td>
+<td>194</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>蒋晓真</td>
+<td>剧情</td>
+<td>中国台湾 / 中国大陆</td>
+<td class="dp-cell">杨少（刘若英 饰）是一个在美奋斗多年、事业成功的设计师，纽约律师史蒂夫（爱伦·希克 饰）一直被她的才艺所倾倒。父亲离世，杨少回沪奔丧，巧遇老赵的儿子赵铭（赵劲 饰），对人生地不熟的杨少赵铭给予了诸多帮助，杨少十分感激。赵铭与好友黄毛（蔡满寿...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="特务迷城|陈德森|粤语 / 普通话 / 英语 / 法语 / 土耳其语 / 韩语" data-reason="外语为主(外语4/中文2)">
+<td style="color:var(--text-muted)">90</td>
+<td class="title-cell">特务迷城</td>
+<td>2001</td>
+<td>6.6</td>
+<td>25940</td>
+<td class="lang-cell">粤语 / 普通话 / 英语 / 法语 / 土耳其语 / 韩语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语4/中文2)</span></td>
+<td>陈德森</td>
+<td>动作 / 喜剧 / 惊悚</td>
+<td>中国香港</td>
+<td class="dp-cell">从小习武的健身器材店营业员小北（成龙）有奇异的预感能力，梦想有天成为特务。凭借预感及身手，小北将打劫银行的劫匪当场逮捕，成为新闻人物，引来私家侦探的注意，怀疑他可能是其韩国客户朴元正失散多年的儿子，决定带他去见朴元正的律师。好奇心驱使，小北...</td>
+<td>Tier 2a</td>
+</tr>
+
+<tr data-search="紫日|冯小宁|汉语普通话 / 俄语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">91</td>
+<td class="title-cell">紫日</td>
+<td>2001</td>
+<td>8.4</td>
+<td>55875</td>
+<td class="lang-cell">汉语普通话 / 俄语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>冯小宁</td>
+<td>剧情 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">二战即将结束时，忠厚老实的中国老百姓杨玉福（富大龙）被苏联红军从日本人的屠刀下救出。向后方转移的路上，苏军误入日军军营，一场激战过后，杨玉福和女军医娜佳（安娜•捷尼拉洛娃）逃进林区，碰上与日军失散的少女秋叶子（前田知惠）。由于一直被灌输军国...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="三更|金知云 / 朗斯·尼美毕达 / 陈可辛|韩语 / 英语 / 汉语普通话 / 泰语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">92</td>
+<td class="title-cell">三更</td>
+<td>2002</td>
+<td>7.4</td>
+<td>28748</td>
+<td class="lang-cell">韩语 / 英语 / 汉语普通话 / 泰语 / 粤语</td>
+<td>韩语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>金知云 / 朗斯·尼美毕达 / 陈可辛</td>
+<td>爱情 / 悬疑 / 奇幻</td>
+<td>中国香港 / 韩国 / 泰国</td>
+<td class="dp-cell">该片由香港、韩国与泰国三位导演陈可辛、金知云与Nonzee Nimibutr的三部短片《回家》、《失忆》与《轮回》组成。《回家》讲于辉（黎明）鉴于以往经验，深信用中药泡澡能令自己死亡三年的妻子（原丽淇）复活，但因行为诡异致使警察邻居（曾志伟...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="十分钟年华老去：小号篇|陈凯歌 / 维克多·艾里斯 / 沃纳·赫尔佐格 / 吉姆·贾木许 / 阿基·考里斯马基 / 斯派克·李 / 维姆·文德斯|英语 / 汉语普通话 / 西班牙语 / 芬兰语 / 巴西土著语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">93</td>
+<td class="title-cell">十分钟年华老去：小号篇</td>
+<td>2002</td>
+<td>8.5</td>
+<td>25026</td>
+<td class="lang-cell">英语 / 汉语普通话 / 西班牙语 / 芬兰语 / 巴西土著语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈凯歌 / 维克多·艾里斯 / 沃纳·赫尔佐格 / 吉姆·贾木许 / 阿基·考里斯马基 / 斯派克·李 / 维姆·文德斯</td>
+<td>剧情</td>
+<td>西班牙 / 英国 / 德国 / 芬兰 / 中国大陆 / 美国</td>
+<td class="dp-cell">《十分钟年华老去 大提琴篇》的姊妹篇，由七位知名导演各自执导摄制而成，共同讲述发生在短暂十分钟里的人情冷暖。《狗没有地狱》里刑满出狱的男人带着女友一起远走故乡莫斯科，是坚贞的爱情与灵魂的回归；《生命线》中由呱呱坠地的新生儿讲起，平静安详；《...</td>
+<td></td>
+</tr>
+
+<tr data-search="天脉传奇|鲍德熹|英语 / 普通话/国语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">94</td>
+<td class="title-cell">天脉传奇</td>
+<td>2002</td>
+<td>5.4</td>
+<td>19094</td>
+<td class="lang-cell">英语 / 普通话/国语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>鲍德熹</td>
+<td>冒险 / 动作 / 爱情</td>
+<td>中国 / 中国香港 / 中国台湾 / 日本</td>
+<td class="dp-cell">早在十三世纪，西藏的能工巧匠制作了“敦煌之心”，它是能够打开保存玄奘舍利子之处的宝物。数百年来，当初在敦煌守卫舍利子的僧人们渐渐变成了一个杂技世家，延续着自己保护圣物的神圣使命。这个杂技世家的最新一代传人——白嫣飞（杨紫琼 饰）、白跃童姐弟...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="无问题2|钱嘉乐|日语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">95</td>
+<td class="title-cell">无问题2</td>
+<td>2002</td>
+<td>5.7</td>
+<td>278</td>
+<td class="lang-cell">日语 / 粤语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>钱嘉乐</td>
+<td>动作 / 喜剧 / 爱情</td>
+<td>日本 / 中国香港</td>
+<td class="dp-cell">木村健介因为崇拜功夫来到香港，阴差阳错中和杀手----无影门的叛徒“无敌”发生冲突，他利用杀虫剂熏昏了这个武林高手，但却被某日本财团的副总裁误以为木村健介是无敌，要他杀掉自己的侄女太田由美子，以谋夺侄女的遗产。木村健介却爱上了由美子，由美子...</td>
+<td></td>
+</tr>
+
+<tr data-search="极地营救|张建亚|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">96</td>
+<td class="title-cell">极地营救</td>
+<td>2002</td>
+<td>5.0</td>
+<td>1562</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张建亚</td>
+<td>剧情</td>
+<td>中国大陆</td>
+<td class="dp-cell">飞行员格桑在新婚前执行最后的任务时飞机失事，特意从广州赶来的新娘项莉医生忍住巨大的悲伤，留在西藏工作。一年后，为了拯救县委书记生命，项莉前往古格王国，不料途中遭遇狂风暴雨，泥石流等一系列天灾。为了拯救车中人的生命，军方出动陆航直升机救助，因...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="爱情灵药|苏照彬 / 李丰博|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">97</td>
+<td class="title-cell">爱情灵药</td>
+<td>2002</td>
+<td>7.5</td>
+<td>3727</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>苏照彬 / 李丰博</td>
+<td>冒险 / 喜剧 / 悬疑</td>
+<td>中国台湾</td>
+<td class="dp-cell">一家日本电视台筹划“台湾不良高生改变计划”节目，栏目组抵达台湾，由此与几个年轻人产生了互动……意外购得暗杀名刀“全丸”的断掌三兄弟筹划行劫，却一直被有道德洁癖的疯警察（戴立忍 饰）追索。而十七岁的高才生林祖状（光良 饰）自幼为自己过长的下体...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="赤裸特工|程小东|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">98</td>
+<td class="title-cell">赤裸特工</td>
+<td>2002</td>
+<td>6.4</td>
+<td>87051</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>程小东</td>
+<td>动作 / 剧情 / 爱情</td>
+<td>中国香港</td>
+<td class="dp-cell">本片是程小东于2002年导演的香港动作惊悚片，该片当年在香港上映第一周就获得了价值70000多美元的票房。Madame M集团在世界各地专门诱拐十二、三貌美少女，将她们软禁在荒岛上进行地狱式的特训，钻研各类型的战斗知识及暗杀技巧。从小训练她...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="下一站…天后|马伟豪|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">99</td>
+<td class="title-cell">下一站…天后</td>
+<td>2003</td>
+<td>6.5</td>
+<td>31219</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>马伟豪</td>
+<td>剧情 / 喜剧 / 爱情</td>
+<td>中国香港</td>
+<td class="dp-cell">家中以卖鱼为生的金大喜（蔡卓妍饰），热爱唱歌的她从小便发明星梦。一个机会让她进入了Harry(陈小春饰)的唱片公司担任歌手Shadow的助手。加入了他们之后才发现，Harry与弟弟阿荣（余文乐饰）不和，Shadow的兴趣更不是在唱歌方面。金...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="人民公厕|陈果|韩语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">100</td>
+<td class="title-cell">人民公厕</td>
+<td>2003</td>
+<td>6.4</td>
+<td>4103</td>
+<td class="lang-cell">韩语 / 粤语</td>
+<td>韩语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈果</td>
+<td>剧情</td>
+<td>韩国 / 中国香港 / 日本</td>
+<td class="dp-cell">冬冬（阿部力）诞生并被抛弃于北京的某间公厕，今已长到18岁的他为了带大他的身患重病的婆婆漫游世界去找寻一种奇异灵药。从北京到香港、釜山、印度、纽约，随着寻药记的上演，浪漫杀手（李灿森）、一头金发的韩国人（张赫）、来自深海的奇女子、讲广东话的...</td>
+<td></td>
+</tr>
+
+<tr data-search="双刀|陈奕利|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">101</td>
+<td class="title-cell">双刀</td>
+<td>2003</td>
+<td>7.8</td>
+<td>591</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈奕利</td>
+<td>短片 / 动作</td>
+<td>中国台湾</td>
+<td class="dp-cell">美籍华人Alexi Tan导演，此片全以好莱坞制作模式及班底拍摄，摄影师Andrzej Sekula曾拍摄电影《落水狗》及《危险人物》，而女主角则是曾参演电影《3X反恐暴族》的黑人女演员Leila Arcieri，至于两名奸角Noel Gu...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="双雄|陈木胜|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">102</td>
+<td class="title-cell">双雄</td>
+<td>2003</td>
+<td>6.4</td>
+<td>37357</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈木胜</td>
+<td>惊悚</td>
+<td>中国香港</td>
+<td class="dp-cell">自负能干的“保护要员组”警员李文健（郑伊健 饰）因性格问题与女友Brenda（林嘉欣 饰）的感情亮起红灯。因为一起棘手案件，他与正在监狱服役的原警方心理组的催眠师黎尚正（黎明 饰）打上交道。尽管知晓黎尚正厉害的李文健表现得异常谨慎，却仍被黎...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="古墓丽影2|扬·德·邦特|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">103</td>
+<td class="title-cell">古墓丽影2</td>
+<td>2003</td>
+<td>6.6</td>
+<td>56466</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>扬·德·邦特</td>
+<td>动作 / 冒险</td>
+<td>美国 / 德国 / 日本 / 英国 / 中国香港</td>
+<td class="dp-cell">罗拉•克劳福特（安吉丽娜•朱莉 饰）这名勇于挑战的探险家继续她的探索之路。这次是寻找早已沉入大海的月神庙。根据资料显示，月神庙内埋藏了传说中的“潘朵拉魔盒”。而一股巨大的能量正存在与这个魔盒当中，同时间邪恶的势力也对这个股力量虎视眈眈。因为...</td>
+<td></td>
+</tr>
+
+<tr data-search="大块头有大智慧|杜琪峰 / 韦家辉|粤语 / 英语 / 印地语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">104</td>
+<td class="title-cell">大块头有大智慧</td>
+<td>2003</td>
+<td>6.7</td>
+<td>73024</td>
+<td class="lang-cell">粤语 / 英语 / 印地语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>杜琪峰 / 韦家辉</td>
+<td>动作 / 剧情 / 惊悚</td>
+<td>中国香港 / 中国大陆</td>
+<td class="dp-cell">大隻佬（刘德华 饰）在跳艳舞时与前来扫黄的警花李凤仪（张柏芝 饰）相遇，同时，重案组亦在附近调查一起印度人杀人案。大隻佬逃跑时与逃走的印度逃犯不期而遇，最后逃犯逃走了，大隻佬被当成了嫌犯抓回了警局。其实大隻佬以前是大陆一名武僧，因好友小翠惨...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="电影香江：刀光剑影|伊恩·泰勒|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">105</td>
+<td class="title-cell">电影香江：刀光剑影</td>
+<td>2003</td>
+<td>7.7</td>
+<td>573</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>伊恩·泰勒</td>
+<td>纪录片</td>
+<td>中国香港 / 美国</td>
+<td class="dp-cell">大导演吴宇森、刘家辉，女侠郑佩佩，亚洲影帝姜大卫、洪金宝，邵氏四大导演楚原，武打女影后惠英红一同回顾华语武侠片发展！此特辑收录了由最初中国上海制作的武侠电影片段，至近年扬威海外由李安执导的《卧虎藏龙》，通过重温不同年代制作的武侠片，带领观众...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="紫蝴蝶|娄烨|汉语普通话 / 日语 / 越南语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">106</td>
+<td class="title-cell">紫蝴蝶</td>
+<td>2003</td>
+<td>6.8</td>
+<td>11616</td>
+<td class="lang-cell">汉语普通话 / 日语 / 越南语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>娄烨</td>
+<td>剧情 / 历史 / 爱情</td>
+<td>中国大陆 / 法国</td>
+<td class="dp-cell">1928年，伪满洲国的日本翻译伊丹英彦（仲村亨）离开中国情人丁慧（章子怡）返回日本，数年后他再回中国来到上海时，变身高级特务。而此时丁慧已成为地下抗日组织的成员，并与该组织首领谢明（冯远征）相爱。抗日组织去火车站接从外地聘请的暗杀日本情报人...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="鬼子死了|蒋钦民|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">107</td>
+<td class="title-cell">鬼子死了</td>
+<td>2003</td>
+<td>7.2</td>
+<td>129</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>蒋钦民</td>
+<td>剧情 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">1944年，我国东北一个孤独的铁路小站上只有三个人，站长和他的妻子，还有一个扳道工人大崔。他们被迫为日本人工作。 一天，火车送来了一个负伤的日本上尉浩太郎和他的小马夫、中国孤儿大头辫。 不知什么原因，这个日本军官酷爱种植向日葵，他在小站周围...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="台北二一|杨顺清|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">108</td>
+<td class="title-cell">台北二一</td>
+<td>2004</td>
+<td>6.7</td>
+<td>379</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>杨顺清</td>
+<td>剧情</td>
+<td>中国台湾</td>
+<td class="dp-cell">阿宏（蔡信弘 饰）和小瑾（林孟瑾 饰）是一对交往七年的恋人，这七年里，两人的感情从最初的亲密浓烈逐渐转向稳定平淡，虽然失去了往日的激情，但两人依然将彼此视为生命中最重要的人。阿宏二十七岁的生日即将到来，为了替阿宏庆祝生日，小瑾偷偷的定了一间...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="哥斯拉之终极战役|北村龙平|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">109</td>
+<td class="title-cell">哥斯拉之终极战役</td>
+<td>2004</td>
+<td>6.6</td>
+<td>1773</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>北村龙平</td>
+<td>动作 / 冒险 / 奇幻</td>
+<td>日本 / 澳大利亚 / 美国 / 中国大陆</td>
+<td class="dp-cell">数年前，人类以超级战舰“轰天号”，在南极击溃“哥吉拉”，并且将“哥吉拉”封印在地底下。但是地球除了“哥吉拉”以外，还有许许多多的怪兽，对各大人类都市虎视眈眈。于是，人类成立了“地球防卫部”，专门对付各种怪兽的入侵。而地球防卫部最强大的成员，...</td>
+<td></td>
+</tr>
+
+<tr data-search="地铁光影：侯孝贤与小津安二郎|哈罗德·曼宁|法语 / 中文" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">110</td>
+<td class="title-cell">地铁光影：侯孝贤与小津安二郎</td>
+<td>2004</td>
+<td>7.7</td>
+<td>150</td>
+<td class="lang-cell">法语 / 中文</td>
+<td>法语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>哈罗德·曼宁</td>
+<td>纪录片</td>
+<td>法国 / 中国台湾 / 日本</td>
+<td class="dp-cell"></td>
+<td></td>
+</tr>
+
+<tr data-search="大事件|杜琪峰|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">111</td>
+<td class="title-cell">大事件</td>
+<td>2004</td>
+<td>6.8</td>
+<td>50408</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>杜琪峰</td>
+<td>动作 / 犯罪 / 剧情</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">香港警队被元（任贤齐 饰）率领的悍匪打得无力还击的一幕被电视摄制队拍了下来，全港市民哗然。为了声誉，全港3万多的警员都投入到缉拿重犯的行动中。重案组督察恒（张家辉 饰）跟踪元到了一栋大厦，在他们正想行动时，副指挥官Rebecca（陈慧琳 饰...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="少年阿虎|李仁港|粤语 / 韩语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">112</td>
+<td class="title-cell">少年阿虎</td>
+<td>2004</td>
+<td>6.0</td>
+<td>6383</td>
+<td class="lang-cell">粤语 / 韩语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>李仁港</td>
+<td>动作 / 剧情 / 爱情</td>
+<td>中国香港 / 韩国</td>
+<td class="dp-cell">温柔美丽的韩藉华侨金美娇（金贤珠饰）为逃避感情创伤，只身来到香港。希望过一段安静生活的美娇，碰巧受到前大学同学的邀请，当上大学暑假班韩文教师。第一堂课上，她便遇上了反叛不羁的学生于建邦（吴建豪饰）。这个沉默寡言、在课堂上一直打瞌睡的学生，并...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="新警察故事|陈木胜|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">113</td>
+<td class="title-cell">新警察故事</td>
+<td>2004</td>
+<td>7.7</td>
+<td>280892</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈木胜</td>
+<td>动作 / 犯罪 / 剧情</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">陈国荣（成龙 饰）的所在那一组警察是警队精英，破案无数。阿祖（吴彦祖 饰）是总警师的儿子，却勾结了几个高官子弟( 蒋怡丶尹子维丶安志杰丶叶山豪)挑战警方。他们到银行抢劫，警钟敲响警察赶到时，就把阿荣及队员带进了一个早已设计好的空旷仓库里。警...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="时差7小时|刘晓光|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">114</td>
+<td class="title-cell">时差7小时</td>
+<td>2004</td>
+<td>4.3</td>
+<td>6903</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>刘晓光</td>
+<td>喜剧 / 爱情</td>
+<td>英国 / 中国大陆</td>
+<td class="dp-cell">16岁的中国女孩珍（妞妞 饰）独身赴英国留学，当她在伦敦机场徘徊之际，校方派来接站的香港留学生DJ（陈冠希 饰）心不在焉的出现了，DJ索要了珍的小费之后带她参观校园，珍的土气举动让DJ啼笑皆非。因为自己的音乐梦想，DJ被负责任的钢琴教师盯住...</td>
+<td></td>
+</tr>
+
+<tr data-search="最后的爱，最初的爱|当摩寿史|英语 / 日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">115</td>
+<td class="title-cell">最后的爱，最初的爱</td>
+<td>2004</td>
+<td>6.3</td>
+<td>3618</td>
+<td class="lang-cell">英语 / 日语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>当摩寿史</td>
+<td>爱情</td>
+<td>中国大陆 / 日本</td>
+<td class="dp-cell">因为遭遇到友情与爱情的背叛而心受重创的日本男子——早濑(渡部笃郎 饰)被日本的一家汽车公司派到上海分公司任职。郁郁寡欢的他结识了上海一对姐妹花。姐姐方敏（徐静蕾 饰）美丽大方，聪慧善良；妹妹方琳（董洁 饰）活泼可爱，青春洋气。姐姐方敏对这个...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="海南鸡饭|毕国智|英语 / 汉语普通话 / 法语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">116</td>
+<td class="title-cell">海南鸡饭</td>
+<td>2004</td>
+<td>7.1</td>
+<td>11402</td>
+<td class="lang-cell">英语 / 汉语普通话 / 法语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>毕国智</td>
+<td>剧情 / 喜剧 / 同性</td>
+<td>新加坡 / 中国香港 / 澳大利亚</td>
+<td class="dp-cell">珍（张艾嘉 饰）早年被丈夫抛弃，勤劳持家的她在新加坡开了一家海南鸡饭餐馆，生意兴隆，亦有好友照顾陪伴，然而三个儿子却让她操心不已。得知大儿子和二儿子都是同性恋者之后，思想保守的珍把全部希望寄托在小儿子Leo（LePham Tan 饰）身上，...</td>
+<td></td>
+</tr>
+
+<tr data-search="电影香江之功夫世家|ian taylor|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">117</td>
+<td class="title-cell">电影香江之功夫世家</td>
+<td>2004</td>
+<td>7.6</td>
+<td>663</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Ian Taylor</td>
+<td>纪录片</td>
+<td>美国 / 中国香港</td>
+<td class="dp-cell">素材多取自天映娱乐数字修复邵氏老片，资料方面不仅有内地影迷难得一见的《侠女十三妹》、《如来神掌》、关德兴“黄飞鸿”电影等超级古董重现天日给大家补过基础课程，还有吴宇森、成龙、李连杰、郑佩佩、姜大卫、刘家良、刘家辉、楚原等知名影人侃侃而谈、回...</td>
+<td></td>
+</tr>
+
+<tr data-search="飞鹰|马楚成|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">118</td>
+<td class="title-cell">飞鹰</td>
+<td>2004</td>
+<td>5.2</td>
+<td>19607</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>马楚成</td>
+<td>动作 / 冒险</td>
+<td>中国香港</td>
+<td class="dp-cell">2009年，好打抱不平的女侠飞鹰（杨紫琼）时常有惩奸除恶之举，深受市民爱戴，她的表面身份是名媛淑女鹭鹭。警察局长认为飞鹰的气焰有损警队威严，找来神探文仁（任贤齐）捉拿飞鹰。行动中，文仁巧遇师妹鹭鹭，因久未见面不知对方生活，两人重逢时他没立即...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="伯爵夫人|詹姆斯·伊沃里|英语 / 法语 / 中文" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">119</td>
+<td class="title-cell">伯爵夫人</td>
+<td>2005</td>
+<td>6.8</td>
+<td>2494</td>
+<td class="lang-cell">英语 / 法语 / 中文</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>詹姆斯·伊沃里</td>
+<td>剧情 / 历史 / 爱情</td>
+<td>英国 / 美国 / 德国 / 中国</td>
+<td class="dp-cell">故事发生在20世纪30年代的上海，托德（拉尔夫·费因斯 Ralph Fiennes 饰）是一位生活和事业都陷入了瓶颈的外交官，整日混迹于欢场和酒馆之间。刚刚来到这里的时候，托德也有过宏大和高远的理想，但渐渐失去的视力和复杂的权谋争斗让他无法...</td>
+<td></td>
+</tr>
+
+<tr data-search="太行山上|韦廉 / 沈东 / 陈健|英语 / 德语 / 粤语 / 汉语普通话 / 日语 / 俄语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">120</td>
+<td class="title-cell">太行山上</td>
+<td>2005</td>
+<td>6.7</td>
+<td>8145</td>
+<td class="lang-cell">英语 / 德语 / 粤语 / 汉语普通话 / 日语 / 俄语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>韦廉 / 沈东 / 陈健</td>
+<td>历史 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">1937年日军全面侵华后，华北危急。国共合作的背景下，红军改编为八路军，在总司令朱德（王伍福 饰）率领下东渡黄河奔赴前线抗战。山西实权人物阎锡山面对“国、共、日”三股力量颇为头疼，提出“守土抗日”口号，在民族大义的影响下，于形式上支持八路军...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="恋爱地图|下山天 / 易智言 / 张一白|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">121</td>
+<td class="title-cell">恋爱地图</td>
+<td>2005</td>
+<td>7.3</td>
+<td>36783</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>下山天 / 易智言 / 张一白</td>
+<td>爱情</td>
+<td>中国台湾 / 中国大陆 / 日本</td>
+<td class="dp-cell">东京尧远（陈柏林饰）从台湾来到东京深造，梦想是成为电脑动画师。但是苦于没有灵感，创作枯燥。一天在大街上偶遇一个浑身散发着哀戚气息的女子，尧远对她一见倾心。女子是年轻的画家美智子，最近正在遭逢失恋的痛楚。而因为爱情的感染，尧远重新激发了创作的...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="无米乐|颜兰权 / 庄益增|日语 / 汉语普通话 / 闽南语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">122</td>
+<td class="title-cell">无米乐</td>
+<td>2005</td>
+<td>8.6</td>
+<td>707</td>
+<td class="lang-cell">日语 / 汉语普通话 / 闽南语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>颜兰权 / 庄益增</td>
+<td>纪录片</td>
+<td>中国台湾</td>
+<td class="dp-cell">75歲種稻的阿伯說，種田對他來說，是一種修行，風吹、日曬...有時候颱風來襲，農人是無法抵抗的，禪--就是不讓你反抗，你甘心忍受，農人都是如此忍受，像和尚修禪...靜靜的坐、靜靜的修，農人的勞動就是默默地修禪。一季望過一季，好壞冬望著好壞冬...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="爱神|王家卫 / 米开朗基罗·安东尼奥尼 / 史蒂文·索德伯格|汉语普通话 / 意大利语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">123</td>
+<td class="title-cell">爱神</td>
+<td>2005</td>
+<td>7.7</td>
+<td>44362</td>
+<td class="lang-cell">汉语普通话 / 意大利语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>王家卫 / 米开朗基罗·安东尼奥尼 / 史蒂文·索德伯格</td>
+<td>剧情 / 爱情 / 情色</td>
+<td>意大利 / 中国香港 / 美国 / 法国 / 卢森堡 / 英国</td>
+<td class="dp-cell">该片是一部三段式主题（爱和性）电影，由米开朗基罗•安东尼奥尼（《危险临界点》）、史蒂文•索德伯格（《平衡》）和王家卫（《手》）三位导演联合执导。《手》讲的是1960年代的香港，年轻的裁缝（张震）多年不计回报地爱着交际花华小姐（巩俐）的故事，...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="神话|唐季礼|英语 / 汉语普通话 / 粤语 / 韩语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">124</td>
+<td class="title-cell">神话</td>
+<td>2005</td>
+<td>6.8</td>
+<td>233552</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语 / 韩语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>唐季礼</td>
+<td>动作 / 冒险 / 喜剧</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">骁勇善战的秦朝大将军蒙毅（成龙饰）受秦始皇所命，负责护送玉漱公主（金喜善饰）入秦为妃，一路上彼此情愫暗生，可蒙毅还是选择了效忠君主。秦始皇病危，蒙毅去拿长生不老药并战死沙场。而公主试药成功，在秦王死后被禁在秦王陵中……几千年后，梦中的神秘白...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="经过|郑文堂|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">125</td>
+<td class="title-cell">经过</td>
+<td>2005</td>
+<td>6.9</td>
+<td>7212</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>郑文堂</td>
+<td>剧情</td>
+<td>中国台湾</td>
+<td class="dp-cell">2004年，故宫书画处助理研究员阿静（桂纶镁饰），自小听着资深员工阿超伯（田丰饰）的故宫往事长大，对故宫的山洞库房有着诸多想像。东横（戴立忍饰）是名自由作家，帮故宫撰写故事，一段失恋境遇让他相信残缺只是人生必经过程。退休的阿超伯一生的故事，...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="见鬼十法|彭发 / 彭顺|粤语 / 泰语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">126</td>
+<td class="title-cell">见鬼十法</td>
+<td>2005</td>
+<td>6.5</td>
+<td>19213</td>
+<td class="lang-cell">粤语 / 泰语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>彭发 / 彭顺</td>
+<td>喜剧 / 恐怖 / 惊悚</td>
+<td>中国香港</td>
+<td class="dp-cell">某泰国小青年乘车夜归，结果坐错公车，在一个陌生的地方下车。将错就错，他逛进一家书店，发现一本名为《见鬼10法》的书，书中罗列了换死人角膜、怀孕自杀、杯仙、十字路鬼、捉鬼迷藏、涂尸泥、屋内打伞、午夜对镜梳头、倒栽头和去死等十种见鬼方法，恐怖惊...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="韩城攻略|马楚成|粤语 / 韩语 / 汉语普通话 / 英语 / 日语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">127</td>
+<td class="title-cell">韩城攻略</td>
+<td>2005</td>
+<td>6.1</td>
+<td>72731</td>
+<td class="lang-cell">粤语 / 韩语 / 汉语普通话 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>马楚成</td>
+<td>剧情 / 喜剧 / 动作</td>
+<td>中国香港 / 韩国</td>
+<td class="dp-cell">刑警林贵仁（梁朝伟饰），隶属日本国防外务科特别侦缉组。美国政府悬红三千万美元追查号称“复仇者”的美金伪钞电版，林获知电版到了香港，便孤身深入黑帮内部盗取，却碰上美艳动人的女飞贼JJ（舒淇饰）。二人合力偷出电版，在最后关头JJ却出卖林，挟着电...</td>
+<td>Tier 2a</td>
+</tr>
+
+<tr data-search="龙刀奇缘|司徒永华|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">128</td>
+<td class="title-cell">龙刀奇缘</td>
+<td>2005</td>
+<td>6.3</td>
+<td>359</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>司徒永华</td>
+<td>动画 / 动作 / 冒险</td>
+<td>中国香港 / 中国大陆</td>
+<td class="dp-cell">传说可令持者所向披靡的潜龙刀，是一柄只能被心存正义之士运用的神兵利器，任何人若本着私心而求注定失败。一天，桃源镇正受着野猪王及神秘的夜行女飞贼的袭击破坏，为了对付怪兽与飞贼，拯救镇民，洪亮决定去寻这柄传说中的绝世兵器，途中遇自称知道潜龙刀的...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="龙咁威2|谷德昭|粤语 / 英语 / 法语 / 日语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">129</td>
+<td class="title-cell">龙咁威2</td>
+<td>2005</td>
+<td>6.3</td>
+<td>3798</td>
+<td class="lang-cell">粤语 / 英语 / 法语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>谷德昭</td>
+<td>动作 / 喜剧 / 剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">龙威（郑中基 饰）及好兄弟吴树喜（李灿森 饰）、黄金舟（张达明 饰）已成为警察2年了，但仍然沉迷游乐。他们几个来到了皇母瑶池村泡温泉，竟然破坏了飞虎队的围捕计划，原来是该村村民猫屎强偷走了镇村之宝的皇母娘娘像。为了平息民愤，警队决定把龙威几...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="东京审判|高群书|英语 / 日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">130</td>
+<td class="title-cell">东京审判</td>
+<td>2006</td>
+<td>7.4</td>
+<td>81529</td>
+<td class="lang-cell">英语 / 日语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>高群书</td>
+<td>犯罪 / 剧情 / 历史</td>
+<td>中国大陆</td>
+<td class="dp-cell">1946年，远东国际军事法庭在东京审判日本战犯，当时法庭由11个国家的11名法官组成，受中国国民政府的委任，以梅汝璈（刘松仁 饰）为首的中国法官在3月20日飞抵东京。《大公报》记者肖南（朱孝天 饰）负责远东国际军事法庭的全程跟踪报道，战前相...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="幻游传|陈以文|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">131</td>
+<td class="title-cell">幻游传</td>
+<td>2006</td>
+<td>5.5</td>
+<td>356</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈以文</td>
+<td>动作 / 喜剧 / 奇幻</td>
+<td>日本 / 中国台湾</td>
+<td class="dp-cell">一个台湾日侨现代娇娇女，看不起家中的学徒，一次意外闯进时空隧道，才发觉古代里劫富济贫、行侠仗义的学徒曾为了救她而受伤，两人发展出一段情，随后、两人跟随道士，破除朝廷与邪教勾結的阴谋……「神遊情人」由台灣龍祥公司、日本角川集團、波麗佳音集團、...</td>
+<td></td>
+</tr>
+
+<tr data-search="我的老婆是大佬3|赵真奎|韩语 / 粤语 / 法语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">132</td>
+<td class="title-cell">我的老婆是大佬3</td>
+<td>2006</td>
+<td>5.9</td>
+<td>12491</td>
+<td class="lang-cell">韩语 / 粤语 / 法语</td>
+<td>韩语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>赵真奎</td>
+<td>动作 / 喜剧 / 剧情</td>
+<td>韩国 / 中国大陆</td>
+<td class="dp-cell">香港最大黑道组织“华百联”的大哥林会长（狄龙 饰）因为社团斗争复杂，将家里的千金小姐阿玲（舒淇 饰）送到韩国来藏身。他拜托交好的韩国黑道大哥杨社长为他照顾女儿。杨社长为了保护好阿玲，没有向部下公开她的身份，只是让手下的基哲（李凡秀 饰好好保...</td>
+<td></td>
+</tr>
+
+<tr data-search="无间道风云|马丁·斯科塞斯|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">133</td>
+<td class="title-cell">无间道风云</td>
+<td>2006</td>
+<td>7.3</td>
+<td>118006</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>马丁·斯科塞斯</td>
+<td>剧情 / 犯罪 / 惊悚</td>
+<td>美国 / 中国香港</td>
+<td class="dp-cell">波士顿南部的马萨诸塞州黑社会势力极为猖獗，其中最大的团伙要数弗兰克（杰克•尼科尔森 Jack Nicholson 饰）执掌的爱尔兰黑帮。警方为了剿灭他们，决定派警校毕业生比利（莱昂纳多•迪卡普里奥 Leonardo DiCaprio 饰）潜...</td>
+<td></td>
+</tr>
+
+<tr data-search="狗咬狗|郑保瑞|英语 / 汉语普通话 / 粤语 / 泰语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">134</td>
+<td class="title-cell">狗咬狗</td>
+<td>2006</td>
+<td>8.1</td>
+<td>78687</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语 / 泰语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>郑保瑞</td>
+<td>动作 / 犯罪 / 剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">暗黑、摇晃的船舱，来自柬埔寨的杀手鹏（陈冠希 饰），狗一般在抢食已经洒在地上的残羹冷炙。甚至，在杀人前，还不忘点了满满一桌的食物，风卷残云之后再冷静杀人施然离去。因身为警察的父亲涉毒而大受的打击的重案组探员伟（李灿森 饰），冷漠，行事不按指...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="玉战士|安蒂·朱西·安妮拉|芬兰语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">135</td>
+<td class="title-cell">玉战士</td>
+<td>2006</td>
+<td>4.3</td>
+<td>3086</td>
+<td class="lang-cell">芬兰语 / 汉语普通话</td>
+<td>芬兰语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>安蒂·朱西·安妮拉</td>
+<td>动作 / 冒险 / 剧情</td>
+<td>芬兰 / 荷兰 / 中国 / 爱沙尼亚</td>
+<td class="dp-cell">千年之前的古代中国，只有一位身为铁匠儿子的剑侠（托米·艾昂 Tommi Eronen饰）可以杀死祸害世人的恶魔（成泰燊 Taishen Cheng饰）。他在杀死恶魔后便可以得到永生。在与恶魔决斗前，剑侠爱上了一位美丽的女子（张静初饰）。剑侠...</td>
+<td></td>
+</tr>
+
+<tr data-search="碟中谍3|j·j·艾布拉姆斯|英语 / 意大利语 / 汉语普通话 / 粤语 / 德语 / 捷克语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">136</td>
+<td class="title-cell">碟中谍3</td>
+<td>2006</td>
+<td>7.6</td>
+<td>172588</td>
+<td class="lang-cell">英语 / 意大利语 / 汉语普通话 / 粤语 / 德语 / 捷克语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>J·J·艾布拉姆斯</td>
+<td>动作 / 冒险 / 惊悚</td>
+<td>美国 / 德国 / 中国大陆 / 意大利</td>
+<td class="dp-cell">伊森（汤姆·克鲁斯 Tom Cruise 饰）曾是任职于特殊部门的秘密特工，自从一位名叫茱莉亚（米歇尔·莫娜汉 Michelle Monaghan 饰）的美丽女子出现在他的生命里后，伊森决定金盆洗手，卸甲归田。遗憾的是，好景不长，幸福的生活...</td>
+<td></td>
+</tr>
+
+<tr data-search="终极忍者|邱礼涛|日语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">137</td>
+<td class="title-cell">终极忍者</td>
+<td>2006</td>
+<td>4.8</td>
+<td>625</td>
+<td class="lang-cell">日语 / 粤语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>邱礼涛</td>
+<td>动作</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">白赖仁（李子雄 饰）野心勃勃，一心想控制人类，差仁者领袖虎大介杀死了菊池博士，抢走了万能的“赤盒”，伹他却打不开。得知音乐家高比（黄子华 饰）能打开盒子，他遂派人将其生擒。与此同时，菊池的学生女忍者香也在追杀高比，而令一面，芭蕉先生派爱徒小...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="诡丝|苏照彬|英语 / 日语 / 汉语普通话 / 闽南语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">138</td>
+<td class="title-cell">诡丝</td>
+<td>2006</td>
+<td>7.2</td>
+<td>29690</td>
+<td class="lang-cell">英语 / 日语 / 汉语普通话 / 闽南语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>苏照彬</td>
+<td>剧情 / 恐怖 / 悬疑</td>
+<td>中国台湾</td>
+<td class="dp-cell">腿有残障的科学家黄三太（江口洋介）率领科学小组（大S、陈柏霖等）发明“孟结海绵”，捕获囚禁了一个十三岁男孩的鬼魂，为了查出该男孩的死因，以便自己死后也能变成类似的鬼，黄三太找来有超常能力的探员叶起东（张震），令其跟踪被放出去的男孩。最终，叶...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="雏菊|刘伟强|韩语 / 英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">139</td>
+<td class="title-cell">雏菊</td>
+<td>2006</td>
+<td>8.1</td>
+<td>242559</td>
+<td class="lang-cell">韩语 / 英语 / 汉语普通话</td>
+<td>韩语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>刘伟强</td>
+<td>剧情 / 爱情</td>
+<td>韩国 / 中国香港</td>
+<td class="dp-cell">阿姆斯特丹，两个男人爱上了同一个女人，注定了一段纠缠的故事。惠瑛（全智贤饰）是画家，每天到广场帮路人画肖像，而像她一样风雨不改的，还有某人送来的一盘雏菊。每天雏菊总是准时送到，让她心里悸动而好奇。一天，匆匆而过的正佑(李成宰 饰)遇上了画家...</td>
+<td></td>
+</tr>
+
+<tr data-search="霍元甲|于仁泰|汉语普通话 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">140</td>
+<td class="title-cell">霍元甲</td>
+<td>2006</td>
+<td>7.0</td>
+<td>149933</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>于仁泰</td>
+<td>剧情 / 传记 / 动作</td>
+<td>美国 / 中国大陆 / 中国香港</td>
+<td class="dp-cell">霍元甲（李连杰 饰）年少时以稚嫩的霍家拳打败向他挑衅的小恶霸后习武信心大增，凭着对武术的悟性及热情，他的武艺根基日益深厚，成为天津赫赫有名的武师，可是其性情也渐变得浮躁傲慢，越来越好勇斗狠。得知徒弟被天津另一高手秦爷重创后，霍元甲不问原由闯...</td>
+<td></td>
+</tr>
+
+<tr data-search="面纱|约翰·卡兰|英语 / 汉语普通话 / 法语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">141</td>
+<td class="title-cell">面纱</td>
+<td>2006</td>
+<td>8.3</td>
+<td>147372</td>
+<td class="lang-cell">英语 / 汉语普通话 / 法语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>约翰·卡兰</td>
+<td>剧情 / 爱情</td>
+<td>美国 / 中国大陆 / 加拿大</td>
+<td class="dp-cell">电影讲述了20年代一对年轻的英国夫妇来到中国乡村生活的故事，在这美丽却凶险的环境中，他们经历了在其英国家乡舒适生活中绝对无法想象和体验的情感波澜，并领悟到了爱与奉献的真谛。故事以女主角吉蒂开篇，为了逃离20年代伦敦浮华却又空虚的社交圈，也为...</td>
+<td></td>
+</tr>
+
+<tr data-search="007大战黑衣人|胡戈|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">142</td>
+<td class="title-cell">007大战黑衣人</td>
+<td>2007</td>
+<td>8.0</td>
+<td>233</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>胡戈</td>
+<td>喜剧 / 动作 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">短片开始对故事背景做了介绍，“在很久很久以前，基斯里巴王国长期遭受欺压，为了反抗霸权，在国王的英明领导下，他们发明了震撼世界的大型团体操，在一次十万人排练时，由于人数过多，引发了地震波。周围国家均有震感。然而，万恶的美帝却硬要说他们在搞核试...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="上海红美丽|奥斯卡·l·科斯托|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">143</td>
+<td class="title-cell">上海红美丽</td>
+<td>2007</td>
+<td>5.2</td>
+<td>1256</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>奥斯卡·L·科斯托</td>
+<td>悬疑</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">故事发生在车水马龙的大都市上海，红美丽（邬君梅 饰）有一个幸福的家庭，但这个家庭在一场意外之后开始分崩离析。红美丽知道，丈夫的死并非意外，而是被奸人所害，愤怒和痛苦之中，一个手无寸铁事事逆来顺受的弱女子决定复仇。在他人的帮助之下，红美丽得到...</td>
+<td></td>
+</tr>
+
+<tr data-search="唐卡迷踪|希门·多安 / 杜夫·龙格尔|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">144</td>
+<td class="title-cell">唐卡迷踪</td>
+<td>2007</td>
+<td>3.5</td>
+<td>341</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>希门·多安 / 杜夫·龙格尔</td>
+<td>动作 / 冒险</td>
+<td>加拿大 / 中国大陆</td>
+<td class="dp-cell">前美军特种兵兰森被美国人张伯伦雇用，带领一支由张伯伦、张伯伦的养女阿妮卡、大学教授萧安以及几个保镖组成的探险队，再危险偏僻的蒙古寻找一件无价之宝——由金银丝线织成，上面镶嵌着钻石珠宝的唐卡。这个唐卡不仅是当地的圣物，而且价值连城。这个无价之...</td>
+<td></td>
+</tr>
+
+<tr data-search="天堂口|陈奕利|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">145</td>
+<td class="title-cell">天堂口</td>
+<td>2007</td>
+<td>5.7</td>
+<td>43517</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈奕利</td>
+<td>动作 / 剧情 / 爱情</td>
+<td>中国大陆 / 中国香港 / 中国台湾</td>
+<td class="dp-cell">阿峰（吴彦祖饰），小虎（杨佑宁饰）和大刚（刘烨饰）是在乡下从小一起长大的好兄弟，好朋友。大刚为了出人头地的梦想，说服他们，一起来到了传说中黄金遍地的上海，准备大干一场。到了上海一段时间后，小虎和阿峰来到了天堂口歌舞厅，在那里遇到了美丽的歌女...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="松鼠自杀事件|吴米森|汉语普通话 / 日语 / 英语 / 西班牙语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">146</td>
+<td class="title-cell">松鼠自杀事件</td>
+<td>2007</td>
+<td>6.3</td>
+<td>714</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语 / 西班牙语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>吴米森</td>
+<td>悬疑 / 爱情</td>
+<td>中国台湾 / 日本</td>
+<td class="dp-cell">男子和May是公司裡的同事。他們都有美滿幸福的婚姻，各自的配偶April和Tom也因為彼此有好的關係，相互認識。然而，男子和May 卻因為工作的經常往來，發生感情，而在基於不破壞對方婚姻的共識下， 000005DC 發生了一段外遇。他們經常...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="红气球之旅|侯孝贤|法语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">147</td>
+<td class="title-cell">红气球之旅</td>
+<td>2007</td>
+<td>7.4</td>
+<td>8621</td>
+<td class="lang-cell">法语 / 汉语普通话</td>
+<td>法语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>侯孝贤</td>
+<td>剧情 / 家庭</td>
+<td>法国 / 中国台湾</td>
+<td class="dp-cell">本片为侯孝贤向法国导演艾尔伯特•拉摩里斯（Albert Lamorisse）拍摄于1956年的短片、在电影史上有重要地位的《红气球（Le Ballon Rouge）》的致敬之作，也是他继《咖啡时光》之后拍摄的第二部致敬外语片。Suzanne...</td>
+<td></td>
+</tr>
+
+<tr data-search="2008年第29届北京奥运会开幕式|张艺谋 / 张继钢 / 陈维亚|汉语普通话 / 英语 / 法语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">148</td>
+<td class="title-cell">2008年第29届北京奥运会开幕式</td>
+<td>2008</td>
+<td>9.2</td>
+<td>41156</td>
+<td class="lang-cell">汉语普通话 / 英语 / 法语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>张艺谋 / 张继钢 / 陈维亚</td>
+<td>运动</td>
+<td>中国大陆</td>
+<td class="dp-cell">1. 北京奥运会开幕式欢迎仪式篇（倒计时最后10秒、欢迎焰火、29个焰火历史足迹、梦幻五环、国旗入场、1名儿童演唱《歌唱祖国》、56个民族的儿童簇拥着国旗走来、升中华人民共和国国旗，唱中华人民共和国国歌）2. 北京奥运会开幕式文艺演出篇（上...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="一个人的奥林匹克|侯咏|英语 / 汉语普通话 / 日语 / 德语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">149</td>
+<td class="title-cell">一个人的奥林匹克</td>
+<td>2008</td>
+<td>7.4</td>
+<td>1390</td>
+<td class="lang-cell">英语 / 汉语普通话 / 日语 / 德语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>侯咏</td>
+<td>喜剧 / 剧情 / 运动</td>
+<td>中国大陆</td>
+<td class="dp-cell">“九一八”事变前夕，刘长春（李兆林 饰）是东北大学的学生，在德籍教练指导下练习短跑，事变后，他回到了家乡大连。刘长春目睹了山河破碎的祖国现状，伹他从未放弃训练，决心有一天能为国争光，他的做法得到了妻子姜秀珍（马镜 饰）的支持。日寇控制下的伪...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="上海公园|黄凯|汉语普通话 / 英语 / 韩语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">150</td>
+<td class="title-cell">上海公园</td>
+<td>2008</td>
+<td>6.7</td>
+<td>573</td>
+<td class="lang-cell">汉语普通话 / 英语 / 韩语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>黄凯</td>
+<td>剧情 / 爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">即将前往南方工作的吴正冬（魏云 饰），临走前的那一晚，在多年后的同学聚会上，与已婚的昔日恋人杜蕊蕊（褚颖颖 饰）重逢。此时的两人，早已不再意气风发执着于梦想。吴正冬变得不再骄傲，杜蕊蕊变得不再天真。生活，正改变着他们。唯一没有变化的，是彼此...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="中国月亮|ron berrett|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">151</td>
+<td class="title-cell">中国月亮</td>
+<td>2008</td>
+<td>5.3</td>
+<td>146</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Ron Berrett</td>
+<td>喜剧 / 剧情 / 爱情</td>
+<td>中国大陆 / 美国</td>
+<td class="dp-cell">Aimlessly cruising through his first post-Stanford University summer， 22 year old David Braddock finds himself in China ...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="功夫之王|罗伯·明可夫|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">152</td>
+<td class="title-cell">功夫之王</td>
+<td>2008</td>
+<td>5.7</td>
+<td>167761</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗伯·明可夫</td>
+<td>动作 / 奇幻 / 冒险</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">杰森（Michael Angarano 饰）是一个疯狂迷恋港台功夫片的美国少年，然而现实中的他却饱受坏孩子的欺负，不敢反抗。偶然机会，节森从某中国古董店得到一根如意金箍棒，借着金箍棒的力量，他竟然回到了几千年前的中国。此时，邪恶的玉疆战神（...</td>
+<td></td>
+</tr>
+
+<tr data-search="功夫小子|小田一生|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">153</td>
+<td class="title-cell">功夫小子</td>
+<td>2008</td>
+<td>4.6</td>
+<td>1891</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>小田一生</td>
+<td>动作 / 儿童</td>
+<td>日本 / 中国大陆</td>
+<td class="dp-cell">小和尚功夫（张壮 饰）年纪虽小但武功高强，为了能够继承武林绝学“南平拳”，功夫整日勤学苦练，师兄们纷纷成为他的手下败将。然而，师傅告诉功夫，想要获得继承权，他还需要打败一个神秘人物，功夫手上的铃铛会引导他找到这位和功夫素未谋面的宿敌。功夫来...</td>
+<td></td>
+</tr>
+
+<tr data-search="北京等待|张伦|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">154</td>
+<td class="title-cell">北京等待</td>
+<td>2008</td>
+<td>3.7</td>
+<td>717</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张伦</td>
+<td>剧情</td>
+<td>中国大陆</td>
+<td class="dp-cell">George（Kelly Nyks 饰）与Judy（宋琇萱 Steph Song 饰）在北京偶遇，George对北京的文化古迹很感兴趣。Judy被老板以无理理由炒鱿鱼，却意外发现美国公司总部在寻找George，为求复工的她在带领George...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="女人不坏|徐克|汉语普通话 / 韩语 / 乌兹别克语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">155</td>
+<td class="title-cell">女人不坏</td>
+<td>2008</td>
+<td>6.0</td>
+<td>129121</td>
+<td class="lang-cell">汉语普通话 / 韩语 / 乌兹别克语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>徐克</td>
+<td>喜剧</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">泛泛（周迅 饰）天资聪慧，却局限于实验室内。她不善于与男人交流，甚至被男人碰一下都会立时僵硬。精于专研人体科学的她发明了一样秘密武器——费洛蒙，只要把这种东西装在身上，就可以让异性趋之若鹜。铁菱（桂纶镁 饰）是个另类摇滚少女，爱好打拳击，副...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="少林少女|本广克行|日语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">156</td>
+<td class="title-cell">少林少女</td>
+<td>2008</td>
+<td>3.8</td>
+<td>1846</td>
+<td class="lang-cell">日语 / 汉语普通话 / 粤语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>本广克行</td>
+<td>动作 / 喜剧 / 运动</td>
+<td>日本 / 中国香港</td>
+<td class="dp-cell">天下武功出少林，盛名之下，奔赴少林习武的年轻人至今不绝。日本女孩樱泽凛（柴崎幸 饰）完成了3000天的少林修行，下山返日。而她回到家乡的第一件事就是四处央人学习少林拳，以完成自己光大少林拳的梦想，但无奈不被人理解，当年自己习武的武道场此时也...</td>
+<td></td>
+</tr>
+
+<tr data-search="张纯如 南京大屠杀|anne pick / bill spahic|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">157</td>
+<td class="title-cell">张纯如 南京大屠杀</td>
+<td>2008</td>
+<td>8.7</td>
+<td>3718</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Anne Pick / Bill Spahic</td>
+<td>纪录片</td>
+<td>中国香港 / 加拿大</td>
+<td class="dp-cell">美籍华裔作家张纯如（Iris Chang 1968.3.28—2004.11.9），在完成自己第一部作品《蚕丝》后，开始将目光着眼于发生在20世纪30年代末的那场惨绝人寰的大屠杀。1937年，日本侵华战争爆发，短短几个月内，中华大地狼烟滚滚...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="狼牙|李忠志 / 吴京|粤语 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">158</td>
+<td class="title-cell">狼牙</td>
+<td>2008</td>
+<td>6.4</td>
+<td>41648</td>
+<td class="lang-cell">粤语 / 日语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>李忠志 / 吴京</td>
+<td>动作 / 惊悚</td>
+<td>中国香港</td>
+<td class="dp-cell">台风过境，阴霾的天色不知会在闭港的小岛上空持续多久，陈旧的民宅内，几个帮派人物突遭袭击，来人身手矫健，斩去当家马天泰之首级后消失于夜色……次日，小岛女警晓禾（Celina Jade 饰）为救自家的猫坠树，一过路男子相救，他自称阿布（吴京 饰...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="荡寇|余力为|葡萄牙语 / 汉语普通话 / 日语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">159</td>
+<td class="title-cell">荡寇</td>
+<td>2008</td>
+<td>5.1</td>
+<td>3901</td>
+<td class="lang-cell">葡萄牙语 / 汉语普通话 / 日语</td>
+<td>葡萄牙语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>余力为</td>
+<td>惊悚</td>
+<td>巴西 / 中国大陆 / 中国香港 / 日本</td>
+<td class="dp-cell">《荡寇》以巴西圣保罗市区一处传统的东洋街区为背景，讲述了年轻冲动的纨绔子弟麒麟和他的父亲，一个带有传奇色彩的中国籍逃犯野良之间的恩恩怨怨。这对父子是南美最大的假货走私集团的首领。他们统治着东洋街区这个充斥着帮会势力、街头商贩、腐败政客和舞女...</td>
+<td></td>
+</tr>
+
+<tr data-search="蝎子|马伟豪|日语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">160</td>
+<td class="title-cell">蝎子</td>
+<td>2008</td>
+<td>4.6</td>
+<td>855</td>
+<td class="lang-cell">日语 / 粤语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>马伟豪</td>
+<td>动作</td>
+<td>日本 / 中国香港</td>
+<td class="dp-cell">熹泰（郭品超 饰）和妻子松岛奈美（水野美纪 饰）结婚不久，彼此之间十分恩爱。不幸的是，熹泰的父亲得罪了名为早夜的女人，狠毒的早夜派出了杀手赤城（梁小龙 饰）、苍狼（李灿森 饰）和星愁（黄伊汶 饰）等人取熹泰性命，哪知道一行人玩心大起，竟然声...</td>
+<td></td>
+</tr>
+
+<tr data-search="长江七号|周星驰|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">161</td>
+<td class="title-cell">长江七号</td>
+<td>2008</td>
+<td>7.0</td>
+<td>408457</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>周星驰</td>
+<td>喜剧 / 科幻</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">小狄（徐娇 饰）是一个在贵族学校念书的穷孩子。他诚实善良，却总是遭到富家子的欺负和嘲笑。小狄和爸爸（周星驰 饰）住在一所废弃的旧房子里，爸爸每天拼命的工作，就是为了让他念好书，将来出人头地。平日，小狄总是很乖，就算体育课因为没有运动鞋而被老...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="靖国神社|李缨|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">162</td>
+<td class="title-cell">靖国神社</td>
+<td>2008</td>
+<td>7.7</td>
+<td>2276</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>李缨</td>
+<td>纪录片</td>
+<td>中国 / 日本</td>
+<td class="dp-cell">靖国神社，这个在东亚近代史上占据着重要位置的建筑物，至今仍会引起无数争论。它坐落于东京都千代田区九段北，里面供奉着自戊辰战争以来为国捐躯的战士的英灵，其中包括二战期间东条英机等14名甲级战犯的牌位，这也成为日本和其余东亚国家长久以来矛盾的焦...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="黄石的孩子|罗杰·斯波蒂斯伍德|英语 / 汉语普通话 / 日语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">163</td>
+<td class="title-cell">黄石的孩子</td>
+<td>2008</td>
+<td>6.7</td>
+<td>19086</td>
+<td class="lang-cell">英语 / 汉语普通话 / 日语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗杰·斯波蒂斯伍德</td>
+<td>剧情 / 战争</td>
+<td>澳大利亚 / 中国大陆 / 德国</td>
+<td class="dp-cell">英国记者乔治•何克（乔纳森•莱斯•梅耶斯 饰）潜入了南京，打算把日军在当地的暴行公诸于世。可是他被日军发现了，在即将被斩头之际，一名中国游击队员陈汉生（周润发 饰）救起了。何克还认识了战地外籍医生丽（拉达•米契尔 饰）。何克辗转到了黄石，与...</td>
+<td></td>
+</tr>
+
+<tr data-search="何止爱|陈奕甫|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">164</td>
+<td class="title-cell">何止爱</td>
+<td>2009</td>
+<td>6.9</td>
+<td>247</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈奕甫</td>
+<td>剧情 / 爱情</td>
+<td>中国台湾</td>
+<td class="dp-cell">故事的主人公是一个外表平平的男子，他穿着黑色西装，带着黑框眼镜，虽然是职场人士模样，但周身散发着颓废疲劳的消极气息。他讨厌坐电梯，电梯门打开后对面墙的话让他心烦不已；他也讨厌和一群人共享电梯，零距离的感觉让他焦躁不安。唯一让男人感到些许开心...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="南京！南京！|陆川|汉语普通话 / 日语 / 英语 / 德语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">165</td>
+<td class="title-cell">南京！南京！</td>
+<td>2009</td>
+<td>7.5</td>
+<td>163655</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语 / 德语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>陆川</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">1937年12月13日，时为国民政府首都的南京城沦陷，部分官员弃城逃亡，但仍有许多官兵留守，誓死保卫这个大厦将倾的城池。宋锡濂部军官陆剑雄（刘烨 饰）协同战友与日军展开了激烈的巷战，他们微弱而顽强的抵抗最终被压制，数以万计的中国军民成为俘虏...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="复仇|杜琪峰|粤语 / 英语 / 法语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">166</td>
+<td class="title-cell">复仇</td>
+<td>2009</td>
+<td>6.9</td>
+<td>25204</td>
+<td class="lang-cell">粤语 / 英语 / 法语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>杜琪峰</td>
+<td>动作 / 犯罪 / 惊悚</td>
+<td>中国香港 / 法国</td>
+<td class="dp-cell">费兰斯•高德勒（约翰尼•哈里戴 Johnny Hallyday 饰）20年前曾是叱咤风云的杀手，收山后他在巴黎开了一家餐馆，过着平静安宁的日子。某天，他定居在澳门的女儿爱莲（Sylvie Testud 饰）一家遭到不明身份的杀手的袭击。女婿...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="好雨时节|许秦豪|汉语普通话 / 英语 / 韩语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">167</td>
+<td class="title-cell">好雨时节</td>
+<td>2009</td>
+<td>6.4</td>
+<td>26039</td>
+<td class="lang-cell">汉语普通话 / 英语 / 韩语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>许秦豪</td>
+<td>剧情 / 爱情</td>
+<td>韩国 / 中国</td>
+<td class="dp-cell">韩国年轻帅气的小伙子东河（郑宇成 饰）来到中国四川成都出差，在游览杜甫草堂时偶遇留学时相识的中国同学五月（高圆圆 饰），后者目前在杜甫草堂从事讲解工作。这次相遇，让两人的心再次碰撞出爱情的火花。他们回忆着生日派对的誓言、彼此亲昵的举动，甚至...</td>
+<td></td>
+</tr>
+
+<tr data-search="拉贝日记|佛罗瑞·加仑伯格|粤语 / 汉语普通话 / 德语 / 日语 / 英语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">168</td>
+<td class="title-cell">拉贝日记</td>
+<td>2009</td>
+<td>7.4</td>
+<td>29919</td>
+<td class="lang-cell">粤语 / 汉语普通话 / 德语 / 日语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>佛罗瑞·加仑伯格</td>
+<td>传记 / 剧情 / 历史</td>
+<td>法国 / 中国大陆 / 德国</td>
+<td class="dp-cell">1937年，在中国南京生活多年的德国商人拉贝（乌尔里奇·图克尔 Ulrich Tukur 饰）与妻子多拉准备回国。他把在西门子中国分部担任的职务交给继承人，然而就在当天的欢送舞会上，日军开始轰炸南京城，到处烧伤抢劫，引起南京暴乱。恐慌的居民...</td>
+<td></td>
+</tr>
+
+<tr data-search="无声风铃|洪荣杰|英语 / 粤语 / 汉语普通话 / 瑞士德语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">169</td>
+<td class="title-cell">无声风铃</td>
+<td>2009</td>
+<td>7.5</td>
+<td>6613</td>
+<td class="lang-cell">英语 / 粤语 / 汉语普通话 / 瑞士德语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>洪荣杰</td>
+<td>剧情 / 同性</td>
+<td>中国香港 / 瑞士 / 德国</td>
+<td class="dp-cell">帕斯卡（Bernhard Bulling 饰）和永健（吕聿来 饰）是漂在香港的两个年轻人。帕斯卡来自瑞士，靠做街头艺人和小偷小摸维持生活；永健来自北京，是一家烧腊店的外卖伙计。两个陌生人在陌生的城市不期而遇，发展出一段心动的爱情。然而快乐却...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="暧昧|monika treut|英语 / 德语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">170</td>
+<td class="title-cell">暧昧</td>
+<td>2009</td>
+<td>4.7</td>
+<td>467</td>
+<td class="lang-cell">英语 / 德语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Monika Treut</td>
+<td>悬疑</td>
+<td>德国 / 中国台湾</td>
+<td class="dp-cell">由德国女导演莫妮卡-楚特执导、台湾与德国两地公司联合制片的一部女同性恋题材新影片《暧昧》的剧组已经结束了在德国汉堡的拍摄，目前正在台湾摄制外景戏。《暧昧》是一部以台湾和德国两地为故事背景的剧情片，片中德国汉堡的女艺术家索菲的同性恋人爱玲被谋...</td>
+<td></td>
+</tr>
+
+<tr data-search="李献计历险记|李阳|汉语普通话 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">171</td>
+<td class="title-cell">李献计历险记</td>
+<td>2009</td>
+<td>8.7</td>
+<td>106481</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>李阳</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">李献计是一位患有差时症的病人，一直以来，他都坐在电脑前玩一款据说没有打通关过的游戏，为此李献计不惜以卖肾为代价。李献计在高人指点下得知要想打通关这款游戏，就要花50万元买一种兴奋剂，为此李献计经历了一段充满传奇的旅程，可是因为差时症的原因，...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="脸|蔡明亮|法语 / 汉语普通话 / 英语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">172</td>
+<td class="title-cell">脸</td>
+<td>2009</td>
+<td>6.8</td>
+<td>1801</td>
+<td class="lang-cell">法语 / 汉语普通话 / 英语</td>
+<td>法语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>蔡明亮</td>
+<td>喜剧 / 剧情</td>
+<td>法国 / 中国台湾 / 比利时 / 荷兰</td>
+<td class="dp-cell">一位台灣導演被邀請到羅浮宮，拍攝聖經故事「莎樂美」。他堅持邀請心儀已久卻傳聞精神狀況不佳的法國影帝尚皮耶李奧，演出劇中輾斷聖施洗約翰頭顱的希律王。這部低成本的製作為顧慮電影票房，硬著頭皮請來國際名模演出莎樂美。影片才剛開拍就狀況連連。牡鹿神...</td>
+<td></td>
+</tr>
+
+<tr data-search="霓虹心|刘汉威|英语 / 瑞典语 / 汉语普通话 / 闽南话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">173</td>
+<td class="title-cell">霓虹心</td>
+<td>2009</td>
+<td>7.2</td>
+<td>3951</td>
+<td class="lang-cell">英语 / 瑞典语 / 汉语普通话 / 闽南话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>刘汉威</td>
+<td>剧情 / 同性</td>
+<td>瑞典 / 中国台湾</td>
+<td class="dp-cell">从瑞典到台湾，奇奇（潘妮拉·奥古斯特 Pernilla August 饰）与16岁的儿子维特（路威·帕莫 Ludwig Parmell 饰）一路走来，满怀心事。已步入中年的母亲奇奇突发奇想，决定带着和自己几乎没有交流的儿子去台湾旅行。母子俩...</td>
+<td></td>
+</tr>
+
+<tr data-search="音乐人生|张经纬|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">174</td>
+<td class="title-cell">音乐人生</td>
+<td>2009</td>
+<td>8.9</td>
+<td>9226</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张经纬</td>
+<td>纪录片</td>
+<td>中国香港</td>
+<td class="dp-cell">本片横跨六年时间记述挖掘了香港钢琴神童黄家正在音乐和人生上的成长历程。黄家正作为十一岁便赴捷克与专业交响乐团合作演出的天才神童，在香港本土更是获得无数赞誉。这样的成就在其他人看来已经非常圆满，可是天才的孤独和苦闷只有他自己知道。与兄弟姐妹的...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="t婆工厂|陳素香|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">175</td>
+<td class="title-cell">T婆工厂</td>
+<td>2010</td>
+<td>7.9</td>
+<td>434</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陳素香</td>
+<td>纪录片 / 同性</td>
+<td>中国台湾</td>
+<td class="dp-cell">2004年底，位於台北縣三重市生產電腦零組件的「飛盟國際電子公司」，因老闆掏空資產逃往大陸，員工面臨關廠的命運。這個工廠有三百多個員工，其中125名是來自菲律賓的女性移工；她們因為三個月沒拿到薪水，憂心忡忡且無所適從，因此來到台灣國際勞工協...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="功夫梦|哈罗德·兹瓦特|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">176</td>
+<td class="title-cell">功夫梦</td>
+<td>2010</td>
+<td>6.4</td>
+<td>91784</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>哈罗德·兹瓦特</td>
+<td>动作 / 剧情 / 家庭</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">本片根据好莱坞1984年的同名电影翻拍而成。12岁的德瑞·帕克（贾登·史密斯 Jaden Smith 饰）随母亲（塔拉吉·P·汉森 Taraji P. Henson 饰）由底特律搬家至中国北京，认识了同校拉小提琴的中国女孩美莹（韩雯雯 饰）...</td>
+<td></td>
+</tr>
+
+<tr data-search="台北星期天|何蔚庭|汉语普通话 / 塔加路语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">177</td>
+<td class="title-cell">台北星期天</td>
+<td>2010</td>
+<td>6.7</td>
+<td>2643</td>
+<td class="lang-cell">汉语普通话 / 塔加路语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>何蔚庭</td>
+<td>剧情 / 喜剧</td>
+<td>中国台湾 / 菲律宾</td>
+<td class="dp-cell">聪明机灵的麦文（Epy Quizon 饰）和木讷朴实的达都（Bayani Agbayani 饰）是在台湾的菲律宾移工 。他们远离家乡，为了家乡亲人更好的生活在这个陌生的地方辛勤工作。工作之余，麦文总是向达都描述他最大的愿望，那就是能在宿舍的...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="我爱高跟鞋|贺照缇|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">178</td>
+<td class="title-cell">我爱高跟鞋</td>
+<td>2010</td>
+<td>7.4</td>
+<td>308</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>贺照缇</td>
+<td>纪录片</td>
+<td>中国台湾</td>
+<td class="dp-cell">紐約曼哈頓街頭一整排高級名牌店家與走起路來婀娜多姿的高跟鞋女郎，還有台北 101 大樓的夜晚，鎂光燈閃個不停地聚焦在女模及女明星們腳上那雙令人炫目的鞋，穿著美麗的鞋，臉上盡是自信跟迷人神采，也喚起了每個人都想要擁有一雙那樣的美麗高跟鞋的慾望...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="谍海风云|米凯尔·哈弗斯特罗姆|英语 / 汉语普通话 / 日语 / 德语 / 上海话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">179</td>
+<td class="title-cell">谍海风云</td>
+<td>2010</td>
+<td>5.8</td>
+<td>19726</td>
+<td class="lang-cell">英语 / 汉语普通话 / 日语 / 德语 / 上海话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>米凯尔·哈弗斯特罗姆</td>
+<td>剧情 / 爱情 / 悬疑</td>
+<td>美国 / 中国大陆 / 泰国</td>
+<td class="dp-cell">1941年，美国海军情报局特工索姆斯（约翰•库萨克 John Cusack 饰）奉命来到上海，负责调查好友康纳被暗杀的真相。他以德国先驱报驻上海记者的身份游走于社会名流的酒会。他借助同纳粹工程师穆勒太太的情人关系消除猜疑、获取情报。在一次赌...</td>
+<td></td>
+</tr>
+
+<tr data-search="这个念头是爱|雷磊|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">180</td>
+<td class="title-cell">这个念头是爱</td>
+<td>2010</td>
+<td>7.7</td>
+<td>768</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>雷磊</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">布鲁斯风格的曼妙音乐响起，画面呈现出一座机场的紧张繁忙的场面。世界各地的红男绿女群集于此，满怀着希望和憧憬，心头早已飞翔他们的目的地。有一个青年听说法国人很浪漫，他决定坐飞机前往法国，见见那个从未谋面的恋人。他轻松地将行李丢了过去，拿到了登...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="香港机密|maris martinsons|英语 / 粤语 / 日语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">181</td>
+<td class="title-cell">香港机密</td>
+<td>2010</td>
+<td>6.4</td>
+<td>145</td>
+<td class="lang-cell">英语 / 粤语 / 日语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Maris Martinsons</td>
+<td>喜剧 / 剧情 / 爱情</td>
+<td>拉脱维亚 / 中国香港</td>
+<td class="dp-cell">在香港这个世界上最奇特最美丽的城市里，阿玛亚遇到了迷人的英国人保罗，保罗戏剧性地改变了阿玛亚的文化和身份认同。</td>
+<td></td>
+</tr>
+
+<tr data-search="黄海|罗泓轸|韩语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">182</td>
+<td class="title-cell">黄海</td>
+<td>2010</td>
+<td>8.5</td>
+<td>186356</td>
+<td class="lang-cell">韩语 / 汉语普通话</td>
+<td>韩语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗泓轸</td>
+<td>剧情 / 动作 / 犯罪</td>
+<td>韩国 / 美国 / 中国香港</td>
+<td class="dp-cell">为了能让妻子去韩国打工，出租车司机久南（河正宇 Jeong-woo Ha 饰）不惜借6万块钱的巨款。妻子已经有六个月没有消息了，久南每日只能用酒精和赌博来麻醉自己的神经。一天，在债主的介绍下，久南认识了绵先生。绵先生不仅愿意帮助他偷渡到韩国...</td>
+<td></td>
+</tr>
+
+<tr data-search="不如归去|孙赞|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">183</td>
+<td class="title-cell">不如归去</td>
+<td>2011</td>
+<td>7.2</td>
+<td>595</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>孙赞</td>
+<td>剧情</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">据美国《星岛日报》报道，一群来自纽约州立大学石溪分校的中国留学生，凭借对DV的热爱，走到了一起，成立了L.I.E。工作室，7年间共拍摄了三部与中国留学生、留美华人生活密切相关的影片。针对近年来许多留美华人在海归问题上仿徨徘徊，L.I.E。工...</td>
+<td></td>
+</tr>
+
+<tr data-search="寻龙夺宝|马里奥·安德鲁西奥|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">184</td>
+<td class="title-cell">寻龙夺宝</td>
+<td>2011</td>
+<td>3.8</td>
+<td>5623</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>马里奥·安德鲁西奥</td>
+<td>动作 / 奇幻 / 冒险</td>
+<td>澳大利亚 / 中国大陆</td>
+<td class="dp-cell">三千年前的中国北方，皇帝为抵御外敌入侵，借走了神龙的龙珠，应允胜利后还珠于龙。皇帝却在战斗中牺牲，龙珠不知所踪。时光转瞬，一个中澳联合考古队凭借当年流传下来的墓葬图发掘皇帝之墓。此时，男孩乔希与女孩林金无意中踏上了寻找龙珠的神秘旅途。盗墓集...</td>
+<td></td>
+</tr>
+
+<tr data-search="巴黎宝贝|王菁|英语 / 汉语普通话 / 法语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">185</td>
+<td class="title-cell">巴黎宝贝</td>
+<td>2011</td>
+<td>5.5</td>
+<td>23139</td>
+<td class="lang-cell">英语 / 汉语普通话 / 法语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>王菁</td>
+<td>剧情 / 喜剧 / 爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">6年前，富二代马小顺（邓超 饰）来到法国巴黎留学，这座以浪漫著称的城市，俨然成了花花公子马小顺寻欢作乐的天堂。某天他和朋友胡打乱闹跑到精英精子库捐精，他的种子阴差阳错进入了绝望的中年女诗人艾玛（珍·玛琪 Jane March 饰）的体内。原...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="幸福卡片|陈宝玲|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">186</td>
+<td class="title-cell">幸福卡片</td>
+<td>2011</td>
+<td>5.9</td>
+<td>840</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈宝玲</td>
+<td>剧情 / 音乐</td>
+<td>澳大利亚 / 中国大陆</td>
+<td class="dp-cell">从很小的时候起，妹妹（朱琳 饰）就被父母抛弃成为了孤儿，幸运的是，远在澳大利亚，有一个名叫兰德尔（盖·皮尔斯 Guy Pearce 饰）的绅士出手相助，妹妹才能在孤儿院过上衣食无忧的生活。妹妹从未见过她的救命恩人，她对兰德尔的所有了解都局限...</td>
+<td></td>
+</tr>
+
+<tr data-search="李献计历险记|郭帆 / 李阳|汉语普通话 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">187</td>
+<td class="title-cell">李献计历险记</td>
+<td>2011</td>
+<td>6.4</td>
+<td>35944</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>郭帆 / 李阳</td>
+<td>爱情 / 奇幻 / 冒险</td>
+<td>中国大陆</td>
+<td class="dp-cell">李献计（房祖名 饰）跟女友王倩（王子文 饰）分手之后，难以接受这个惨痛的现实，以至于重新回到了差时症的怪圈之中。他穿梭在自己的时空里，回忆着童年上学看课外书被老师罚站，对于父亲（姜武 饰）严厉批评的心不在焉，对于二叔（姚鲁 饰）精通电子维修...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="涉梦而行-电子音乐在中国|张艺馨|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">188</td>
+<td class="title-cell">涉梦而行-电子音乐在中国</td>
+<td>2011</td>
+<td>7.4</td>
+<td>113</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张艺馨</td>
+<td>纪录片 / 传记</td>
+<td>中国大陆</td>
+<td class="dp-cell">影片时长50分钟。采访中国国内业界专业人士。如音乐人士沈黎晖；音乐学者张有待；DJ DIO、翁嗡、Mikey_Zhang 、ELVIS_T、 孙大威、宠物同谋等。纪录了80年代改革开放电子音乐传入中国到今天的发展和状态。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="爱回温|彭陌勰|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">189</td>
+<td class="title-cell">爱回温</td>
+<td>2011</td>
+<td>5.4</td>
+<td>137</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>彭陌勰</td>
+<td>剧情 / 爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">中国大陆同志题材短片。一个关于三个以L为名字首字母的人之间发生的故事，Luc，Laurence，Liz为你送上一段具有悬疑色彩的浪漫爱情故事。Luc是一名在外企上班的青年人，他暗恋着自己的外籍老板Laurence，却发现他与Liz有着异常亲...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="爱封了|唐丹|德语 / 英语 / 汉语普通话 / 波兰语 / 土耳其语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">190</td>
+<td class="title-cell">爱封了</td>
+<td>2011</td>
+<td>5.2</td>
+<td>4022</td>
+<td class="lang-cell">德语 / 英语 / 汉语普通话 / 波兰语 / 土耳其语</td>
+<td>德语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>唐丹</td>
+<td>喜剧 / 爱情</td>
+<td>中国大陆 / 德国</td>
+<td class="dp-cell">山城女孩凌玲（江一燕 饰）志愿成为一名空姐，为了这个目标她在重庆小丑鲜花店努力打工存钱。偶然的机缘，玲儿与德籍华人余广浩（吴大维 饰）有了一段露水姻缘。在此之后，两人经常通过余送来的手机谈情说爱，俨然一对热恋中的情侣。这个火辣的妹子无法忍受...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="花|娄烨|法语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">191</td>
+<td class="title-cell">花</td>
+<td>2011</td>
+<td>6.9</td>
+<td>19661</td>
+<td class="lang-cell">法语 / 汉语普通话</td>
+<td>法语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>娄烨</td>
+<td>剧情 / 爱情 / 情色</td>
+<td>法国 / 中国大陆</td>
+<td class="dp-cell">一段绽放在北京的中法恋情凋谢后，花（任洁 饰）决定辞去在北京当老师的工作，前往巴黎寻回男友，但终究还是没能令其回心转意。在陌生的城市游荡，迷路的花偶遇了一位法国蓝领马修（塔哈·拉希姆 Tahar Rahim 饰），马修即刻向这位中国姑娘大放...</td>
+<td></td>
+</tr>
+
+<tr data-search="赛德克·巴莱(上)：太阳旗|魏德圣|日语 / 闽南语 / 赛德克语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">192</td>
+<td class="title-cell">赛德克·巴莱(上)：太阳旗</td>
+<td>2011</td>
+<td>8.9</td>
+<td>90976</td>
+<td class="lang-cell">日语 / 闽南语 / 赛德克语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>魏德圣</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国台湾</td>
+<td class="dp-cell">本片根据雾社事件史实改编。1895年，《马关条约》割让台湾之后，日本遂即武力接收台湾，宝岛各地纷纷被攻破。而台湾山区因道路不通，原住民生活尚暂未受影响，雾社地区的赛德克人之中，马赫坡年轻一代的莫那鲁道（游大庆 饰）英勇过人，率族群与甘卓万人...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="赛德克·巴莱(下)：彩虹桥|魏德圣|日语 / 闽南语 / 赛德克语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">193</td>
+<td class="title-cell">赛德克·巴莱(下)：彩虹桥</td>
+<td>2011</td>
+<td>8.8</td>
+<td>80937</td>
+<td class="lang-cell">日语 / 闽南语 / 赛德克语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>魏德圣</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国台湾</td>
+<td class="dp-cell">莫那鲁道（林庆台 饰）率领族人在公学斩杀异族血祭祖灵后，拥有了通过彩虹桥的资格，剩下来的，就是在英勇战斗后从容赴死。在日本方面，雾社的消息很快传达各处，陆军少将镰田弥彦率军队与警察组成的联合部队，迅速发起讨伐。马赫坡等社分头行动，利用地形优...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="雪花秘扇|王颖|英语 / 汉语普通话 / 韩语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">194</td>
+<td class="title-cell">雪花秘扇</td>
+<td>2011</td>
+<td>5.7</td>
+<td>73550</td>
+<td class="lang-cell">英语 / 汉语普通话 / 韩语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>王颖</td>
+<td>剧情 / 历史</td>
+<td>中国大陆 / 美国</td>
+<td class="dp-cell">十九世纪初的中国，妇女还保留着裹小脚的复苏。在湖南的某个小镇，百合（李冰冰 饰）与雪花（全智贤 饰）按照当地风俗结为老同，自幼生活在一起，靠着女书交流彼此的心事，她们之间深厚的情感无 人能够取代。随着年龄的长大，百合与雪花必须嫁作人妇，从此...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="龙拳|蔡业翰|英语 / 汉语普通话 / 马来语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">195</td>
+<td class="title-cell">龙拳</td>
+<td>2011</td>
+<td>2.6</td>
+<td>147</td>
+<td class="lang-cell">英语 / 汉语普通话 / 马来语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>蔡业翰</td>
+<td>剧情 / 动作</td>
+<td>中国大陆 / 新加坡 / 马来西亚</td>
+<td class="dp-cell">《龙拳》是一部以传统华人文化与现代华人文化的冲突为题材的电影。阿杰（蔡业翰饰）从中国到马来西亚投靠叔叔，发觉流氓在小镇收保护费，结果他团结小镇居民，击败流氓。故事是述说着一间咖啡厅老板陈叔叔面对着当地黑社会给他造成的麻烦。因为没能力缴交保护...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="2032 我们期望的未来|杜家毅|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">196</td>
+<td class="title-cell">2032 我们期望的未来</td>
+<td>2012</td>
+<td>7.7</td>
+<td>603</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>杜家毅</td>
+<td>短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">这部时长4分半、总投资30万元人民币的影片由联合国开发计划署（UNDP）中国代表处制作，32个中国人各用一句话描述自己对20年后未来的愿望。实际参与拍摄的共232人，演员周迅是唯一的公众人物。她是UNDP中国亲善大使，也是这部影片的资助者。...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="一八九四·甲午大海战|冯小宁|汉语普通话 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">197</td>
+<td class="title-cell">一八九四·甲午大海战</td>
+<td>2012</td>
+<td>5.6</td>
+<td>9578</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>冯小宁</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">1867年，李鸿章（孙海英 饰）上书，清政府下令建立船政学堂，由洋人讲授西洋海军知识。邓世昌（陆毅 饰）前来报考，得刘步蟾兄妹相助，一鸣惊人。1877年，邓世昌送同学们赴英国皇家海军学院深造。4年之后，邓世昌代表朝廷迎接同学凯旋。他在伦敦街...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="人再囧途之泰囧|徐峥|汉语普通话 / 英语 / 泰语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">198</td>
+<td class="title-cell">人再囧途之泰囧</td>
+<td>2012</td>
+<td>7.5</td>
+<td>708579</td>
+<td class="lang-cell">汉语普通话 / 英语 / 泰语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>徐峥</td>
+<td>喜剧</td>
+<td>中国大陆</td>
+<td class="dp-cell">商业成功人士徐朗（徐峥 饰）用了五年时间发明了一种叫“油霸”的神奇产品——每次汽车加油只需加到三分之二，再滴入2滴“油霸”，油箱的汽油就会变成满满一箱。徐朗的同学，兼商业竞争对手高博（黄渤 饰）想把这个发明一次性卖给法国人。但徐朗坚决不同意...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="十二生肖|成龙|英语 / 汉语普通话 / 粤语 / 法语 / 西班牙语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">199</td>
+<td class="title-cell">十二生肖</td>
+<td>2012</td>
+<td>6.7</td>
+<td>317091</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语 / 法语 / 西班牙语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>成龙</td>
+<td>喜剧 / 动作 / 冒险</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">当年英法联军火烧圆明园，致使大批珍贵文物流落海外，其中四尊十二生肖兽首最引人关注，不仅惹出国内外的广泛争论，更有收藏家开出天价竞拍这几尊珍品。当然，其间不乏奸邪的文物贩子，试图通过偷盗的手段获取宝贝。以此为契机，正在度假的国际大盗JC（成龙...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="咆哮无声|萧锋|英语 / 汉语普通话 / 日语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">200</td>
+<td class="title-cell">咆哮无声</td>
+<td>2012</td>
+<td>3.4</td>
+<td>439</td>
+<td class="lang-cell">英语 / 汉语普通话 / 日语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>萧锋</td>
+<td>历史 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">中国女孩万云（刘芸 饰）在姑奶奶万静娴（汪裴 饰）去世以后看见了她当年的日记。日记里姑奶奶在青年时代的战争经历和情感以及当年800抗战壮士英勇投江的故事，深深打动了万云。她决定沿着当年姑奶奶的脚步，走上寻找真相之路。日本人中村一郎（涩谷天马...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="商战|西蒙·殷|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">201</td>
+<td class="title-cell">商战</td>
+<td>2012</td>
+<td>4.6</td>
+<td>237</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>西蒙·殷</td>
+<td>惊悚</td>
+<td>美国 / 中国香港</td>
+<td class="dp-cell">一名性格特立独行的纽约对冲基金交易员Conner Lee（丁温庆 饰）受到美国及亚洲两般金融恶势力的牵引，到香港展开了一场惊天动地的家族企业并购商战。为求达成这项市值数十亿元的世纪商业买卖，Conner不择手段，并甘愿以自己的生命以及一间公...</td>
+<td></td>
+</tr>
+
+<tr data-search="大手啊大手，越大越好|雷磊|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">202</td>
+<td class="title-cell">大手啊大手，越大越好</td>
+<td>2012</td>
+<td>7.2</td>
+<td>383</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>雷磊</td>
+<td>动画 / 短片 / 音乐</td>
+<td>中国大陆</td>
+<td class="dp-cell">本部独具匠心的奇幻动画短片，用极具形式感的表现手法，向我们描画了一个神奇的“大手王国”。一双双蓝色的大手，跟随着节奏打着拍子。大手小人特别的勤劳，他们干活儿又快又好。成堆的苹果在流水工作线上被他们整理成箱，运往世界各地。这时，出现了一个爱说...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="天使之城|陈家铮|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">203</td>
+<td class="title-cell">天使之城</td>
+<td>2012</td>
+<td>6.7</td>
+<td>106</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈家铮</td>
+<td>剧情 / 爱情 / 短片</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">大洋另一边的天使之城洛杉矶小洁、王鹏、杨一凡和晓曦等充满青春朝气的中国孩子来此求学。在温暖浪漫的加州海岸，曾经身体不适的一凡和晓曦相知相恋，他们的手紧紧相握，发誓永不分开，但是命运永远无法预测。出身平平的王鹏热爱电影，希望走入好莱坞拍摄心中...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="她，一个人的旅行|余静萍|英语 / 汉语普通话 / 法语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">204</td>
+<td class="title-cell">她，一个人的旅行</td>
+<td>2012</td>
+<td>6.0</td>
+<td>462</td>
+<td class="lang-cell">英语 / 汉语普通话 / 法语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>余静萍</td>
+<td>短片</td>
+<td>中国台湾</td>
+<td class="dp-cell">ELLE首部微電影【她．一個人的旅行】7月6日於台北電影節全球首映。ELLE與妳一起旅行．邂逅巴黎。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="妙之异境巴黎|stéphane sednaoui|英语 / 汉语普通话 / 法语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">205</td>
+<td class="title-cell">妙之异境巴黎</td>
+<td>2012</td>
+<td>5.8</td>
+<td>330</td>
+<td class="lang-cell">英语 / 汉语普通话 / 法语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Stéphane Sednaoui</td>
+<td>剧情 / 爱情</td>
+<td>中国大陆 / 法国</td>
+<td class="dp-cell">巴黎早上八点，来自上海的女孩（周冬雨 饰）对着鱼缸里的金鱼自言自语，她许诺为鱼儿带回一个同伴，并希望今天能有好运气。过了一会儿，女孩走出沉淀着历史气息的公寓，畅言漫步在这座浪漫梦幻的城市街头。坐在学院的长凳上，女孩按照导师的指示绘画，而目光...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="形影不离|伍仕贤|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">206</td>
+<td class="title-cell">形影不离</td>
+<td>2012</td>
+<td>5.9</td>
+<td>20582</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>伍仕贤</td>
+<td>剧情 / 悬疑</td>
+<td>中国大陆</td>
+<td class="dp-cell">《形影不离》讲述的是发生在中国某南方城市的一个多线索和情节曲折的另类故事，它兼具剧情、心理悬疑元素：吴彦祖扮演的李越是一个工作和家里遇到麻烦不断的年轻工程师。他的妻子阿胖（龚蓓苾饰）是个貌似很情绪化的暗访记者，而闫妮饰演的上司给李越带来了不...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="心·方向|陈厦|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">207</td>
+<td class="title-cell">心·方向</td>
+<td>2012</td>
+<td>4.6</td>
+<td>253</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈厦</td>
+<td>剧情 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">天秤座女孩李北北与苏岩青梅竹马，却因误会情缘未续。高帅却给了她平实窝心的爱。婚礼上，苏岩飞车抢亲。面对爱情走向，能决定北北归属的，必然是她的本心。观看完整影片：http://t.cn/zWxSqT2</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="我最后一次看见澳门|若昂·佩德罗·罗德里格斯 / 朱奥胡格拉达玛塔|葡萄牙语 / 粤语 / 英语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">208</td>
+<td class="title-cell">我最后一次看见澳门</td>
+<td>2012</td>
+<td>5.9</td>
+<td>137</td>
+<td class="lang-cell">葡萄牙语 / 粤语 / 英语</td>
+<td>葡萄牙语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>若昂·佩德罗·罗德里格斯 / 朱奥胡格拉达玛塔</td>
+<td>剧情 / 犯罪 / 悬疑</td>
+<td>葡萄牙 / 法国 / 中国澳门</td>
+<td class="dp-cell">影片导演Joao Rui Guerra da Mata年少的时候曾经在澳门生活。30多年之后，他用镜头记录下一个已然是陌生的澳门，记忆中的那个城市无处可寻。使用这些纪录素材，导演剪辑出了一部对于克里斯·马克尔的《日月无光》以及约瑟夫·范·斯...</td>
+<td></td>
+</tr>
+
+<tr data-search="拯救第365天|亓梅晓 / 图兰·唐克 / 马克·皮涅罗 / 李山|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">209</td>
+<td class="title-cell">拯救第365天</td>
+<td>2012</td>
+<td>3.1</td>
+<td>163</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>亓梅晓 / 图兰·唐克 / 马克·皮涅罗 / 李山</td>
+<td>动画 / 奇幻 / 冒险</td>
+<td>中国大陆 / 新西兰 / 英国 / 美国</td>
+<td class="dp-cell">故事发生在远古的东方，人们生活在一片宁静祥和之中；然而，一个仇恨阴影却在黑暗之中步步紧逼，生活被瞬间摧毁！生命危在旦夕！那么，绝境之中，谁会是那个顶天立地的英雄？他就是“光”！一个不明身世的“另类”！第365天，揭开了他的身世之谜，却又让他...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="晚秋|金泰勇|英语 / 韩语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">210</td>
+<td class="title-cell">晚秋</td>
+<td>2012</td>
+<td>7.0</td>
+<td>227455</td>
+<td class="lang-cell">英语 / 韩语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>金泰勇</td>
+<td>剧情</td>
+<td>韩国 / 美国 / 中国香港</td>
+<td class="dp-cell">《晚秋》根据李满熙导演1966年的同名电影改编而成，影片以美国西雅图为背景，讲述两名男女在异国他乡的爱情故事。本在监狱服刑的安娜（汤唯 Wei Tang 饰）因母亲过世获得三天假期，七年来首次踏上归家之路，并于长途汽车上邂逅了勋（玄彬 Bi...</td>
+<td></td>
+</tr>
+
+<tr data-search="本子上的魔术|曾翔立|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">211</td>
+<td class="title-cell">本子上的魔术</td>
+<td>2012</td>
+<td>7.7</td>
+<td>193</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>曾翔立</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">本片采用定格拍摄的手法，大概用到了1000张静态图片，之后配合一些后期的处理，就完成了这样一部可爱又充满创意的小动画儿！酷哦！</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="桃姐|许鞍华|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">212</td>
+<td class="title-cell">桃姐</td>
+<td>2012</td>
+<td>8.3</td>
+<td>286446</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>许鞍华</td>
+<td>剧情 / 家庭</td>
+<td>中国香港</td>
+<td class="dp-cell">桃姐（叶德娴 饰）是侍候了李家数十年的老佣人，把第二代的少爷罗杰（刘德华 饰）抚养成人。罗杰从事电影制片人，五十多岁了仍然独身，而桃姐也继续照顾罗杰，成为习惯……一日，桃姐如常到街市买菜，回寓所煲汤、做好满桌的饭菜，在等待从内地出差回家的罗...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="沙井村之恋|王乐涛 / 许益华|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">213</td>
+<td class="title-cell">沙井村之恋</td>
+<td>2012</td>
+<td>5.4</td>
+<td>156</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>王乐涛 / 许益华</td>
+<td>剧情 / 喜剧 / 爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">沙井村，和西安众多城中村一样，是蚁族的乐土。即将大学毕业的王林肯与女朋友陈小丹就是这里的租客，他们的房东安震南（卢学习 饰）有一个傻孙子——“总统”安红（叶倩 饰）。本片讲述的就是，王林肯（李佳鑫 饰）和小丹（梁思佳 饰），还有王林肯的好哥...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="环形使者|莱恩·约翰逊|英语 / 法语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">214</td>
+<td class="title-cell">环形使者</td>
+<td>2012</td>
+<td>6.9</td>
+<td>159327</td>
+<td class="lang-cell">英语 / 法语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>莱恩·约翰逊</td>
+<td>动作 / 科幻 / 惊悚</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">未来，2044年。时间旅行从被发明的一开始就属于非法，只有当黑帮组织想清理某个特定对象、又不愿意在此世界留下任何痕迹时，才会出动“环形使者”。他们专门负责处决那些被时间传送回彼世界的目标。之所以称为“环形使者”，因为他们最终必须杀死未来的自...</td>
+<td></td>
+</tr>
+
+<tr data-search="纽约客@上海|夏伟|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">215</td>
+<td class="title-cell">纽约客@上海</td>
+<td>2012</td>
+<td>6.4</td>
+<td>6688</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>夏伟</td>
+<td>剧情 / 喜剧 / 爱情</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">上海：21世纪全球贸易中心。每天都有更多的外籍商人来到上海，渴望了解到中国做生意的方式。这些外国人中有我们的同事，老板，邻居，客户……当雄心勃勃的纽约律师山姆（丹尼尔·海尼 Daniel Henney 饰）被意外的派到上海时，他立即陷入了法...</td>
+<td></td>
+</tr>
+
+<tr data-search="街头之王|岳松 / 钟雷|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">216</td>
+<td class="title-cell">街头之王</td>
+<td>2012</td>
+<td>5.0</td>
+<td>1798</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>岳松 / 钟雷</td>
+<td>剧情 / 动作</td>
+<td>中国大陆</td>
+<td class="dp-cell">《街头之王》是中国大陆首部纯街头格斗电影，同时也是一部独立电影！电影讲述了街头混混岳锋年少时因过人身手，成为街头打架高手，被人称为“街头之王”。但却在一次斗殴中意外误杀一名白衣少年，入狱8年。8年后，岳锋（岳松 饰）出狱，低调入世，封闭了自...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="远方|王小帅|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">217</td>
+<td class="title-cell">远方</td>
+<td>2012</td>
+<td>4.4</td>
+<td>239</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>王小帅</td>
+<td>剧情 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">崇尚简单直接的男主角胡清每天过着家和公司两点一线的规律生活，一次在演唱会外的堵车中，误被当成黑车的胡清结识了一位酒醉的女孩，酒醉女孩疯癫又自由的行为感染了胡清，让他明白自己本来可以过的更自由……</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="重返大海|陆强|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">218</td>
+<td class="title-cell">重返大海</td>
+<td>2012</td>
+<td>5.3</td>
+<td>3598</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陆强</td>
+<td>动画 / 冒险 / 家庭</td>
+<td>中国大陆 / 美国 / 加拿大</td>
+<td class="dp-cell">纽约湾的海域里生活着一个飞鱼家族，年轻的飞鱼Kevin（李俊宇 配音）已被父亲选中作为下一代的头鱼。他梦想着有一天能带领整个家族前往飞鱼故乡巴巴多斯。在一次争吵后冲动地冒险挑战人类的捕鱼区，不幸被捕，来到了唐人街餐馆的鱼缸里，家族祖传的珍珠...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="钱学森|张建亚|汉语普通话 / 英语 / 俄语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">219</td>
+<td class="title-cell">钱学森</td>
+<td>2012</td>
+<td>7.3</td>
+<td>25500</td>
+<td class="lang-cell">汉语普通话 / 英语 / 俄语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>张建亚</td>
+<td>传记</td>
+<td>中国大陆</td>
+<td class="dp-cell">上世纪四十年代，加州理工学院终身教授钱学森（陈坤 饰）因为美国兴起的反共言论而备受打击。他的尖端技术研究被迫中止，并被责令出境。钱学森心系祖国，归心似箭，而意识到钱学森的巨大价值的美方又对其归国设置了重重障碍，甚至以间谍罪逮捕钱学森。最终，...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="铁拳|罗伯特·菲茨杰拉德·迪格斯|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">220</td>
+<td class="title-cell">铁拳</td>
+<td>2012</td>
+<td>5.6</td>
+<td>17089</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗伯特·菲茨杰拉德·迪格斯</td>
+<td>动作</td>
+<td>美国 / 中国香港</td>
+<td class="dp-cell">本片创造了一个虚构的混战时代，背景是19世纪的中国。在北方有一个势力强大的狮子帮，朝廷想用黄金收买他们，而此时帮派内讧了，老大金狮（陈观泰 饰）被老二银狮（文峰 Byron Mann 饰）和老三铜狮（黎烈弓 Cung Le 饰）杀害，金狮的...</td>
+<td></td>
+</tr>
+
+<tr data-search="非典情人|陈冲|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">221</td>
+<td class="title-cell">非典情人</td>
+<td>2012</td>
+<td>6.3</td>
+<td>334</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈冲</td>
+<td>剧情 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">国际大都会上海，夜幕降临，华灯初上。城市的一角，男女老少觥筹交错，笑语欢歌。家庭晚宴结束，众人正准备离开的时候，餐厅所在的整条街突然停电。秀秀（江一燕 饰）留下来等着结账，丈夫则和其他人先行离开。突然安静下来的餐厅，只剩下秀秀和邻桌一名来自...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="一场风花雪月的事|高群书|汉语普通话 / 英语 / 韩语 / 日语 / 粤语 / 意大利语" data-reason="外语为主(外语4/中文2)">
+<td style="color:var(--text-muted)">222</td>
+<td class="title-cell">一场风花雪月的事</td>
+<td>2013</td>
+<td>4.5</td>
+<td>28185</td>
+<td class="lang-cell">汉语普通话 / 英语 / 韩语 / 日语 / 粤语 / 意大利语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语4/中文2)</span></td>
+<td>高群书</td>
+<td>动作 / 爱情 / 犯罪</td>
+<td>中国大陆</td>
+<td class="dp-cell">08年夏天，失踪多年的国宝——金佛，重现在韩国头号黑帮——金氏家族之手。警方在金氏次子正熙（在熙 饰）潜入深圳境内避难时，安排女警吕月月（Angelababy 饰）以全程保护正熙之名追查金佛下落，两人经历了险象环生的黑帮追杀后情愫暗生，导致...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="中国合伙人|陈可辛|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">223</td>
+<td class="title-cell">中国合伙人</td>
+<td>2013</td>
+<td>7.6</td>
+<td>582787</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈可辛</td>
+<td>剧情</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">20世纪80年代，三个怀有热情和梦想的年轻人在高等学府燕京大学的校园内相遇，从此展开了他们长达三十年的友谊和梦想征途。出生于留学世家的孟晓骏（邓超 饰）渴望站在美国的土地上改变世界，浪漫自由的王阳（佟大为 饰）尽情享受改革开放初期那蓬勃激昂...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="你的今天和我的明天|陈敏郎|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">224</td>
+<td class="title-cell">你的今天和我的明天</td>
+<td>2013</td>
+<td>6.3</td>
+<td>108</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈敏郎</td>
+<td>剧情 / 同性</td>
+<td>中国台湾</td>
+<td class="dp-cell">人在纽约，台湾青年老在公寓间穿梭外送中国菜顺便找妈妈，但他拿的却是30年代女星玛琳黛德丽的相片；他的白人邻居以清洁公用电话维生，三更半夜回荡街头，偶然邂逅双生姐妹花，却分不清爱的究竟是姊姊或妹妹。两个看似毫不相干的人，彷佛在生命的某个当头冥...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="前进，达瓦里希|王一琳|汉语普通话 / 俄语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">225</td>
+<td class="title-cell">前进，达瓦里希</td>
+<td>2013</td>
+<td>7.4</td>
+<td>21775</td>
+<td class="lang-cell">汉语普通话 / 俄语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>王一琳</td>
+<td>动画 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">20世纪80年代末、90年代初，中国某个平凡的小村庄，小女孩如同千千万万的同龄人一样在社会主义的环境下成长起来。她玩的游戏也极具时代特色，红色花纹的老式积木，家养的小动物猫儿弗拉基咪尔、小鸡费里克斯和淘气的小鸭子贝利亚，即使日常也时不时蹦出...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="功夫侠|宁瀛 / 袁祥仁|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">226</td>
+<td class="title-cell">功夫侠</td>
+<td>2013</td>
+<td>3.7</td>
+<td>1837</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>宁瀛 / 袁祥仁</td>
+<td>动作</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">陈平（陈虎 饰）是在边陲小镇打工的普通青年，他身怀高超的中国功夫，但是与生俱来的恐高症让他对自己失去了信心。一次偶然的机会陈平发现老板运货箱中藏着一个被绑架的七岁外国男孩儿（阿曼 饰）。为了弄清楚男孩的来历并寻找他的父母，陈平忍辱负重，在支...</td>
+<td></td>
+</tr>
+
+<tr data-search="城市微旅行|曹郁 / 程工|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">227</td>
+<td class="title-cell">城市微旅行</td>
+<td>2013</td>
+<td>7.7</td>
+<td>2263</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>曹郁 / 程工</td>
+<td>纪录片 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">2012年冬至，北京：作家冯唐，30岁之前几乎没有离开过北京城；绿茶餐厅老板娘路妍，创造了连开16家连锁餐厅的传奇女人；外滩画报编辑文林，睡过全球各地酒店的疲惫行者。2013年大寒，上海：这三位已行遍世界，却难有自由的都市人，把一段非常重要...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="大明猩|金容华|汉语普通话 / 日语 / 韩语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">228</td>
+<td class="title-cell">大明猩</td>
+<td>2013</td>
+<td>5.5</td>
+<td>16035</td>
+<td class="lang-cell">汉语普通话 / 日语 / 韩语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>金容华</td>
+<td>剧情 / 喜剧 / 运动</td>
+<td>中国大陆 / 韩国</td>
+<td class="dp-cell">中国容华杂技团有一个尽人皆知的动物明星，它就是会打棒球的低地大猩猩灵灵。受老团长影响，灵灵很早便学习击打棒球，而从小和它一起长大的15岁驯兽师赵薇薇（徐娇 饰）与灵灵合作默契，并且能够用人类和猩猩的语言交流。可是老团长为了让山地大猩猩雷霆和...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="天机·富春山居图|孙健君|汉语普通话 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">229</td>
+<td class="title-cell">天机·富春山居图</td>
+<td>2013</td>
+<td>3.0</td>
+<td>114442</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>孙健君</td>
+<td>动作 / 冒险</td>
+<td>中国大陆</td>
+<td class="dp-cell">元代画家黄公望的名作《富春山居图》，被誉为“中国十大传世名画”之一。由于种种原因，该作的“无用师卷”和“剩山图”分处海峡两岸，隔海相望。2011年，《富春山居图》有望合璧展出，谁知这件保额即高达十亿的旷世杰作引来各国罪犯的觊觎。早些时候，“...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="女经grace|柴禾|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">230</td>
+<td class="title-cell">女经Grace</td>
+<td>2013</td>
+<td>6.4</td>
+<td>338</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>柴禾</td>
+<td>纪录片 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">【在线地址】 http://v.youku.com/v_show/id_XNTg3OTU5ODUy.html【柴禾手记】http://www.douban.com/note/291238196/几年以来被“虐待”老人的往事困扰而一直噩梦不断...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="甜心巧克力|筱原哲雄|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">231</td>
+<td class="title-cell">甜心巧克力</td>
+<td>2013</td>
+<td>5.2</td>
+<td>4871</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>筱原哲雄</td>
+<td>爱情</td>
+<td>中国大陆 / 日本</td>
+<td class="dp-cell">国际大都会上海，美丽女孩林月（林志玲 饰）在街角经营着一家全手工制作的巧克力店。她的日本人好友木场总一郎（池内博之 饰）来华十年，此前曾是北海道夕张的滑雪场救助员，如今在异国他乡进行绘画创作。总算成功举办个人画展的木场，一直渴望和林月走入婚...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="蓝眼睛，中国21天|纪易达|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">232</td>
+<td class="title-cell">蓝眼睛，中国21天</td>
+<td>2013</td>
+<td>7.2</td>
+<td>491</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>纪易达</td>
+<td>纪录片</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">一部从一个你从没看过的角度出发的纪录片。两个背包，一组摄影器材，21天穿越中国6个省8个城市。 纪录片的主人公 Luke Helgeson 生活在明尼苏达州的一个人口只有6万人的小地方。 在2013年的夏天他来到了中国，不过生活在小城市的他...</td>
+<td></td>
+</tr>
+
+<tr data-search="这是三里屯|罗伯特·道格拉斯|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">233</td>
+<td class="title-cell">这是三里屯</td>
+<td>2013</td>
+<td>5.7</td>
+<td>1191</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗伯特·道格拉斯</td>
+<td>喜剧</td>
+<td>冰岛 / 中国大陆</td>
+<td class="dp-cell">初来乍到的英国人盖瑞（卡洛斯·欧德利 Carlos Ottery 饰）在三里屯刚落下脚，便迫不及待地想要大干一场，实现他的“中国梦”。然而在北京人生地不熟的他却在寻求投资的路上处处碰壁。正在盖瑞一筹莫展之际，一个自诩中国通的澳洲人福来克（阿...</td>
+<td></td>
+</tr>
+
+<tr data-search="通往无之桥|fabio paleari|汉语普通话 / 英语 / 意大利语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">234</td>
+<td class="title-cell">通往无之桥</td>
+<td>2013</td>
+<td>7.4</td>
+<td>111</td>
+<td class="lang-cell">汉语普通话 / 英语 / 意大利语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>Fabio Paleari</td>
+<td>短片 / 音乐</td>
+<td>中国大陆</td>
+<td class="dp-cell">2013年5月，玛莎拉蒂携手赞那度，开启了一次艺术与音乐的灵感之旅。中国摇滚教父崔健，与英国音乐家HOWIE B，自驾从威尼斯出发，经米兰、科莫湖，佛罗伦萨和托斯卡纳小镇等，激发出一曲音乐，一部艺术微电影，三部关于艺术、生活、音乐的微型纪录...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="金门银光梦|魏时煜|英语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">235</td>
+<td class="title-cell">金门银光梦</td>
+<td>2013</td>
+<td>8.1</td>
+<td>843</td>
+<td class="lang-cell">英语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>魏时煜</td>
+<td>纪录片</td>
+<td>中国香港</td>
+<td class="dp-cell">李小龙未满周岁便亮相银幕的《金门女》，导演伍锦霞是 三藩市华侨，三、四十年代在香港和美国执导过九部粤 语片，不乏民族意识及女权色彩。既是第一位执导港片 的海外华人女导演，更是独立特行、超越时代的奇女子， 毕生短髮男装打扮，人皆以「霞哥」相称...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="钢铁侠3|沙恩·布莱克|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">236</td>
+<td class="title-cell">钢铁侠3</td>
+<td>2013</td>
+<td>7.8</td>
+<td>389813</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>沙恩·布莱克</td>
+<td>动作 / 科幻</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">自纽约事件以来，托尼·斯塔克（小罗伯特·唐尼 Robert Downey Jr. 饰）为前所未有的焦虑症所困扰。他疯狂投入钢铁侠升级版的研发，为此废寝忘食，甚至忽略了女友佩珀·波茨（格温妮斯·帕特洛 Gwyneth Paltrow 饰）的感...</td>
+<td></td>
+</tr>
+
+<tr data-search="一步之遥|姜文|汉语普通话 / 英语 / 上海话 / 法语 / 日语 / 满语 / 越南语 / 拉丁语" data-reason="外语为主(外语5/中文2)">
+<td style="color:var(--text-muted)">237</td>
+<td class="title-cell">一步之遥</td>
+<td>2014</td>
+<td>6.6</td>
+<td>283593</td>
+<td class="lang-cell">汉语普通话 / 英语 / 上海话 / 法语 / 日语 / 满语 / 越南语 / 拉丁语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语5/中文2)</span></td>
+<td>姜文</td>
+<td>剧情 / 喜剧 / 动作</td>
+<td>中国大陆 / 美国 / 中国香港</td>
+<td class="dp-cell">北洋政府统治时期，盘踞上海的军阀武大帅之子武七（文章 饰）为洗刷耻辱，辗转找到了前清遗老马走日（姜文 饰）求助。在此之后，马走日和在法租界当警督的发小项飞田（葛优 饰）联手策划了名为“花域总统选举”的大型选美活动，和马从小就认识的现总统完颜...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="中美舞林冠军对抗赛||英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">238</td>
+<td class="title-cell">中美舞林冠军对抗赛</td>
+<td>2014</td>
+<td>8.5</td>
+<td>264</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td></td>
+<td>歌舞</td>
+<td>中国大陆</td>
+<td class="dp-cell">《中美舞林》冠军对抗争霸赛是由灿星制作打造的跨国舞蹈特别节目，张傲月、朱洁静、刘福洋、唐诗逸等12位中国优秀舞者将对阵由美国《舞林争霸》（《So You Think You Can Dance》）冠军Russell Melanie以及八届登...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="光阴的故事－台湾新电影|谢庆铃|汉语普通话 / 法语 / 英语 / 泰语 / 意大利语 / 西班牙语" data-reason="外语为主(外语5/中文1)">
+<td style="color:var(--text-muted)">239</td>
+<td class="title-cell">光阴的故事－台湾新电影</td>
+<td>2014</td>
+<td>6.7</td>
+<td>1140</td>
+<td class="lang-cell">汉语普通话 / 法语 / 英语 / 泰语 / 意大利语 / 西班牙语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语5/中文1)</span></td>
+<td>谢庆铃</td>
+<td>纪录片</td>
+<td>中国台湾</td>
+<td class="dp-cell">臺灣新電影三十週年之際，導演谢慶鈴從台北飛往清邁、巴黎、東京、香港、北京、鹿特丹甚至布宜諾斯艾利斯，背景完全不同的導演、影評、藝術家们，娓娓道來臺灣新電影與他們的關係，那麼远、那麼近。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="史前怪兽|埃里克·斯泰尔斯|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">240</td>
+<td class="title-cell">史前怪兽</td>
+<td>2014</td>
+<td>3.0</td>
+<td>4363</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>埃里克·斯泰尔斯</td>
+<td>动作 / 科幻 / 惊悚</td>
+<td>英国 / 中国大陆</td>
+<td class="dp-cell">故事发生在一个无名湖泊之中，近日来，在湖泊附近接二连三的发生了数起死亡事件，犯罪现场十分血腥可怕，犯罪手段十分凶残，通过一些残留的影像和证据不难发现，袭击者并非人类，而很可能是隐藏在湖底的某种野兽。塔维斯（斯科特·阿金斯 Scott Adk...</td>
+<td></td>
+</tr>
+
+<tr data-search="图兰朵|陈薪伊|意大利语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">241</td>
+<td class="title-cell">图兰朵</td>
+<td>2014</td>
+<td>7.1</td>
+<td>117</td>
+<td class="lang-cell">意大利语 / 汉语普通话</td>
+<td>意大利语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈薪伊</td>
+<td>爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">美丽的中国公主图兰朵（孙秀苇 饰演）残暴冷酷，她给所有前来求婚的异国王子出了三道谜语，只有猜出她三道谜语的人，才有机会娶她，如猜错便会被处死。已经有三个没运气的人丧生了。流亡中国的鞑靼王子卡拉夫（戴玉强 饰）被公主的美貌吸引，前来应婚，并答...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="安大略合约|关心 / 刘迦密|英语 / 中文 chinese" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">242</td>
+<td class="title-cell">安大略合约</td>
+<td>2014</td>
+<td>7.5</td>
+<td>259</td>
+<td class="lang-cell">英语 / 中文 Chinese</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>关心 / 刘迦密</td>
+<td>剧情</td>
+<td>中国大陆 / 加拿大</td>
+<td class="dp-cell">潘小帅先生（黄轩饰）时年30岁出头，历经多年海外留学后回到中国。他的父亲希望他接手家族企业，但他却感觉内心空虚，渴望去做一些更有意义的事，尤其是他周围的朋友们都沉迷于追逐金钱和社会地位。某天的一个机缘巧合下，接到一个著名旅游杂志的冒险旅游竞...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="海神密码|乔和平 / 罗越|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">243</td>
+<td class="title-cell">海神密码</td>
+<td>2014</td>
+<td>2.5</td>
+<td>597</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>乔和平 / 罗越</td>
+<td>动作 / 冒险</td>
+<td>中国大陆</td>
+<td class="dp-cell">故事发生在公海之上，在传说中，公海的海底生活着一种史前巨兽，守护着价值连城的巨额宝藏。不胫而走的消息很快引起了世界各国的注意，美国、日本等国亦纷纷派出特工明察暗访，想要抢先一步得到宝藏。查尔斯（彼得·斯特曼 Peter Stormare 饰...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="澳门风云 賭城風雲|王晶 / 钟少雄|汉语普通话 / 粤语 / 英语 / 葡萄牙语 / 泰语 / 韩语 / 日语" data-reason="外语为主(外语5/中文2)">
+<td style="color:var(--text-muted)">244</td>
+<td class="title-cell">澳门风云 賭城風雲</td>
+<td>2014</td>
+<td>5.8</td>
+<td>157477</td>
+<td class="lang-cell">汉语普通话 / 粤语 / 英语 / 葡萄牙语 / 泰语 / 韩语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语5/中文2)</span></td>
+<td>王晶 / 钟少雄</td>
+<td>喜剧 / 动作</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">闻名中外，曾担任美国赌场保安总顾问的魔术手石一坚（周润发 饰），终回流澳门退休，更宴请各方朋友到来庆祝生日宴。其中好友Benz哥（许绍雄 饰）与他的儿子晒冷（谢霆锋 饰）以及外甥牛必胜（杜汶泽 饰），更特别由香港来到澳门到贺。 翌日，大陆、...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="秘密分享者|peter fudakowski|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">245</td>
+<td class="title-cell">秘密分享者</td>
+<td>2014</td>
+<td>5.6</td>
+<td>174</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Peter Fudakowski</td>
+<td>爱情</td>
+<td>英国 / 波兰 / 中国大陆 / 泰国</td>
+<td class="dp-cell">改编自文学大师康拉德（Joseph Conrad）的经典名著《黑暗之心》，描述年轻船长康拉德，第一次领航就前往神秘的南中国海，但桀骜不驯的中国船员们，却怀疑他和贪心的老板想将船给弄沉骗取保险金，于是百般刁难。趁着停泊在一个不知名的海湾时，船...</td>
+<td></td>
+</tr>
+
+<tr data-search="绝命航班|周文武贝|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">246</td>
+<td class="title-cell">绝命航班</td>
+<td>2014</td>
+<td>3.5</td>
+<td>16150</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>周文武贝</td>
+<td>动作 / 惊悚 / 灾难</td>
+<td>中国大陆</td>
+<td class="dp-cell">夜幕降临，从太平洋中心好运岛飞往新加坡的大洋航空615次航班正准备起飞。由于近几年乘客锐减，该航班即将取消，此次也是这架飞机最后一次飞行。方木（辜承 饰）、沈吟（伊娜 饰）、刘夏（李晨浩 饰）等寥寥九位乘客走入机舱。机长查尔斯（艾德·维斯特...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="老男孩猛龙过江|肖央|汉语普通话 / 英语 / 韩语 / 山东方言 / 意大利语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">247</td>
+<td class="title-cell">老男孩猛龙过江</td>
+<td>2014</td>
+<td>5.7</td>
+<td>126716</td>
+<td class="lang-cell">汉语普通话 / 英语 / 韩语 / 山东方言 / 意大利语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>肖央</td>
+<td>剧情 / 喜剧</td>
+<td>中国大陆</td>
+<td class="dp-cell">本片讲述了倒插门被媳妇全家嫌弃的王小帅（王太利 饰）面临生活困境，决心放下一切实现梦想，于是他找到了老同学肖大宝（肖央 饰）。曾经因为拉大提琴的女孩马璐（屈菁菁 饰）而分道扬镳的两人又聚在了一起，决定前往美国勇闯选秀节目。两兄弟千辛万苦来到...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="西藏冈仁波齐朝圣之旅||日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">248</td>
+<td class="title-cell">西藏冈仁波齐朝圣之旅</td>
+<td>2014</td>
+<td>7.6</td>
+<td>309</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td></td>
+<td>纪录片</td>
+<td>日本 / 中国大陆</td>
+<td class="dp-cell">2008年以后，国内外媒体进入西藏受到严格限制。2014年，我们趁12年一次朝圣年的机会，入藏采访当地最新情况。从公元前至今，受西藏人崇拜的冈仁波齐，是耸立于印度、尼泊尔和中国边境附近，海拔6656米的神山。本片沿从拉萨到冈仁波齐转山的旅程...</td>
+<td></td>
+</tr>
+
+<tr data-search="超体|吕克·贝松|英语 / 汉语普通话 / 法语 / 意大利语 / 德语 / 西班牙语 / 韩语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">249</td>
+<td class="title-cell">超体</td>
+<td>2014</td>
+<td>7.4</td>
+<td>495776</td>
+<td class="lang-cell">英语 / 汉语普通话 / 法语 / 意大利语 / 德语 / 西班牙语 / 韩语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>吕克·贝松</td>
+<td>动作 / 科幻</td>
+<td>法国 / 德国 / 中国台湾 / 加拿大 / 美国 / 英国</td>
+<td class="dp-cell">被恶德男友强迫帮人送货的年轻女子露西（斯嘉丽·约翰逊 Scarlett Johansson 饰），遭遇了穷凶恶极的黑帮头目张先生（崔岷植 饰）一伙。她连同三个男人被张先生在腹部缝入了代号为CPH4的神秘药品，以此将药品偷偷带入不同国家。在台...</td>
+<td></td>
+</tr>
+
+<tr data-search="超验骇客|沃利·菲斯特|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">250</td>
+<td class="title-cell">超验骇客</td>
+<td>2014</td>
+<td>6.6</td>
+<td>87362</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>沃利·菲斯特</td>
+<td>动作 / 爱情 / 科幻</td>
+<td>美国 / 中国大陆 / 英国</td>
+<td class="dp-cell">近未来，天才科学家威尔·卡斯特（约翰尼·德普 Johnny Depp 饰）开发出最接近人类的人工智能机器人“品（Pin）”，他在收获来自科学界的美誉同时，也遭到无数反对者的诟病与抨击。在某次会议之后，威尔遭到激进组织成员的枪击，虽然当时侥幸...</td>
+<td></td>
+</tr>
+
+<tr data-search="香气|曾翠珊|汉语普通话 / 韩语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">251</td>
+<td class="title-cell">香气</td>
+<td>2014</td>
+<td>5.3</td>
+<td>2367</td>
+<td class="lang-cell">汉语普通话 / 韩语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>曾翠珊</td>
+<td>爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">一场意外中，朱俐（陈燃 饰）不幸受伤，而意外的始作俑者，是一位名叫江仁俊（朴施厚 饰）的韩国男子，江仁俊千里迢迢远赴异国，为的是寻找出走的女友敏贞（沈智瑗 饰）。为了补偿朱俐的损失，江仁俊住进了朱俐的家中照顾她的生活起居，而在此过程中，朱俐...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="五到九|鄭彌彬 / 杜海 / 宮崎大祐 / rasiguet sookkarn|日语 / 汉语普通话 / 泰语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">252</td>
+<td class="title-cell">五到九</td>
+<td>2015</td>
+<td>5.3</td>
+<td>189</td>
+<td class="lang-cell">日语 / 汉语普通话 / 泰语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>鄭彌彬 / 杜海 / 宮崎大祐 / Rasiguet Sookkarn</td>
+<td>剧情 / 犯罪</td>
+<td>新加坡 / 泰国 / 中国大陆 / 日本</td>
+<td class="dp-cell">巴西世界盃總決賽當日，下午五點，中國少年民工縮衣節食，滿心期待下班後與應召姐姐共度良宵，殊不知她早已買好了離城的車票。晚間九點，新加坡男教師與輕熟女想來場隱密的山頂幽會卻被不解風情的計程車司機不斷打擾。午夜一點，在日俄交界的偏遠小鎮，神祕放...</td>
+<td></td>
+</tr>
+
+<tr data-search="命中注定|张皓|汉语普通话 / 意大利语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">253</td>
+<td class="title-cell">命中注定</td>
+<td>2015</td>
+<td>5.8</td>
+<td>58075</td>
+<td class="lang-cell">汉语普通话 / 意大利语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>张皓</td>
+<td>喜剧 / 爱情</td>
+<td>中国大陆 / 中国香港 / 美国</td>
+<td class="dp-cell">少女时期的方圆经历了两次算命结果命中注定她未来的爱人叫宋昆明。长大成年后的方圆在即将与谢明江结婚前却意外接到宋昆明的电话。于是，方圆不顾一切地追到意大利，随后在异国他乡展开了一段充满戏剧性的寻爱之旅。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="唐人街探案|陈思诚|汉语普通话 / 泰语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">254</td>
+<td class="title-cell">唐人街探案</td>
+<td>2015</td>
+<td>7.7</td>
+<td>733684</td>
+<td class="lang-cell">汉语普通话 / 泰语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>陈思诚</td>
+<td>喜剧 / 动作 / 悬疑</td>
+<td>中国大陆</td>
+<td class="dp-cell">天赋异禀的结巴少年秦风（刘昊然 饰）警校落榜，被姥姥遣送泰国找远房表舅——号称“唐人街第一神探”，实则猥琐的大叔唐仁（王宝强 饰）散心。不想一夜花天酒地后，唐仁沦为离奇凶案嫌疑人，不得不和秦风亡命天涯……穷追不舍的警探黄兰登（陈赫 饰）、无...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="商业创意在中国|贺欣浩|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">255</td>
+<td class="title-cell">商业创意在中国</td>
+<td>2015</td>
+<td>7.5</td>
+<td>354</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>贺欣浩</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="dp-cell">中国的国际形象是生产制造大国，世界对它在创意领域的实力还很陌生。即便在中国生活工作多年的外国人眼里，中国创意才刚起步，与欧美差距不小。当提到中国经济，大家都为中国速度而震惊。而不少品牌为追求速度，往往牺牲品质，更有甚者，则选择山寨优秀设计这...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="坏蛋必须死|孙皓|韩语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">256</td>
+<td class="title-cell">坏蛋必须死</td>
+<td>2015</td>
+<td>6.0</td>
+<td>38776</td>
+<td class="lang-cell">韩语 / 汉语普通话</td>
+<td>韩语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>孙皓</td>
+<td>喜剧 / 动作 / 犯罪</td>
+<td>中国大陆 / 中国香港 / 韩国</td>
+<td class="dp-cell">假期来临之际，在釜山当中文老师的强子（陈柏霖 饰）和从中国家乡远道而来的好哥们三儿（乔振宇 饰）、大头（丁文博 饰）和弟弟帕帕（杨旭文 饰）相约，一起到济州岛散心。狂飙的小混混、性感的韩国女人（孙艺珍 饰）、执着的老警察（张光 饰）、神秘的...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="山河故人|贾樟柯|英语 / 山西话 / 汉语普通话 / 上海话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">257</td>
+<td class="title-cell">山河故人</td>
+<td>2015</td>
+<td>8.0</td>
+<td>260260</td>
+<td class="lang-cell">英语 / 山西话 / 汉语普通话 / 上海话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>贾樟柯</td>
+<td>剧情 / 家庭</td>
+<td>中国大陆 / 法国 / 日本</td>
+<td class="dp-cell">1999年，山西汾阳县城，开朗雀跃的女孩沈涛（赵涛 饰）徘徊在矿工梁子（梁景东 饰）和煤矿老板张晋生（张译 饰）两端。一女二男的三角恋，无法维持长久的平衡。梁子和晋生的友情破裂。涛儿结婚的时节，有人选择远方。2014年，因长期在煤矿工作，梁...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="开罗宣言|刘星 / 温德光 / 胡明钢|汉语普通话 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">258</td>
+<td class="title-cell">开罗宣言</td>
+<td>2015</td>
+<td>3.4</td>
+<td>3427</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>刘星 / 温德光 / 胡明钢</td>
+<td>剧情 / 历史</td>
+<td>中国大陆</td>
+<td class="dp-cell">重庆大轰炸。延安派曾希圣赴重庆，将重要资料交给蒋介石（马晓伟 饰），军技室破译密码专家石剑峰（胡军 饰）凭着中共的资料，破译了日军的情报，救了宋子文一命。石剑峰破译了：“日军可能是对美国要有行动。”上报何应钦（何政军 饰）。蒋介石将这份情报...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="恋爱中的城市|文牧野 / 董润年 / 韩轶 / 傅天余 / 冀佳彤|汉语普通话 / 法语 / 捷克语 / 日语 / 意大利语 / 英语 / 上海话" data-reason="外语为主(外语5/中文2)">
+<td style="color:var(--text-muted)">259</td>
+<td class="title-cell">恋爱中的城市</td>
+<td>2015</td>
+<td>5.7</td>
+<td>36511</td>
+<td class="lang-cell">汉语普通话 / 法语 / 捷克语 / 日语 / 意大利语 / 英语 / 上海话</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语5/中文2)</span></td>
+<td>文牧野 / 董润年 / 韩轶 / 傅天余 / 冀佳彤</td>
+<td>爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">这是一个“人越来越多 ，世界却越来越小”的——小世界。佛罗伦萨、布拉格、巴黎、上海、北海道小樽，五座城市，五段不同的爱情故事在这个“小世界”中上演。浪漫的午夜巴黎上演了一段奇幻邂逅；神秘布拉格正经历一场忧伤的偶遇；美丽上海隐藏了一个关于美食...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="战火中的芭蕾|董亚春 / 尼基塔·米哈尔科夫|汉语普通话 / 俄语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">260</td>
+<td class="title-cell">战火中的芭蕾</td>
+<td>2015</td>
+<td>6.6</td>
+<td>1642</td>
+<td class="lang-cell">汉语普通话 / 俄语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>董亚春 / 尼基塔·米哈尔科夫</td>
+<td>剧情 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">电影通过男女主人公在抗日烽火中的芭蕾情缘，讲述一段跨越国界的凄美恋情，揭露日本军国主义的凶残与伪善、顽固不化与背信弃义，展示了中俄两国军民患难与共、携手并肩共同抗击法西斯侵略的战斗友谊。1945年9月12日，潜伏在黑龙江边境小镇丛林中的30...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="日曜日式散步者|黄亚历|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">261</td>
+<td class="title-cell">日曜日式散步者</td>
+<td>2015</td>
+<td>7.8</td>
+<td>1124</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>黄亚历</td>
+<td>历史 / 纪录片</td>
+<td>中国台湾 / 日本</td>
+<td class="dp-cell">寻找日治文学足迹，发掘台湾的超现实主义。 回顾日治时代的台湾新文学运动，最初是服务于社会、人生、争取民族尊严的反帝国、反封建之现实主义的文学路线。然而鲜为人知的，相对于此一写实路线，台湾在一九三○年代，已出现了几乎与欧洲世界同步的文学现代主...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="杀破狼2|郑保瑞|汉语普通话 / 粤语 / 英语 / 泰语 / 韩语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">262</td>
+<td class="title-cell">杀破狼2</td>
+<td>2015</td>
+<td>7.4</td>
+<td>166882</td>
+<td class="lang-cell">汉语普通话 / 粤语 / 英语 / 泰语 / 韩语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>郑保瑞</td>
+<td>剧情 / 动作 / 犯罪</td>
+<td>中国香港 / 中国大陆</td>
+<td class="dp-cell">倒卖人体器官集团的主脑洪文刚（古天乐 饰）罹患严重心脏病，为了活命他甚至计划摘取亲弟弟洪文标（恭硕良 饰）的心。为了完成卧底工作不惜身染毒瘾的志杰（吴京 饰）随老大去码头劫持试图逃跑的洪文标，他的上司见叔叔陈国华（任达华 饰）接到线报后也率...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="水滴|王壬|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">263</td>
+<td class="title-cell">水滴</td>
+<td>2015</td>
+<td>8.7</td>
+<td>28860</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>王壬</td>
+<td>科幻 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">近未来的某天，联合国秘书长向宇宙中的未知生命发送了一条渴望建立交流和友情的口讯。不知过了多久，地球收到来自三体舰队的讯息。而今三体舰队的前哨探测器已经抵达太阳系，地球国际发射了螳螂号火箭，以捕捉这枚探测器。针对外星来客，人类的科学家、政治家...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="沙西米|潘志远|日语 / 闽南语 hokkien" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">264</td>
+<td class="title-cell">沙西米</td>
+<td>2015</td>
+<td>4.1</td>
+<td>3784</td>
+<td class="lang-cell">日语 / 闽南语 Hokkien</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>潘志远</td>
+<td>情色</td>
+<td>中国台湾</td>
+<td class="dp-cell">日本福岛大地震毁掉了AV女优浅野夏美（波多野结衣 饰）生活中的一切，与此同时，她还得知同自己合作过多部作品的男优因为患上了艾滋病而自杀身亡，这也就意味着，自己一直以来都暴露在恐怖病毒的侵犯之下。一张不期而至的明信片让夏美决定前往台湾，在那里...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="滚蛋吧！肿瘤君|韩延|汉语普通话 / 英语 / 韩语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">265</td>
+<td class="title-cell">滚蛋吧！肿瘤君</td>
+<td>2015</td>
+<td>7.4</td>
+<td>387388</td>
+<td class="lang-cell">汉语普通话 / 英语 / 韩语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>韩延</td>
+<td>喜剧 / 爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">即将迎来29岁生日的青年漫画家熊顿（白百何 饰），却接二连三遭遇了常人难以想象的打击。工作被炒，男友跳票，还莫名其妙到警察局走了一遭。更糟糕的是，她在聚会上突然晕倒，经检查后才发现自己的身体出了问题。一向乐观开朗的熊顿并未被病魔吓到和打败，...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="满月酒|郑伯昱|英语 / 汉语普通话 / 闽南语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">266</td>
+<td class="title-cell">满月酒</td>
+<td>2015</td>
+<td>6.5</td>
+<td>1290</td>
+<td class="lang-cell">英语 / 汉语普通话 / 闽南语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>郑伯昱</td>
+<td>剧情 / 喜剧 / 同性</td>
+<td>中国台湾 / 美国</td>
+<td class="dp-cell">在美国洛杉矶工作生活的男同志Danny（郑伯昱 饰）渴望拥有自己的孩子，但他极度传统又在意别人眼光的母亲（归亚蕾 饰）由于早已得知其性向，一直不敢奢望他能延续家族香火；一次意外得知儿子Danny的生子计画后，竟开启了这段母子一段一波三折寻找...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="爸爸的假期|王岳伦|汉语普通话 / 韩语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">267</td>
+<td class="title-cell">爸爸的假期</td>
+<td>2015</td>
+<td>4.0</td>
+<td>14150</td>
+<td class="lang-cell">汉语普通话 / 韩语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>王岳伦</td>
+<td>喜剧 / 家庭</td>
+<td>中国大陆</td>
+<td class="dp-cell">某外企高管老郭（郭涛 饰）的婚姻进入七年之痒，一心扑在工作上的他和妻儿疏于交流，而事业也进入了困顿起。老实木讷的小编剧岳伦儿（王岳伦 饰）饱受欺凌，软弱无能，此刻也经历着来自家庭和事业的双重压力。英俊帅气的模特亮子（张亮 饰）奋力打拼却没有...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="狂野飞车|袁野|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">268</td>
+<td class="title-cell">狂野飞车</td>
+<td>2015</td>
+<td>2.6</td>
+<td>900</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>袁野</td>
+<td>动作 / 爱情 / 冒险</td>
+<td>中国大陆</td>
+<td class="dp-cell">大漠飞沙，引擎轰鸣，野性十足的美女车模（安娜塔莉娅 饰）只身深入大漠，只为和心爱的人共赴爱情之约。各国车手们本想在这里一战成名，却不知这死亡沙海既是天堂，亦是地狱。在凶险的生死竞速中，车手肯特惨遭对手布莱恩（米歇尔·法布里斯 饰）设计陷害，...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="破风|林超贤|汉语普通话 / 韩语 / 英语 / 意大利语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">269</td>
+<td class="title-cell">破风</td>
+<td>2015</td>
+<td>7.3</td>
+<td>135764</td>
+<td class="lang-cell">汉语普通话 / 韩语 / 英语 / 意大利语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>林超贤</td>
+<td>剧情 / 运动</td>
+<td>中国香港 / 中国大陆</td>
+<td class="dp-cell">郑知元（崔始源 饰）是世界闻名的赛车手，在目睹了他精彩绝伦的技巧和速度之后，初出茅庐的车手仇铭（彭于晏 饰）和邱田（窦骁 饰）心甘情愿地成为了他的“破风手”，并以三人之间的绝佳默契打败了强敌。然而，胜利是属于“冲线手”的，无论怎样努力，“破...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="约战西班牙|王耀明|汉语普通话 / 西班牙语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">270</td>
+<td class="title-cell">约战西班牙</td>
+<td>2015</td>
+<td>9.1</td>
+<td>421</td>
+<td class="lang-cell">汉语普通话 / 西班牙语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>王耀明</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="dp-cell">2015年年初，一支西班牙巴塞罗那的业余球队通过互联网发布挑战视频，声称必以5球狂胜中国业余球队。而北京一支业余球队决定应战，并克服重重困难开赴西班牙，最终在万里之外的异国他乡击败对手，用一场胜利回应了西班牙球队的挑战。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="美好2015|莫森·玛克玛尔巴夫 / 蔡明亮 / 黄建新 / 严浩|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">271</td>
+<td class="title-cell">美好2015</td>
+<td>2015</td>
+<td>5.3</td>
+<td>121</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>莫森·玛克玛尔巴夫 / 蔡明亮 / 黄建新 / 严浩</td>
+<td>剧情</td>
+<td>中国香港</td>
+<td class="dp-cell">電影節今年請來兩岸三地三大導，還有伊朗大師麥馬巴夫，走四地拼出四種感覺。麥馬巴夫拍《房客》，伊朗男孩給倫敦包租婆迫租，情急之下和她一起遛狗和領盲人，那都是他的散工。執導《無無眠》的蔡明亮說故事：「只是出門寫生，畫一幅小康東京夜行圖。冬夜，冷...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="魔镜|帕芬姆·王金达 / 金成浩 / 彭发|汉语普通话 / 韩语 / 泰语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">272</td>
+<td class="title-cell">魔镜</td>
+<td>2015</td>
+<td>5.1</td>
+<td>2519</td>
+<td class="lang-cell">汉语普通话 / 韩语 / 泰语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>帕芬姆·王金达 / 金成浩 / 彭发</td>
+<td>惊悚</td>
+<td>中国大陆 / 韩国</td>
+<td class="dp-cell">《电话》骨折女孩侑真（李彩英 饰）百无聊赖待在家中养伤，这天她偶然收到一个镜子的快递，之后通过手机和某个陌生男子聊天。聊兴正酣，她给对方发去一张自己的照片，而对方则回过来一模一样的照片，并声称就在她的身边。《奶奶》爸爸妈妈赶着去上班，而每天...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="2016辽宁卫视春节联欢晚会|尹琪|英语 / 汉语普通话 / 韩语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">273</td>
+<td class="title-cell">2016辽宁卫视春节联欢晚会</td>
+<td>2016</td>
+<td>8.5</td>
+<td>550</td>
+<td class="lang-cell">英语 / 汉语普通话 / 韩语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>尹琪</td>
+<td>歌舞 / 真人秀</td>
+<td>中国大陆</td>
+<td class="dp-cell">2016辽宁卫视春晚完整版，罗志祥、霍尊、周华健、张靓颖、柳岩、郎朗、宋小宝、田娃，还有丹东歌手徐子崴、韩国人气歌手鸟叔PSY、六小龄童金猴闹春，一个都不少，这台小品最多、最搞笑的春节晚会一举集合了宋小宝团队、开心麻花团队、郭冬临、潘长江、...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="再见瓦城|赵德胤|汉语普通话 / 泰语 / 缅甸语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">274</td>
+<td class="title-cell">再见瓦城</td>
+<td>2016</td>
+<td>6.9</td>
+<td>8088</td>
+<td class="lang-cell">汉语普通话 / 泰语 / 缅甸语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>赵德胤</td>
+<td>剧情 / 爱情</td>
+<td>缅甸 / 中国台湾 / 印度</td>
+<td class="dp-cell">忧郁的热带，女孩莲青（吴可熙 饰）遇见少年阿国（柯震东 饰），都是从缅甸跋涉至曼谷的偷渡客，他们连边界都穿过了，却迟迟等不到一纸身分。想新生他方为人，如今却飘荡城市边缘成鬼，日子剩下反覆的劳动，小吃店、成衣厂、工厂熔炉，无处可洩的闷热，高烧...</td>
+<td></td>
+</tr>
+
+<tr data-search="冰美人|周艾民 / 弗拉基米尔·缅绍夫|汉语普通话 / 日语 / 韩语 / 俄语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">275</td>
+<td class="title-cell">冰美人</td>
+<td>2016</td>
+<td>5.2</td>
+<td>490</td>
+<td class="lang-cell">汉语普通话 / 日语 / 韩语 / 俄语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>周艾民 / 弗拉基米尔·缅绍夫</td>
+<td>爱情 / 战争</td>
+<td>中国大陆 / 俄罗斯</td>
+<td class="dp-cell">一个女人对心爱男人的一份期许，一个男人对心爱女人的一份忠贞不渝！一个二战后残留下的冰冷地窖，一具风干的男骷髅身上的一个绣烂的口琴，从而慢慢揭开一具冰封60年的美丽女子的失踪之谜......</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="周日皇后|baby ruth villarama|英语 / 粤语 / 菲律宾语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">276</td>
+<td class="title-cell">周日皇后</td>
+<td>2016</td>
+<td>7.5</td>
+<td>115</td>
+<td class="lang-cell">英语 / 粤语 / 菲律宾语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Baby Ruth Villarama</td>
+<td>纪录片</td>
+<td>菲律宾 / 中国香港 / 日本 / 英国</td>
+<td class="dp-cell">在香港光鲜的表面下，来自菲律宾的家政服务人员领着可怜的薪水默默无闻的工作。在一次盛大的选美比赛中，五个家政服务人员给自己进行了一次大变身，并且重拾他们的尊严。导演记录下五位有魅力而且勇敢的菲律宾女性，她们通过举办盛会，成为香港190000菲...</td>
+<td></td>
+</tr>
+
+<tr data-search="奔爱|张一白 / 管虎 / 张猛 / 滕华涛 / 高群书|汉语普通话 / 英语 / 日语 / 土耳其语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">277</td>
+<td class="title-cell">奔爱</td>
+<td>2016</td>
+<td>4.0</td>
+<td>26540</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语 / 土耳其语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>张一白 / 管虎 / 张猛 / 滕华涛 / 高群书</td>
+<td>剧情 / 爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">在电影备案公示中，我们还发现了导演高群书的身影。在电影《爱，无处不在》中，高群书、鲍晶晶等担任编剧，由五位导演在五个国家用各自的方式诠释“爱”的含义，展现五种不同的爱的故事。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="妈妈，晚餐吃什么？|白羽弥仁|日语 / 闽南语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">278</td>
+<td class="title-cell">妈妈，晚餐吃什么？</td>
+<td>2016</td>
+<td>6.8</td>
+<td>637</td>
+<td class="lang-cell">日语 / 闽南语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>白羽弥仁</td>
+<td>剧情 / 家庭</td>
+<td>日本 / 中国台湾</td>
+<td class="dp-cell">一青姐妹来自台湾人父亲与日本人母亲（河合美智子 饰）结合的家庭，童年时代都在台湾度过。妹妹一青窈（藤本泉 饰）出生后一家人移居到东京，然而没有多久父亲就撒手人寰，独留母女三人相依为命。母亲每天都坚持亲自下厨，烹调女儿最喜爱的台湾菜。母亲的料...</td>
+<td></td>
+</tr>
+
+<tr data-search="德昂|王兵|缅甸语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">279</td>
+<td class="title-cell">德昂</td>
+<td>2016</td>
+<td>6.3</td>
+<td>230</td>
+<td class="lang-cell">缅甸语 / 汉语普通话</td>
+<td>缅甸语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>王兵</td>
+<td>纪录片</td>
+<td>中国香港 / 法国</td>
+<td class="dp-cell">入选#柏林电影节#论坛单元的是纪录片导演王兵的新作《德昂》，影片跟随德昂族的女人老人和孩子们从缅甸逃往中国边境，记录下他们每天的日常生活，被称为是“逃亡者视角的出埃及记”。（@torovandarko）</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="惊天大逆转|李骏|汉语普通话 / 韩语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">280</td>
+<td class="title-cell">惊天大逆转</td>
+<td>2016</td>
+<td>7.0</td>
+<td>70983</td>
+<td class="lang-cell">汉语普通话 / 韩语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>李骏</td>
+<td>剧情 / 犯罪 / 悬疑</td>
+<td>中国大陆</td>
+<td class="dp-cell">海归华人郭志华（钟汉良 饰）在韩国结识了正在首尔进行学术交流的心理医生杨曦（郎月婷 饰），便委托她为烧伤毁容的哥哥郭志达进行创后心理诊疗辅导。于此同时，首尔正在进行着一场激烈的中韩足球对抗赛，决战之际，中方的队长忽然得知，自己的未婚妻被神秘...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="我的新野蛮女友|赵根植|韩语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">281</td>
+<td class="title-cell">我的新野蛮女友</td>
+<td>2016</td>
+<td>3.8</td>
+<td>14927</td>
+<td class="lang-cell">韩语 / 汉语普通话</td>
+<td>韩语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>赵根植</td>
+<td>喜剧 / 爱情</td>
+<td>韩国 / 中国大陆</td>
+<td class="dp-cell">影片讲述了男主人公牵牛（车太贤 饰）与新“野蛮”女友星星（宋茜 饰）从相恋到结婚的浪漫经历。星星是牵牛的小学初恋，由于韩语不流利常常被周围同学欺负。牵牛最初仍无法忘记分手离别的前任“她”，直到有一天，牵牛再次遇见初恋星星后，便不顾身边人的反...</td>
+<td></td>
+</tr>
+
+<tr data-search="沉默|马丁·斯科塞斯|英语 / 日语 / 拉丁语 / 葡萄牙语 / 粤语 / 荷兰语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">282</td>
+<td class="title-cell">沉默</td>
+<td>2016</td>
+<td>7.7</td>
+<td>20836</td>
+<td class="lang-cell">英语 / 日语 / 拉丁语 / 葡萄牙语 / 粤语 / 荷兰语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>马丁·斯科塞斯</td>
+<td>剧情 / 历史</td>
+<td>美国 / 英国 / 中国台湾 / 日本 / 墨西哥 / 意大利</td>
+<td class="dp-cell">《沉默》改编自著名日本作家远藤周作的同名小说。故事发生在德川幕府时代禁教令下长崎附近的小村子，一个葡萄牙耶稣会的教士偷渡到日本传教，并调查恩师因遭受「穴吊」酷刑而宣誓弃教一事，因为这事在当时欧洲人的眼中，不只是个人的挫折，同时也是整个欧洲信...</td>
+<td></td>
+</tr>
+
+<tr data-search="湄公河行动|林超贤|汉语普通话 / 粤语 / 泰语 / 缅甸语 / 英语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">283</td>
+<td class="title-cell">湄公河行动</td>
+<td>2016</td>
+<td>8.0</td>
+<td>670903</td>
+<td class="lang-cell">汉语普通话 / 粤语 / 泰语 / 缅甸语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>林超贤</td>
+<td>剧情 / 动作 / 犯罪</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">金三角湄公河上，一处被称为“鬼门关”的河段，两艘来自中国的商船遭到不明身份之人的枪击袭击。未过多久，泰国军方召开新闻发布会，指责中国商船贩卖毒品。虽然发布会宣称船员全部逃亡，但是十三具遭受残忍杀害的中国船员尸体很快被人发现。这起胆大妄为的案...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="米歇尔·福柯|汪民安|汉语普通话 / 法语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">284</td>
+<td class="title-cell">米歇尔·福柯</td>
+<td>2016</td>
+<td>7.4</td>
+<td>1061</td>
+<td class="lang-cell">汉语普通话 / 法语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>汪民安</td>
+<td>纪录片</td>
+<td>中国大陆</td>
+<td class="dp-cell">米歇尔·福柯（Michel Foucault，1926.10.15－1984.6.25），法国哲学家，他也是二十世纪最伟大的思想家之一。福柯的效应遍及人文科学，他在哲学、历史、社会理论、文学、艺术、政治学、法学等方面都产生了巨大的影响。“在...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="终极胜利|冼杞然 / 迈克尔·帕克|英语 / 汉语普通话 / 日语 / 天津话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">285</td>
+<td class="title-cell">终极胜利</td>
+<td>2016</td>
+<td>6.1</td>
+<td>427</td>
+<td class="lang-cell">英语 / 汉语普通话 / 日语 / 天津话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>冼杞然 / 迈克尔·帕克</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国大陆 / 中国香港 / 美国</td>
+<td class="dp-cell">热爱中国的李爱锐（约瑟夫·费因斯 Joseph Fiennes 饰），甘愿放弃因奥运夺冠赢取回来的优质生活，回到正遭受日本残酷侵略的中国，在这段苦难日子中结识了徐牛（窦骁 饰），二人共同忍辱坚毅地对抗凶残毒辣的侵略者，救护了一大批被日本人关...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="绝地逃亡|雷尼·哈林|汉语普通话 / 英语 / 俄语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">286</td>
+<td class="title-cell">绝地逃亡</td>
+<td>2016</td>
+<td>5.7</td>
+<td>88964</td>
+<td class="lang-cell">汉语普通话 / 英语 / 俄语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>雷尼·哈林</td>
+<td>喜剧 / 动作</td>
+<td>中国大陆 / 美国 / 中国香港</td>
+<td class="dp-cell">香港探员陈港生（成龙饰）跟踪黑道老大维克多·王（赵文瑄饰）长达十数年，为搜集他犯罪证据而被卷入一场“计中计”中，还将自己的侄女白舒（范冰冰饰）牵扯进来。在这场被中国特警、维克多·王、俄罗斯黑帮三面夹攻的“绝地逃亡”中，班尼结识了共患难的最佳...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="美人鱼|周星驰|汉语普通话 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">287</td>
+<td class="title-cell">美人鱼</td>
+<td>2016</td>
+<td>6.7</td>
+<td>734772</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>周星驰</td>
+<td>喜剧 / 爱情 / 奇幻</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">白手起家的富豪刘轩（邓超 饰）新拍下了一块地皮，并联合了女强人李若兰（张雨绮 饰）使用恐怖的声纳技术驱赶鱼类，用于填海造地。人鱼一族长期居住在附近区域的海里，为了继续生存，带头大哥章鱼八哥（罗志祥 饰）派出了美人鱼珊珊（林允 饰）“色诱”刘...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="花样厨神|金镇雅|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">288</td>
+<td class="title-cell">花样厨神</td>
+<td>2016</td>
+<td>5.9</td>
+<td>3970</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>金镇雅</td>
+<td>剧情</td>
+<td>韩国 / 泰国 / 中国大陆</td>
+<td class="dp-cell">知名的电视制作人怡珊（杨紫琼 饰），继挖掘了国际厨神翰伟（黄经汉 饰）后，展开下一届新厨神的寻找工作，为此特别举办 “国际食神争霸赛”。从小与爷爷学做家常菜的一晗（刘宪华 饰）为保住自家即将倒闭的餐厅，贸然前去参赛。这个烹饪手法古怪的小子一...</td>
+<td></td>
+</tr>
+
+<tr data-search="谎言西西里|林育贤|汉语普通话 / 韩语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">289</td>
+<td class="title-cell">谎言西西里</td>
+<td>2016</td>
+<td>5.2</td>
+<td>16207</td>
+<td class="lang-cell">汉语普通话 / 韩语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>林育贤</td>
+<td>爱情</td>
+<td>中国大陆</td>
+<td class="dp-cell">影片讲述了韩国男孩俊浩（李准基 饰）以隐形方式默默守护心爱女友小悠（周冬雨 饰），并帮助其重启人生和爱情的故事。此次跨国“牵手”不仅发生在摩登都市上海，足迹还将远至充满美丽传说的意大利西西里，上演一场跨越国界和地域的动人恋情。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="赏金猎人|申太罗|汉语普通话 / 韩语 / 泰语 / 英语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">290</td>
+<td class="title-cell">赏金猎人</td>
+<td>2016</td>
+<td>5.1</td>
+<td>37710</td>
+<td class="lang-cell">汉语普通话 / 韩语 / 泰语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>申太罗</td>
+<td>剧情 / 喜剧 / 动作</td>
+<td>中国大陆 / 韩国 / 中国香港</td>
+<td class="dp-cell">李山（李敏镐 饰）和阿Yo（钟汉良 饰）曾经同为国际刑警，后因任务失败被一同革职，当起了私人保镖。在一起看似普通的爆炸案中，两人与由凌芯（唐嫣 饰）、Swan（吴千语 饰）和宝宝（樊少皇 饰）组成的赏金三人组狭路相逢，一番冲突较量后，他们组...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="超能太阳鸭|维克多·拉基索夫|俄语 / 英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">291</td>
+<td class="title-cell">超能太阳鸭</td>
+<td>2016</td>
+<td>5.0</td>
+<td>1057</td>
+<td class="lang-cell">俄语 / 英语 / 汉语普通话</td>
+<td>俄语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>维克多·拉基索夫</td>
+<td>剧情 / 喜剧 / 动画</td>
+<td>俄罗斯 / 美国 / 中国大陆</td>
+<td class="dp-cell">在遥远的东方世界，有一座与世无争的世外仙境“太阳岛”，岛主之子龙威是一个典型的“网瘾+废柴”少年，却整天做着展翅高飞，拯救世界的白日梦，因为根据古老的预言，当整个世界陷入邪恶黑暗的时候，太阳岛上的太阳鸭就会出现并带领大家对抗邪恶，保护每一寸...</td>
+<td></td>
+</tr>
+
+<tr data-search="长城|张艺谋|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">292</td>
+<td class="title-cell">长城</td>
+<td>2016</td>
+<td>4.9</td>
+<td>367869</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张艺谋</td>
+<td>动作 / 奇幻 / 冒险</td>
+<td>中国大陆 / 美国</td>
+<td class="dp-cell">电影《长城》讲述了在古代，一支中国精英部队为保卫人类，在举世闻名的长城上与怪兽饕餮进行生死决战的故事。欧洲雇佣军威廉（马特·达蒙 Matt Damon 饰）与同伴佩罗·托瓦尔（佩德罗·帕斯卡 Pedro Pascal 饰）不远万里来到中国盗...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="阿尼|邹隆娜|菲律宾语 / 他加禄语 / 汉语普通话 / 闽南语 / 英语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">293</td>
+<td class="title-cell">阿尼</td>
+<td>2016</td>
+<td>6.3</td>
+<td>165</td>
+<td class="lang-cell">菲律宾语 / 他加禄语 / 汉语普通话 / 闽南语 / 英语</td>
+<td>菲律宾语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>邹隆娜</td>
+<td>短片</td>
+<td>中国台湾 / 菲律宾</td>
+<td class="dp-cell">Docked at the port of Kaohsiung， Filipino seaman Arnie buys a ring with the help of his mates， to propose to his girlfri...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="龙之诞生|乔治·诺非|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">294</td>
+<td class="title-cell">龙之诞生</td>
+<td>2016</td>
+<td>5.1</td>
+<td>729</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>乔治·诺非</td>
+<td>剧情 / 传记 / 动作</td>
+<td>美国 / 中国大陆 / 加拿大</td>
+<td class="dp-cell">功夫片传奇影星李小龙的生平故事即将被好莱坞搬上大银幕，这部影片叫做《龙之诞生》(Birth of the Dragon)，由QED国际和Groundswell制片公司联合制作，影片不仅是李小龙生平传记，也会是一部功夫动作片。故事将集中在李小...</td>
+<td></td>
+</tr>
+
+<tr data-search="下海|奥利维耶·梅斯|法语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">295</td>
+<td class="title-cell">下海</td>
+<td>2017</td>
+<td>7.0</td>
+<td>14862</td>
+<td class="lang-cell">法语 / 汉语普通话</td>
+<td>法语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>奥利维耶·梅斯</td>
+<td>剧情</td>
+<td>比利时 / 法国 / 瑞士 / 中国大陆</td>
+<td class="dp-cell">上世纪90年代末东北爆发大规模下岗潮，女性失业尤为严重。很多女人听说当法国保姆能赚钱，便不惜背上巨债出国。到巴黎后发现求生无路，只好去“站街”。比利时导演奥利维耶偶然遇到她们，进行了长期调查，并找到王小帅任监制，以此拍摄出电影《下海》。</td>
+<td></td>
+</tr>
+
+<tr data-search="侠盗联盟|冯德伦|汉语普通话 / 英语 / 法语 / 俄语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">296</td>
+<td class="title-cell">侠盗联盟</td>
+<td>2017</td>
+<td>5.2</td>
+<td>61703</td>
+<td class="lang-cell">汉语普通话 / 英语 / 法语 / 俄语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>冯德伦</td>
+<td>动作 / 冒险</td>
+<td>中国大陆 / 中国香港 / 捷克</td>
+<td class="dp-cell">十七世纪西班牙皇室赠送给中国皇帝的礼物GAIA，而今虽然被分为森之瞳、灵之泉、命之翼三份，却依然价值连城，令人垂涎。出狱不久的江洋大盗张丹（刘德华 饰）将目标锁定在这几件宝物上，他找到资深黑客小宝（杨祐宁 饰）以及女贼叶红（舒淇 饰），成功...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="功夫瑜伽|唐季礼|汉语普通话 / 英语 / 印地语 / 阿拉伯语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">297</td>
+<td class="title-cell">功夫瑜伽</td>
+<td>2017</td>
+<td>5.0</td>
+<td>169676</td>
+<td class="lang-cell">汉语普通话 / 英语 / 印地语 / 阿拉伯语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>唐季礼</td>
+<td>喜剧 / 动作 / 冒险</td>
+<td>中国大陆 / 印度</td>
+<td class="dp-cell">考古学教授Jack（成龙 饰）多年没有踏出学校，校长和学生都对他添油加醋的历史半信半疑。一次授课后，一个印度女孩找到Jack，用一张千年地图吸引了Jack的目光。于是Jack和挚友的儿子李琼斯（李治廷 饰）、助教小光（张艺兴 饰）组成“寻宝...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="咖啡风暴|克里斯提诺·波顿|意大利语 / 法语 / 汉语普通话 / 弗拉芒语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">298</td>
+<td class="title-cell">咖啡风暴</td>
+<td>2017</td>
+<td>5.4</td>
+<td>401</td>
+<td class="lang-cell">意大利语 / 法语 / 汉语普通话 / 弗拉芒语</td>
+<td>意大利语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>克里斯提诺·波顿</td>
+<td>剧情</td>
+<td>意大利 / 中国大陆 / 比利时</td>
+<td class="dp-cell">电影《咖啡风暴》在中国、意大利、比利时取景拍摄，讲述了三段感人至深的故事，展现了不同文化背景下多样的人文情怀。影片利用咖啡悠久的历史、丰富的味觉体验和地域差异等特征，展现了当代世界面临的种种挑战。</td>
+<td></td>
+</tr>
+
+<tr data-search="唐人街1871|梁普智|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">299</td>
+<td class="title-cell">唐人街1871</td>
+<td>2017</td>
+<td>4.6</td>
+<td>679</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>梁普智</td>
+<td>剧情 / 历史 / 西部</td>
+<td>中国香港 / 美国</td>
+<td class="dp-cell">影片背景设定在1871年洛杉矶中国城大屠杀的悲惨历史事件。透过一对华裔情侣扣人心弦的爱情故事，反映了种族偏见和对移民的不友善，以及连带造成的社会冲突。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="天梯：蔡国强的艺术|凯文·麦克唐纳|英语 / 汉语普通话 / 闽南语 / 日语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">300</td>
+<td class="title-cell">天梯：蔡国强的艺术</td>
+<td>2017</td>
+<td>8.6</td>
+<td>36203</td>
+<td class="lang-cell">英语 / 汉语普通话 / 闽南语 / 日语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>凯文·麦克唐纳</td>
+<td>纪录片</td>
+<td>中国大陆 / 美国</td>
+<td class="dp-cell">《天梯：蔡国强的艺术》是当今世界最重要艺术家之一蔡国强的首部电影纪录片。既是一个从中国出发、成为具国际影响力艺术家的励志故事，也体现着新时代中国人的追求和精神。本片由奥斯卡金奖导演凯文·麦克唐纳（Kevin Macdonald）耗时两年，从...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="时间去哪儿了|贾樟柯 / 沃尔特·塞勒斯 / 马德哈尔·班达卡 / 贾梅尔·奎比卡 / 阿列克谢·费多尔琴科|汉语普通话 / 葡萄牙语 / 俄语 / 印地语 / 英语" data-reason="外语为主(外语4/中文1)">
+<td style="color:var(--text-muted)">301</td>
+<td class="title-cell">时间去哪儿了</td>
+<td>2017</td>
+<td>6.0</td>
+<td>4782</td>
+<td class="lang-cell">汉语普通话 / 葡萄牙语 / 俄语 / 印地语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语4/中文1)</span></td>
+<td>贾樟柯 / 沃尔特·塞勒斯 / 马德哈尔·班达卡 / 贾梅尔·奎比卡 / 阿列克谢·费多尔琴科</td>
+<td>剧情</td>
+<td>中国大陆 / 巴西 / 俄罗斯 / 印度 / 南非</td>
+<td class="dp-cell">金砖国家首部合作影片《时间去哪儿了》由贾樟柯监制，汇聚五位来自中国、俄罗斯、印度、巴西、南非的电影导演，以“不忘初心”的态度，分别以“时间去哪儿了”为主题拍摄一部电影短片，以自己的独特视角，讲述出自己对时间和情感的不同理解。五部短片依次为：...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="杀破狼·贪狼|叶伟信|粤语 / 泰语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">302</td>
+<td class="title-cell">杀破狼·贪狼</td>
+<td>2017</td>
+<td>7.0</td>
+<td>159460</td>
+<td class="lang-cell">粤语 / 泰语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>叶伟信</td>
+<td>剧情 / 动作</td>
+<td>中国香港 / 中国大陆</td>
+<td class="dp-cell">香港警察李忠志（古天乐 饰）得知女儿芝（陈汉娜 饰）于泰国旅游间莫名失踪，即亲赴泰国报警求助。负责案件的华人探员崔杰（吴樾 饰），应允让他一同调查，却想不到李忠志利用媒体呼吁市民提供线索。 一条意外拍下芝被捉走的片段上载至警方网站，却被神秘...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="极致追击|查尔斯·马丁|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">303</td>
+<td class="title-cell">极致追击</td>
+<td>2017</td>
+<td>3.4</td>
+<td>4372</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>查尔斯·马丁</td>
+<td>动作 / 犯罪 / 冒险</td>
+<td>中国大陆</td>
+<td class="dp-cell">前SAS特工，声名显赫的安保专家丹尼·斯特拉顿（奥兰多·布鲁姆 Orlando Bloom 饰）遭遇了人生中最大的劫难：藏品被盗，女友离去，身败名裂。沉寂已久的他决定东山再起，一次看似简单的任务背后，却藏着更为惊人的阴谋。面对警方的误会，队...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="白色女孩|杜可风 / 孙明莉|粤语 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">304</td>
+<td class="title-cell">白色女孩</td>
+<td>2017</td>
+<td>4.3</td>
+<td>431</td>
+<td class="lang-cell">粤语 / 英语 / 日语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>杜可风 / 孙明莉</td>
+<td>剧情</td>
+<td>中国香港 / 日本</td>
+<td class="dp-cell">香港最后一座渔村里的苍白少女，在父亲形同牢笼的过度照顾下。一天，她在旧皮箱中发现了母亲的遗物，开始思索自己的身世。到晚上，她从家中溜出去见坂元。坂元是一位栖身于废弃村屋的流浪者。屋内有一间暗房和一面镜子，让她从另一个角度看世界。同时，村内出...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="英伦对决|马丁·坎贝尔|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">305</td>
+<td class="title-cell">英伦对决</td>
+<td>2017</td>
+<td>7.0</td>
+<td>204196</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>马丁·坎贝尔</td>
+<td>动作 / 犯罪</td>
+<td>英国 / 中国大陆 / 美国</td>
+<td class="dp-cell">关玉明（成龙 饰）和女儿小凡（梁佩诗 饰）在英国伦敦过着相依为命的日子。关玉明经营着一间小小的餐馆，老老实实的靠着辛勤劳作养活家庭，从未有过想要僭越法律或是道德的念头。然而，上天并不眷顾这个善良的男人，在一场恐怖袭击中，小凡不幸成为了受害者...</td>
+<td></td>
+</tr>
+
+<tr data-search="追捕|吴宇森|汉语普通话 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">306</td>
+<td class="title-cell">追捕</td>
+<td>2017</td>
+<td>4.5</td>
+<td>30974</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>吴宇森</td>
+<td>剧情 / 动作 / 犯罪</td>
+<td>中国香港 / 中国大陆</td>
+<td class="dp-cell">国际律师杜丘（张涵予 饰）清晨醒来，发现一个陌生女子被杀死在枕边，当所有证据皆指向自己就是凶手时，他拒捕逃离，决定自己查出真相。颇有名气的警探矢村（福山雅治 饰）在追捕过程中，察觉案件并不简单。一警一“匪”在交手中竟发展出了一段惺惺相惜的情...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="霹雳奇幻 生死一剑|黄强华 / 郑保品|日语 / 闽南语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">307</td>
+<td class="title-cell">霹雳奇幻 生死一剑</td>
+<td>2017</td>
+<td>8.0</td>
+<td>2502</td>
+<td class="lang-cell">日语 / 闽南语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>黄强华 / 郑保品</td>
+<td>动作 / 动画 / 奇幻</td>
+<td>日本 / 中国台湾</td>
+<td class="dp-cell">《Thunderbolt Fantasy 生死一剑》是一部由台湾和日本双方合作的2017年奇幻武侠布袋戏电影。其剧本由日本编剧虚渊玄撰写，布袋戏剧由台湾霹雳布袋戏制作，为《Thunderbolt Fantasy 东离剑游纪》的外传。全剧由两...</td>
+<td></td>
+</tr>
+
+<tr data-search="24小时：末路重生|布莱恩·斯莫兹|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">308</td>
+<td class="title-cell">24小时：末路重生</td>
+<td>2018</td>
+<td>5.1</td>
+<td>7407</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>布莱恩·斯莫兹</td>
+<td>动作 / 科幻 / 犯罪</td>
+<td>美国 / 中国大陆 / 南非</td>
+<td class="dp-cell">永远不要点燃一个职业杀手的怒火，就算面临重重包围，他也能杀个片甲不留！杀手特拉维斯（伊桑∙霍克 饰）得知了犯罪组织“红山”的惊天阴谋，他在国际刑警“琳”（许晴 饰）的影响下，决定重整目标、直捣红山“老巢”。可是，特拉维斯只能存活24个小时，...</td>
+<td></td>
+</tr>
+
+<tr data-search="古巴花旦|魏时煜|粤语 / 西班牙语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">309</td>
+<td class="title-cell">古巴花旦</td>
+<td>2018</td>
+<td>8.1</td>
+<td>674</td>
+<td class="lang-cell">粤语 / 西班牙语 / 英语</td>
+<td>粤语</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>魏时煜</td>
+<td>纪录片</td>
+<td>中国香港</td>
+<td class="dp-cell">在古巴首都夏湾拿（今称哈瓦那）出生、自小学习粤剧的何秋兰和黄美玉，既是独生女儿、又是舞台姐妹。何秋兰的养父方标因爲家人反对他学戏而由广东远走古巴，黄美玉的中国父亲则是华人街有名的裁缝。两人生长在三、四十年代繁荣的夏湾拿，小生黄美玉学习过功夫...</td>
+<td>Tier 1</td>
+</tr>
+
+<tr data-search="小玩意|王洪飞|汉语普通话 / 荷兰语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">310</td>
+<td class="title-cell">小玩意</td>
+<td>2018</td>
+<td>6.0</td>
+<td>102</td>
+<td class="lang-cell">汉语普通话 / 荷兰语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>王洪飞</td>
+<td>剧情</td>
+<td>中国台湾 / 荷兰 / 克罗地亚</td>
+<td class="dp-cell">游走在夜晚台北街头的摄影师，拍下了一位小女孩的身影。这幅影像意外勾起摄影师的童年回忆，当画面不断涌入并与女孩的身份交织融合，他不知不觉地将自己的童年记忆投射在女孩正经历的一切之中——女孩的风筝、女孩与爱人的别离，是她的故事，还是摄影师的？台...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="巨齿鲨|乔·德特杜巴|英语 / 汉语普通话 / 泰语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">311</td>
+<td class="title-cell">巨齿鲨</td>
+<td>2018</td>
+<td>5.7</td>
+<td>199315</td>
+<td class="lang-cell">英语 / 汉语普通话 / 泰语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>乔·德特杜巴</td>
+<td>动作 / 科幻 / 惊悚</td>
+<td>美国 / 中国大陆 / 中国香港</td>
+<td class="dp-cell">一项由中国主导的国际科研项目，正在马里亚纳海沟深处进行时，遭遇未知生物攻击，科研人员被困海底。前美国海军陆战队深海潜水专家乔纳斯·泰勒受命前往营救，再度遭遇数年前曾经在深海给自己留下终身难以磨灭记忆的史前生物巨齿鲨。乔纳斯联手科研项目中的中...</td>
+<td></td>
+</tr>
+
+<tr data-search="帝皇酒店|范思澳|葡萄牙语 / 粤语 / 英语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">312</td>
+<td class="title-cell">帝皇酒店</td>
+<td>2018</td>
+<td>4.7</td>
+<td>141</td>
+<td class="lang-cell">葡萄牙语 / 粤语 / 英语</td>
+<td>葡萄牙语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>范思澳</td>
+<td>剧情</td>
+<td>葡萄牙 / 中国大陆</td>
+<td class="dp-cell">离家20 多年的青年回到澳门，和“帝皇酒店”的玛莉亚相遇的故事。以“黑色电影”的影像风格，在澳门过去与现在的时空中穿梭。</td>
+<td></td>
+</tr>
+
+<tr data-search="彼处，此处，无处不在|张晶蕾|日语 / 英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">313</td>
+<td class="title-cell">彼处，此处，无处不在</td>
+<td>2018</td>
+<td>8.1</td>
+<td>192</td>
+<td class="lang-cell">日语 / 英语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张晶蕾</td>
+<td>纪录片 / 音乐</td>
+<td>中国大陆</td>
+<td class="dp-cell">音乐纪录片《The fin. : there， here， everywhere》由吉术斋&amp;HIP LAND MUSIC共同出品，吉术斋制作，张晶蕾导演。作为当今亚洲乃至世界备受瞩目的年轻乐队之一，来自日本的The fin.凭借英伦复古的曲...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="戛纳本色|/|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">314</td>
+<td class="title-cell">戛纳本色</td>
+<td>2018</td>
+<td>4.7</td>
+<td>387</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>/</td>
+<td>纪录片 / 短片</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">戛纳电影节不对公众开放，于是来参加的4000名记者组成了戛纳的大部分观众。不过，主办方不但不完善放映时间和合理运用所有的放映厅，还把记者们按不同的颜色分为几个类别。证件的颜色代表着看电影前需要排队的时长。手持低级别证件的记者们通常需要在影厅...</td>
+<td></td>
+</tr>
+
+<tr data-search="摩天营救|罗森·马歇尔·瑟伯|英语 / 粤语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">315</td>
+<td class="title-cell">摩天营救</td>
+<td>2018</td>
+<td>6.3</td>
+<td>157948</td>
+<td class="lang-cell">英语 / 粤语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗森·马歇尔·瑟伯</td>
+<td>动作 / 惊悚 / 冒险</td>
+<td>中国香港 / 美国</td>
+<td class="dp-cell">在香港市中心，世界上最高、结构最复杂的摩天大楼遭到破坏，危机一触即发。威尔·索耶（道恩·强森 饰）的妻子萨拉（内芙·坎贝尔 饰）和孩子们在98层被劫为人质，直接暴露在火线上。威尔，这位战争英雄、前联邦调查局救援队员，作为大楼的安保顾问，却被...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="无双|庄文强|汉语普通话 / 粤语 / 英语 / 泰语 / 波兰语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">316</td>
+<td class="title-cell">无双</td>
+<td>2018</td>
+<td>8.0</td>
+<td>847858</td>
+<td class="lang-cell">汉语普通话 / 粤语 / 英语 / 泰语 / 波兰语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>庄文强</td>
+<td>剧情 / 动作 / 犯罪</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">身陷囹圄的李问（郭富城 饰）被引渡回港，他原本隶属于一个的跨国假钞制贩组织。该组织曾犯下过多宗恶性案件，而首脑“画家”不仅始终逍遥法外，连真面目都没人知道。为了逼迫李问吐露“画家”真实身份，警方不惜用足以判死刑的假罪证使其就范。就在此时，富...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="暮光·巴黎|万沥方 / 董方辰|法语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">317</td>
+<td class="title-cell">暮光·巴黎</td>
+<td>2018</td>
+<td>3.8</td>
+<td>1623</td>
+<td class="lang-cell">法语 / 汉语普通话</td>
+<td>法语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>万沥方 / 董方辰</td>
+<td>爱情 / 奇幻</td>
+<td>法国 / 中国大陆</td>
+<td class="dp-cell">一个发生在“浪漫之都”巴黎，讲述有关爱与永恒的暗黑童话，法国神秘家族“KOI”于100年前创立电影公司，寻找欲望强盛的人类，邀请至古堡拍戏，让人类演绎心底的欲望最高潮之际，摄取人类的欲望。某个午夜，神秘家族成员FRANCOIS遇上林佩欣，一...</td>
+<td></td>
+</tr>
+
+<tr data-search="毒液：致命守护者|鲁本·弗雷斯彻|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">318</td>
+<td class="title-cell">毒液：致命守护者</td>
+<td>2018</td>
+<td>7.2</td>
+<td>755979</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>鲁本·弗雷斯彻</td>
+<td>动作 / 科幻 / 惊悚</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">艾迪（汤姆·哈迪 Tom Hardy 饰）是一位深受观众喜爱的新闻记者，和女友安妮（米歇尔·威廉姆斯 Michelle Williams 饰）相恋多年，彼此之间感情十分要好。安妮是一名律师，接手了生命基金会的案件，在女友的邮箱里，艾迪发现了...</td>
+<td></td>
+</tr>
+
+<tr data-search="环太平洋：雷霆再起|斯蒂文·s·迪奈特|英语 / 汉语普通话 / 俄语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">319</td>
+<td class="title-cell">环太平洋：雷霆再起</td>
+<td>2018</td>
+<td>5.5</td>
+<td>221359</td>
+<td class="lang-cell">英语 / 汉语普通话 / 俄语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>斯蒂文·S·迪奈特</td>
+<td>动作 / 科幻 / 冒险</td>
+<td>英国 / 中国大陆 / 日本 / 美国 / 墨西哥</td>
+<td class="dp-cell">在对抗外星人的入侵并成功封住虫洞的十年后，人类从废墟中站起来。他们忘记了恐惧，纵情狂欢，其中便包括斯特克·潘特考斯特将军的儿子杰克（约翰·博耶加 John Boyega 饰）。在一次偷到废弃机甲零件的过程中，他偶然遭遇以一己之力组装迷你机甲...</td>
+<td></td>
+</tr>
+
+<tr data-search="盛情款待|陈钰杰|日语 / 汉语普通话 / 英语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">320</td>
+<td class="title-cell">盛情款待</td>
+<td>2018</td>
+<td>5.8</td>
+<td>171</td>
+<td class="lang-cell">日语 / 汉语普通话 / 英语</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈钰杰</td>
+<td>剧情</td>
+<td>日本 / 中国台湾</td>
+<td class="dp-cell">明月館是一間位於京都近郊的日式旅館，有著美麗的湖景和傳統的日式風情，但由於建築老舊又位處偏僻，經營狀況岌岌可危。台北一家建設公司老闆Charles（楊烈 飾）決定買下明月館，派兒子Jacky（王柏傑 飾）前往監督旅館的翻修工程，但Jacky...</td>
+<td></td>
+</tr>
+
+<tr data-search="红海行动|林超贤|汉语普通话 / 阿拉伯语 / 英语 / 索马里语 / 粤语" data-reason="外语为主(外语3/中文2)">
+<td style="color:var(--text-muted)">321</td>
+<td class="title-cell">红海行动</td>
+<td>2018</td>
+<td>8.2</td>
+<td>939139</td>
+<td class="lang-cell">汉语普通话 / 阿拉伯语 / 英语 / 索马里语 / 粤语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文2)</span></td>
+<td>林超贤</td>
+<td>动作 / 战争</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">中东国家伊维亚共和国发生政变，武装冲突不断升级。刚刚在索马里执行完解救人质任务的海军护卫舰临沂号，受命前往伊维亚执行撤侨任务。舰长高云（张涵予 饰）派出杨锐（张译 饰）率领的蛟龙突击队登陆战区，护送华侨安全撤离。谁知恐怖组织扎卡却将撤侨部队...</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="邪不压正|姜文|汉语普通话 / 英语 / 日语 / 法语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">322</td>
+<td class="title-cell">邪不压正</td>
+<td>2018</td>
+<td>7.1</td>
+<td>638190</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语 / 法语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>姜文</td>
+<td>剧情 / 喜剧 / 动作</td>
+<td>中国大陆</td>
+<td class="dp-cell">七七事变前夕，华裔青年小亨德勒（彭于晏 饰）从美国远赴重洋，回到阔别十数年之久的北平从医。然而他真正的名字叫李天然，十三岁那年曾亲眼目睹师父一家遭师兄朱潜龙（廖凡 饰）和日本人根本一郎（泽田谦也 饰）灭门。侥幸逃生的天然被美国人亨德勒医生送...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="三重威胁之跨国大营救|杰西·约翰逊|英语 / 汉语普通话 / 泰语 / 印尼语 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">323</td>
+<td class="title-cell">三重威胁之跨国大营救</td>
+<td>2019</td>
+<td>4.5</td>
+<td>3713</td>
+<td class="lang-cell">英语 / 汉语普通话 / 泰语 / 印尼语 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>杰西·约翰逊</td>
+<td>动作</td>
+<td>泰国 / 中国大陆 / 中国香港 / 美国</td>
+<td class="dp-cell">东南亚的热带丛林，龙飞（陈虎饰）正与搭档帕于（托尼·贾饰）参加一项秘密任务，配合一个突击小队进行人道主义救援，但没想到，他们拼死救下的却是一个做恶多端令人闻风丧胆的犯罪头子柯林斯（斯科特·阿金斯饰）。柯林斯被救后，把所有知情人都锁在秘密基地...</td>
+<td></td>
+</tr>
+
+<tr data-search="亡命之途|半野喜弘|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">324</td>
+<td class="title-cell">亡命之途</td>
+<td>2019</td>
+<td>4.3</td>
+<td>458</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>半野喜弘</td>
+<td>剧情 / 犯罪</td>
+<td>日本 / 中国台湾</td>
+<td class="dp-cell">因涉入一宗枉死案件被日本角头追杀而躲避到中国台湾的痞子牧野(妻夫木聪饰)，找上同样因此事件自我放逐的冷酷杀手岛(丰川悦司饰)，两名负罪的旅人一路逃亡来到了花莲，认识了开朗的当地女孩小恩(谢欣颖饰)，三人在这趟流浪的旅程中，竟遭到一位如同鬼魅...</td>
+<td></td>
+</tr>
+
+<tr data-search="再向前一步|王砺珉|汉语普通话 / 英语 / 法语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">325</td>
+<td class="title-cell">再向前一步</td>
+<td>2019</td>
+<td>8.1</td>
+<td>137</td>
+<td class="lang-cell">汉语普通话 / 英语 / 法语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>王砺珉</td>
+<td>短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">1932年，黑人马丁和白人莉莉安相恋，在种族隔离的年代，等待他们的将会是什么？1981年，67岁的杜拉斯和29岁的安德烈相恋，他们能否跨越年龄的鸿沟？二战期间，一等兵亨利和战地护士艾米相恋，在炮火与死神的诅咒下，他们还能重逢吗？</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="决战中途岛|罗兰·艾默里奇|英语 / 日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">326</td>
+<td class="title-cell">决战中途岛</td>
+<td>2019</td>
+<td>7.5</td>
+<td>213047</td>
+<td class="lang-cell">英语 / 日语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>罗兰·艾默里奇</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国大陆 / 中国香港 / 加拿大 / 美国</td>
+<td class="dp-cell">电影讲述的是第二次世界大战太平洋战争重要转折点——中途岛海战：经此一役，日本海军受到“降维打击”，美日海上实力反转，从而扭转了整个太平洋战场的局势。影片通过参战士兵和飞行员一个个鲜活的故事，带领观众逐步进入1942年6月初发生在太平洋中途岛...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="别告诉她|王子逸|英语 / 汉语普通话 / 日语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">327</td>
+<td class="title-cell">别告诉她</td>
+<td>2019</td>
+<td>7.2</td>
+<td>85068</td>
+<td class="lang-cell">英语 / 汉语普通话 / 日语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>王子逸</td>
+<td>剧情 / 家庭</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">影片讲述一个华人家庭的奶奶被诊断罹癌，但家人选择隐瞒奶奶，假借一场婚礼的名义让所有家人回家见奶奶最后一面，但在纽约长大的碧莉（奥卡菲娜饰演）认为知道自己病况是奶奶的人权，因此在华人家庭中上演一场中西文化冲突，一部寻根家庭喜剧。故事改编自华裔...</td>
+<td></td>
+</tr>
+
+<tr data-search="半边天|刘雨霖 / 丹妮拉·托马斯 / 伊丽莎维塔·斯蒂肖娃 / 阿什维尼·伊耶·蒂瓦里 / 萨拉·布兰克|汉语普通话 / 印地语 / 葡萄牙语 / 俄语 / 英语" data-reason="外语为主(外语4/中文1)">
+<td style="color:var(--text-muted)">328</td>
+<td class="title-cell">半边天</td>
+<td>2019</td>
+<td>6.2</td>
+<td>1044</td>
+<td class="lang-cell">汉语普通话 / 印地语 / 葡萄牙语 / 俄语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语4/中文1)</span></td>
+<td>刘雨霖 / 丹妮拉·托马斯 / 伊丽莎维塔·斯蒂肖娃 / 阿什维尼·伊耶·蒂瓦里 / 萨拉·布兰克</td>
+<td>剧情</td>
+<td>中国大陆 / 印度 / 巴西 / 俄罗斯 / 南非</td>
+<td class="dp-cell">影片由北京西河星汇影业出品，中国导演贾樟柯担任监制，邀请来自巴西、俄罗斯、印度、中国、南非五个“金砖国家”的五位女性导演，以女性视角发声，分别以“当代女性情感与社会”为主题拍摄一部电影短片，而五部独立的短片将汇集为一部片名为《半边天》的集锦...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="回到中国|丁怡瑱|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">329</td>
+<td class="title-cell">回到中国</td>
+<td>2019</td>
+<td>3.8</td>
+<td>6149</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>丁怡瑱</td>
+<td>剧情</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">安娜·阿卡娜(《蚁人》《思想调查员》)将主演新片《回到中国》(Go Back to China)，美籍华裔女导演丁怡瑱(《已是香港明日》)执导。阿卡娜饰演一位挥霍信托基金混迹于派对的女孩，被父亲强迫去中国为家庭玩具企业工作。在这次旅程中，她...</td>
+<td></td>
+</tr>
+
+<tr data-search="大厨|源根|英语 / 汉语普通话 / 粤语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">330</td>
+<td class="title-cell">大厨</td>
+<td>2019</td>
+<td>7.5</td>
+<td>810</td>
+<td class="lang-cell">英语 / 汉语普通话 / 粤语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>源根</td>
+<td>剧情 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">不远的未来，各行各业的人力都在被机器人所取代。终于，洛杉矶的华人厨子老蒲也被要求将自己的中餐厨艺传授给一个名为威廉的机器人。</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="尺八·一声一世|聿馨|汉语普通话 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">331</td>
+<td class="title-cell">尺八·一声一世</td>
+<td>2019</td>
+<td>7.8</td>
+<td>9578</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>聿馨</td>
+<td>纪录片 / 音乐</td>
+<td>中国大陆</td>
+<td class="dp-cell">本片通过记录中国，日本，美国等地的尺八演奏家，制管师，学习者的生活，去见证在尺八之路上行走着的人们，通过他们不同阶段的经历与思考，折射出来古老的尺八在当下的困境与希望，也通过尺八去映照出每个人对生活，生命，世界的认知与感悟。尺八，由竹子根部...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="我们一家人|吴皓|英语 / 汉语普通话 / 四川话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">332</td>
+<td class="title-cell">我们一家人</td>
+<td>2019</td>
+<td>7.4</td>
+<td>17195</td>
+<td class="lang-cell">英语 / 汉语普通话 / 四川话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>吴皓</td>
+<td>纪录片 / 短片 / 同性</td>
+<td>中国大陆 / 美国</td>
+<td class="dp-cell">一位留学后移民美国的中国同志，他和他的同性伴侣在美国通过代孕生子创造了一个彻底的现代家庭。但现在他的难题是如何向他那非常传统的中国父母和亲戚介绍自己的伴侣和孩子...…</td>
+<td>Tier 2b</td>
+</tr>
+
+<tr data-search="未来机器城|安恪温 / 龙子乔|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">333</td>
+<td class="title-cell">未来机器城</td>
+<td>2019</td>
+<td>5.7</td>
+<td>13959</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>安恪温 / 龙子乔</td>
+<td>科幻 / 动画 / 冒险</td>
+<td>中国大陆 / 加拿大</td>
+<td class="dp-cell">一个即将被用于拯救人类的新型机器人7723（韩莹棣 配音），因缘际会遇上了热爱足球的调皮少女苏小麦（郑海音 配音）。而看似顽劣的小麦生长在一个不算完整的家庭里，父亲为追梦离家，使得小麦的成长也受到了影响，性格冷漠孤僻。7723的出现也使得这...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="梭哈|张晶蕾|汉语普通话 / 英语 / 日语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">334</td>
+<td class="title-cell">梭哈</td>
+<td>2019</td>
+<td>8.7</td>
+<td>318</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>张晶蕾</td>
+<td>纪录片 / 音乐</td>
+<td>中国大陆</td>
+<td class="dp-cell">Snapline从组建到现在，似乎到了可以把手里的牌全押上的时候。专辑《獣化》完成后，人们都在问一个问题：未来，乐队的未来。然而，选择梭哈的玩家真的会精心谋划未来吗？在一无所有和人生赢家的赌注前，在某一刻的极致面前，未来重要吗？ Snapl...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="流浪地球|郭帆|汉语普通话 / 英语 / 俄语 / 法语 / 日语 / 韩语 / 印尼语" data-reason="外语为主(外语6/中文1)">
+<td style="color:var(--text-muted)">335</td>
+<td class="title-cell">流浪地球</td>
+<td>2019</td>
+<td>7.9</td>
+<td>1721483</td>
+<td class="lang-cell">汉语普通话 / 英语 / 俄语 / 法语 / 日语 / 韩语 / 印尼语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语6/中文1)</span></td>
+<td>郭帆</td>
+<td>科幻 / 冒险 / 灾难</td>
+<td>中国大陆</td>
+<td class="dp-cell">近未来，科学家们发现太阳急速衰老膨胀，短时间内包括地球在内的整个太阳系都将被太阳所吞没。为了自救，人类提出一个名为“流浪地球”的大胆计划，即倾全球之力在地球表面建造上万座发动机和转向发动机，推动地球离开太阳系，用2500年的时间奔往另外一个...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="热带雨|陈哲艺|英语 / 汉语普通话 / 闽南语" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">336</td>
+<td class="title-cell">热带雨</td>
+<td>2019</td>
+<td>7.5</td>
+<td>59441</td>
+<td class="lang-cell">英语 / 汉语普通话 / 闽南语</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>陈哲艺</td>
+<td>剧情</td>
+<td>新加坡 / 中国台湾</td>
+<td class="dp-cell">从马来西亚移居新加坡的阿玲在一间高中担任中文老师。她的家庭生活让她倍感沮丧：公公因为瘫痪无法说话，丈夫对她也日趋冷淡。夫妻二人多年来一直尝试怀孕，但情况一直没有得到好转，丈夫的不闻不问更让她感到孤独。伟伦是阿玲的一位学生，他通过中文课对老师...</td>
+<td></td>
+</tr>
+
+<tr data-search="还有一些树|廖克发|汉语普通话 / 马来语 / 英语 / 马来西亚原住民语言" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">337</td>
+<td class="title-cell">还有一些树</td>
+<td>2019</td>
+<td>7.2</td>
+<td>193</td>
+<td class="lang-cell">汉语普通话 / 马来语 / 英语 / 马来西亚原住民语言</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>廖克发</td>
+<td>纪录片</td>
+<td>中国台湾</td>
+<td class="dp-cell">电影从一封来自1969年的信开始追溯，谈及独立前原住民被奴役的黑暗历史，直到1969年发生的种族冲突事件，电影记录下这些不被谈论及允许的回忆，探讨种族之间造成仇恨与隔阂的原因，入围台北电影奖最佳纪录片等三项大奖。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="龙牌之谜|伊哥·斯坦普陈科|英语 / 俄语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">338</td>
+<td class="title-cell">龙牌之谜</td>
+<td>2019</td>
+<td>3.6</td>
+<td>16284</td>
+<td class="lang-cell">英语 / 俄语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>伊哥·斯坦普陈科</td>
+<td>动作 / 奇幻 / 冒险</td>
+<td>俄罗斯 / 中国大陆 / 美国</td>
+<td class="dp-cell">电影《龙牌之谜》讲述了古老的东方传说——龙王在睡觉的时候睫毛长到地里能够长出茶叶。龙王把法力封印在龙牌里，并把这种力量赋予了替他照料睫毛的白魔法大师（成龙饰）和他的女儿成兰（姚星彤饰）。邪恶的黑魔法师将白魔法大师和成兰关进了异国监狱，龙王也...</td>
+<td></td>
+</tr>
+
+<tr data-search="为我哼首摇篮曲|熊邦玲|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">339</td>
+<td class="title-cell">为我哼首摇篮曲</td>
+<td>2020</td>
+<td>8.3</td>
+<td>121</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>熊邦玲</td>
+<td>纪录片 / 短片 / 家庭</td>
+<td>加拿大 / 中国台湾</td>
+<td class="dp-cell">汝文五岁时和她的亲生父母分开了，四十五年过去了，她仍然无法将童年的碎片拼接起来。对汝文来说，生存意味着将自己的好奇心永远埋藏—为什么自己会被父母遗弃？随着时间的推移，这种好奇心已逐渐变成一种无声的渴望。直到她的小女儿Tiffany开始问起一...</td>
+<td></td>
+</tr>
+
+<tr data-search="光语者|孙辉 / 冯冯 / 杨紫云 / 周全|汉语普通话 / 英语 / 挪威语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">340</td>
+<td class="title-cell">光语者</td>
+<td>2020</td>
+<td>7.4</td>
+<td>2939</td>
+<td class="lang-cell">汉语普通话 / 英语 / 挪威语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>孙辉 / 冯冯 / 杨紫云 / 周全</td>
+<td>纪录片</td>
+<td>中国大陆 / 挪威</td>
+<td class="dp-cell">每一个人都有自己的故事，每一片土地都有独特的生命力，在冬季寒冷的北极圈，在终日不见阳光的极夜，有这样一群人， 因为不同的理由活着，他们为了生活，为了理想，在茫茫的冰原中闪烁着，发出独特的光芒，或闪亮自己，或照亮别人。本片以光为主题，从科学之...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="八佰|管虎|汉语普通话 / 日语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">341</td>
+<td class="title-cell">八佰</td>
+<td>2020</td>
+<td>7.5</td>
+<td>728336</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>管虎</td>
+<td>剧情 / 历史 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">1937年淞沪会战的最后一役，“八百壮士”奉命坚守上海四行仓库，以少敌多顽强抵抗四天四夜。电影《八佰》由管虎导演，是亚洲首部全片使用IMAX摄影机拍摄的商业电影，将于2020年8月21日全国影院上映。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="动物特工局|张志一 / 纪约姆·伊弗奈|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">342</td>
+<td class="title-cell">动物特工局</td>
+<td>2020</td>
+<td>6.1</td>
+<td>5266</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>张志一 / 纪约姆·伊弗奈</td>
+<td>喜剧 / 动画 / 冒险</td>
+<td>中国大陆 / 法国</td>
+<td class="dp-cell">谁说猫鼠不能做朋友？谁说损友不能一起拯救世界？在一个多种动物组成的现代化世界里，动物特工局精英张大威（猫）在因缘际会下结识废柴技术宅阿丘（鼠），当傲娇成性、嘴硬心软的张大威遇见幽默呆萌、重情重义的阿丘，会发生什么欢乐逗趣的故事？这对被卷入一...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="南京抗疫现场|竹内亮|日语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">343</td>
+<td class="title-cell">南京抗疫现场</td>
+<td>2020</td>
+<td>8.0</td>
+<td>775</td>
+<td class="lang-cell">日语 / 汉语普通话</td>
+<td>日语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>竹内亮</td>
+<td>纪录片 / 短片</td>
+<td>中国大陆</td>
+<td class="dp-cell">不久前，一部不过十分钟的超短纪录片登上了日本雅虎首页，引起广泛热议。随后，这部纪录片又增加了2分多钟的内容，且制作成了英语版在YouTube上播放。这部纪录片就是《南京抗疫现场》。常居南京的日本导演竹内亮用他的镜头，忠实地记录了疫情爆发以来...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="囧妈|徐峥|汉语普通话 / 俄语 / 英语" data-reason="外语为主(外语2/中文1)">
+<td style="color:var(--text-muted)">344</td>
+<td class="title-cell">囧妈</td>
+<td>2020</td>
+<td>5.9</td>
+<td>560565</td>
+<td class="lang-cell">汉语普通话 / 俄语 / 英语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语2/中文1)</span></td>
+<td>徐峥</td>
+<td>喜剧</td>
+<td>中国大陆</td>
+<td class="dp-cell">虽然有着诸多不舍，但是强势的老板徐伊万（徐峥 饰）还是和合作伙伴兼妻子张璐（袁泉 饰）结束了失败的婚姻。由于某种心理作祟，他试图阻挠前妻在海外重新创业。为了第一时间赶去美国，他回到母亲卢小花（黄梅莹 饰）的住处取护照，结果阴差阳错和母亲坐上...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="夺冠|陈可辛|汉语普通话 / 英语 / 日语 / 葡萄牙语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">345</td>
+<td class="title-cell">夺冠</td>
+<td>2020</td>
+<td>7.1</td>
+<td>384332</td>
+<td class="lang-cell">汉语普通话 / 英语 / 日语 / 葡萄牙语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>陈可辛</td>
+<td>剧情 / 运动</td>
+<td>中国大陆 / 中国香港</td>
+<td class="dp-cell">2008年8月15日，北京奥运会女排比赛，中国VS美国。戴着金丝框眼镜的郎平（巩俐 饰）坐在美国队教练席上，大气沉稳，目光如电；中国队教练（黄渤 饰）站在场边，全神贯注，面带笑容。中国队教练望向郎平，目光充满深意，不断经过的人影遮蔽了他的视...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="狙击手|黄照盛|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">346</td>
+<td class="title-cell">狙击手</td>
+<td>2020</td>
+<td>4.8</td>
+<td>1628</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>黄照盛</td>
+<td>动作 / 战争</td>
+<td>中国大陆</td>
+<td class="dp-cell">讲述了在险峻的战争局势中，顶级雇佣兵刀口舔血，险中作战，从恐怖分子、军火公司等多方势力中成功夺回放射性元素，最终瓦解阴谋、守护城市的惊险历程。影片在波折跌宕的剧情中，为观众传达人道主义精神以及捍卫和平的主旋律价值观。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="花木兰|妮琪·卡罗|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">347</td>
+<td class="title-cell">花木兰</td>
+<td>2020</td>
+<td>4.9</td>
+<td>286171</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>妮琪·卡罗</td>
+<td>动作 / 冒险 / 古装</td>
+<td>美国 / 中国香港</td>
+<td class="dp-cell">迪士尼影业荣誉出品《花木兰》由备受赞誉的电影导演妮基·卡罗执导，将中国传奇战士的史诗故事全新呈现。影片讲述了一位无所畏惧的年轻女子义无反顾为家国而战，成为中国史上最著名的伟大勇士之一。当皇帝下令境内每个家庭必须有一位男丁应召出征，抵御北方来...</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="飞奔去月球|格兰·基恩 / 约翰·凯世|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">348</td>
+<td class="title-cell">飞奔去月球</td>
+<td>2020</td>
+<td>6.1</td>
+<td>6434</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>格兰·基恩 / 约翰·凯世</td>
+<td>动画 / 冒险 / 家庭</td>
+<td>美国 / 中国大陆</td>
+<td class="dp-cell">影片讲述了小女孩菲菲的奔月故事。菲菲从小听着妈妈讲述的嫦娥与后羿的爱情故事长大，她坚信嫦娥是真爱永恒的化身。妈妈去世几年之后，爸爸准备再婚，菲菲深受打击。为了捍卫自己的家庭，为了向爸爸证明，嫦娥还在月球上永志不渝地等待后羿，她所代表的永恒真...</td>
+<td></td>
+</tr>
+
+<tr data-search="鱼生|chen， po-chien|英语 / 汉语普通话" data-reason="外语为第一语言">
+<td style="color:var(--text-muted)">349</td>
+<td class="title-cell">鱼生</td>
+<td>2020</td>
+<td>7.8</td>
+<td>714</td>
+<td class="lang-cell">英语 / 汉语普通话</td>
+<td>英语</td>
+<td><span class="badge badge-first">外语为第一语言</span></td>
+<td>Chen， Po-Chien</td>
+<td>动画 / 短片</td>
+<td>中国台湾</td>
+<td class="dp-cell">在居酒屋中，厨师注意到一群特别的客人。他决定为他们提供各种招牌菜。短片以独特的视角为我们揭示了人类污染对海洋动物的伤害。</td>
+<td>非方言</td>
+</tr>
+
+<tr data-search="唐人街探案3|陈思诚|汉语普通话 / 日语 / 英语 / 泰语" data-reason="外语为主(外语3/中文1)">
+<td style="color:var(--text-muted)">350</td>
+<td class="title-cell">唐人街探案3</td>
+<td>2021</td>
+<td>5.3</td>
+<td>966565</td>
+<td class="lang-cell">汉语普通话 / 日语 / 英语 / 泰语</td>
+<td>汉语普通话</td>
+<td><span class="badge badge-dom">外语为主(外语3/中文1)</span></td>
+<td>陈思诚</td>
+<td>喜剧 / 悬疑</td>
+<td>中国大陆 / 中国香港 / 日本</td>
+<td class="dp-cell">为了争夺东京新唐人街的开发权，东南亚帮派与日本黑帮组织黑龙会纷争不断。为了避免冲突升级，合作共赢，东南亚商会会长苏察维邀请黑龙会头目渡边胜（三浦友和 饰）谈判。谈判地点设在四面环水的日式茶室，室内只有双方头目而已。谁知谈判开始没多久，室内就...</td>
+<td>非方言</td>
+</tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+function filterTable() {{
+  var search = document.getElementById('search').value.toLowerCase();
+  var reason = document.getElementById('reason-filter').value;
+  var rows = document.querySelectorAll('#tbody tr');
+  rows.forEach(function(row) {{
+    var dataSearch = row.getAttribute('data-search');
+    var dataReason = row.getAttribute('data-reason');
+    var matchSearch = !search || dataSearch.indexOf(search) >= 0;
+    var matchReason = !reason || dataReason === reason;
+    row.style.display = (matchSearch && matchReason) ? '' : 'none';
+  }});
+}}
+</script>
+</body>
+</html>

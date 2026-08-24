@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方言电影为什么「赢」了？ · 交互预览</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<link rel="stylesheet" href="style.css">
+<style>
+:root{
+  --bg:#0b0e14; --bg2:#10141d; --panel:rgba(20,26,38,.72); --line:rgba(255,255,255,.09);
+  --text:#eef1f6; --muted:#9aa3b2; --gold:#ffc24b; --gold-dim:rgba(255,194,75,.16);
+  --blue:#6fa8ff; --blue-dim:rgba(111,168,255,.14); --red:#ff6b5e; --red-dim:rgba(255,107,94,.16);
+  --green:#5cc8a1; --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.75;overflow-x:hidden}
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+#progress-bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--gold),var(--red));z-index:60;transition:width .15s linear}
+/* side nav */
+#side-nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:6px;font-size:12px}
+#side-nav button{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--muted);border-radius:14px;padding:4px 10px;cursor:pointer;transition:all .25s;white-space:nowrap}
+#side-nav button:hover{color:var(--text);border-color:var(--gold)}
+#side-nav button.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+@media(max-width:980px){#side-nav{display:none}}
+main{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 24px}
+section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:96px 0}
+.chapter{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media(max-width:980px){.chapter{grid-template-columns:1fr;gap:28px}section{padding:64px 0}}
+/* cover */
+#cover{align-items:center;text-align:center;min-height:100vh;padding-top:120px}
+.kicker{letter-spacing:.35em;color:var(--gold);font-size:13px;text-transform:uppercase;margin-bottom:18px}
+#cover h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,5.4vw,64px);line-height:1.25;text-shadow:0 0 60px rgba(255,194,75,.25)}
+#cover h1 em{font-style:normal;color:var(--gold)}
+#cover .sub{margin-top:22px;color:var(--muted);font-size:clamp(14px,1.6vw,17px);max-width:640px;margin-left:auto;margin-right:auto}
+.cover-stats{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.stat-pill{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 22px;min-width:210px}
+.stat-pill b{display:block;font-size:26px;font-family:var(--serif)}
+.stat-pill b.gold{color:var(--gold)} .stat-pill b.blue{color:var(--blue)} .stat-pill b.red{color:var(--red)}
+.stat-pill span{font-size:12px;color:var(--muted)}
+#enter-btn{margin-top:40px;background:linear-gradient(120deg,var(--gold),#ff9d3c);color:#1a1206;border:none;border-radius:999px;padding:14px 44px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(255,194,75,.35);transition:transform .2s}
+#enter-btn:hover{transform:translateY(-2px)}
+.scroll-hint{margin-top:26px;color:var(--muted);font-size:13px;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+/* text card */
+.act-tag{display:inline-block;font-size:12px;letter-spacing:.2em;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:3px 14px;margin-bottom:18px}
+.act-tag.blue{color:var(--blue);border-color:var(--blue)}
+.act-tag.red{color:var(--red);border-color:var(--red)}
+.act-tag.green{color:var(--green);border-color:var(--green)}
+h2.act-title{font-family:var(--serif);font-size:clamp(24px,3vw,36px);line-height:1.35;margin-bottom:16px}
+h2.act-title .num{color:var(--gold);margin-right:10px}
+.copy p{color:var(--muted);margin-bottom:12px;font-size:15px}
+.copy p strong{color:var(--text)}
+.copy .gold{color:var(--gold)} .copy .blue{color:var(--blue)} .copy .red{color:var(--red)}
+.fact-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:16px;border-left:3px solid var(--gold)}
+.fact-card.blue{border-left-color:var(--blue)} .fact-card.red{border-left-color:var(--red)}
+.fact-card .label{font-size:11px;color:var(--muted);letter-spacing:.15em}
+.fact-card .value{font-size:20px;font-family:var(--serif);font-weight:700;margin-top:2px}
+.hook{margin-top:20px;font-size:14px;color:var(--muted);font-style:italic;border-top:1px dashed var(--line);padding-top:14px}
+/* chart panel */
+.chart-panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;backdrop-filter:blur(8px)}
+.chart-panel h3{font-size:14px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.chart-panel .chart{width:100%;height:340px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.controls .seg{display:inline-flex;background:rgba(255,255,255,.06);border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.controls .seg button{border:none;background:transparent;color:var(--muted);padding:7px 16px;font-size:13px;cursor:pointer;transition:all .2s}
+.controls .seg button.on{background:var(--gold-dim);color:var(--gold)}
+.controls .seg button.on.blue{background:var(--blue-dim);color:var(--blue)}
+.controls .range{display:flex;align-items:center;gap:10px;flex:1;min-width:200px}
+.controls input[type=range]{flex:1;accent-color:var(--gold)}
+.controls output{font-size:13px;color:var(--gold);min-width:70px;text-align:right;font-variant-numeric:tabular-nums}
+.metric-line{margin-top:10px;font-size:13px;color:var(--muted)}
+.metric-line b{color:var(--text)}
+/* prologue cards */
+.win-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+@media(max-width:760px){.win-cards{grid-template-columns:1fr}}
+.win-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;text-align:center}
+.win-card .big{font-family:var(--serif);font-size:30px;font-weight:900}
+.win-card .big.no{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--red)}
+.win-card .big.yes{color:var(--gold)}
+.win-card p{font-size:13px;color:var(--muted);margin-top:8px}
+/* waves */
+.wave-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:980px){.wave-grid{grid-template-columns:1fr}}
+.wave-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;border-top:3px solid var(--gold)}
+.wave-card.w2{border-top-color:var(--green)} .wave-card.w3{border-top-color:#ff9d5c}
+.wave-card h4{font-family:var(--serif);font-size:17px}
+.wave-card .era{font-size:12px;color:var(--muted);margin:2px 0 12px}
+.movie-chip{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:8px;cursor:pointer;transition:all .2s;width:100%;text-align:left;color:var(--text);font-size:13px}
+.movie-chip:hover{border-color:var(--gold);background:var(--gold-dim)}
+.movie-chip .rt{margin-left:auto;color:var(--gold);font-weight:700}
+.movie-chip .yr{color:var(--muted);font-size:11px;margin-left:6px}
+#lucky-btn{margin-top:8px;background:transparent;border:1px dashed var(--gold);color:var(--gold);border-radius:10px;padding:10px 20px;cursor:pointer;font-size:13px;transition:all .2s}
+#lucky-btn:hover{background:var(--gold-dim)}
+#lucky-hint{margin-top:10px;font-size:13px;color:var(--muted)}
+/* finale */
+.finale-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}
+@media(max-width:760px){.finale-stats{grid-template-columns:repeat(2,1fr)}}
+.finale-stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.finale-stat b{display:block;font-size:24px;font-family:var(--serif)}
+.finale-stat span{font-size:12px;color:var(--muted)}
+.closing{font-family:var(--serif);font-size:clamp(19px,2.6vw,28px);line-height:1.9;text-align:center;max-width:820px;margin:46px auto 0}
+.closing em{color:var(--gold);font-style:normal}
+/* method */
+footer#method{min-height:auto;padding:60px 0 90px;border-top:1px solid var(--line)}
+footer#method h3{font-family:var(--serif);font-size:22px;margin-bottom:16px}
+footer#method details{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 18px;margin-bottom:10px;font-size:14px;color:var(--muted)}
+footer#method summary{cursor:pointer;color:var(--text);font-weight:600}
+footer#method details p{margin-top:8px}
+.tag{display:inline-block;font-size:11px;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:1px 8px;margin-right:6px}
+/* cover KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:860px;margin:26px auto 0}
+@media(max-width:760px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
+.kpi-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 10px}
+.kpi-card b{display:block;font-family:var(--serif);font-size:22px}
+.kpi-card b.gold{color:var(--gold)} .kpi-card b.blue{color:var(--blue)}
+.kpi-card span{font-size:11px;color:var(--muted)}
+/* correction card */
+.correction-card{background:rgba(255,107,94,.07);border:1px solid rgba(255,107,94,.4);border-radius:12px;padding:14px 18px;margin-top:18px}
+.correction-card .label{font-size:11px;color:var(--muted);letter-spacing:.15em}
+.correction-card .value{font-size:15px;margin-top:4px;line-height:1.75}
+.correction-card .value b.gold{color:var(--gold)} .correction-card .value b.red{color:var(--red)} .correction-card .value b.blue{color:var(--blue)}
+/* case comparison */
+.case-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+@media(max-width:760px){.case-row{grid-template-columns:1fr}}
+.case-col{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.case-col h5{font-size:14px;margin-bottom:10px}
+.case-col.mand h5{color:var(--blue)} .case-col.dial h5{color:var(--gold)}
+.case-film{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:8px;padding:7px 11px;margin-bottom:7px;cursor:pointer;width:100%;text-align:left;color:var(--text);font-size:13px;transition:all .2s}
+.case-film:hover{border-color:var(--gold);background:var(--gold-dim)}
+.case-film .rt{margin-left:auto;color:var(--red);font-weight:700}
+.case-film .yr{color:var(--muted);font-size:11px}
+/* director part B */
+.dir-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+@media(max-width:760px){.dir-metrics{grid-template-columns:1fr}}
+.dir-metric{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.dir-metric b{display:block;font-family:var(--serif);font-size:26px;color:var(--gold)}
+.dir-metric span{font-size:12px;color:var(--muted)}
+.dir-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+@media(max-width:980px){.dir-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.dir-grid{grid-template-columns:1fr}}
+.dir-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;border-top:3px solid var(--gold)}
+.dir-card h5{font-family:var(--serif);font-size:16px;margin-bottom:2px}
+.dir-card .role{font-size:12px;color:var(--muted);margin-bottom:10px}
+.dir-card .row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:4px}
+.dir-card .row b{color:var(--text)}
+.dir-card .diff{margin-top:8px;font-size:14px}
+.dir-card .diff b.gold{color:var(--gold)}
+/* five dimensions */
+.dim-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:24px}
+@media(max-width:980px){.dim-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.dim-grid{grid-template-columns:1fr}}
+.dim-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 14px;text-align:center}
+.dim-card .no{font-family:var(--serif);font-size:26px;color:var(--gold);font-weight:900}
+.dim-card b{display:block;font-size:15px;margin-top:4px}
+.dim-card p{font-size:12px;color:var(--muted);margin-top:8px}
+/* scale tags */
+.scale-tag{display:inline-block;font-size:10px;line-height:1.7;border-radius:4px;padding:0 6px;margin-left:6px;vertical-align:1px;cursor:help;letter-spacing:.05em;font-style:normal}
+.scale-tag.data{color:var(--green);border:1px solid rgba(92,200,161,.5)}
+.scale-tag.infer{color:var(--gold);border:1px solid rgba(255,194,75,.5)}
+.scale-tag.logic{color:var(--blue);border:1px solid rgba(111,168,255,.5)}
+#tag-pop{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:rgba(15,18,26,.97);border:1px solid var(--line);border-radius:10px;padding:10px 16px;font-size:13px;color:var(--text);z-index:90;display:none;max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+#tag-pop b{display:block;margin-bottom:4px}
+/* explore */
+.explore-wrap{margin-top:28px;text-align:center}
+#explore-btn{background:linear-gradient(120deg,var(--gold),#ff9d3c);color:#1a1206;border:none;border-radius:999px;padding:12px 40px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(255,194,75,.3);transition:transform .2s}
+#explore-btn:hover{transform:translateY(-2px)}
+@media(max-width:980px){.chart-panel .chart{height:280px}}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div id="progress-bar"></div>
+<nav id="side-nav" aria-label="章节导航"></nav>
+
+<main>
+  <!-- 封面 -->
+  <section id="cover">
+    <p class="kicker">一个数据新闻 · 交互预览</p>
+    <h1>方言电影为什么<em>「赢」</em>了？</h1>
+    <p class="sub">2026 年，一部讲闽南语家庭的《给阿嬷的情书》让全国观众破防——方言不是土，是这代人重新发现的「根」。<br>当普通话工业产品高速量产、稀释品质，选择方言的创作者以更自觉的差异化，守住了华语电影口碑的下限。这「赢」从来不只是方言的赢——是文化多样性的赢。</p>
+    <div class="kpi-row">
+      <div class="kpi-card"><b class="gold">63,025</b><span>部电影 · 全量数据集</span></div>
+      <div class="kpi-card"><b class="gold">1888—2026</b><span>年份跨度</span></div>
+      <div class="kpi-card"><b class="gold">≥100</b><span>最低评价人数</span></div>
+      <div class="kpi-card"><b class="gold">12,858</b><span>中国电影</span></div>
+    </div>
+    <div class="cover-stats">
+      <div class="stat-pill"><b class="gold">3,045</b><span>部方言电影（中国大陆）</span></div>
+      <div class="stat-pill"><b class="blue">9,813</b><span>部普通话电影（中国大陆）</span></div>
+      <div class="stat-pill"><b class="gold">6.4%</b><span>方言片烂片率（&lt;5分）</span></div>
+      <div class="stat-pill"><b class="red">24.4%</b><span>普通话片烂片率（&lt;5分）</span></div>
+    </div>
+    <p style="margin-top:16px;font-size:12px;color:var(--muted)">※ 《给阿嬷的情书》（2026）已在数据集内并计入方言片（潮汕话居首，Tier 2a）；原始交付数据缺语言列，曾误归普通话组，2026-08-19 对照豆瓣实页修正补收。正文不引用该片具体评分。</p>
+    <button id="enter-btn" type="button">进入故事 ↓</button>
+    <div class="scroll-hint">↓ 向下滚动，粒子随叙事重排 ↓</div>
+  </section>
+
+  <!-- 序章 -->
+  <section id="prologue">
+    <div class="chapter">
+      <div class="copy">
+        <span class="act-tag">序章</span>
+        <h2 class="act-title">先把「赢」钉在口碑维度</h2>
+        <p>我们说的「赢」，<strong>不是票房、不是数量</strong>——数据集里没有票房字段，我们只谈口碑与下限。先摆三张卡片，把「赢」的边界说清楚：</p>
+        <div class="win-cards">
+          <div class="win-card"><div class="big no">≠ 票房</div><p>数据无票房/成本字段，票房之说不谈。</p></div>
+          <div class="win-card"><div class="big no">≠ 数量</div><p>普通话片数量是方言片的 3.2 倍，数量多不等于口碑好。</p></div>
+          <div class="win-card"><div class="big yes">= 口碑下限</div><p>我们只比均分、烂片率与高分率——口碑与下限。</p></div>
+        </div>
+        <div class="correction-card">
+          <span class="label">高分率纠偏 · 方言其实输了一局</span>
+          <div class="value">全量高分率（≥8分）：方言 <b class="blue">9.5%</b> &lt; 普通话 <b class="blue">11.8%</b> —— 方言反而落后。<br>仅剧情片：方言 <b class="gold">14.4%</b> &gt; 普通话 <b class="blue">8.5%</b> —— 才完成反超。<span class="scale-tag data">数据可证</span></div>
+        </div>
+        <p style="margin-top:10px;font-size:13px;color:var(--muted)">方言片均分、烂片率全胜，唯独高分率落败——因为方言高分池里混进了演唱会/纪录片。剔除后，连高分率也翻盘。这也是我们坚持三口径的原因。</p>
+        <p class="hook">先把时间轴拉开，看这条被掩盖了三十年的弧线。</p>
+      </div>
+      <div class="chart-panel">
+        <h3>中国大陆电影：方言 vs 普通话 · 分年代均分</h3>
+        <div id="chart-arc" class="chart"></div>
+        <div class="metric-line" id="arc-metric">加载中…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第一幕 -->
+  <section id="act1">
+    <div class="chapter">
+      <div class="chart-panel">
+        <h3>逐年均分差（方言 − 普通话，中国大陆，1990–2020）</h3>
+        <div id="chart-yearly" class="chart"></div>
+        <div class="controls">
+          <label class="range">拖动年份
+            <input type="range" id="year-slider" min="1990" max="2020" step="1" value="2010">
+            <output id="year-out"></output>
+          </label>
+        </div>
+        <div class="metric-line" id="yearly-metric">加载中…</div>
+      </div>
+      <div class="copy">
+        <span class="act-tag">第一幕 · 逆转弧线</span>
+        <h2 class="act-title"><span class="num">01</span>三十年，胜负手翻了两次</h2>
+        <p>1990 年代，普通话片领先方言片 <strong class="blue">0.39 分</strong>；2010 年代，方言片反超 <strong class="gold">0.95 分</strong>——摆幅 <strong class="gold">1.34 分</strong>。</p>
+        <div class="fact-card"><span class="label">分年代差值（方言 − 普通话）</span><div class="value">1990s <span class="blue">−0.39</span> · 2000s <span class="blue">−0.33</span> · 2010s <span class="gold">+0.95</span> · 2020s <span class="gold">+0.59</span></div></div>
+        <div class="fact-card blue"><span class="label">结构性断点</span><div class="value">2010 年：此后 11 年再无反转</div></div>
+        <p>2005–2006 曾出现一次短暂触零（样本仅 56 部，不作数），真正的反转在 <strong class="gold">2010 年</strong>：方言片以 6.83 对 6.29 完成结构性超越，之后每年都是方言领先。</p>
+        <p class="hook">反转发生了，但它为什么发生？先看普通话这边出了什么。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第二幕 -->
+  <section id="act2">
+    <div class="chapter">
+      <div class="copy">
+        <span class="act-tag blue">第二幕 · 产量塌陷</span>
+        <h2 class="act-title"><span class="num">02</span>普通话不是不好，是「太多太滥」</h2>
+        <p>2010 年代，普通话片产量是方言片的 <strong class="blue">6.8 倍</strong>（4,287 部 vs 627 部），烂片率同时飙到 <strong class="red">36.1%</strong>；方言片同期只有 <strong class="gold">13.4%</strong>。市场洪流把均值一点点拽低。</p>
+        <div class="fact-card blue"><span class="label">单片关注度（评价人数均值）</span><div class="value">方言 47,060 人 vs 普通话 22,684 人（2010s）</div></div>
+        <div class="fact-card red"><span class="label">烂片率（评分&lt;5 占比）</span><div class="value">2010s：普通话 36.1% · 方言 13.4%</div></div>
+        <p>同一个十年，普通话片用 6.8 倍的产量，换来了 2.7 倍的踩雷率——<strong>量越大，雷越多</strong>。</p>
+        <p class="hook">那方言这边，凭什么这么稳？</p>
+      </div>
+      <div class="chart-panel">
+        <h3>烂片率（评分&lt;5）· 分年代对比</h3>
+        <div id="chart-flop" class="chart"></div>
+        <div class="controls">
+          <div class="seg" id="flop-seg">
+            <button type="button" data-mode="decade" class="on">分年代</button>
+            <button type="button" data-mode="overall">全量</button>
+          </div>
+        </div>
+        <div class="metric-line" id="flop-metric">加载中…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第三幕 -->
+  <section id="act3">
+    <div class="chapter">
+      <div class="chart-panel">
+        <h3>类型控制三口径 · 均分对比（中国大陆）</h3>
+        <div id="chart-type" class="chart"></div>
+        <div class="controls">
+          <div class="seg" id="type-seg">
+            <button type="button" data-mode="raw" class="on">原始</button>
+            <button type="button" data-mode="exclude">剔除演唱会/纪录</button>
+            <button type="button" data-mode="drama">仅剧情片</button>
+          </div>
+        </div>
+        <div class="metric-line" id="type-metric">加载中…</div>
+        <h3 style="margin-top:14px">方言内部：粤语 vs 非粤语</h3>
+        <div id="chart-canto" class="chart" style="height:200px"></div>
+      </div>
+      <div class="copy">
+        <span class="act-tag red">第三幕 · 门槛效应</span>
+        <h2 class="act-title"><span class="num">03</span>方言是「被精选过的高品质子集」</h2>
+        <p>全口径烂片率 <strong class="gold">6.4%</strong> vs <strong class="red">24.4%</strong>——最硬的一条。但怀疑者会说：是不是纪录片、演唱会拉高了方言？切换到三个口径，结论<strong>依然成立</strong>：</p>
+        <div class="fact-card red"><span class="label">仅剧情片</span><div class="value">方言 6.86 vs 普通话 6.25 · 烂片率 5.2% vs 18.0%</div></div>
+        <div class="fact-card"><span class="label">方言内部：非粤语方言</span><div class="value">7.22 分 · 烂片率 2.1%（n=479）</div></div>
+        <p>更关键的是：方言的稳<strong>不是港片粤语独大</strong>——非粤语方言均分 <strong class="gold">7.22</strong> 高于粤语 <strong>6.51</strong>，西南官话、闽南语、吴语各有各的好。</p>
+        <p class="hook">这种「小语种更稳」，是华语独有，还是全球共性？</p>
+      </div>
+    </div>
+    <div class="case-row">
+      <div class="case-col mand">
+        <h5>普通话低分个案 · 「IP + 流量」模式</h5>
+        <button class="case-film" type="button" data-id="26581837" data-title="上海堡垒" data-year="2019" data-rating="2.9">上海堡垒<span class="yr">2019</span><span class="rt">★ 2.9</span></button>
+        <button class="case-film" type="button" data-id="24852545" data-title="爱情公寓" data-year="2018" data-rating="3.2">爱情公寓<span class="yr">2018</span><span class="rt">★ 3.2</span></button>
+        <button class="case-film" type="button" data-id="26259634" data-title="何以笙箫默" data-year="2015" data-rating="3.8">何以笙箫默<span class="yr">2015</span><span class="rt">★ 3.8</span></button>
+        <button class="case-film" type="button" data-id="25823277" data-title="三生三世十里桃花" data-year="2017" data-rating="4.0">三生三世十里桃花<span class="yr">2017</span><span class="rt">★ 4.0</span></button>
+        <button class="case-film" type="button" data-id="25779217" data-title="诛仙1" data-year="2019" data-rating="4.5">诛仙1<span class="yr">2019</span><span class="rt">★ 4.5</span></button>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">共性：大 IP + 流量演员 + 工业管线，把「创作」做成「投产」。</p>
+      </div>
+      <div class="case-col dial">
+        <h5>方言低分个案 · 「翻拍经典 / 跟风」模式</h5>
+        <button class="case-film" type="button" data-id="30416337" data-title="唐伯虎点秋香2019" data-year="2019" data-rating="2.8">唐伯虎点秋香2019<span class="yr">2019</span><span class="rt">★ 2.8</span></button>
+        <button class="case-film" type="button" data-id="22557335" data-title="降魔传" data-year="2017" data-rating="2.9">降魔传<span class="yr">2017</span><span class="rt">★ 2.9</span></button>
+        <button class="case-film" type="button" data-id="21264296" data-title="嗨起，打他个鬼子" data-year="2013" data-rating="2.9">嗨起，打他个鬼子<span class="yr">2013</span><span class="rt">★ 2.9</span></button>
+        <button class="case-film" type="button" data-id="30329714" data-title="冒牌搭档" data-year="2018" data-rating="3.0">冒牌搭档<span class="yr">2018</span><span class="rt">★ 3.0</span></button>
+        <button class="case-film" type="button" data-id="26796665" data-title="九龙不败" data-year="2019" data-rating="3.0">九龙不败<span class="yr">2019</span><span class="rt">★ 3.0</span></button>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px">共性：翻拍经典名号、蹭题材热度，方言只当「噱头」用。</p>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:14px;color:var(--muted);max-width:760px"><strong style="color:var(--text)">两边一样烂</strong>——烂的不是语言，是「创作路径」：把电影当 IP 生意做、当题材噱头蹭，不管说什么语言都会烂。<span class="scale-tag logic">行业观察</span> <span style="font-size:12px">※ 方案初稿列的天机·富春山居图/西游记之大闹天宫/长城在 v4.1.1 口径下已判定为非方言片（混合语言），故此处换成实测方言低分片。</span></p>
+  </section>
+
+  <!-- 第四幕 -->
+  <section id="act4">
+    <div class="chapter">
+      <div class="copy">
+        <span class="act-tag green">第四幕 · 外部参照</span>
+        <h2 class="act-title"><span class="num">04</span>华语普通话，是全球烂片率异常值</h2>
+        <p>把镜头拉到全球：「小语种下限更稳」是<strong>世界共性</strong>——欧洲内部，非主导语言烂片率 1.5%，低于主导语言英语的 3.6%。</p>
+        <p>但华语的情况特殊：普通话烂片率 <strong class="red">24.4%</strong>，是日韩（5.8%）、北美（8.8%）的四五倍，是全球市场里的<strong class="red">孤例</strong>。方言片 6.4% 反而是正常水平。</p>
+        <div class="fact-card green"><span class="label">结论</span><div class="value">华语反转的根源，是普通话自己塌陷</div></div>
+        <p class="hint" style="font-size:12px;color:var(--muted);margin-top:10px">注意：跨国类比只支撑「下限稳」共性，不支撑「均分反转」的因果。</p>
+        <p class="hook">共性说完了，回到华语自己的故事——这三十年，是谁在拍方言？</p>
+      </div>
+      <div class="chart-panel">
+        <h3>全球各市场烂片率（评分&lt;5）· 华语普通话标红</h3>
+        <div id="chart-global" class="chart"></div>
+        <div class="metric-line" id="global-metric">加载中…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 第五幕 -->
+  <section id="act5">
+    <span class="act-tag">第五幕 · 三波浪潮</span>
+    <h2 class="act-title"><span class="num">05</span>三十年，三波方言浪潮</h2>
+    <p style="color:var(--muted);margin-bottom:22px;max-width:760px">数据落回具体电影。三波浪潮，三种方言，同一个逻辑：<strong style="color:var(--text)">用更少的产量，守住更稳的下限</strong>。点击任意电影查看详情。</p>
+    <div class="wave-grid">
+      <div class="wave-card w1">
+        <h4>第一波 · 港片粤语</h4>
+        <div class="era">1985–2005 · 市井江湖的底色</div>
+        <div id="wave-hk"></div>
+      </div>
+      <div class="wave-card w2">
+        <h4>第二波 · 西南方言</h4>
+        <div class="era">2010– · 作者表达的自觉</div>
+        <div id="wave-sw"></div>
+      </div>
+      <div class="wave-card w3">
+        <h4>第三波 · 闽南语新浪潮</h4>
+        <div class="era">2008– · 乡愁与家庭史诗</div>
+        <div id="wave-mn"></div>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <button id="lucky-btn" type="button">🎲 捞一部方言电影</button>
+      <div id="lucky-hint">从 3,045 部方言片中随机捞一部，看看运气。</div>
+    </div>
+
+    <div style="margin-top:52px;border-top:1px dashed var(--line);padding-top:34px">
+      <h3 style="font-family:var(--serif);font-size:clamp(20px,2.4vw,28px);margin-bottom:10px"><span style="color:var(--gold)">5B · 同导演双栖对比</span>——同一批人，两套结果</h3>
+      <p style="color:var(--muted);margin-bottom:4px;max-width:780px">「方言片更好，会不会只是导演水平差异？」把导演变量锁死：<strong style="color:var(--text)">476 位</strong>既拍方言又拍普通话的大陆导演中，<strong style="color:var(--gold)">70%</strong> 的方言片均分高于自己的普通话片——平均差 <strong style="color:var(--gold)">+0.64 分</strong>。<span class="scale-tag data">数据可证</span></p>
+      <div class="dir-metrics">
+        <div class="dir-metric"><b>476</b><span>双栖导演（两种语言都有作品）</span></div>
+        <div class="dir-metric"><b>70%</b><span>方言片评分更高</span></div>
+        <div class="dir-metric"><b>+0.64</b><span>方言 − 普通话 平均分差</span></div>
+      </div>
+      <div class="chart-panel" style="margin-top:16px">
+        <h3>双栖导演分差分布 · 476 位（方言均分 − 普通话均分）</h3>
+        <div id="chart-director" class="chart" style="height:220px"></div>
+      </div>
+      <div class="dir-grid">
+        <div class="dir-card">
+          <h5>刘镇伟</h5>
+          <div class="role">《大话西游》系列导演</div>
+          <div class="row"><span>方言片均分</span><b class="gold">7.02（24 部）</b></div>
+          <div class="row"><span>普通话片均分</span><b>4.09（7 部）</b></div>
+          <div class="diff">分差 <b class="gold">+2.93</b></div>
+          <button class="case-film" type="button" data-id="1292213" data-title="大话西游之大圣娶亲" data-year="2014" data-rating="9.2">大话西游之大圣娶亲<span class="yr">粤语</span><span class="rt">★ 9.2</span></button>
+          <button class="case-film" type="button" data-id="3990500" data-title="机器侠" data-year="2009" data-rating="5.3">机器侠<span class="yr">普通话</span><span class="rt">★ 5.3</span></button>
+        </div>
+        <div class="dir-card">
+          <h5>袁和平</h5>
+          <div class="role">武术指导出身导演</div>
+          <div class="row"><span>方言片均分</span><b class="gold">6.94（21 部）</b></div>
+          <div class="row"><span>普通话片均分</span><b>5.00（4 部）</b></div>
+          <div class="diff">分差 <b class="gold">+1.94</b></div>
+          <button class="case-film" type="button" data-id="1302654" data-title="奇门遁甲(1982)" data-year="1982" data-rating="8.1">奇门遁甲（1982）<span class="yr">粤语</span><span class="rt">★ 8.1</span></button>
+          <button class="case-film" type="button" data-id="26661191" data-title="奇门遁甲(2017)" data-year="2017" data-rating="4.4">奇门遁甲（2017）<span class="yr">普通话</span><span class="rt">★ 4.4</span></button>
+        </div>
+        <div class="dir-card">
+          <h5>刘观伟</h5>
+          <div class="role">《僵尸先生》系列导演</div>
+          <div class="row"><span>方言片均分</span><b class="gold">6.65（15 部）</b></div>
+          <div class="row"><span>普通话片均分</span><b>3.54（8 部）</b></div>
+          <div class="diff">分差 <b class="gold">+3.11</b></div>
+          <button class="case-film" type="button" data-id="1295933" data-title="僵尸先生" data-year="1985" data-rating="8.4">僵尸先生<span class="yr">粤语</span><span class="rt">★ 8.4</span></button>
+          <button class="case-film" type="button" data-id="3993553" data-title="三笑之才子佳人" data-year="2010" data-rating="3.9">三笑之才子佳人<span class="yr">普通话</span><span class="rt">★ 3.9</span></button>
+        </div>
+        <div class="dir-card">
+          <h5>马伟豪</h5>
+          <div class="role">港式爱情喜剧导演</div>
+          <div class="row"><span>方言片均分</span><b class="gold">6.58（26 部）</b></div>
+          <div class="row"><span>普通话片均分</span><b>4.45（6 部）</b></div>
+          <div class="diff">分差 <b class="gold">+2.13</b></div>
+          <button class="case-film" type="button" data-id="1308655" data-title="新扎师妹" data-year="2002" data-rating="7.9">新扎师妹<span class="yr">粤语</span><span class="rt">★ 7.9</span></button>
+          <button class="case-film" type="button" data-id="25908065" data-title="我们的十年" data-year="2016" data-rating="5.5">我们的十年<span class="yr">普通话</span><span class="rt">★ 5.5</span></button>
+        </div>
+      </div>
+      <p style="margin-top:16px;font-size:14px;color:var(--muted);max-width:780px">同一双手，把老本行（粤语）做到 8 分，把接活项目（普通话）做到 4 分——<strong style="color:var(--text)">质量差异来自「投入度」，不来自语言本身</strong>。方言片更容易被认真对待。<span class="scale-tag infer">推测性口吻</span> <span style="font-size:12px">※ 双栖口径：中国大陆电影，导演字段全值匹配（任一署名含该导演即计入）；未做显著性检验。</span></p>
+    </div>
+
+    <p class="hook">故事讲到这，该收了——方言赢的，到底是什么？</p>
+  </section>
+
+  <!-- 终章 -->
+  <section id="finale">
+    <div class="chapter">
+      <div class="copy">
+        <span class="act-tag">终章 · 升华落点</span>
+        <h2 class="act-title">不止方言的赢，是文化多样性的赢</h2>
+        <p><strong>拆对立：</strong>方言赢的不是普通话，而是<strong class="gold">同质化</strong>。无论哪种语言被认真讲述，赢的都是中国电影。胜负手是<strong>质量</strong>——这把尺，两边都够得着。</p>
+        <p><strong>亮家底：</strong>中国大陆电影的语言字段记录了 <strong class="gold">202 种</strong>不同语言/方言标签。方言内部，闽南语 7.39、上海话 7.44、客家话 7.88 等小方言均分都高于粤语 6.51——质量不靠一地方言独大，而是<strong>百花齐放</strong>。</p>
+        <div class="fact-card"><span class="label">多样性地图 · 各语言组均分（样本量≥10）</span><div class="value" style="font-size:14px">客家话 7.88 · 晋语 7.71 · 维吾尔语 7.58 · 上海话 7.44 · 闽南语 7.39 · 藏语 7.20 · 重庆话 7.10 · 四川话 7.06 · 台语 7.05 · 粤语 6.51</div></div>
+      </div>
+      <div class="chart-panel">
+        <h3>方言各语言组均分 vs 粤语基准（样本量≥10）</h3>
+        <div id="chart-diversity" class="chart"></div>
+      </div>
+    </div>
+    <div class="finale-stats">
+      <div class="finale-stat"><b class="gold">6.62</b><span>华语方言片均分（全口径）</span></div>
+      <div class="finale-stat"><b class="blue">7.17</b><span>欧洲电影均分</span></div>
+      <div class="finale-stat"><b class="blue">6.75</b><span>北美电影均分</span></div>
+      <div class="finale-stat"><b class="red">0.4 分</b><span>我们与欧美的平均分差距</span></div>
+    </div>
+
+    <h3 style="font-family:var(--serif);font-size:clamp(20px,2.4vw,28px);margin-top:44px;text-align:center">那什么才是「好故事」？——五个维度</h3>
+    <p style="text-align:center;color:var(--muted);font-size:14px;margin-top:6px">五维度是观察归纳，不是评分公式。<span class="scale-tag logic">行业观察</span></p>
+    <div class="dim-grid">
+      <div class="dim-card"><div class="no">①</div><b>有根</b><p>方言自带地域与文化根脉，故事天然「有出处」</p></div>
+      <div class="dim-card"><div class="no">②</div><b>被认真讲</b><p>同导演对比：方言项目投入度系统性更高</p></div>
+      <div class="dim-card"><div class="no">③</div><b>人物真实</b><p>母语对白让人物可信，表演有了「接地气」的支点</p></div>
+      <div class="dim-card"><div class="no">④</div><b>能打动人</b><p>高分方言片评价人数中位 17,707 vs 普通话 1,278 —— 13.8 倍<span class="scale-tag data">数据可证</span></p></div>
+      <div class="dim-card"><div class="no">⑤</div><b>守住下限</b><p>烂片率 6.4% vs 24.4%——差也差不到哪去</p></div>
+    </div>
+
+    <div class="chapter" style="margin-top:44px">
+      <div class="chart-panel">
+        <h3>中国大陆各类型均分 · 点击条形查看该类型 Top 片单</h3>
+        <div id="chart-genre" class="chart" style="height:300px"></div>
+        <div class="metric-line" id="genre-metric">点击上方的条形图，查看该类型的高分片单。</div>
+      </div>
+      <div class="copy">
+        <span class="act-tag">终章 · 类型线索</span>
+        <h2 class="act-title">类型均分透露的「认真程度」</h2>
+        <p>动画 <strong class="gold">7.62</strong>、纪录片 <strong class="gold">7.57</strong>、历史 <strong class="gold">7.53</strong>——均分最高的类型，多为需要慢工细作的认真体裁；而恐怖 <strong class="red">5.91</strong>、悬疑 <strong class="red">6.14</strong> 垫底——恰恰是流水线最密集的工业类型。<span class="scale-tag infer">推测性口吻</span></p>
+        <div class="fact-card"><span class="label">类型均分</span><div class="value" style="font-size:15px">动画 7.62 · 纪录 7.57 · 历史 7.53 · 家庭 7.42 · 剧情 6.86 · 悬疑 6.14 · 恐怖 5.91</div></div>
+        <p>好故事不挑类型，但<strong>容易被认真对待的类型，分数普遍更高</strong>。方言片大多落在「剧情/家庭/纪录」这类被认真拍的体裁里。</p>
+        <p class="hook">把故事讲好，靠的是根、认真、真实、打动人、守住下限——方言恰好都沾。</p>
+      </div>
+    </div>
+
+    <div class="explore-wrap">
+      <button id="explore-btn" type="button">进入探索舱 → 跨语言 / 年份 / 类型自由筛选</button>
+    </div>
+    <p class="closing">所以这不是方言对普通话的胜利，而是<em>文化多样性</em>的胜利——我们的土地孕育了上百种语言、无数故事，本就是创作的富矿。今天我们在平均分上仍落后欧美，但那道鸿沟是<em>质量的鸿沟，不是文化的鸿沟</em>——把质量做好，追上乃至并肩，并非奢望。<br><br><em>靠质量去赢——这，才是真正的文化自信。</em></p>
+  </section>
+
+  <!-- 方法论 -->
+    <footer id="method">
+    <h3>数据、方法与局限（诚实清单）</h3>
+    <details open>
+      <summary>标注系统：每个数字的可信度分层</summary>
+      <p>正文中关键论断附有三种可点击标签：<span class="scale-tag data">数据可证</span> 直接出自数据库、可复算；<span class="scale-tag infer">推测性口吻</span> 解释性解读，非因果证明；<span class="scale-tag logic">行业观察</span> 行业常识与逻辑推论。点击标签可查看定义。</p>
+    </details>
+    <details open>
+      <summary>数据范围与口径</summary>
+      <p>来自 <span class="tag">derived_movies.csv</span> 63,025 部电影（豆瓣频道宽口径，含纪录片/短片/演出影像），每部至少 100 人评价。语言按 v4.4 口径判定（2026-08-19 《给阿嬷的情书》语言字段修正补收）：方言 3,338 部（全口径）/ 3,045 部（中国大陆），普通话·非方言 9,813 部（中国大陆）。页面全部数字为预计算落盘，无前端随机采样。</p>
+    </details>
+    <details>
+      <summary>① 演唱会混杂</summary>
+      <p>v4.3 审计已剔除 49 部戏曲/演唱会影像（方言 Top 高分池曾混入演唱会，如张国荣演唱会 9.8 分）；正文同显「原始 / 剔除 / 仅剧情片」三口径，结论方向不变。</p>
+    </details>
+    <details>
+      <summary>② 合并桶与误标</summary>
+      <p>Is_Dialect 为合并桶，无法证伪具体方言崛起；语言字段为多标签（如「粤语 / 汉语普通话」），少数英文片可能误标——案例片单已按类型剔除并人工复核。</p>
+    </details>
+    <details>
+      <summary>③ 评价人数 ≠ 票房</summary>
+      <p>评价人数仅作关注度代理，数据集无票房/成本字段，正文不讨论票房。</p>
+    </details>
+    <details>
+      <summary>④ 时间偏倚</summary>
+      <p>数据集经 2026-08-18 合并 delivery_20260817 后覆盖至 2026 年；2022 年后共 7,190 部，以北美/欧洲/东亚为主、中国大陆占 16%；「2020s」分组的中国方言片仅 57 部，该年代数字谨慎引用。</p>
+    </details>
+    <details>
+      <summary>⑤ 解释边界</summary>
+      <p>「门槛效应」「投入度」是描述性解读而非因果证明；跨国类比只支撑「下限稳」共性，不支撑「均分反转」因果；未做显著性检验与跨平台评分校准。</p>
+    </details>
+    <details>
+      <summary>⑥ 行业现实三问</summary>
+      <p><b>a. 数据可信吗？</b> 豆瓣评分受样本与场外因素影响，我们只用「均分/烂片率/高分率」粗颗粒指标，不做细粒度归因。<br>
+      <b>b. 评价人数公平吗？</b> 方言片评价人数整体偏少，均值更易波动——已用「每部 ≥100 人」下限过滤，并给出 n 值供读者自行判断。<br>
+      <b>c. 方言是「原因」还是「标签」？</b> 本文立场：方言是优质创作路径的「同现标签」，不是质量本身的原因——换掉创作路径，方言也救不了烂片（见第三幕低分个案）。</p>
+    </details>
+    <p style="margin-top:22px;font-size:13px;color:var(--muted)">本页为《方言电影交互网页·整体架构与设计方案》的交互预览版，叙事框架与方案一致，所有数字基于当前仓库数据实测核算。</p>
+  </footer>
+</main>
+
+<script src="vendor/echarts.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+'use strict';
+/* ============ 预计算聚合数据（v4.4 口径 · 指纹 c64962992e · 2026-08-19 阿嬷补收后重算，scripts/sync_preview_dialect_v43_20260819.py） ============ */
+const AGG = {
+  byDecade: {
+    "Pre-1990s": {d: {n:755,mean:6.77,below5:0.7}, m:{n:1634,mean:7.09,below5:1.2}, delta:-0.31},
+    "1990s":    {d: {n:938,mean:6.68,below5:4.1}, m:{n:524,mean:7.07,below5:3.8}, delta:-0.39},
+    "2000s":    {d: {n:668,mean:6.44,below5:8.8}, m:{n:1261,mean:6.77,below5:10.3}, delta:-0.33},
+    "2010s":    {d: {n:627,mean:6.56,below5:13.4}, m:{n:4287,mean:5.61,below5:36.1}, delta:0.95},
+    "2020s":    {d: {n:57,mean:6.34,below5:15.8}, m:{n:2107,mean:5.76,below5:31.9}, delta:0.59}
+  },
+  yearly: {"1990":-0.23,"1991":-0.32,"1992":-0.42,"1993":-0.26,"1994":-0.46,"1995":-0.5,"1996":-0.35,"1997":-0.41,"1998":-0.73,"1999":-0.27,"2000":-0.83,"2001":-0.6,"2002":-0.91,"2003":-0.36,"2004":-0.44,"2005":0.06,"2006":-0.44,"2007":-0.11,"2008":-0.07,"2009":-0.04,"2010":0.54,"2011":0.67,"2012":0.93,"2013":1.26,"2014":1.26,"2015":0.84,"2016":1.22,"2017":1.21,"2018":0.55,"2019":0.51,"2020":0.58},
+  flopDecade: {
+    "1990s": {d:4.1, m:3.8}, "2000s": {d:8.8, m:10.3},
+    "2010s": {d:13.4, m:36.1}, "2020s": {d:15.8, m:31.9}
+  },
+  flopOverall: {d:6.4, m:24.4},
+  typeCtl: {
+    raw:     {d:{mean:6.62,below5:6.4}, m:{mean:6.11,below5:24.4}},
+    exclude: {d:{mean:6.58,below5:6.6}, m:{mean:5.93,below5:26.9}},
+    drama:   {d:{mean:6.86,below5:5.2}, m:{mean:6.25,below5:18.0}}
+  },
+  canto: [
+    {name:"非粤语方言", value:7.22, below5:2.1, n:480, color:"#5cc8a1"},
+    {name:"粤语", value:6.51, below5:7.2, n:2565, color:"#ffc24b"}
+  ],
+  global: [
+    {name:"欧洲 · 非主导语言", value:1.5, n:6006},
+    {name:"欧洲 · 英语", value:3.6, n:6010},
+    {name:"日韩", value:5.8, n:11109},
+    {name:"华语 · 方言", value:6.4, n:3045},
+    {name:"北美 · 英语", value:8.8, n:15681},
+    {name:"华语 · 普通话", value:24.4, n:9813, outlier:true}
+  ],
+  diversity: [
+    {name:"客家话", mean:7.88, n:10},
+    {name:"晋语", mean:7.71, n:14},
+    {name:"维吾尔语", mean:7.58, n:13},
+    {name:"上海话", mean:7.44, n:50},
+    {name:"闽南语", mean:7.39, n:117},
+    {name:"藏语", mean:7.20, n:35},
+    {name:"重庆话", mean:7.10, n:13},
+    {name:"四川话", mean:7.06, n:33},
+    {name:"台语", mean:7.05, n:13},
+    {name:"粤语", mean:6.51, n:2565}
+  ],
+  waves: {
+    hk: [
+      {title:"无间道", year:2003, rating:9.3, id:"1307914"},
+      {title:"南海十三郎", year:1997, rating:9.3, id:"1303913"},
+      {title:"饮食男女", year:1994, rating:9.1, id:"900054"},
+      {title:"阿飞正传", year:2018, rating:8.5, id:"1305690"},
+      {title:"重庆森林", year:1994, rating:8.8, id:"900089"}
+    ],
+    sw: [
+      {title:"让子弹飞", year:2010, rating:8.7, id:"900072"},
+      {title:"无名之辈", year:2018, rating:8.0, id:"27110296"},
+      {title:"路边野餐", year:2016, rating:7.9, id:"26337866"},
+      {title:"不成问题的问题", year:2017, rating:8.1, id:"26657126"},
+      {title:"南方车站的聚会", year:2019, rating:7.4, id:"27668250"}
+    ],
+    mn: [
+      {title:"一一", year:2017, rating:9.1, id:"1292434"},
+      {title:"大佛普拉斯", year:2017, rating:8.7, id:"27059130"},
+      {title:"赛德克·巴莱", year:2012, rating:8.8, id:"3993559"},
+      {title:"阳光普照", year:2019, rating:8.5, id:"30292777"},
+      {title:"孤味", year:2020, rating:8.1, id:"34805873"}
+    ]
+  },
+  directorHist: {"≤−2":15,"−1":51,"0":164,"+1":143,"+2":70,"+3":23,"≥+4":10},
+  genreAvg: [
+    {name:"动画", mean:7.62, n:30, top:[
+      {title:"欲望Jungle", year:2015, rating:9.0, id:"26745394"},
+      {title:"魔法阿妈", year:1998, rating:8.9, id:"1299227"},
+      {title:"麦兜故事", year:2001, rating:8.6, id:"1302476"}]},
+    {name:"纪录片", mean:7.57, n:113, top:[
+      {title:"集体回忆 - 张国荣", year:2007, rating:9.4, id:"2170951"},
+      {title:"囚", year:2017, rating:9.1, id:"26961159"},
+      {title:"一百年的歌声", year:2004, rating:9.0, id:"1915881"}]},
+    {name:"历史", mean:7.53, n:32, top:[
+      {title:"无言的山丘", year:1992, rating:9.2, id:"1298944"},
+      {title:"鬼子来了", year:2000, rating:9.2, id:"900030"},
+      {title:"悲情城市", year:1989, rating:8.9, id:"1294194"}]},
+    {name:"家庭", mean:7.42, n:81, top:[
+      {title:"饮食男女", year:1994, rating:9.1, id:"900054"},
+      {title:"一一", year:2017, rating:9.1, id:"1292434"},
+      {title:"陈仓已冬", year:2011, rating:8.9, id:"25851736"}]},
+    {name:"同性", mean:7.07, n:45, top:[
+      {title:"春光乍泄", year:1997, rating:8.8, id:"900079"},
+      {title:"摄氏零度·春光再现", year:1999, rating:8.8, id:"1401526"},
+      {title:"自梳", year:1997, rating:8.5, id:"1304648"}]},
+    {name:"短片", mean:7.04, n:101, top:[
+      {title:"欲望Jungle", year:2015, rating:9.0, id:"26745394"},
+      {title:"如果早知道男生也会被性侵", year:2013, rating:8.7, id:"30200085"},
+      {title:"玛嘉烈与大卫 白咖啡男", year:2016, rating:8.7, id:"26895378"}]},
+    {name:"武侠", mean:6.96, n:79, top:[
+      {title:"倩女幽魂", year:2011, rating:8.8, id:"1297447"},
+      {title:"东邪西毒", year:1994, rating:8.6, id:"900131"},
+      {title:"笑傲江湖2：东方不败", year:1992, rating:8.5, id:"1294417"}]},
+    {name:"剧情", mean:6.86, n:1298, top:[
+      {title:"棱角杯", year:1993, rating:9.4, id:"26672579"},
+      {title:"南海十三郎", year:1997, rating:9.3, id:"1303913"},
+      {title:"无间道", year:2003, rating:9.3, id:"1307914"}]}
+  ]
+};
+
+const C = {
+  gold:'#ffc24b', blue:'#6fa8ff', red:'#ff6b5e', green:'#5cc8a1',
+  muted:'#9aa3b2', grid:'rgba(255,255,255,.08)'
+};
+function baseOption(){ return {
+  backgroundColor:'transparent',
+  textStyle:{fontFamily:'Noto Sans SC, PingFang SC, sans-serif', color:'#eef1f6'},
+  tooltip:{backgroundColor:'rgba(15,18,26,.96)', borderColor:'rgba(255,255,255,.18)', textStyle:{color:'#eef1f6',fontSize:12}, padding:10},
+  grid:{left:44,right:18,top:30,bottom:34}
+};}
+let charts = {};
+function mk(id){ const el=document.getElementById(id); const c=echarts.init(el); charts[id]=c; return c; }
+function resized(){ Object.values(charts).forEach(c=>c&&c.resize()); }
+
+/* ---------- 序章：分年代折线 ---------- */
+function renderArc(){
+  const decs=Object.keys(AGG.byDecade);
+  const c=mk('chart-arc');
+  c.setOption(Object.assign(baseOption(),{
+    legend:{data:['方言','普通话'],textStyle:{color:C.muted,fontSize:12},top:0,right:10},
+    xAxis:{type:'category',data:decs.map(d=>d.replace('Pre-1990s','80s以前').replace('s','年代')),axisLine:{lineStyle:{color:C.grid}},axisLabel:{color:C.muted,fontSize:11}},
+    yAxis:{type:'value',min:5,max:7.5,name:'均分',nameTextStyle:{color:C.muted,fontSize:11},axisLabel:{color:C.muted,fontSize:11},splitLine:{lineStyle:{color:C.grid}}},
+    series:[
+      {name:'方言',type:'line',smooth:true,symbolSize:8,lineStyle:{width:3,color:C.gold},itemStyle:{color:C.gold},
+       areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(255,194,75,.25)'},{offset:1,color:'rgba(255,194,75,0)'}]}},
+       data:decs.map(d=>AGG.byDecade[d].d.mean)},
+      {name:'普通话',type:'line',smooth:true,symbolSize:8,lineStyle:{width:3,color:C.blue},itemStyle:{color:C.blue},
+       data:decs.map(d=>AGG.byDecade[d].m.mean)}
+    ]
+  }));
+  const m=document.getElementById('arc-metric');
+  m.innerHTML='<b>30 年摆幅 1.34 分</b>：1990s 普通话领先 <b class="blue">0.39</b> → 2010s 方言反超 <b class="gold">0.95</b>（差值 = 方言 − 普通话）';
+}
+
+/* ---------- 第一幕：逐年滑块 ---------- */
+function renderYearly(){
+  const years=Object.keys(AGG.yearly).map(Number);
+  const c=mk('chart-yearly');
+  c.setOption(Object.assign(baseOption(),{
+    xAxis:{type:'category',data:years,axisLine:{lineStyle:{color:C.grid}},axisLabel:{color:C.muted,fontSize:10,interval:1}},
+    yAxis:{type:'value',name:'差值(方言−普通话)',nameTextStyle:{color:C.muted,fontSize:11},axisLabel:{color:C.muted,fontSize:11},splitLine:{lineStyle:{color:C.grid}}},
+    series:[
+      {type:'bar',data:years.map(y=>AGG.yearly[y]),barWidth:'55%',
+       itemStyle:{color:function(p){return p.value>=0?'rgba(255,194,75,.85)':'rgba(111,168,255,.85)';},
+         borderRadius:[4,4,0,0]},
+       markLine:{silent:true,symbol:'none',lineStyle:{color:C.red,type:'dashed',width:1.5},label:{color:C.red,fontSize:10,formatter:'2010 结构性反转'},data:[{xAxis:'2010'}]}}
+    ]
+  }));
+  const slider=document.getElementById('year-slider');
+  const out=document.getElementById('year-out');
+  const metric=document.getElementById('yearly-metric');
+  function upd(y){
+    out.value=y;
+    const v=AGG.yearly[y];
+    metric.innerHTML=`<b>${y} 年</b>：方言 − 普通话 = <b class="${v>=0?'gold':'blue'}">${v>=0?'+':''}${v.toFixed(2)} 分</b>${y>=2010?'<span style="color:var(--red)"> · 已进入结构性反转区</span>':''}`;
+  }
+  slider.addEventListener('input',()=>upd(slider.value));
+  upd('2010');
+}
+
+/* ---------- 第二幕：烂片率 ---------- */
+function renderFlop(){
+  const c=mk('chart-flop');
+  function draw(mode){
+    const keys = mode==='decade' ? ['1990s','2000s','2010s','2020s'] : ['全量'];
+    const d = keys.map(k=> mode==='decade' ? AGG.flopDecade[k].d : AGG.flopOverall.d);
+    const m = keys.map(k=> mode==='decade' ? AGG.flopDecade[k].m : AGG.flopOverall.m);
+    c.setOption(Object.assign(baseOption(),{
+      legend:{data:['方言','普通话'],textStyle:{color:C.muted,fontSize:12},top:0,right:10},
+      xAxis:{type:'category',data:keys.map(k=>k==='全量'?k:k.replace('s','年代')),axisLabel:{color:C.muted,fontSize:11}},
+      yAxis:{type:'value',max:45,name:'烂片率 %',nameTextStyle:{color:C.muted,fontSize:11},axisLabel:{color:C.muted,fontSize:11,formatter:'{value}%'},splitLine:{lineStyle:{color:C.grid}}},
+      series:[
+        {name:'方言',type:'bar',data:d,barWidth:20,itemStyle:{color:C.gold,borderRadius:[4,4,0,0]},label:{show:true,position:'top',color:C.gold,fontSize:11,formatter:'{c}%'}},
+        {name:'普通话',type:'bar',data:m,barWidth:20,itemStyle:{color:C.blue,borderRadius:[4,4,0,0]},label:{show:true,position:'top',color:C.blue,fontSize:11,formatter:'{c}%'}}
+      ]
+    }));
+  }
+  document.getElementById('flop-seg').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    document.querySelectorAll('#flop-seg button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); draw(b.dataset.mode);
+  });
+  draw('decade');
+}
+
+/* ---------- 第三幕：类型控制 ---------- */
+function renderType(){
+  const c=mk('chart-type');
+  const names={raw:'原始',exclude:'剔除演唱会/纪录',drama:'仅剧情片'};
+  function draw(mode){
+    const d=AGG.typeCtl[mode].d, m=AGG.typeCtl[mode].m;
+    c.setOption(Object.assign(baseOption(),{
+      legend:{data:['方言','普通话'],textStyle:{color:C.muted,fontSize:12},top:0,right:10},
+      xAxis:{type:'category',data:['均分'],axisLabel:{color:C.muted,fontSize:11}},
+      yAxis:{type:'value',min:5,max:7.5,axisLabel:{color:C.muted,fontSize:11},splitLine:{lineStyle:{color:C.grid}}},
+      series:[
+        {name:'方言',type:'bar',data:[d.mean],barWidth:44,itemStyle:{color:C.gold,borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:C.gold,fontSize:13,fontWeight:700,formatter:function(p){return p.value.toFixed(2)+' · 烂片率 '+AGG.typeCtl[mode].d.below5+'%';}}},
+        {name:'普通话',type:'bar',data:[m.mean],barWidth:44,itemStyle:{color:C.blue,borderRadius:[5,5,0,0]},label:{show:true,position:'top',color:C.blue,fontSize:13,fontWeight:700,formatter:function(p){return p.value.toFixed(2)+' · 烂片率 '+AGG.typeCtl[mode].m.below5+'%';}}}
+      ]
+    }));
+  }
+  document.getElementById('type-seg').addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    document.querySelectorAll('#type-seg button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); draw(b.dataset.mode);
+  });
+  draw('raw');
+  const c2=mk('chart-canto');
+  c2.setOption(Object.assign(baseOption(),{
+    xAxis:{type:'category',data:AGG.canto.map(x=>x.name),axisLabel:{color:C.muted,fontSize:11}},
+    yAxis:{type:'value',min:5,max:8,axisLabel:{color:C.muted,fontSize:11},splitLine:{lineStyle:{color:C.grid}}},
+    series:[{type:'bar',data:AGG.canto.map(x=>({value:x.value,itemStyle:{color:x.color}})),barWidth:44,
+      label:{show:true,position:'top',color:C.text,fontSize:12,formatter:function(p){const x=AGG.canto[p.dataIndex];return x.value.toFixed(2)+' · n='+x.n;}}}]
+  }));
+}
+
+/* ---------- 第四幕：全球对照 ---------- */
+function renderGlobal(){
+  const c=mk('chart-global');
+  const data=AGG.global.slice().sort((a,b)=>a.value-b.value);
+  c.setOption(Object.assign(baseOption(),{
+    grid:{left:130,right:40,top:10,bottom:30},
+    xAxis:{type:'value',name:'烂片率 %',nameTextStyle:{color:C.muted,fontSize:11},axisLabel:{color:C.muted,fontSize:11,formatter:'{value}%'},splitLine:{lineStyle:{color:C.grid}}},
+    yAxis:{type:'category',data:data.map(x=>x.name),axisLabel:{color:function(value,index){return data[index].outlier?'#ff6b5e':'#9aa3b2';},fontSize:12}},
+    series:[{
+      type:'bar',barWidth:18,
+      data:data.map(x=>({value:x.value,itemStyle:{color:x.outlier?'#ff6b5e':'rgba(111,168,255,.75)',borderRadius:[0,5,5,0]}})),
+      label:{show:true,position:'right',color:C.muted,fontSize:11,formatter:function(p){return p.value+'% · n='+data[p.dataIndex].n;}}
+    }]
+  }));
+  const m=document.getElementById('global-metric');
+  m.innerHTML='华语普通话烂片率 <b class="red">24.4%</b>，是日韩 5.8% 的 <b>4.2 倍</b>——全球孤例。方言片 6.4% 反而是正常水平。';
+}
+
+/* ---------- 第五幕：三波浪潮 + 捞一部 ---------- */
+function chipHtml(f,id,wave){
+  const c=document.createElement('button');
+  c.type='button'; c.className='movie-chip';
+  c.innerHTML=`${f.title}<span class="yr">${f.year}</span><span class="rt">★ ${f.rating.toFixed(1)}</span>`;
+  c.addEventListener('click',()=>openByMovie(id,f));
+  document.getElementById(wave).appendChild(c);
+}
+async function openByMovie(id,f){
+  await window.DataService.init().catch(()=>{});
+  const movie=window.DataService.dataset.find(m=>String(m.movieId)===String(id));
+  if(movie){ window.openSharedMovieDetail(movie); }
+  else{
+    window.openSharedMovieDetail({movieId:id,title:f.title,year:f.year,rating:f.rating,
+      votes:0,decade:'',region:'China',genres:'',language:'',languageGroup:'方言',});
+  }
+}
+function renderWaves(){
+  ['hk','sw','mn'].forEach(w=>{
+    AGG.waves[w].forEach(f=>chipHtml(f,f.id,'wave-'+w));
+  });
+  const btn=document.getElementById('lucky-btn');
+  btn.addEventListener('click',async ()=>{
+    await window.DataService.init().catch(()=>{});
+    const pool=window.DataService.dataset.filter(m=>m.isDialect);
+    if(!pool.length){ document.getElementById('lucky-hint').textContent='数据未加载，请通过本地服务器打开本页。'; return; }
+    const m=pool[Math.floor(Math.random()*pool.length)];
+    document.getElementById('lucky-hint').innerHTML=`捞到一部：<b style="color:var(--gold)">《${m.title}》</b>（${m.year} · ★ ${m.rating.toFixed(1)}）`;
+    window.openSharedMovieDetail(m);
+  });
+}
+
+/* ---------- 第五幕 Part B：同导演分差直方图 ---------- */
+function renderDirector(){
+  const c=mk('chart-director');
+  const labels=Object.keys(AGG.directorHist);
+  const values=labels.map(k=>AGG.directorHist[k]);
+  const gold=[]; const blue=[];
+  labels.forEach(k=>{ const v=AGG.directorHist[k]; if(k.indexOf('-')>=0||k.indexOf('−')>=0||k==='0'){blue.push(v);gold.push(0);} else {gold.push(v);blue.push(0);} });
+  c.setOption(Object.assign(baseOption(),{
+    xAxis:{type:'category',data:labels,axisLabel:{color:C.muted,fontSize:11}},
+    yAxis:{type:'value',name:'导演数',nameTextStyle:{color:C.muted,fontSize:11},axisLabel:{color:C.muted,fontSize:11},splitLine:{lineStyle:{color:C.grid}}},
+    series:[
+      {name:'方言更高',type:'bar',data:gold,barWidth:34,itemStyle:{color:'rgba(255,194,75,.85)',borderRadius:[4,4,0,0]},label:{show:true,position:'top',color:C.gold,fontSize:10}},
+      {name:'普通话更高/持平',type:'bar',data:blue,barWidth:34,itemStyle:{color:'rgba(111,168,255,.7)',borderRadius:[4,4,0,0]},label:{show:true,position:'top',color:C.blue,fontSize:10}}
+    ],
+    tooltip:{trigger:'axis',formatter:function(ps){const i=ps[0].dataIndex;return labels[i]+' 分档：<b>'+values[i]+'</b> 位导演';}}
+  }));
+}
+
+/* ---------- 终章：类型均分（可点击） ---------- */
+function renderGenre(){
+  const c=mk('chart-genre');
+  const names=AGG.genreAvg.map(g=>g.name);
+  c.setOption(Object.assign(baseOption(),{
+    xAxis:{type:'category',data:names,axisLabel:{color:C.muted,fontSize:11,interval:0,rotate:30},axisLine:{lineStyle:{color:C.grid}}},
+    yAxis:{type:'value',min:4,max:9,name:'均分',nameTextStyle:{color:C.muted,fontSize:11},axisLabel:{color:C.muted,fontSize:11},splitLine:{lineStyle:{color:C.grid}}},
+    series:[{
+      type:'bar',barWidth:40,data:AGG.genreAvg.map((g,i)=>({
+        value:g.mean,
+        itemStyle:{color:g.mean>=7?'rgba(92,200,161,.85)':g.mean>=6?'rgba(255,194,75,.85)':'rgba(255,107,94,.8)',borderRadius:[4,4,0,0]},
+        gname:g.name
+      })),
+      label:{show:true,position:'top',color:C.text,fontSize:11,formatter:function(p){return p.value.toFixed(2)+' · n='+AGG.genreAvg[p.dataIndex].n;}}
+    }]
+  }));
+  c.on('click',function(p){
+    const g=AGG.genreAvg[p.dataIndex];
+    if(!g)return;
+    const m=document.getElementById('genre-metric');
+    m.innerHTML='<b>'+g.name+'</b> 均分 '+g.mean.toFixed(2)+'（n='+g.n+'）· 该类型 Top 片单：'+
+      g.top.map(t=>'<a href="javascript:void(0)" onclick="window.openByMovie(\''+t.id+'\',{title:\''+t.title+'\',year:'+t.year+',rating:'+t.rating+',id:\''+t.id+'\'})" style="color:var(--gold);text-decoration:underline">《'+t.title+'》'+t.rating.toFixed(1)+'</a>').join('　');
+  });
+}
+
+/* ---------- 终章：多样性 ---------- */
+function renderDiversity(){
+  const c=mk('chart-diversity');
+  const data=AGG.diversity.slice().reverse();
+  c.setOption(Object.assign(baseOption(),{
+    grid:{left:70,right:110,top:10,bottom:30},
+    xAxis:{type:'value',min:5,max:8.5,axisLabel:{color:C.muted,fontSize:10},splitLine:{lineStyle:{color:C.grid}}},
+    yAxis:{type:'category',data:data.map(x=>x.name),axisLabel:{color:'#9aa3b2',fontSize:11}},
+    series:[{
+      type:'bar',barWidth:16,
+      data:data.map(x=>({value:x.mean,itemStyle:{color:x.name==='粤语'?'rgba(255,194,75,.55)':'rgba(92,200,161,.8)',borderRadius:[0,4,4,0]}})),
+      label:{show:true,position:'right',color:C.muted,fontSize:10,formatter:function(p){const x=data[p.dataIndex];return x.mean.toFixed(2)+' · n='+x.n;}}
+    }]
+  }));
+}
+
+/* ---------- 封面粒子：聚成「方言」 ---------- */
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+let W=0,H=0,particles=[],targets=[],coverActive=true;
+function sizeCanvas(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+window.addEventListener('resize',()=>{sizeCanvas(); if(coverActive)buildTargets();});
+function buildTargets(){
+  if(W<=0||H<=0)return; /* 首载瞬间视口可能为 0，避免 getImageData 抛 IndexSizeError 阻断后续渲染 */
+  const off=document.createElement('canvas');
+  off.width=W; off.height=H;
+  const o=off.getContext('2d');
+  o.fillStyle='#000'; o.fillRect(0,0,W,H);
+  o.fillStyle='#fff'; o.textAlign='center'; o.textBaseline='middle';
+  const fs=Math.min(W*0.16,150);
+  o.font=`900 ${fs}px "Noto Serif SC","Songti SC",serif`;
+  o.fillText('方言',W/2,H*0.42);
+  o.font=`600 ${fs*0.16}px sans-serif`;
+  o.fillText('为什么赢了',W/2,H*0.42+fs*0.78);
+  const img=o.getImageData(0,0,W,H).data;
+  targets=[];
+  const step=7;
+  for(let y=0;y<H;y+=step){ for(let x=0;x<W;x+=step){
+    if(img[(y*W+x)*4+3]>100) targets.push({x,y});
+  }}
+  if(targets.length>3200){
+    const out=[];
+    for(let i=0;i<3200;i++){ const t=targets[Math.floor(Math.random()*targets.length)]; out.push({x:t.x+ (Math.random()-.5)*step*2, y:t.y+(Math.random()-.5)*step*2}); }
+    targets=out;
+  }
+}
+function initParticles(){
+  const n=Math.min(1400,Math.floor(W*H/1400));
+  particles=[];
+  for(let i=0;i<n;i++){
+    particles.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,
+      r:Math.random()<0.5?1:2,dialect:Math.random()<0.35});
+  }
+}
+function tick(){
+  ctx.clearRect(0,0,W,H);
+  const drift=!coverActive;
+  for(const p of particles){
+    if(drift){ p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; }
+    else if(targets.length){
+      const t=targets[Math.floor(Math.random()*targets.length)];
+      p.x+=(t.x-p.x)*0.012 + (Math.random()-.5)*.5;
+      p.y+=(t.y-p.y)*0.012 + (Math.random()-.5)*.5;
+    }
+    ctx.globalAlpha=0.75;
+    ctx.fillStyle=p.dialect?'rgba(255,194,75,.9)':'rgba(170,190,220,.55)';
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+  }
+  if(coverActive){
+    ctx.globalAlpha=.35; ctx.fillStyle='#ffc24b';
+    ctx.font=`900 ${Math.min(W*0.16,150)*0.9}px "Noto Serif SC","Songti SC",serif`;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('方言',W/2,H*0.42);
+  }
+  requestAnimationFrame(tick);
+}
+const cover=document.getElementById('cover');
+new IntersectionObserver(es=>{es.forEach(e=>{coverActive=e.isIntersecting; if(e.isIntersecting)buildTargets();});}).observe(cover);
+
+/* ---------- 侧边导航 + 进度 ---------- */
+const navData=[
+  ['cover','封面'],['prologue','序章'],['act1','一·逆转弧线'],['act2','二·产量塌陷'],
+  ['act3','三·门槛效应'],['act4','四·外部参照'],['act5','五·三波浪潮'],['finale','终章'],['method','方法论']
+];
+const nav=document.getElementById('side-nav');
+navData.forEach(([id,label])=>{
+  const b=document.createElement('button');
+  b.textContent=label; b.dataset.target=id;
+  b.addEventListener('click',()=>document.getElementById(id).scrollIntoView({behavior:'smooth'}));
+  nav.appendChild(b);
+});
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){
+    document.querySelectorAll('#side-nav button').forEach(x=>x.classList.toggle('active',x.dataset.target===e.target.id));
+  }});
+},{rootMargin:'-40% 0px -55% 0px'});
+navData.forEach(([id])=>io.observe(document.getElementById(id)));
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('progress-bar').style.width=p+'%';
+},{passive:true});
+
+/* ---------- 启动 ---------- */
+window.addEventListener('resize',resized);
+renderArc(); renderYearly(); renderFlop(); renderType(); renderGlobal(); renderWaves(); renderDirector(); renderGenre(); renderDiversity();
+sizeCanvas(); buildTargets(); initParticles(); tick();
+document.getElementById('enter-btn').addEventListener('click',()=>document.getElementById('prologue').scrollIntoView({behavior:'smooth'}));
+document.getElementById('explore-btn').addEventListener('click',()=>window.open('explore.html','_blank'));
+document.querySelectorAll('.case-film').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const f={title:btn.dataset.title,year:Number(btn.dataset.year),rating:Number(btn.dataset.rating),id:btn.dataset.id};
+    openByMovie(f.id,f);
+  });
+});
+/* scale-tag 说明弹层 */
+const TAG_DEFS={
+  data:'「数据可证」—— 该数字直接出自数据库，可复算，见方法论。',
+  infer:'「推测性口吻」—— 解释性解读，非因果证明。',
+  logic:'「行业观察」—— 行业常识与逻辑推论，无直接数据支撑。'
+};
+let popTimer=null;
+const pop=document.createElement('div');
+pop.id='tag-pop';
+document.body.appendChild(pop);
+document.querySelectorAll('.scale-tag').forEach(tag=>{
+  tag.addEventListener('click',()=>{
+    pop.innerHTML='<b style="color:var(--gold)">'+tag.textContent+'</b>'+TAG_DEFS[tag.classList.contains('data')?'data':tag.classList.contains('infer')?'infer':'logic'];
+    pop.style.display='block';
+    clearTimeout(popTimer);
+    popTimer=setTimeout(()=>{pop.style.display='none';},2600);
+  });
+});
+window.DataService.init().catch(()=>{});
+</script>
+</body>
+</html>

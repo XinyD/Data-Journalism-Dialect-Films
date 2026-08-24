@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>故事宇宙（归档副本）</title>
+    <!--
+        归档副本 · 「终章——故事宇宙」交互舱
+        ------------------------------------
+        从正式前端 frontend/index.html 的 step-12 板块完整抽出，原样保留
+        地图 + 语言星的交互能力。此页面不是主站的一部分，仅供历史留存。
+
+        运行方式：通过本地服务器打开（与主站一致）
+            python serve.py
+            然后访问 http://127.0.0.1:8000/archive/story-universe.html
+
+        <base href="../frontend/"> 让本页所有相对 URL（数据 fetch、构建产物、
+        echarts、字体、CSS）都解析到主站 frontend/ 目录，因此无需复制任何
+        依赖文件。故事宇宙的数据（story_universe.json / china_provinces.json）
+        与构建 chunk 仍由主站 npm run build 产出。
+    -->
+    <base href="../frontend/">
+    <!-- 主站构建样式：文件名带哈希，故从 manifest 读取后动态注入，避免每次 build 失效 -->
+    <script>
+        (function () {
+            var req = new XMLHttpRequest();
+            req.open('GET', 'build/manifest.json', false);
+            try {
+                req.send();
+                var m = JSON.parse(req.responseText);
+                if (m.style) {
+                    var link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = m.style;
+                    document.head.appendChild(link);
+                }
+            } catch (e) {
+                console.error('无法加载主站 manifest，样式缺失：', e);
+            }
+        })();
+    </script>
+    <style>
+        /* 归档页布局：让交互舱全屏铺满，去掉滚动叙事的多 step 布局 */
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #050507;
+            color: #E8E4DC;
+            min-height: 100vh;
+        }
+        body { overflow-x: hidden; }
+
+        #step-12.particle-step {
+            min-height: 100vh;
+            min-height: 100svh;
+            justify-content: flex-start;
+            align-items: stretch;
+            padding: 0;
+        }
+        #step-12 .finale-echo-universe {
+            position: relative;
+            top: auto;
+            height: 100vh;
+            height: 100svh;
+        }
+
+        /* 归档页简易电影详情弹窗 */
+        #archive-movie-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+        #archive-movie-modal.is-on { display: flex; }
+        .archive-modal-card {
+            max-width: 24rem;
+            width: calc(100vw - 3rem);
+            padding: 1.5rem 1.75rem;
+            border-radius: 14px;
+            background: rgba(15, 20, 35, 0.92);
+            border: 1px solid rgba(232, 184, 109, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            font-family: "Noto Serif SC", "Songti SC", serif;
+        }
+        .archive-modal-card h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.15rem;
+            color: #F0D7A8;
+        }
+        .archive-modal-card .row {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+            color: #C8C8CC;
+            line-height: 1.6;
+        }
+        .archive-modal-card .row b { color: #E8E4DC; }
+        .archive-modal-close {
+            display: block;
+            margin: 1.25rem auto 0;
+            padding: 0.4rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: transparent;
+            color: #E8E4DC;
+            font: inherit;
+            cursor: pointer;
+        }
+        .archive-modal-close:hover { background: rgba(255, 255, 255, 0.08); }
+
+        .archive-banner {
+            position: fixed;
+            top: 0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            padding: 0.3rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(15, 20, 35, 0.7);
+            border: 1px solid rgba(232, 184, 109, 0.25);
+            color: #d4a574;
+            font: 0.72rem/1.4 "Noto Sans SC", "PingFang SC", sans-serif;
+            letter-spacing: 0.04em;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="archive-banner">归档副本 · 故事宇宙</div>
+
+    <!-- 终章·故事宇宙（原 frontend/index.html step-12） -->
+    <div class="step particle-step" id="step-12" data-scene="echo-universe">
+        <span class="theory-badge echo-universe-badge">终章——故事宇宙</span>
+        <section class="finale-echo-universe" id="echo-universe" aria-label="故事宇宙">
+            <div class="echo-head">
+                <div class="echo-head-row">
+                    <h2>故事宇宙待你探索</h2>
+                </div>
+                <p id="echo-hint">拖拽缩放地图；点击外围语言星看叙事资源；点击省份或地图光点看地方电影。</p>
+            </div>
+
+            <div class="echo-layer is-on" id="echo-composite-layer">
+                <div id="echo-map-wrap"></div>
+                <div class="echo-lang-fallback" id="echo-lang-fallback"></div>
+                <div class="echo-map-panels">
+                    <div class="echo-panel-card" id="echo-asset-card">
+                        <div class="echo-card-header">
+                            <div>
+                                <h3 id="echo-asset-title">地方资源</h3>
+                            </div>
+                            <button type="button" class="echo-card-close" data-close aria-label="关闭">×</button>
+                        </div>
+                        <div class="echo-card-body">
+                            <p class="echo-card-intro" id="echo-asset-intro"></p>
+                            <div class="echo-tab-row" id="echo-asset-tabs"></div>
+                            <ul class="echo-asset-list" id="echo-asset-list"></ul>
+                        </div>
+                    </div>
+                    <div class="echo-panel-card" id="echo-film-card">
+                        <div class="echo-card-header">
+                            <div>
+                                <h3 id="echo-film-title">已有电影</h3>
+                                <p class="meta" id="echo-film-count"></p>
+                            </div>
+                            <button type="button" class="echo-card-close" data-close aria-label="关闭">×</button>
+                        </div>
+                        <div class="echo-card-body">
+                            <div class="echo-chip-row" id="echo-film-chips"></div>
+                            <div class="echo-film-cards" id="echo-film-list"></div>
+                            <div class="echo-story-block" id="echo-story-hooks-block" hidden>
+                                <h4>可讲故事原型</h4>
+                                <ul id="echo-story-hooks"></ul>
+                            </div>
+                            <p class="echo-pending-note" id="echo-film-pending"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="echo-planet-tip" id="echo-planet-tip" aria-live="polite"></div>
+                <aside class="echo-story-panel" id="echo-story-panel" aria-hidden="true">
+                    <button type="button" class="echo-panel-close" id="echo-panel-close" aria-label="关闭">×</button>
+                    <div id="echo-story-panel-body"></div>
+                </aside>
+            </div>
+        </section>
+    </div>
+
+    <!-- 归档页简易电影详情弹窗（主站的 openMovieDetail 在此不可用） -->
+    <div id="archive-movie-modal" role="dialog" aria-modal="true" aria-labelledby="archive-movie-title">
+        <div class="archive-modal-card">
+            <h3 id="archive-movie-title">电影</h3>
+            <div id="archive-movie-body"></div>
+            <button type="button" class="archive-modal-close" id="archive-movie-close">关闭</button>
+        </div>
+    </div>
+
+    <!-- 依赖：echarts（window.echarts）+ 故事宇宙场景（IIFE，设 window.EchoUniverseScene）。
+         路径由 <base href="../frontend/"> 解析到主站目录。 -->
+    <script src="vendor/echarts.min.js"></script>
+    <script src="js/scenes/echo_universe.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            // 归档页无主站数据集：findPublicationMovie 始终返回 null，
+            // openFilmFromUniverse 会回退到 film 自带字段；openMovieDetail 用简易弹窗。
+            function stubFindPublicationMovie() { return null; }
+
+            var modal = document.getElementById('archive-movie-modal');
+            var titleEl = document.getElementById('archive-movie-title');
+            var bodyEl = document.getElementById('archive-movie-body');
+
+            function escapeHtml(s) {
+                if (s == null) return '';
+                return String(s).replace(/[&<>"']/g, function (c) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+                });
+            }
+
+            function stubOpenMovieDetail(movie) {
+                if (!movie) return;
+                titleEl.textContent = movie.title || '电影';
+                var rows = [];
+                if (movie.year) rows.push(['年份', movie.year]);
+                if (movie.rating != null) rows.push(['评分', '★ ' + Number(movie.rating).toFixed(1)]);
+                if (movie.votes) rows.push(['评价人数', Number(movie.votes).toLocaleString('zh-CN')]);
+                if (movie.director) rows.push(['导演', movie.director]);
+                if (movie.languageGroup) rows.push(['语言组', movie.languageGroup]);
+                if (movie.genres) rows.push(['类型', movie.genres]);
+                bodyEl.innerHTML = rows.map(function (r) {
+                    return '<p class="row"><b>' + escapeHtml(r[0]) + '</b>：' + escapeHtml(r[1]) + '</p>';
+                }).join('');
+                modal.classList.add('is-on');
+            }
+
+            function closeModal() { modal.classList.remove('is-on'); }
+
+            document.getElementById('archive-movie-close').addEventListener('click', closeModal);
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            function boot() {
+                if (!window.EchoUniverseScene) {
+                    console.error('EchoUniverseScene 未加载');
+                    return;
+                }
+                window.EchoUniverseScene.init({
+                    openMovieDetail: stubOpenMovieDetail,
+                    findPublicationMovie: stubFindPublicationMovie,
+                });
+                // 进入视图，触发懒加载与渲染
+                window.EchoUniverseScene.onVisible(true);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', boot);
+            } else {
+                boot();
+            }
+        })();
+    </script>
+</body>
+</html>
