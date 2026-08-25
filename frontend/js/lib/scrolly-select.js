@@ -26,3 +26,20 @@ export function isFarJump(fromIndex, toIndex) {
     if (fromIndex < 0 || toIndex < 0) return false;
     return Math.abs(toIndex - fromIndex) >= 2;
 }
+
+export function narrativeProgress(scrollY, start, end) {
+    const span = Math.max(1, Number(end) - Number(start));
+    return Math.max(0, Math.min(1, (Number(scrollY) - Number(start)) / span));
+}
+
+export function chapterFillFromGeometry(steps, currentId) {
+    if (!steps.length) return { top: 0, height: 0 };
+    const first = steps[0].top;
+    const last = steps[steps.length - 1];
+    const total = Math.max(1, last.top + last.height - first);
+    const current = steps.find(step => step.id === currentId) || steps[0];
+    return {
+        top: (current.top - first) / total * 100,
+        height: current.height / total * 100
+    };
+}

@@ -249,15 +249,22 @@ html[data-prologue-state="WORLD_MAP"] .chart-background::before {
 .prologue-section { position: relative; pointer-events: none; }
 .particle-step {
     position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
+    min-height: 72svh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
-    padding: 7vh 10vw;
+    padding: 8vh 10vw 6vh;
     pointer-events: none;
+}
+.intro-step,
+#step-intro,
+#step-8c,
+#step-8e,
+#step-9,
+#step-10,
+#step-11 {
+    min-height: 100svh;
 }
 .particle-step > h2,
 .particle-step > p:not(.hero-subtitle):not(.scene-hook),
@@ -274,9 +281,9 @@ html[data-prologue-state="WORLD_MAP"] .chart-background::before {
     border-radius: 8px;
     background: rgba(10, 10, 12, 0.7);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.34);
-    opacity: 0.12;
-    transform: translateY(32px) scale(0.97);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
     pointer-events: auto;
 }
 .particle-step > h2 {
@@ -1092,9 +1099,8 @@ button.movie-card:focus-visible { outline: 2px solid #FFF; outline-offset: 3px; 
 .scene-hook {
     max-width: min(96vw, 100%);
     width: max-content;
-    margin: 0 auto 5vh;
-    margin-top: auto;
-    padding: 32px 0 0;
+    margin: 2.5rem auto 2vh;
+    padding: 16px 0 0;
     border: none;
     background: none;
     box-shadow: none;
@@ -1102,9 +1108,9 @@ button.movie-card:focus-visible { outline: 2px solid #FFF; outline-offset: 3px; 
     align-self: center;
     text-align: center;
     white-space: nowrap;
-    opacity: 0.12;
-    transform: translateY(32px) scale(0.97);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
     pointer-events: auto;
     font-family: var(--font-serif);
     font-size: clamp(0.5625rem, 1.05vw + 0.42rem, var(--text-sm));

@@ -1,5 +1,5 @@
 import { rafThrottle, prefersReducedMotion } from './lib/schedule.js';
-import { isFarJump, pickCurrentStep } from './lib/scrolly-select.js';
+import { chapterFillFromGeometry, isFarJump, narrativeProgress, pickCurrentStep } from './lib/scrolly-select.js';
 
 const STEP_HYSTERESIS = 0.12;
 const RATIO_THRESHOLDS = [0, 0.08, 0.16, 0.28, 0.4, 0.55, 0.7, 0.85, 1];
@@ -17,19 +17,30 @@ function getChapterNavFill() {
     return document.querySelector('.chapter-nav-fill');
 }
 
+function pageTop(el) {
+    return el.getBoundingClientRect().top + window.scrollY;
+}
+
+function stepGeometry() {
+    return [...document.querySelectorAll('.particle-step')].map(step => ({
+        id: step.id,
+        top: pageTop(step),
+        height: step.offsetHeight
+    }));
+}
+
 function updateChapterNavFill(currentStep) {
     const fill = getChapterNavFill();
     if (!fill || !currentStep) return;
-    const steps = [...document.querySelectorAll('.particle-step')];
-    const index = steps.indexOf(currentStep);
-    if (index < 0 || steps.length <= 1) {
-        fill.style.height = index >= 0 ? '100%' : '0%';
+    const geometry = stepGeometry();
+    if (geometry.length <= 1) {
+        fill.style.height = geometry.length ? '100%' : '0%';
         fill.style.top = '0%';
         return;
     }
-    const segment = 100 / steps.length;
-    fill.style.height = `${segment}%`;
-    fill.style.top = `${index * segment}%`;
+    const rect = chapterFillFromGeometry(geometry, currentStep.id);
+    fill.style.top = `${rect.top}%`;
+    fill.style.height = `${rect.height}%`;
 }
 
 export function updateChapterNav(currentStep) {
@@ -95,6 +106,19 @@ export function initScrollytelling(deps) {
     let currentStep = steps[0] || null;
     let pendingPinId = null;
     let selectRaf = 0;
+    const bar = document.querySelector('#story-progress i');
+
+    function updateProgress() {
+        if (bar && steps.length) {
+            const first = steps[0];
+            const last = steps[steps.length - 1];
+            const start = pageTop(first);
+            const end = pageTop(last) + last.offsetHeight - window.innerHeight;
+            bar.style.width = `${narrativeProgress(window.scrollY, start, end) * 100}%`;
+        }
+        if (currentStep) updateChapterNavFill(currentStep);
+        if (window.ScaleScene) window.ScaleScene.onScroll();
+    }
 
     function sceneIdOf(step) {
         return (step && step.getAttribute('data-scene')) || 'universe';
@@ -124,7 +148,10 @@ export function initScrollytelling(deps) {
                 prologueChanged = true;
             }
         }
-        if (sameStep && !prologueChanged) return;
+        if (sameStep && !prologueChanged) {
+            updateProgress();
+            return;
+        }
         deps.activateSceneInteraction(sceneId, currentStep);
         const sameScene = prevScene === sceneId && !prologueChanged;
         if (!sameScene || prologueChanged) {
@@ -132,6 +159,7 @@ export function initScrollytelling(deps) {
         }
         if (window.WaveScene) window.WaveScene.onSceneChange(sceneId);
         if (window.ScaleScene) window.ScaleScene.onSceneChange(sceneId);
+        updateProgress();
     }
 
     function commitStep() {
@@ -212,14 +240,9 @@ export function initScrollytelling(deps) {
         });
     }
 
-    const bar = document.querySelector('#story-progress i');
-    const onScroll = rafThrottle(() => {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        if (bar && max > 0) bar.style.width = `${Math.min(100, (window.scrollY / max) * 100)}%`;
-        if (window.ScaleScene) window.ScaleScene.onScroll();
-    });
+    const onScroll = rafThrottle(updateProgress);
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    updateProgress();
     updateChapterNav(document.querySelector('.particle-step.is-active') || steps[0]);
     scheduleSelect();
 }

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { isFarJump, pickCurrentStep } from '../frontend/js/lib/scrolly-select.js';
+import { chapterFillFromGeometry, isFarJump, narrativeProgress, pickCurrentStep } from '../frontend/js/lib/scrolly-select.js';
 
 const ids = ['step-0', 'step-intro', 'step-2', 'step-7', 'step-8e'];
 
@@ -34,4 +34,22 @@ test('isFarJump is true across two or more steps', () => {
     assert.equal(isFarJump(0, 2), true);
     assert.equal(isFarJump(4, 1), true);
     assert.equal(isFarJump(-1, 3), false);
+});
+
+test('narrativeProgress is clamped to the story range', () => {
+    assert.equal(narrativeProgress(0, 0, 1000), 0);
+    assert.equal(narrativeProgress(250, 0, 1000), 0.25);
+    assert.equal(narrativeProgress(2000, 0, 1000), 1);
+    assert.equal(narrativeProgress(100, 200, 1200), 0);
+});
+
+test('chapterFillFromGeometry uses real step heights', () => {
+    const steps = [
+        { id: 'a', top: 0, height: 100 },
+        { id: 'b', top: 100, height: 300 },
+        { id: 'c', top: 400, height: 100 }
+    ];
+    const fill = chapterFillFromGeometry(steps, 'b');
+    assert.equal(fill.top, 20);
+    assert.equal(fill.height, 60);
 });
