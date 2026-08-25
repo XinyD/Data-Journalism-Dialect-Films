@@ -108,6 +108,18 @@ export function initScrollytelling(deps) {
     let selectRaf = 0;
     const bar = document.querySelector('#story-progress i');
 
+    function refreshRatiosFromView() {
+        const top = window.innerHeight * 0.22;
+        const bottom = window.innerHeight * 0.78;
+        const band = Math.max(1, bottom - top);
+        for (let i = 0; i < steps.length; i += 1) {
+            const step = steps[i];
+            const rect = step.getBoundingClientRect();
+            const visible = Math.max(0, Math.min(rect.bottom, bottom) - Math.max(rect.top, top));
+            ratios.set(step.id, visible / band);
+        }
+    }
+
     function updateProgress() {
         if (bar && steps.length) {
             const first = steps[0];
@@ -240,8 +252,15 @@ export function initScrollytelling(deps) {
         });
     }
 
-    const onScroll = rafThrottle(updateProgress);
+    const onScroll = rafThrottle(() => {
+        updateProgress();
+        if (!pendingPinId) {
+            refreshRatiosFromView();
+            scheduleSelect();
+        }
+    });
     window.addEventListener('scroll', onScroll, { passive: true });
+    refreshRatiosFromView();
     updateProgress();
     updateChapterNav(document.querySelector('.particle-step.is-active') || steps[0]);
     scheduleSelect();

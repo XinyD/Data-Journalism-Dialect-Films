@@ -2839,15 +2839,28 @@ function particleLook(sceneId, d) {
 function selectDrawRows(budget) {
     if (particleData.length <= budget) return particleData;
     const focused = [];
+    const keep = [];
     const rest = [];
     for (let i = 0; i < particleData.length; i += 1) {
         const row = particleData[i];
         if (isSceneFocused(row)) focused.push(row);
+        else if (row.mobileKeep || row.dustKeep) keep.push(row);
         else rest.push(row);
     }
-    if (focused.length >= budget) return focused.slice(0, budget);
-    rest.sort((a, b) => visualKeepPriority(b) - visualKeepPriority(a));
-    return focused.concat(rest.slice(0, budget - focused.length));
+    if (focused.length >= budget) return focused;
+    const fill = keep.concat(rest);
+    return focused.concat(fill.slice(0, budget - focused.length));
+}
+
+function projectDataPoint(x, y, axes, box) {
+    const affine = particleChart ? seriesPixelAffine(0) : null;
+    if (affine) {
+        return [
+            affine.origin[0] + x * affine.sx + y * affine.tx,
+            affine.origin[1] + x * affine.sy + y * affine.ty
+        ];
+    }
+    return plotToPixel(x, y, axes, box);
 }
 
 function buildPixelPlot(sceneId, rows) {
@@ -2858,7 +2871,7 @@ function buildPixelPlot(sceneId, rows) {
     for (let i = 0; i < rows.length; i += 1) {
         const d = rows[i];
         const point = layoutXY(sceneId, d, env);
-        const pixel = plotToPixel(point.x, point.y, axes, box);
+        const pixel = projectDataPoint(point.x, point.y, axes, box);
         const look = particleLook(sceneId, d);
         items.push({
             id: d.id,
@@ -2958,7 +2971,6 @@ function startPlotTween(snap, toItems) {
             return;
         }
         plotTweenRaf = 0;
-        if (activeSceneId !== 'universe') blitPixelItems(buildPixelPlot(activeSceneId, particleData));
     };
     plotTweenRaf = requestAnimationFrame(tick);
 }
@@ -2970,14 +2982,15 @@ function paintStoryParticles(sceneId, allowTween = true) {
         paintUniverseLive();
         return;
     }
+    const items = buildPixelPlot(sceneId, selectDrawRows(TWEEN_BUDGET));
     const canTween = allowTween
         && !prefersReducedMotion()
         && universeLayer.count() > 0;
     if (!canTween) {
-        blitPixelItems(buildPixelPlot(sceneId, particleData));
+        blitPixelItems(items);
         return;
     }
-    startPlotTween(universeLayer.snapshot(), buildPixelPlot(sceneId, selectDrawRows(TWEEN_BUDGET)));
+    startPlotTween(universeLayer.snapshot(), items);
 }
 
 function paintLanguageStarfield() {
@@ -3059,13 +3072,6 @@ const particleScenes = {
                 { xAxis: 5.4, yAxis: otherRegions.mean + otherRegions.sd }
             ]
         ];
-        const data = (focusedComparison ? selectedRows : particleData).map(d => [
-            focusedComparison ? (d.isHollywood ? 4 : 5) + d.jitterX : d.genreCode + d.jitterGenreX,
-            d.rating,
-            d.isHollywood ? 1 : 0,
-            d.id,
-            isSceneFocused(d)
-        ]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3093,7 +3099,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: data,
+                data: [],
                 symbolSize: val => val[2] === 1 ? 5 : 3,
                 itemStyle: { color: p => p.value[2] === 1 ? COLORS.hollywood : COLORS.asian },
                 markLine: createGuideMarkLine(guides),
@@ -3110,7 +3116,6 @@ const particleScenes = {
         const regionStats = summarize(selectedRows);
         const standardized = standardizedMeanByDecadeGenre(selectedRows, particleData);
         const overallStats = summarize(particleData);
-        const data = particleData.map(d => [regionPosition(d.regionCode) + d.jitterX, d.rating, d.regionCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3132,7 +3137,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: data,
+                data: [],
                 symbolSize: val => val[2] === 2 || val[2] === 3 ? 5 : 2,
                 itemStyle: { 
                     color: p => {
@@ -3156,7 +3161,6 @@ const particleScenes = {
     'decade-bubble': () => {
         const selectedDecade = sceneState['decade-bubble'];
         const decadeStats = summarize(particleData.filter(row => decadeOf(row.year) === selectedDecade));
-        const data = particleData.map(d => [d.year, d.rating, decadeOf(d.year) === sceneState['decade-bubble'] ? 1 : 0, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3180,7 +3184,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: data,
+                data: [],
                 symbolSize: val => val[2] === 1 ? 5 : 2,
                 itemStyle: { 
                     color: p => p.value[2] === 1 ? 'rgba(185, 196, 206, 0.86)' : 'rgba(255, 255, 255, 0.12)'
@@ -3200,7 +3204,6 @@ const particleScenes = {
         const languagePosition = code => languageOrder.indexOf(code);
         const languageStats = summarize(particleData.filter(row => row.langCode === selectedLanguage));
         const overallStats = summarize(particleData);
-        const data = particleData.map(d => [languagePosition(d.langCode) + d.jitterGenreX, d.rating, d.langCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3222,7 +3225,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: data,
+                data: [],
                 symbolSize: val => val[2] === selectedLanguage ? 6 : 3,
                 itemStyle: { 
                     color: p => LANGUAGE_COLORS[p.value[2]] || 'rgba(255, 255, 255, 0.15)'
@@ -3240,7 +3243,6 @@ const particleScenes = {
         const cutoff = Number(sceneState['century-decline']);
         const before = summarize(particleData.filter(row => row.year < cutoff));
         const after = summarize(particleData.filter(row => row.year >= cutoff));
-        const data = particleData.map(d => [d.year, d.rating, d.year >= cutoff ? 1 : 0, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3262,7 +3264,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: data,
+                data: [],
                 symbolSize: 4,
                 itemStyle: { 
                     color: p => p.value[2] === 1 ? COLORS.afterCutoff : 'rgba(132, 182, 244, 0.48)'
@@ -3283,7 +3285,6 @@ const particleScenes = {
         const regionOrder = [0, 1, 2, 3, 4].filter(code => code !== selectedRegion).concat(selectedRegion);
         const regionPosition = code => regionOrder.indexOf(code);
         const regionStats = summarize(particleData.filter(row => row.regionCode === selectedRegion));
-        const data = particleData.map(d => [regionPosition(d.regionCode) + d.jitterX, d.rating, d.regionCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3305,7 +3306,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: data,
+                data: [],
                 symbolSize: val => val[2] === selectedRegion ? 6 : 2,
                 itemStyle: { 
                     color: p => {
@@ -3331,7 +3332,6 @@ const particleScenes = {
         const selectedRows = particleData.filter(row => SCENE_INTERACTIONS['chinese-dialect'].filter(row, selectedPeriod));
         const mandarin = summarize(selectedRows.filter(row => row.langCode === 2));
         const dialect = summarize(selectedRows.filter(row => row.langCode === 3));
-        const data = particleData.map(d => [languageDisplayIndex(d.langCode) + d.jitterGenreX, d.rating, d.langCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3353,7 +3353,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: data,
+                data: [],
                 symbolSize: val => {
                     if (val[2] !== 2 && val[2] !== 3) return 2;
                     return val[4] ? 6 : 2;
@@ -3385,12 +3385,6 @@ const particleScenes = {
         const selectedRows = particleData.filter(row => SCENE_INTERACTIONS['dual-director'].filter(row, selected));
         const mandarin = summarize(selectedRows.filter(row => row.langCode === 2));
         const dialect = summarize(selectedRows.filter(row => row.langCode === 3));
-        const dualX = code => (code === 2 ? 0 : 1);
-        const data = particleData.map(d => {
-            const inPair = d.langCode === 2 || d.langCode === 3;
-            const x = inPair ? dualX(d.langCode) + d.jitterX * 0.55 : -1.2 + d.jitterX * 0.2;
-            return [x, d.rating, d.langCode, d.id, isSceneFocused(d)];
-        });
         const dialectGuide = selected === '2' ? NaN : (dialect.n ? dialect.mean : NaN);
         const mandarinGuide = selected === '3' ? NaN : (mandarin.n ? mandarin.mean : NaN);
         return {
@@ -3415,7 +3409,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: data,
+                data: [],
                 symbolSize: val => {
                     if (val[2] !== 2 && val[2] !== 3) return 1.5;
                     return val[4] ? 6 : 2.4;
@@ -3443,10 +3437,6 @@ const particleScenes = {
         const phase = globalLayersPhase || 'pull-back';
         const compact = window.innerWidth <= 700;
         const showThreshold = phase !== 'pull-back';
-        const data = particleData.map(d => {
-            const group = globalLayerOf(d);
-            return [globalLayerX(d, group, phase), d.rating, group, d.id, 1];
-        });
         const names = compact
             ? GLOBAL_LAYER_GROUPS.map(group => group.short)
             : GLOBAL_LAYER_GROUPS.map(group => group.label);
@@ -3504,7 +3494,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data,
+                data: [],
                 symbolSize: val => {
                     const group = val[2];
                     const movie = particleData[val[3]];
@@ -3563,18 +3553,6 @@ const particleScenes = {
     }),
     'dialect-flops': () => {
         const phase = resolveFlopPhase(flopPhase);
-        const layerPhase = globalLayersPhase || 'mandarin-outlier';
-        const data = particleData.map(row => {
-            const lit = isFlopLit(row, phase);
-            const group = globalLayerOf(row);
-            return [
-                lit ? dialectFlopX(row, phase) : globalLayerX(row, group, layerPhase),
-                row.rating,
-                dialectFlopRole(row),
-                row.id,
-                lit ? 1 : 0
-            ];
-        });
         const guides = [{
             ...horizontalGuide(5, '方言片低分线', GUIDE_COLORS.threshold, 'insideEndTop'),
             type: 'solid',
@@ -3616,7 +3594,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data,
+                data: [],
                 _noDim: true,
                 symbolSize: val => {
                     if (!val || val[4] === 0) return 1.2;
@@ -3674,17 +3652,10 @@ function renderParticleScene(sceneId, force = false) {
         return;
     }
     lastVisualKey = visualKey;
-    if (isCoverUniverse) {
-        stopPlotTween();
-        startUniverseLoop();
-    } else if (isCanvasParticleScene(sceneId)) {
-        paintStoryParticles(sceneId, !force);
-    }
     if(!particleChart || !particleScenes[sceneId]) return;
     const option = particleScenes[sceneId]();
     const largeDataset = particleData.length > 20000;
-    const reducedMotion = window.innerWidth <= 700
-        || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotion = prefersReducedMotion();
     const compactMotion = reducedMotion || largeDataset;
     const isUniverse = sceneId === 'universe' || sceneId === 'final-universe' || sceneId === 'three-waves' || sceneId === 'scale' || sceneId === 'echo-narrative';
     const isGlobalLayers = sceneId === 'global-layers';
@@ -3812,6 +3783,12 @@ function renderParticleScene(sceneId, force = false) {
     };
     particleChart.setOption(option, true);
     rememberPlottedSeries(option.series);
+    if (isCoverUniverse) {
+        stopPlotTween();
+        startUniverseLoop();
+    } else if (isCanvasParticleScene(sceneId)) {
+        paintStoryParticles(sceneId, !force);
+    }
     if (isDialectFlops) {
         scheduleFlopOverlay(0);
     }
