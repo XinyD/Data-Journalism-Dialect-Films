@@ -45,6 +45,9 @@ jobs:
         run: npm run check:js
         # Covers frontend/js/scenes/scene_waves.js and the other story modules.
 
+      - name: Run JavaScript unit tests
+        run: npm run test:js
+
       - name: Build frontend bundles
         run: |
           npm ci

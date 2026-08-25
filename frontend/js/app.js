@@ -7,11 +7,47 @@ import { initChapterNav, initScrollytelling } from './scrolly.js';
 import { initExplorerScene, exitExplorer, isExplorerOpen } from './scenes/explorer_scene.js';
 import { createFlopLinkSync } from './scenes/flop-overlay.js';
 import { syncCoverReveal } from './scenes/prologue.js';
+import { createUniverseLayer, parseRgba } from './scenes/universe_canvas.js';
+import {
+    easeCubicOut,
+    layoutAxes,
+    layoutXY,
+    plotToPixel,
+    usesPlotAxes
+} from './scenes/scene_layout.js';
 
 let particleChart = null;
 let particleData = [];
 let plottedSeriesData = [];
 let visualKeepIsMobile = false;
+let universeLayer = null;
+let lastVisualKey = '';
+let lastLayoutWidth = 0;
+const STARFIELD_SCENES = new Set(['final-universe', 'three-waves', 'scale', 'echo-narrative']);
+
+const CANVAS_SCENES = new Set([
+    'universe',
+    'asian-breakout',
+    'european-slow',
+    'language-babel',
+    'decade-bubble',
+    'century-decline',
+    'chinese-dialect',
+    'global-layers',
+    'dialect-flops',
+    'dual-director',
+    'final-universe',
+    'three-waves',
+    'scale',
+    'echo-narrative'
+]);
+const TWEEN_MS = 920;
+const TWEEN_BUDGET = 14000;
+let plotTweenRaf = 0;
+
+function isCanvasParticleScene(sceneId) {
+    return CANVAS_SCENES.has(sceneId);
+}
 
 // Dark-theme palette shared by the particle scenes and their guide lines.
 const COLORS = {
@@ -427,9 +463,7 @@ let prologueFlyToMap = false;
 let visualMaskGrids = null;
 let coverLayout = { centroids: {}, packed: {}, rings: {}, scales: {} };
 let universeRaf = 0;
-let lastUniversePaint = 0;
 let lastUniverseMotionKey = '';
-let universePlotCache = [];
 const VISUAL_BUDGET_DESKTOP = 10800;
 const VISUAL_BUDGET_MOBILE = 7200;
 const DUST_BUDGET_DESKTOP = 4000;
@@ -597,11 +631,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     const onParticleResizeFrame = rafThrottle(() => {
         cancelFlopOverlay();
         if (particleChart) particleChart.resize();
+        if (universeLayer) universeLayer.resize();
+        if (activeSceneId === 'universe') {
+            lastUniverseMotionKey = '';
+            paintUniverseLive();
+        } else if (isCanvasParticleScene(activeSceneId)) {
+            paintStoryParticles(activeSceneId, false);
+        }
         if (window.WaveScene) window.WaveScene.onResize();
     });
+    lastLayoutWidth = window.innerWidth;
     const onParticleResizeDebounced = debounce(() => {
         if (isMobileViewport() !== visualKeepIsMobile) assignVisualKeep();
-        if (particleChart) renderParticleScene(activeSceneId);
+        const widthChanged = window.innerWidth !== lastLayoutWidth;
+        lastLayoutWidth = window.innerWidth;
+        if (widthChanged && particleChart) renderParticleScene(activeSceneId, true);
     }, 200);
     window.addEventListener('resize', () => {
         onParticleResizeFrame();
@@ -609,11 +653,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
-function hexToRgba(hex, alpha) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+function hexToRgb(hex) {
+    return [
+        parseInt(hex.slice(1, 3), 16),
+        parseInt(hex.slice(3, 5), 16),
+        parseInt(hex.slice(5, 7), 16)
+    ];
 }
 
 function clamp01(value) {
@@ -1367,7 +1412,7 @@ function visualGroupColor(group, brightness, mapped, movie, appear, dim) {
         const tone = depth * 0.7 + brightness * 0.3;
         const alpha = (0.10 + tone * 0.52) * Math.max(0, appear);
         const rgb = Math.round(198 + tone * 38);
-        return `rgba(${rgb}, ${Math.min(255, rgb + 2)}, ${Math.min(255, rgb + 8)}, ${Math.max(0.08, Math.min(0.62, alpha))})`;
+        return [rgb, Math.min(255, rgb + 2), Math.min(255, rgb + 8), Math.max(0.08, Math.min(0.62, alpha))];
     }
     const edge = movie ? movie.visualEdge : 0.55;
     const voidness = movie ? movie.visualVoid : 0;
@@ -1379,14 +1424,14 @@ function visualGroupColor(group, brightness, mapped, movie, appear, dim) {
         const depth = movie ? movie.visualSize : 0.4;
         if (prologueState === PROLOGUE_STATES.STAR_FIELD) {
             const alpha = (0.08 + brightness * 0.16 + depth * 0.12) * Math.max(0, appear);
-            return `rgba(220, 220, 226, ${Math.max(0.08, Math.min(0.36, alpha))})`;
+            return [220, 220, 226, Math.max(0.08, Math.min(0.36, alpha))];
         }
         if (prologueState === PROLOGUE_STATES.REGION_FOCUS && dim) {
             const alpha = (0.06 + brightness * 0.08 + depth * 0.06) * Math.max(0, appear);
-            return `rgba(220, 220, 226, ${Math.max(0.06, Math.min(0.20, alpha))})`;
+            return [220, 220, 226, Math.max(0.06, Math.min(0.20, alpha))];
         }
         const alpha = (0.22 + brightness * 0.33) * air * shown * (dim ? 0.62 : 1);
-        return `rgba(220, 220, 226, ${Math.max(0.16, Math.min(0.55, alpha))})`;
+        return [220, 220, 226, Math.max(0.16, Math.min(0.55, alpha))];
     }
     let hex = VISUAL_GROUP_COLORS[group] || VISUAL_GROUP_COLORS.unknown;
     if (onCover && group === 'china') hex = COVER_CHINA_HEX;
@@ -1395,7 +1440,8 @@ function visualGroupColor(group, brightness, mapped, movie, appear, dim) {
     const focused = prologueState === PROLOGUE_STATES.REGION_FOCUS && !dim;
     const minA = onCover ? (group === 'china' ? 0.46 : 0.42) : focused ? 0.42 : 0.28;
     const maxA = onCover ? (group === 'china' ? 0.92 : 0.86) : focused ? 0.88 : 0.85;
-    return hexToRgba(hex, Math.max(minA, Math.min(maxA, alpha)));
+    const rgb = hexToRgb(hex);
+    return [rgb[0], rgb[1], rgb[2], Math.max(minA, Math.min(maxA, alpha))];
 }
 
 function universeSymbolSize(movie, brightness, appear, dim) {
@@ -1823,7 +1869,7 @@ const SCENE_INTERACTIONS = {
         label: '第一幕 · 地区分布',
         prompt: '逐个地区查看原始均分与年代×主类型标准化均分。',
         type: 'buttons',
-        defaultValue: '1',
+        defaultValue: '3',
         options: REGION_LABELS.map((label, index) => ({ value: String(index), label })),
         filter: (row, value) => row.regionCode === Number(value),
         metrics: value => {
@@ -1867,7 +1913,7 @@ const SCENE_INTERACTIONS = {
         label: '第三幕 · 分析语言组',
         prompt: '切换分析语言组，同时读取占比、均值和高分占比。此处语言均指主要语言；混合语种按片单首位归组。',
         type: 'buttons',
-        defaultValue: '0',
+        defaultValue: '3',
         options: languageOptionList(false),
         filter: (row, value) => row.langCode === Number(value),
         metrics: value => {
@@ -1918,7 +1964,7 @@ const SCENE_INTERACTIONS = {
         label: '第二幕 · 下限检验',
         prompt: '切换地区，对比第一四分位数、中位数和低分占比。',
         type: 'buttons',
-        defaultValue: '1',
+        defaultValue: '3',
         options: REGION_LABELS.map((label, index) => ({ value: String(index), label })),
         filter: (row, value) => row.regionCode === Number(value),
         metrics: value => {
@@ -2452,6 +2498,10 @@ function pickRandomMovie(sceneId) {
     const movie = candidates[Math.floor(Math.random() * candidates.length)];
     renderPickedMovie(sceneId, movie, '随机打捞');
     openMovieDetail(movie);
+    if (isCanvasParticleScene(sceneId) && universeLayer) {
+        universeLayer.highlight(movie.id);
+        return;
+    }
     if (sceneId === activeSceneId && particleChart) {
         const plottedRows = plottedSeriesData[0] || [];
         const dataIndex = plottedRows.findIndex(item => {
@@ -2555,19 +2605,42 @@ function openPickedParticle(movie) {
     openMovieDetail(movie);
 }
 
+function movieTooltipHtml(movie) {
+    if (!movie) return '';
+    const visualLabel = VISUAL_GROUP_LABELS[movie.visualGroup] || '';
+    return `<strong style="font-size:14px">${escapeHtml(movie.title)}</strong><br>`
+        + `${movie.year} · ${movie.rating.toFixed(1)} 分 · ${Number(movie.votes || 0).toLocaleString('zh-CN')} 人评价<br>`
+        + `${REGION_LABELS[movie.regionCode] || '未知地区'} · ${LANGUAGE_LABELS[movie.langCode] || '未知语言组'}`
+        + (visualLabel ? `<br>视觉地区 ${escapeHtml(visualLabel)}` : '');
+}
+
+function initUniverseLayer() {
+    const canvas = document.getElementById('universe-layer');
+    if (!canvas || universeLayer) return;
+    universeLayer = createUniverseLayer({
+        canvas,
+        onPick(movieId) {
+            const movie = Number.isInteger(movieId) ? particleData[movieId] : null;
+            if (movie) openPickedParticle(movie);
+        },
+        formatTooltip(movieId) {
+            const movie = Number.isInteger(movieId) ? particleData[movieId] : null;
+            return movieTooltipHtml(movie);
+        }
+    });
+}
+
 function initParticleEngine() {
     const container = document.getElementById('chart-container');
     particleChart = echarts.init(container, 'dark');
-    particleChart.on('click', params => {
-        if (isMobileViewport()) return;
-        const movieId = params.value && params.value[3];
-        const movie = particleData[movieId];
-        if (movie) openPickedParticle(movie);
-    });
     particleChart.getZr().on('click', event => {
-        if (!isMobileViewport()) return;
+        if (isCanvasParticleScene(activeSceneId)) return;
         const movie = findNearestMovieByPixel(event.offsetX, event.offsetY, 20);
         if (movie) openPickedParticle(movie);
+    });
+    initUniverseLayer();
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && activeSceneId === 'universe') startUniverseLoop();
     });
     setPrologueState(PROLOGUE_STATES.WORLD_MAP);
     renderParticleScene('universe');
@@ -2575,73 +2648,13 @@ function initParticleEngine() {
 }
 
 function universeChartAr() {
+    if (universeLayer && universeLayer.isVisible()) {
+        const size = universeLayer.cssSize();
+        return Math.max(0.5, size.width / Math.max(1, size.height));
+    }
     const chartW = particleChart ? particleChart.getWidth() : window.innerWidth;
     const chartH = particleChart ? particleChart.getHeight() : window.innerHeight;
     return Math.max(0.5, chartW / Math.max(1, chartH));
-}
-
-function buildUniversePlot() {
-    const ar = universeChartAr();
-    const rows = prologueVisibleRows();
-    const moving = prologueMotionBusy();
-    if (universePlotCache.length !== rows.length) {
-        universePlotCache = rows.map(() => ({
-            value: [0, 0, '', 0, 0.5, 0, 1],
-            id: '0',
-            symbolSize: 2,
-            itemStyle: { color: 'rgba(220, 220, 226, 0.16)' }
-        }));
-    }
-    for (let i = 0; i < rows.length; i += 1) {
-        const d = rows[i];
-        const pose = universePose(d, ar);
-        const brightness = ratingBrightness(d.rating);
-        const dim = prologueState === PROLOGUE_STATES.REGION_FOCUS
-            && d.visualGroup !== prologueFocusGroup;
-        const item = universePlotCache[i];
-        item.id = String(d.id);
-        item.value[0] = pose.x;
-        item.value[1] = pose.y;
-        item.value[2] = d.visualGroup;
-        item.value[3] = d.id;
-        item.value[4] = brightness;
-        item.value[5] = pose.onMap;
-        item.value[6] = pose.appear;
-        item.symbolSize = universeSymbolSize(d, brightness, pose.appear, dim);
-        const color = visualGroupColor(
-            d.visualGroup,
-            brightness,
-            pose.onMap === 1,
-            d,
-            pose.appear,
-            dim
-        );
-        const glowing = !moving
-            && pose.onMap
-            && !isCoverDust(d)
-            && brightness >= 0.87
-            && pose.appear > 0.55;
-        if (glowing) {
-            const hex = prologueState === PROLOGUE_STATES.WORLD_MAP && d.visualGroup === 'china'
-                ? COVER_CHINA_HEX
-                : (VISUAL_GROUP_COLORS[d.visualGroup] || VISUAL_GROUP_COLORS.unknown);
-            item.itemStyle = {
-                color,
-                shadowBlur: 6,
-                shadowColor: hexToRgba(hex, 0.38)
-            };
-        } else if (isCoverDust(d)) {
-            const depth = Number.isFinite(d.dustDepth) ? d.dustDepth : 0.45;
-            item.itemStyle = {
-                color,
-                shadowBlur: 1.1 + depth * 2.4,
-                shadowColor: color
-            };
-        } else {
-            item.itemStyle = { color };
-        }
-    }
-    return universePlotCache;
 }
 
 function prologueMotionKey() {
@@ -2655,18 +2668,320 @@ function prologueMotionKey() {
 }
 
 function paintUniverseLive() {
-    if (!particleChart || activeSceneId !== 'universe') return;
+    if (!universeLayer || activeSceneId !== 'universe') return;
     advancePrologueMotion(performance.now());
     const key = prologueMotionKey();
     if (key === lastUniverseMotionKey) return;
     lastUniverseMotionKey = key;
-    const data = buildUniversePlot();
-    rememberPlottedSeries([{ data }]);
-    particleChart.setOption({
-        animation: false,
-        series: [{ data }]
-    }, { notMerge: false, lazyUpdate: true, silent: true });
+    const ar = universeChartAr();
+    const rows = prologueVisibleRows();
+    const moving = prologueMotionBusy();
+    universeLayer.begin(rows.length, 100 * ar);
+    for (let i = 0; i < rows.length; i += 1) {
+        const d = rows[i];
+        const pose = universePose(d, ar);
+        const brightness = ratingBrightness(d.rating);
+        const dim = prologueState === PROLOGUE_STATES.REGION_FOCUS
+            && d.visualGroup !== prologueFocusGroup;
+        if (moving && isCoverDust(d)) continue;
+        if (pose.appear < 0.02) continue;
+        const color = visualGroupColor(
+            d.visualGroup,
+            brightness,
+            pose.onMap === 1,
+            d,
+            pose.appear,
+            dim
+        );
+        const glowing = !moving
+            && pose.onMap
+            && !isCoverDust(d)
+            && brightness >= 0.87
+            && pose.appear > 0.55;
+        universeLayer.push(
+            pose.x,
+            pose.y,
+            universeSymbolSize(d, brightness, pose.appear, dim),
+            color,
+            glowing,
+            d.id
+        );
+    }
+    universeLayer.draw();
     syncCoverReveal();
+}
+
+function languageStarColor(langCode, focused) {
+    if (langCode === 3) return focused ? [255, 179, 0, 0.78] : [255, 179, 0, 0.16];
+    if (langCode === 2) return focused ? [98, 176, 255, 0.72] : [98, 176, 255, 0.12];
+    return focused ? [220, 220, 226, 0.18] : [220, 220, 226, 0.07];
+}
+
+function stopPlotTween() {
+    if (plotTweenRaf) cancelAnimationFrame(plotTweenRaf);
+    plotTweenRaf = 0;
+}
+
+function scenePlotBox(sceneId) {
+    const size = universeLayer ? universeLayer.cssSize() : { width: window.innerWidth, height: window.innerHeight };
+    const compact = window.innerWidth <= 700;
+    if (!usesPlotAxes(sceneId)) {
+        return { left: 0, top: 0, width: size.width, height: size.height };
+    }
+    if (sceneId === 'global-layers') {
+        const bottom = compact ? 78 : 56;
+        return { left: 28, top: 22, width: size.width - 46, height: size.height - 22 - bottom };
+    }
+    if (sceneId === 'dialect-flops') {
+        const left = compact ? 28 : size.width * 0.16;
+        const right = compact ? 18 : size.width * 0.07;
+        const bottom = compact ? 78 : 56;
+        return { left, top: 22, width: size.width - left - right, height: size.height - 22 - bottom };
+    }
+    return { left: 8, top: 8, width: size.width - 16, height: size.height - 16 };
+}
+
+function layoutEnv(sceneId) {
+    const selected = sceneState[sceneId];
+    return {
+        selectedRegion: Number(selected ?? 3),
+        selectedLanguage: Number(selected ?? 3),
+        selectedDecade: selected,
+        cutoff: Number(selected ?? 2010),
+        globalPhase: globalLayersPhase || 'mandarin-outlier',
+        flopPhase: resolveFlopPhase(flopPhase),
+        yMin: sampleRatingExtent[0],
+        yMax: sampleRatingExtent[1],
+        yearMin: sampleYearExtent[0],
+        yearMax: sampleYearExtent[1],
+        languageOrder: LANGUAGE_DISPLAY_ORDER,
+        languageIndex: languageDisplayIndex,
+        layerOf: globalLayerOf,
+        layerX: globalLayerX,
+        flopX: dialectFlopX,
+        flopLit: isFlopLit
+    };
+}
+
+function particleLook(sceneId, d) {
+    const focused = isSceneFocused(d) === 1;
+    if (STARFIELD_SCENES.has(sceneId) || sceneId === 'echo-narrative') {
+        const dialectOrMandarin = d.langCode === 3 || d.langCode === 2;
+        return {
+            size: focused ? (d.langCode === 3 ? 2.6 : dialectOrMandarin ? 2.3 : 1.7) : 1.15,
+            color: languageStarColor(d.langCode, focused),
+            glow: focused && dialectOrMandarin && d.rating >= 8.7
+        };
+    }
+    if (sceneId === 'asian-breakout') {
+        let color = [255, 255, 255, 0.14];
+        if (focused) {
+            if (d.regionCode === 2 || d.regionCode === 3) color = [...hexToRgb(COLORS.asian), 0.86];
+            else if (d.regionCode === 0) color = [84, 112, 198, 0.55];
+            else color = [236, 232, 224, 0.5];
+        }
+        return { size: focused ? 3.2 : 1.2, color, glow: false };
+    }
+    if (sceneId === 'european-slow') {
+        if (!focused) return { size: 1.2, color: [255, 255, 255, 0.14], glow: false };
+        if (d.rating < 5) return { size: 3.4, color: [...hexToRgb(GUIDE_COLORS.threshold), 0.9], glow: false };
+        return { size: 3.1, color: [236, 232, 224, 0.84], glow: false };
+    }
+    if (sceneId === 'language-babel') {
+        const parsed = parseRgba(LANGUAGE_COLORS[d.langCode] || 'rgba(255,255,255,0.15)');
+        if (!focused) parsed[3] = Math.min(parsed[3], 0.14);
+        return { size: focused ? 3.4 : 1.3, color: parsed, glow: false };
+    }
+    if (sceneId === 'decade-bubble') {
+        const on = decadeOf(d.year) === sceneState['decade-bubble'];
+        return {
+            size: on ? 3.2 : 1.2,
+            color: on ? [185, 196, 206, 0.86] : [255, 255, 255, 0.12],
+            glow: false
+        };
+    }
+    if (sceneId === 'century-decline') {
+        const after = d.year >= Number(sceneState['century-decline']);
+        return {
+            size: 2.4,
+            color: after ? [...hexToRgb(COLORS.afterCutoff), 0.82] : [132, 182, 244, 0.48],
+            glow: false
+        };
+    }
+    if (sceneId === 'chinese-dialect' || sceneId === 'dual-director') {
+        if (d.langCode === 3) {
+            return { size: focused ? 3.4 : 1.4, color: [...hexToRgb(COLORS.dialect), focused ? 0.86 : 0.18], glow: false };
+        }
+        if (d.langCode === 2) {
+            return { size: focused ? 3.2 : 1.4, color: [...hexToRgb(COLORS.chinaBlue), focused ? 0.82 : 0.16], glow: false };
+        }
+        return { size: 1.15, color: [255, 255, 255, 0.08], glow: false };
+    }
+    if (sceneId === 'global-layers') {
+        const group = globalLayerOf(d);
+        let color = [255, 255, 255, 0.14];
+        if (group === 3) color = [...hexToRgb(COLORS.dialect), 0.8];
+        else if (group === 4) color = [...hexToRgb(COLORS.chinaBlue), 0.7];
+        else if (group >= 0) color = [255, 255, 255, 0.38];
+        return { size: group === 3 || group === 4 ? 2.8 : 1.6, color, glow: false };
+    }
+    if (sceneId === 'dialect-flops') {
+        const lit = isFlopLit(d, resolveFlopPhase(flopPhase));
+        const role = dialectFlopRole(d);
+        if (!lit) return { size: 1.2, color: [220, 220, 226, 0.1], glow: false };
+        if (role === 3) return { size: 6.5, color: [...hexToRgb(COLORS.dialect), 0.95], glow: true };
+        if (role === 2 || role === 1) return { size: 3.2, color: [...hexToRgb(COLORS.dialect), 0.8], glow: false };
+        return { size: 1.4, color: [255, 209, 102, 0.28], glow: false };
+    }
+    return { size: 1.6, color: [220, 220, 226, 0.16], glow: false };
+}
+
+function selectDrawRows(budget) {
+    if (particleData.length <= budget) return particleData;
+    const focused = [];
+    const rest = [];
+    for (let i = 0; i < particleData.length; i += 1) {
+        const row = particleData[i];
+        if (isSceneFocused(row)) focused.push(row);
+        else rest.push(row);
+    }
+    if (focused.length >= budget) return focused.slice(0, budget);
+    rest.sort((a, b) => visualKeepPriority(b) - visualKeepPriority(a));
+    return focused.concat(rest.slice(0, budget - focused.length));
+}
+
+function buildPixelPlot(sceneId, rows) {
+    const env = layoutEnv(sceneId);
+    const axes = layoutAxes(sceneId, env);
+    const box = scenePlotBox(sceneId);
+    const items = [];
+    for (let i = 0; i < rows.length; i += 1) {
+        const d = rows[i];
+        const point = layoutXY(sceneId, d, env);
+        const pixel = plotToPixel(point.x, point.y, axes, box);
+        const look = particleLook(sceneId, d);
+        items.push({
+            id: d.id,
+            x: pixel[0],
+            y: pixel[1],
+            size: look.size,
+            color: look.color,
+            glow: look.glow
+        });
+    }
+    return items;
+}
+
+function blitPixelItems(items) {
+    if (!universeLayer) return;
+    universeLayer.begin(items.length, 1);
+    for (let i = 0; i < items.length; i += 1) {
+        const item = items[i];
+        universeLayer.pushPixel(item.x, item.y, item.size, item.color, item.glow, item.id);
+    }
+    universeLayer.draw();
+}
+
+function startPlotTween(snap, toItems) {
+    stopPlotTween();
+    const n = toItems.length;
+    const fromX = new Float32Array(n);
+    const fromY = new Float32Array(n);
+    const fromS = new Float32Array(n);
+    const fromR = new Float32Array(n);
+    const fromG = new Float32Array(n);
+    const fromB = new Float32Array(n);
+    const fromA = new Float32Array(n);
+    const toX = new Float32Array(n);
+    const toY = new Float32Array(n);
+    const toS = new Float32Array(n);
+    const toR = new Float32Array(n);
+    const toG = new Float32Array(n);
+    const toB = new Float32Array(n);
+    const toA = new Float32Array(n);
+    const glow = new Uint8Array(n);
+    const ids = new Int32Array(n);
+    const index = new Map();
+    for (let i = 0; i < snap.n; i += 1) index.set(snap.ids[i], i);
+    for (let i = 0; i < n; i += 1) {
+        const item = toItems[i];
+        const prev = index.get(item.id);
+        toX[i] = item.x;
+        toY[i] = item.y;
+        toS[i] = item.size;
+        toR[i] = item.color[0];
+        toG[i] = item.color[1];
+        toB[i] = item.color[2];
+        toA[i] = item.color[3];
+        glow[i] = item.glow ? 1 : 0;
+        ids[i] = item.id;
+        if (prev == null) {
+            fromX[i] = item.x;
+            fromY[i] = item.y;
+            fromS[i] = item.size;
+            fromR[i] = item.color[0];
+            fromG[i] = item.color[1];
+            fromB[i] = item.color[2];
+            fromA[i] = 0;
+        } else {
+            fromX[i] = snap.xs[prev];
+            fromY[i] = snap.ys[prev];
+            fromS[i] = snap.sizes[prev];
+            fromR[i] = snap.rCh[prev];
+            fromG[i] = snap.gCh[prev];
+            fromB[i] = snap.bCh[prev];
+            fromA[i] = snap.aCh[prev];
+        }
+    }
+    const t0 = performance.now();
+    const tick = now => {
+        const t = easeCubicOut((now - t0) / TWEEN_MS);
+        universeLayer.begin(n, 1);
+        for (let i = 0; i < n; i += 1) {
+            universeLayer.pushPixel(
+                fromX[i] + (toX[i] - fromX[i]) * t,
+                fromY[i] + (toY[i] - fromY[i]) * t,
+                fromS[i] + (toS[i] - fromS[i]) * t,
+                [
+                    fromR[i] + (toR[i] - fromR[i]) * t,
+                    fromG[i] + (toG[i] - fromG[i]) * t,
+                    fromB[i] + (toB[i] - fromB[i]) * t,
+                    fromA[i] + (toA[i] - fromA[i]) * t
+                ],
+                glow[i] === 1 && t > 0.7,
+                ids[i]
+            );
+        }
+        universeLayer.draw();
+        if (t < 1 && activeSceneId !== 'universe') {
+            plotTweenRaf = requestAnimationFrame(tick);
+            return;
+        }
+        plotTweenRaf = 0;
+        if (activeSceneId !== 'universe') blitPixelItems(buildPixelPlot(activeSceneId, particleData));
+    };
+    plotTweenRaf = requestAnimationFrame(tick);
+}
+
+function paintStoryParticles(sceneId, allowTween = true) {
+    if (!universeLayer) return;
+    if (sceneId === 'universe') {
+        stopPlotTween();
+        paintUniverseLive();
+        return;
+    }
+    const canTween = allowTween
+        && !prefersReducedMotion()
+        && universeLayer.count() > 0;
+    if (!canTween) {
+        blitPixelItems(buildPixelPlot(sceneId, particleData));
+        return;
+    }
+    startPlotTween(universeLayer.snapshot(), buildPixelPlot(sceneId, selectDrawRows(TWEEN_BUDGET)));
+}
+
+function paintLanguageStarfield() {
+    paintStoryParticles(activeSceneId, true);
 }
 
 function prologueMotionBusy() {
@@ -2682,18 +2997,15 @@ function prologueMotionBusy() {
 
 function startUniverseLoop() {
     if (universeRaf) return;
-    const tick = now => {
+    stopPlotTween();
+    const tick = () => {
         universeRaf = 0;
-        if (activeSceneId === 'universe' && !document.hidden) {
-            if (now - lastUniversePaint >= 55) {
-                lastUniversePaint = now;
-                paintUniverseLive();
-            }
-        }
+        if (activeSceneId !== 'universe' || document.hidden) return;
+        paintUniverseLive();
         if (prologueMotionBusy()) {
             universeRaf = requestAnimationFrame(tick);
-        } else if (particleChart && activeSceneId === 'universe') {
-            advancePrologueMotion(performance.now());
+        } else {
+            lastUniverseMotionKey = '';
             paintUniverseLive();
         }
     };
@@ -2703,8 +3015,6 @@ function startUniverseLoop() {
 const particleScenes = {
     'universe': () => {
         const ar = universeChartAr();
-        advancePrologueMotion(performance.now());
-        const data = buildUniversePlot();
         return {
             backgroundColor: 'transparent',
             animation: false,
@@ -2714,9 +3024,8 @@ const particleScenes = {
             series: [{
                 _noDim: true,
                 type: 'scatter',
-                data,
-                symbolSize: 2,
-                itemStyle: {},
+                data: [],
+                silent: true,
                 universalTransition: false
             }]
         };
@@ -2874,7 +3183,7 @@ const particleScenes = {
                 data: data,
                 symbolSize: val => val[2] === 1 ? 5 : 2,
                 itemStyle: { 
-                    color: p => p.value[2] === 1 ? COLORS.dialect : 'rgba(255, 255, 255, 0.12)' // 90年代闪耀黄金色
+                    color: p => p.value[2] === 1 ? 'rgba(185, 196, 206, 0.86)' : 'rgba(255, 255, 255, 0.12)'
                 },
                 markLine: createGuideMarkLine([
                     horizontalGuide(decadeStats.mean, `${selectedDecade} 均值 ${decadeStats.mean.toFixed(2)}`, GUIDE_COLORS.selected, 'insideEndBottom'),
@@ -2999,7 +3308,12 @@ const particleScenes = {
                 data: data,
                 symbolSize: val => val[2] === selectedRegion ? 6 : 2,
                 itemStyle: { 
-                    color: p => p.value[2] === selectedRegion ? COLORS.selectedRegion : 'rgba(255, 255, 255, 0.12)'
+                    color: p => {
+                        if (p.value[2] !== selectedRegion) return 'rgba(255, 255, 255, 0.14)';
+                        const row = particleData[p.value[3]];
+                        if (row && row.rating < 5) return GUIDE_COLORS.threshold;
+                        return 'rgba(236, 232, 224, 0.84)';
+                    }
                 },
                 markLine: createGuideMarkLine([
                     horizontalGuide(regionStats.q1, `${REGION_LABELS[selectedRegion]} Q1 ${regionStats.q1.toFixed(2)}`, GUIDE_COLORS.q1, 'insideEndBottom'),
@@ -3234,30 +3548,19 @@ const particleScenes = {
             }]
         };
     },
-    'final-universe': () => {
-        // 随机星云坐标，按语言组上色：方言琥珀 / 普通话灰蓝 / 其他暗灰
-        const data = particleData.map(d => [d.randX, d.randY, d.langCode, d.id, isSceneFocused(d)]);
-        return {
-            backgroundColor: 'transparent',
-            animationDurationUpdate: 2000,
-            xAxis: { show: false, min: 0, max: 100 },
-            yAxis: { show: false, min: 0, max: 100 },
-            series: [{
-                type: 'scatter',
-                data: data,
-                symbolSize: 3,
-                itemStyle: { 
-                    color: p => {
-                        const lang = p.value[2];
-                        if (lang === 3) return 'rgba(255, 179, 0, 0.7)'; // 方言 (琥珀)
-                        if (lang === 2) return 'rgba(98, 176, 255, 0.7)'; // 普通话 (灰蓝)
-                        return 'rgba(255, 255, 255, 0.12)'; // 其他 (暗灰)
-                    }
-                },
-                universalTransition: true
-            }]
-        };
-    },
+    'final-universe': () => ({
+        backgroundColor: 'transparent',
+        animation: false,
+        animationDurationUpdate: 0,
+        xAxis: { show: false, min: 0, max: 100 },
+        yAxis: { show: false, min: 0, max: 100 },
+        series: [{
+            type: 'scatter',
+            data: [],
+            silent: true,
+            universalTransition: false
+        }]
+    }),
     'dialect-flops': () => {
         const phase = resolveFlopPhase(flopPhase);
         const layerPhase = globalLayersPhase || 'mandarin-outlier';
@@ -3316,7 +3619,7 @@ const particleScenes = {
                 data,
                 _noDim: true,
                 symbolSize: val => {
-                    if (!val || val[4] === 0) return 0;
+                    if (!val || val[4] === 0) return 1.2;
                     const role = val[2];
                     if (phase === 'cases') {
                         if (role === 3) return 9;
@@ -3329,15 +3632,11 @@ const particleScenes = {
                 },
                 itemStyle: {
                     color: p => {
-                        if (!p.value || p.value[4] === 0) return 'rgba(0,0,0,0)';
+                        if (!p.value || p.value[4] === 0) return 'rgba(220, 220, 226, 0.10)';
                         const role = p.value[2];
-                        if (phase === 'cases' && role === 3) return 'rgba(232, 176, 88, 0.95)';
-                        if (phase === 'tail' || phase === 'flopsOnly') {
-                            if (role === 2 || role === 3) return 'rgba(214, 98, 92, 0.86)';
-                            return 'rgba(176, 132, 72, 0.2)';
-                        }
-                        if (role === 2 || role === 3) return 'rgba(196, 118, 86, 0.76)';
-                        return 'rgba(176, 132, 72, 0.36)';
+                        if (phase === 'cases' && role === 3) return COLORS.dialect;
+                        if (role === 2 || role === 3) return COLORS.dialect;
+                        return 'rgba(255, 209, 102, 0.28)';
                     }
                 },
                 markLine: createGuideMarkLine(guides),
@@ -3350,12 +3649,36 @@ particleScenes['three-waves'] = particleScenes['final-universe'];
 particleScenes['scale'] = particleScenes['final-universe'];
 particleScenes['echo-narrative'] = particleScenes['final-universe'];
 
-function renderParticleScene(sceneId) {
+function sceneVisualKey(sceneId) {
+    if (sceneId === 'universe') return `universe:${prologueState}:${prologueFocusGroup || ''}`;
+    if (STARFIELD_SCENES.has(sceneId)) return `starfield:${sceneId}:${String(sceneState[sceneId] ?? '')}`;
+    return `chart:${sceneId}:${String(sceneState[sceneId] ?? '')}:${globalLayersPhase}:${flopPhase}`;
+}
+
+function renderParticleScene(sceneId, force = false) {
     runtime.activeSceneId = sceneId;
+    document.documentElement.dataset.activeScene = sceneId;
+    const isCoverUniverse = sceneId === 'universe';
+    const isStarfield = STARFIELD_SCENES.has(sceneId);
     const chartDom = document.getElementById('chart-container');
     if (chartDom) {
         if (chartDom.dataset.echoLayer) delete chartDom.dataset.echoLayer;
-        if (!chartDom.dataset.waveLayer) chartDom.style.opacity = '1';
+        if (!chartDom.dataset.waveLayer) {
+            chartDom.classList.toggle('is-behind', isCoverUniverse || isStarfield);
+        }
+    }
+    if (universeLayer) universeLayer.setVisible(isCanvasParticleScene(sceneId));
+    const visualKey = sceneVisualKey(sceneId);
+    if (!force && visualKey === lastVisualKey) {
+        if (isCoverUniverse) startUniverseLoop();
+        return;
+    }
+    lastVisualKey = visualKey;
+    if (isCoverUniverse) {
+        stopPlotTween();
+        startUniverseLoop();
+    } else if (isCanvasParticleScene(sceneId)) {
+        paintStoryParticles(sceneId, !force);
     }
     if(!particleChart || !particleScenes[sceneId]) return;
     const option = particleScenes[sceneId]();
@@ -3366,16 +3689,10 @@ function renderParticleScene(sceneId) {
     const isUniverse = sceneId === 'universe' || sceneId === 'final-universe' || sceneId === 'three-waves' || sceneId === 'scale' || sceneId === 'echo-narrative';
     const isGlobalLayers = sceneId === 'global-layers';
     const isDialectFlops = sceneId === 'dialect-flops';
-    option.animation = !(largeDataset && !isUniverse);
-    if (!isUniverse || !option.animationDurationUpdate) {
-        option.animationDurationUpdate = compactMotion ? 0 : 420;
-    }
-    if ((isGlobalLayers || isDialectFlops) && !reducedMotion) {
-        option.animation = true;
-        option.animationDurationUpdate = 1100;
-    }
+    option.animation = !(largeDataset || compactMotion);
+    option.animationDurationUpdate = option.animation ? (isUniverse ? 0 : 420) : 0;
     option.animationEasingUpdate = 'cubicOut';
-    if (sceneId === 'universe') {
+    if (isCoverUniverse || isStarfield) {
         option.animation = false;
         option.animationDurationUpdate = 0;
     }
@@ -3435,25 +3752,31 @@ function renderParticleScene(sceneId) {
     }
     const series = option.series && option.series[0];
     if (series) {
-        series.universalTransition = sceneId === 'universe'
-            ? false
-            : ((isGlobalLayers || isDialectFlops) ? !reducedMotion : !compactMotion);
-        series.progressive = sceneId === 'universe' ? 0 : (largeDataset ? 6000 : 0);
-        series.progressiveThreshold = largeDataset ? 5000 : 3000;
+        series.universalTransition = false;
         series.progressiveChunkMode = 'mod';
-        if (sceneId === 'universe') {
+        if (isCoverUniverse || isStarfield || isCanvasParticleScene(sceneId)) {
+            series.data = [];
+            series.progressive = 0;
+            series.silent = true;
             series.itemStyle = series.itemStyle || {};
-            series.emphasis = {
-                scale: 1.35,
-                itemStyle: { borderColor: '#FFFFFF', borderWidth: 1 }
-            };
+            series.large = false;
         } else {
+            if (largeDataset) {
+                series.large = true;
+                series.largeThreshold = 500;
+                series.progressive = 0;
+                series.progressiveThreshold = 1e9;
+            } else {
+                series.large = false;
+                series.progressive = 0;
+                series.progressiveThreshold = 3000;
+            }
             const originalColor = series.itemStyle && series.itemStyle.color;
             const originalSize = series.symbolSize;
-            const unfocusedColor = series.unfocusedColor || 'rgba(255, 255, 255, 0.09)';
+            const unfocusedColor = series.unfocusedColor || 'rgba(255, 255, 255, 0.12)';
             const unfocusedSize = Number.isFinite(Number(series.unfocusedSize))
                 ? Number(series.unfocusedSize)
-                : (largeDataset ? 0.8 : 1.5);
+                : (largeDataset ? 1.2 : 1.5);
             delete series.unfocusedColor;
             delete series.unfocusedSize;
             series.itemStyle = series.itemStyle || {};
@@ -3462,7 +3785,7 @@ function renderParticleScene(sceneId) {
                 return typeof originalColor === 'function' ? originalColor(params) : originalColor;
             };
             series.symbolSize = value => {
-                if (value && value[4] === 0) return isDialectFlops ? 0 : unfocusedSize;
+                if (value && value[4] === 0) return unfocusedSize;
                 const size = typeof originalSize === 'function' ? originalSize(value) : originalSize;
                 if (series._noDim || isGlobalLayers || isDialectFlops) return size;
                 return largeDataset ? Math.max(1.2, Math.min(3.2, Number(size) * 0.64)) : size;
@@ -3471,7 +3794,7 @@ function renderParticleScene(sceneId) {
                 ? { scale: 1.35, itemStyle: { borderColor: 'rgba(255,255,255,0.4)', borderWidth: 1, shadowBlur: 0 } }
                 : {
                     scale: largeDataset ? 1.35 : 2.2,
-                    itemStyle: { borderColor: '#FFFFFF', borderWidth: 1, shadowBlur: 16, shadowColor: 'rgba(255,255,255,0.65)' }
+                    itemStyle: { borderColor: '#FFFFFF', borderWidth: 1, shadowBlur: 0 }
                 };
         }
     }
@@ -3484,19 +3807,13 @@ function renderParticleScene(sceneId) {
         formatter: params => {
             const raw = params.value;
             if (isDialectFlops && raw && raw[4] === 0) return '';
-            const movie = particleData[raw && raw[3]];
-            if (!movie) return '';
-            const visualLabel = VISUAL_GROUP_LABELS[movie.visualGroup] || '';
-            return `<strong style="font-size:14px">${escapeHtml(movie.title)}</strong><br>`
-                + `${movie.year} · ${movie.rating.toFixed(1)} 分 · ${Number(movie.votes || 0).toLocaleString('zh-CN')} 人评价<br>`
-                + `${REGION_LABELS[movie.regionCode] || '未知地区'} · ${LANGUAGE_LABELS[movie.langCode] || '未知语言组'}`
-                + (visualLabel ? `<br>视觉地区 ${escapeHtml(visualLabel)}` : '');
+            return movieTooltipHtml(particleData[raw && raw[3]]);
         }
     };
     particleChart.setOption(option, true);
     rememberPlottedSeries(option.series);
     if (isDialectFlops) {
-        scheduleFlopOverlay(reducedMotion ? 0 : 1100);
+        scheduleFlopOverlay(0);
     }
 }
 
@@ -3911,13 +4228,18 @@ function bindWaveScene() {
         findPublicationMovie,
         setChartHidden(hidden) {
             const el = document.getElementById('chart-container');
-            if (!el) return;
-            if (hidden) {
-                el.dataset.waveLayer = 'hidden';
-                el.style.opacity = '0';
-            } else {
-                delete el.dataset.waveLayer;
-                el.style.opacity = '1';
+            if (el) {
+                if (hidden) {
+                    el.dataset.waveLayer = 'hidden';
+                    el.style.opacity = '0';
+                } else {
+                    delete el.dataset.waveLayer;
+                    el.style.opacity = '';
+                    el.classList.toggle('is-behind', isCanvasParticleScene(activeSceneId));
+                }
+            }
+            if (universeLayer) {
+                universeLayer.setVisible(!hidden && isCanvasParticleScene(activeSceneId));
             }
         }
     });
