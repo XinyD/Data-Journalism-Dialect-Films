@@ -20,7 +20,7 @@
     <!-- endbuild -->
     <!-- build:js -->
     <script defer src="build/echarts-main.f19d3377a9.js"></script>
-    <script defer src="build/app.73a04775a3.js"></script>
+    <script defer src="build/app.b0c12b7a07.js"></script>
     <!-- endbuild -->
 </head>
 <body>
@@ -94,7 +94,7 @@
                 <h2>中国均分，五大地区垫底 <span class="scale-tag data">数据可证</span></h2>
                 <p>粒子现在按<strong>地区</strong>与评分排列。切换地区后，数据卡会同步显示电影数、原始均分，以及按全部电影的年代×主类型构成重新加权后的均分。</p>
                 <p>欧洲收录 <span id="europe-count">--</span> 部，均分 <span id="europe-mean">--</span>；其余地区合计 <span id="non-europe-count">--</span> 部，均分 <span id="non-europe-mean">--</span>，相差 <strong><span id="europe-raw-gap">--</span> 分</strong>。统一年代和主类型构成后，差距缩小到 <strong><span id="europe-standardized-gap">--</span> 分</strong>，构成差异对应其中约 <span id="europe-gap-reduction">--</span> 分。</p>
-                <p>中国大陆 <span id="china-n">--</span> 部电影，均分 <strong><span id="china-mean">--</span></strong>，在五大主要产区中排名末位。如果把五大地区比作同一场考试，中国大陆的“班级平均分”比第一名欧洲低了约 <strong><span id="china-europe-mean-gap">--</span> 分</strong>——而且这不是因为“卷子更难”：统一年代和类型构成后，差距依然存在。</p>
+                <p>中国（含港澳台） <span id="china-n">--</span> 部电影，均分 <strong><span id="china-mean">--</span></strong>，在五大主要产区中排名末位。如果把五大地区比作同一场考试，中国（含港澳台）的“班级平均分”比第一名欧洲低了约 <strong><span id="china-europe-mean-gap">--</span> 分</strong>——而且这不是因为“卷子更难”：统一年代和类型构成后，差距依然存在。</p>
                 <p class="scene-hook">均分低只是表象。更扎眼的是下限。</p>
             </div>
 
@@ -104,7 +104,7 @@
                 <h2>每五部中国电影，就有一部不及格 <span class="scale-tag data">数据可证</span></h2>
                 <p>切换地区后，当前地区会被绿色高亮；页面同时对比第一四分位数、中位数及低于 5 分的比例。</p>
                 <p>欧洲组有 <strong><span id="europe-detail-count">--</span> 部</strong>电影，第一四分位数为 <span id="europe-q1">--</span>，低于 5 分的影片占 <span id="europe-below-five">--</span>；其余地区的第一四分位数为 <span id="non-europe-q1">--</span>，低于 5 分的影片占 <span id="non-europe-below-five">--</span>。欧洲评分较高的差异，在分布下半段同样清晰。</p>
-                <p>中国大陆低于 5 分的电影占 <strong><span id="china-below5">--</span></strong>——全球最高。每五部中国电影中，就有一部不及格。这不是“观众太苛刻”，问题出在拍电影的人，不是打分的人——电影工业在批量生产低质内容。</p>
+                <p>中国（含港澳台）低于 5 分的电影占 <strong><span id="china-below5">--</span></strong>——全球最高。每五部中国电影中，就有一部不及格。这不是“观众太苛刻”，问题出在拍电影的人，不是打分的人——电影工业在批量生产低质内容。</p>
                 <p class="scene-hook">中国电影的低分困境从何而来？是观众太苛刻，还是拍电影的人出了问题？</p>
             </div>
 
@@ -146,7 +146,7 @@
                 <span class="theory-badge">第六幕——方言的“反超”</span>
                 <h2>2010：方言“反超”普通话 <span class="scale-tag data">数据可证</span></h2>
                 <p><strong>亮蓝色</strong>代表普通话电影，<strong>金黄色</strong>代表方言电影。请选择年代，比较两组的电影数、均分与差值。</p>
-                <p>华语内部（中国大陆口径）合并全部年份时，方言片 <span id="dialect-count">--</span> 部，均分 <span id="dialect-mean">--</span>；普通话片 <span id="mandarin-count">--</span> 部，均分 <span id="mandarin-mean">--</span>，相差 <strong><span id="dialect-delta">--</span> 分</strong>。分开年代后，九十年代差值为 <span id="dialect-delta-1990s">--</span>，2010 年代变为 <span id="dialect-delta-2010s">--</span>。合并所有年份，会把这次换向压成一个总差值。</p>
+                <p>华语内部（中国含港澳台口径）合并全部年份时，方言片 <span id="dialect-count">--</span> 部，均分 <span id="dialect-mean">--</span>；普通话片 <span id="mandarin-count">--</span> 部，均分 <span id="mandarin-mean">--</span>，相差 <strong><span id="dialect-delta">--</span> 分</strong>。分开年代后，九十年代差值为 <span id="dialect-delta-1990s">--</span>，2010 年代变为 <span id="dialect-delta-2010s">--</span>。合并所有年份，会把这次换向压成一个总差值。</p>
                 <p>1990 年代，普通话片均分略高于方言片（差 <strong><span id="delta-1990s">--</span></strong>）。2000 年代差距缩小。2010 年代，方言片反超，均分高出普通话 <strong><span id="delta-2010s">--</span></strong>。2020 年代延续这一趋势（<strong><span id="delta-2020s">--</span></strong>）。2010 年前后出现了明显的转向——此后方言片系统性地优于普通话片。</p>
                 <p class="scene-hook">2010 年这个转折点，只发生在中国吗？如果把镜头拉远，会发现一个更普遍的规律。</p>
             </div>
@@ -314,7 +314,7 @@
                         <div class="scale-block scale-core" id="scale-core">
                             <span class="scale-rule"></span>
                             <p class="scale-l1">流水线的价格是 <b id="scale-cn">--</b>。<br>态度的溢价是 <b id="scale-premium">--</b>。</p>
-                            <p class="scale-l2">追上欧洲，只差 <span id="scale-gap-eu">--</span>；追上北美，只差 <span id="scale-gap-na">--</span>。每一步都被证明可行。</p>
+                            <p class="scale-l2">先追上全球其余产区，只差 <span id="scale-gap-rest">--</span>；再追上北美，只差 <span id="scale-gap-na">--</span>。每一步都被证明可行。</p>
                             <p class="scale-fn">中位数同样成立：<span id="scale-median-chain">--</span>。日韩含较多演出实录、其他地区样本较小，均以中位数为稳。</p>
                         </div>
                         <div class="scale-block scale-diag" id="scale-diag">
@@ -387,7 +387,7 @@
                 <div class="finale-layer">
                     <div class="finale-echo-card">
                         <h2 class="intro-kicker">回响</h2>
-                        <p>回到开头那个问题：一部小中方言电影，凭什么“赢了”？</p>
+                        <p>回到开头那个问题：一部小众方言电影，凭什么“赢了”？</p>
                         <p>因为它讲了一个有根的、被认真讲的、关于真实的人的故事。</p>
                         <p class="intro-question">方言不是答案。好故事才是。</p>
                         <p>好故事从哪来？不是凭空产生的——它需要土壤。方言电影是这片土壤上开出的花之一。中国大地上有上百种语言、几千年的记忆、56 个民族的风土人情——多样的文化是故事最好的养料，我们从不缺。</p>
@@ -421,7 +421,7 @@
         <section class="explorer-section" id="glass-section">
             <div class="explorer-header">
                 <h2>自由打捞：从统计集合回到电影</h2>
-                <p>探索舱收录本报道分析的 <span data-publication-count>加载中</span> 部电影。组合年代、地区与语言条件后，页面会显示结果总数并分页列出全部匹配电影，可按评分、评价人数或年份排序；点击任意电影可核对简介、评分、评价人数与来源记录。</p>
+                <p>探索舱收录本报道分析的 <span data-publication-count>加载中</span> 部电影。组合年代、地区与语言条件后，页面会显示结果总数并分页列出全部匹配电影，可按评分、评价人数或年份排序；默认隐藏栋笃笑、演唱会等演出影像，可在「类型」中切换；点击任意电影可核对简介、评分、评价人数与来源记录。</p>
             </div>
 
             <div class="filter-bar">
@@ -445,7 +445,7 @@
                         <option value="North_America">北美</option>
                         <option value="Europe">欧洲</option>
                         <option value="East_Asia">东亚</option>
-                        <option value="China">中国大陆</option>
+                        <option value="China">中国（含港澳台）</option>
                         <option value="Other">其他</option>
                     </select>
                 </div>
@@ -459,6 +459,14 @@
                         <option value="2">普通话</option>
                         <option value="3">方言</option>
                         <option value="5">其他</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-kind">类型</label>
+                    <select id="filter-kind">
+                        <option value="films">电影（默认，不含演出影像）</option>
+                        <option value="all">全部条目</option>
+                        <option value="perf">仅演出影像</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -502,7 +510,9 @@
             <h3>数据、方法与局限</h3>
             <p><strong>数据范围：</strong> 从 <span id="source-record-count">加载中</span> 条源记录中保留片名、年份、评分完整且评价人数不少于 <span id="methodology-minimum-vote-count">--</span> 的电影，再按豆瓣条目 URL、规范化片名与年份去重。当前发布版本纳入 <strong><span id="methodology-sample-count">加载中</span> 部</strong>，年份范围为 <span id="methodology-year-range">加载中</span>。这是一份按上述门槛筛选的观察性样本，未按全球电影总体进行概率抽样。</p>
             <p><strong>条目与分类：</strong>“电影”沿用豆瓣电影频道的宽口径，包含长片、短片、纪录片、动画、演出影像及部分电视条目。地区取第一制片国家／地区，主类型取类型列表第一项；语言统一为英语、日语、韩语、普通话、方言、其他六组。分组按主要语言，混合语种按片单首位归组；方言组沿用中国方言清单。</p>
-            <p><strong>时间完整性：</strong> 当前快照覆盖 <span id="methodology-year-range-repeat">加载中</span>。2022 年及以后共 <span id="year-2022plus-count">--</span> 部，其中中国大陆 <span id="year-2022plus-china-count">--</span> 部（约 <span id="year-2022plus-china-share">--</span>）。2020s 中国方言片 <span id="china-dialect-2020s-n">--</span> 部。第五幕「时间的坡度（下）」切分窗口固定为 1990—2020 年——这是比较门槛，不是数据截止年份。</p>
+            <p><strong>口径构成：</strong> 正文「中国（含港澳台）」指第一制片国家／地区映射入中国组的全部影片。其中方言片 3,045 部的构成为：香港 2,487 部、台湾 179 部、大陆 374 部、澳门 5 部。第三幕与第十一幕的语言组统计为全量口径（含海外华语片），其余方言对比均为中国（含港澳台）口径。</p>
+            <p><strong>敏感性检验：</strong> 仅统计制片地区为中国大陆（含澳门）的子样本时，方言片 n=379、均分 7.05、烂片率 4.2%；普通话片 n=7,219、均分 5.98、烂片率 28.9%——差距比全口径更大且方向一致。分年代看，2000s +0.50、2010s +1.44、2020s +1.38（1990s 方言片仅 6 部，不具比较性）。主结论不依赖港台样本。</p>
+            <p><strong>时间完整性：</strong> 当前快照覆盖 <span id="methodology-year-range-repeat">加载中</span>。2022 年及以后共 <span id="year-2022plus-count">--</span> 部，其中中国（含港澳台） <span id="year-2022plus-china-count">--</span> 部（约 <span id="year-2022plus-china-share">--</span>）。2020s 中国方言片 <span id="china-dialect-2020s-n">--</span> 部。第五幕「时间的坡度（下）」切分窗口固定为 1990—2020 年——这是比较门槛，不是数据截止年份。</p>
             <p><strong>粒子引擎：</strong> 序章基于 HTML5 Canvas 与 ECharts，对当前 <span id="particle-sample-count">加载中</span> 条发布记录实时映射。为保证万级粒子的滚动性能，序章宇宙场景关闭过渡动画与渐进渲染；其他大数据场景启用渐进渲染。筛选、悬停和点选仍基于完整记录。</p>
             <p><strong>计算口径：</strong> 每部电影等权计入；全部电影的等权均分为 <span id="overall-unweighted-mean">--</span>，按评价人数加权后为 <span id="overall-vote-weighted-mean">--</span>。平均数、中位数、总体标准差与四分位数会随当前筛选实时重算。各幕数据卡的高分占比参考线为 8.5 分；正文叙述的方言／普通话高分率采用 ≥8.0 分（<span id="china-dialect-high8">--</span> vs <span id="china-mandarin-high8">--</span>）。</p>
             <p><strong>解释边界：</strong> 页面未设置总体抽样权重，也未做显著性检验、因果识别或跨平台评分校准。结论适用于上述数据范围；讨论全球电影或具体成因时，还需要其他数据与方法。“工业化导致低分”在本报道中为推测性解读，数据集无直接工业化指标。</p>

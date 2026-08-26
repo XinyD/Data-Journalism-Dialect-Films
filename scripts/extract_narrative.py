@@ -19,7 +19,7 @@ RATING = "豆瓣评分"
 VOTES = "评价人数"
 OUTPUT = NARRATIVE_FACTS
 GENRE_LABELS = ["剧情", "喜剧", "动作/冒险", "爱情", "悬疑/惊悚", "科幻/奇幻", "其他"]
-REGION_LABELS = ["北美", "欧洲", "东亚", "中国大陆", "其他"]
+REGION_LABELS = ["北美", "欧洲", "东亚", "中国（含港澳台）", "其他"]
 LANGUAGE_LABELS = ["英语", "日语", "普通话", "方言", "韩语", "其他"]
 
 

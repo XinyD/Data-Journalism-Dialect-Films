@@ -5,6 +5,7 @@ import { prefersReducedMotion, rafThrottle, debounce } from './lib/schedule.js';
 import { initGallery } from './gallery.js';
 import { initChapterNav, initScrollytelling } from './scrolly.js';
 import { initExplorerScene, exitExplorer, isExplorerOpen } from './scenes/explorer_scene.js';
+import { isPerformanceEntry } from './lib/perf_entry.js';
 import { createFlopLinkSync } from './scenes/flop-overlay.js';
 import { syncCoverReveal } from './scenes/prologue.js';
 
@@ -56,7 +57,7 @@ const GUIDE_COLORS = {
     dialect: '#FFD166'
 };
 
-const REGION_LABELS = ['北美', '欧洲', '东亚', '中国大陆', '其他'];
+const REGION_LABELS = ['北美', '欧洲', '东亚', '中国（含港澳台）', '其他'];
 const REGIONS = REGION_LABELS;
 const GENRES = ['剧情', '喜剧', '动作/冒险', '爱情', '悬疑/惊悚', '科幻/奇幻', '其他（纪录/动画等）'];
 const GENRE_AXIS_LABELS = ['剧情', '喜剧', '动作', '爱情', '悬疑', '科幻', '其他'];
@@ -1883,7 +1884,10 @@ const SCENE_INTERACTIONS = {
         insight: value => {
             const rows = particleData.filter(row => row.langCode === Number(value));
             const stats = summarize(rows);
-            return `${LANGUAGE_LABELS[Number(value)]}组收录 ${stats.n.toLocaleString('zh-CN')} 部，占全部电影 ${(stats.n / particleData.length * 100).toFixed(1)}%，均分 ${stats.mean.toFixed(2)}。`;
+            const caliberNote = Number(value) === 2 || Number(value) === 3
+                ? '语言组为全量口径（含海外华语片）；正文引述的是中国（含港澳台）口径。'
+                : '';
+            return `${LANGUAGE_LABELS[Number(value)]}组收录 ${stats.n.toLocaleString('zh-CN')} 部，占全部电影 ${(stats.n / particleData.length * 100).toFixed(1)}%，均分 ${stats.mean.toFixed(2)}。${caliberNote}`;
         }
     },
     'century-decline': {
@@ -1949,7 +1953,8 @@ const SCENE_INTERACTIONS = {
             { value: '2020s', label: '2020s' }
         ],
         filter: (row, value) => (
-            (row.langCode === 2 || row.langCode === 3)
+            row.regionCode === 3
+            && (row.langCode === 2 || row.langCode === 3)
             && (value === 'all' || decadeOf(row.year) === value)
         ),
         metrics: value => {
@@ -2153,7 +2158,8 @@ const SCENE_INTERACTIONS = {
             { value: '2', label: '普通话' }
         ],
         filter: (row, value) => (
-            (row.langCode === 2 || row.langCode === 3)
+            row.regionCode === 3
+            && (row.langCode === 2 || row.langCode === 3)
             && (value === 'all' || row.langCode === Number(value))
         ),
         metrics: value => {
@@ -2202,7 +2208,7 @@ const SCENE_INTERACTIONS = {
         type: 'buttons',
         defaultValue: 'all',
         options: [{ value: 'all', label: '方言片' }],
-        filter: (row) => row.langCode === 3,
+        filter: (row) => row.langCode === 3 && row.regionCode === 3,
         metrics: () => {
             const waves = dialectAgg && dialectAgg.wave_cases;
             const count = waves ? ['hk', 'sw', 'mn'].reduce((n, key) => n + (waves[key] || []).length, 0) : 0;
@@ -2447,7 +2453,7 @@ function currentFilteredMovies(sceneId = activeSceneId) {
 }
 
 function pickRandomMovie(sceneId) {
-    const candidates = currentFilteredMovies(sceneId);
+    const candidates = currentFilteredMovies(sceneId).filter(movie => !isPerformanceEntry(movie));
     if (!candidates.length) return;
     const movie = candidates[Math.floor(Math.random() * candidates.length)];
     renderPickedMovie(sceneId, movie, '随机打捞');
@@ -3017,7 +3023,7 @@ const particleScenes = {
         const selectedRows = particleData.filter(row => SCENE_INTERACTIONS['chinese-dialect'].filter(row, selectedPeriod));
         const mandarin = summarize(selectedRows.filter(row => row.langCode === 2));
         const dialect = summarize(selectedRows.filter(row => row.langCode === 3));
-        const data = particleData.map(d => [languageDisplayIndex(d.langCode) + d.jitterGenreX, d.rating, d.langCode, d.id, isSceneFocused(d)]);
+        const data = particleData.filter(d => d.regionCode === 3 || (d.langCode !== 2 && d.langCode !== 3)).map(d => [languageDisplayIndex(d.langCode) + d.jitterGenreX, d.rating, d.langCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3073,9 +3079,9 @@ const particleScenes = {
         const dialect = summarize(selectedRows.filter(row => row.langCode === 3));
         const dualX = code => (code === 2 ? 0 : 1);
         const data = particleData.map(d => {
-            const inPair = d.langCode === 2 || d.langCode === 3;
+            const inPair = (d.langCode === 2 || d.langCode === 3) && d.regionCode === 3;
             const x = inPair ? dualX(d.langCode) + d.jitterX * 0.55 : -1.2 + d.jitterX * 0.2;
-            return [x, d.rating, d.langCode, d.id, isSceneFocused(d)];
+            return [x, d.rating, inPair ? d.langCode : -1, d.id, isSceneFocused(d)];
         });
         const dialectGuide = selected === '2' ? NaN : (dialect.n ? dialect.mean : NaN);
         const mandarinGuide = selected === '3' ? NaN : (mandarin.n ? mandarin.mean : NaN);
@@ -3536,14 +3542,14 @@ function medianOf(values) {
 function getWorldScaleRungs() {
     const regions = narrativeFacts && narrativeFacts.regions;
     const raw = dialectAgg && dialectAgg.type_controlled && dialectAgg.type_controlled.raw;
-    if (!regions || !regions['中国大陆'] || !regions['其他'] || !regions['北美'] || !regions['东亚'] || !regions['欧洲'] || !raw || !raw.d) {
+    if (!regions || !regions['中国（含港澳台）'] || !regions['其他'] || !regions['北美'] || !regions['东亚'] || !regions['欧洲'] || !raw || !raw.d) {
         return null;
     }
     const dialectMed = narrativeFacts.mandarin_dialect && narrativeFacts.mandarin_dialect.dialect_mixed
         ? narrativeFacts.mandarin_dialect.dialect_mixed.median
         : null;
     return [
-        { key: 'cn', name: '中国电影整体', score: Number(regions['中国大陆'].mean), med: Number(regions['中国大陆'].median), n: regions['中国大陆'].n, color: '#837C6E', note: '含普通话量产大片。这是流水线逻辑下的基线。' },
+        { key: 'cn', name: '中国电影整体', score: Number(regions['中国（含港澳台）'].mean), med: Number(regions['中国（含港澳台）'].median), n: regions['中国（含港澳台）'].n, color: '#837C6E', note: '含普通话量产大片。这是流水线逻辑下的基线。' },
         { key: 'dia', name: '方言片', score: Number(raw.d.mean), med: dialectMed, n: raw.d.n, color: '#d4a574', isKey: true, note: '语言层切片。这是我们最好的成绩；烂片率仅 6.4%。' },
         { key: 'oth', name: '其他地区', score: Number(regions['其他'].mean), med: Number(regions['其他'].median), n: regions['其他'].n, color: '#9A938A', note: '拉美、非洲、大洋洲等混装样本较小，仅供参考。' },
         { key: 'na', name: '北美', score: Number(regions['北美'].mean), med: Number(regions['北美'].median), n: regions['北美'].n, color: '#7A5D82', note: '英语世界的工业中心，均分并不是最高。' },
@@ -3659,7 +3665,7 @@ function fillWorldScale() {
     setTextById('scale-remain-mark', `−${Math.abs(remain).toFixed(2)}`);
     setTextById('scale-step1', Math.abs(step1).toFixed(2));
     setTextById('scale-step2', Math.abs(step2).toFixed(2));
-    setTextById('scale-gap-eu', Math.abs(step1).toFixed(2));
+    setTextById('scale-gap-rest', Math.abs(step1).toFixed(2));
     setTextById('scale-gap-na', Math.abs(step2).toFixed(2));
     setTextById('scale-median-chain', rungs.map(rung => (
         Number.isFinite(Number(rung.med)) ? Number(rung.med).toFixed(1) : '--'
@@ -3677,8 +3683,8 @@ function fillChinaNarrativeKpis() {
         setTextById('china-n', Number(agg.meta.baseline.china_total).toLocaleString('zh-CN'));
         setTextById('china-count', Number(agg.meta.baseline.china_total).toLocaleString('zh-CN'));
     }
-    if (facts && facts.regions && facts.regions['中国大陆']) {
-        const china = facts.regions['中国大陆'];
+    if (facts && facts.regions && facts.regions['中国（含港澳台）']) {
+        const china = facts.regions['中国（含港澳台）'];
         setTextById('china-mean', Number(china.mean).toFixed(2));
         setTextById('china-below5', `${(china.below_five_share).toFixed(1)}%`);
         const europe = facts.regions['欧洲'];

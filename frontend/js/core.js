@@ -507,6 +507,8 @@ window.fetchJson = fetchJson;
 window.ANALYSIS_LANGUAGE_LABELS = ANALYSIS_LANGUAGE_LABELS;
 window.openSharedMovieDetail = openSharedMovieDetail;
 window.renderLocalGallery = renderLocalGallery;
+window.getBaseChartOption = getBaseChartOption;
+window.TOKENS = TOKENS;
 
 function installGlobalErrorHandlers() {
     window.addEventListener('error', event => {
