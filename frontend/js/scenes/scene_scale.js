@@ -1,4 +1,4 @@
-/* 第十二幕 · 刻度：按钮换拍，点亮尺子与换句 */
+/* 第十幕 · 刻度：按钮换拍，点亮尺子与换句 */
 (function (global) {
     const MAX_BEAT = 9;
     const ROLL_MS = 750;

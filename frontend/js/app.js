@@ -6,48 +6,19 @@ import { initGallery } from './gallery.js';
 import { initChapterNav, initScrollytelling } from './scrolly.js';
 import { initExplorerScene, exitExplorer, isExplorerOpen } from './scenes/explorer_scene.js';
 import { createFlopLinkSync } from './scenes/flop-overlay.js';
-import { syncCoverReveal } from './scenes/prologue.js';
-import { createUniverseLayer, parseRgba } from './scenes/universe_canvas.js';
-import {
-    easeCubicOut,
-    layoutAxes,
-    layoutXY,
-    plotToPixel,
-    usesPlotAxes
-} from './scenes/scene_layout.js';
+import { createPrologueMotionLayer, syncCoverReveal } from './scenes/prologue.js';
 
 let particleChart = null;
 let particleData = [];
 let plottedSeriesData = [];
 let visualKeepIsMobile = false;
-let universeLayer = null;
-let lastVisualKey = '';
-let lastLayoutWidth = 0;
-const STARFIELD_SCENES = new Set(['final-universe', 'three-waves', 'scale', 'echo-narrative']);
-
-const CANVAS_SCENES = new Set([
-    'universe',
-    'asian-breakout',
-    'european-slow',
-    'language-babel',
-    'decade-bubble',
-    'century-decline',
-    'chinese-dialect',
-    'global-layers',
-    'dialect-flops',
-    'dual-director',
-    'final-universe',
-    'three-waves',
-    'scale',
-    'echo-narrative'
-]);
-const TWEEN_MS = 920;
-const TWEEN_BUDGET = 14000;
-let plotTweenRaf = 0;
-
-function isCanvasParticleScene(sceneId) {
-    return CANVAS_SCENES.has(sceneId);
-}
+let prologueMotionLayer = null;
+let universeMotionOverlay = false;
+let universeHandoffToken = 0;
+let universeHandoffTimer = 0;
+let universeFinishedHandler = null;
+let prologueLandRows = [];
+let prologueDustRows = [];
 
 // Dark-theme palette shared by the particle scenes and their guide lines.
 const COLORS = {
@@ -60,7 +31,6 @@ const COLORS = {
     text: '#E2E2E2',
     grid: 'rgba(255, 255, 255, 0.05)',
     tooltipBg: 'rgba(10, 10, 12, 0.85)',
-    afterCutoff: '#FF6B45',
     selectedRegion: '#2ECC71',
     chinaBlue: '#2196F3',
     // v2: Design-spec region colors for the geographic universe scene
@@ -464,10 +434,11 @@ let visualMaskGrids = null;
 let coverLayout = { centroids: {}, packed: {}, rings: {}, scales: {} };
 let universeRaf = 0;
 let lastUniverseMotionKey = '';
+let universePlotCache = [];
 const VISUAL_BUDGET_DESKTOP = 10800;
 const VISUAL_BUDGET_MOBILE = 7200;
-const DUST_BUDGET_DESKTOP = 4000;
-const DUST_BUDGET_MOBILE = 2800;
+const DUST_BUDGET_DESKTOP = 7500;
+const DUST_BUDGET_MOBILE = 4800;
 const COVER_PACK = 0.42;
 const COVER_PACK_TARGET = { x: 46, y: 52 };
 const COVER_SCALES = {
@@ -553,6 +524,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             visualPhase: stableUnit(key, 13) * Math.PI * 2,
             visualFreq: 0.14 + stableUnit(key, 19) * 0.09,
             visualSize: stableUnit(key, 23),
+            brightness: Math.max(0.3, Math.min(1, Number(movie.rating) / 10)),
             jitterX: (stableUnit(key, 47) - 0.5) * 0.6,
             jitterGenreX: (stableUnit(key, 71) - 0.5) * 0.5,
             mobileKeep: true,
@@ -631,21 +603,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const onParticleResizeFrame = rafThrottle(() => {
         cancelFlopOverlay();
         if (particleChart) particleChart.resize();
-        if (universeLayer) universeLayer.resize();
-        if (activeSceneId === 'universe') {
+        if (prologueMotionLayer) prologueMotionLayer.resize();
+        if (window.WaveScene) window.WaveScene.onResize();
+        if (activeSceneId === 'universe' && prologueMotionBusy()) {
             lastUniverseMotionKey = '';
             paintUniverseLive();
-        } else if (isCanvasParticleScene(activeSceneId)) {
-            paintStoryParticles(activeSceneId, false);
         }
-        if (window.WaveScene) window.WaveScene.onResize();
     });
-    lastLayoutWidth = window.innerWidth;
     const onParticleResizeDebounced = debounce(() => {
         if (isMobileViewport() !== visualKeepIsMobile) assignVisualKeep();
-        const widthChanged = window.innerWidth !== lastLayoutWidth;
-        lastLayoutWidth = window.innerWidth;
-        if (widthChanged && particleChart) renderParticleScene(activeSceneId, true);
+        if (particleChart) renderParticleScene(activeSceneId);
     }, 200);
     window.addEventListener('resize', () => {
         onParticleResizeFrame();
@@ -659,6 +626,11 @@ function hexToRgb(hex) {
         parseInt(hex.slice(3, 5), 16),
         parseInt(hex.slice(5, 7), 16)
     ];
+}
+
+function hexToRgba(hex, alpha) {
+    const rgb = hexToRgb(hex);
+    return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 }
 
 function clamp01(value) {
@@ -995,83 +967,15 @@ function sampleOceanDust(movieId) {
     ];
 }
 
-function coverDustCenters() {
-    const centers = [];
-    for (let i = 0; i < 126; i += 1) {
-        let x;
-        let y;
-        let sx;
-        let sy;
-        if (i < 22) {
-            x = 68 + hash2(i, 2, 401) * 30;
-            y = 4 + hash2(i, 4, 409) * 34;
-            sx = 1.05 + hash2(i, 6, 419) * 4.1;
-            sy = 0.9 + hash2(i, 8, 421) * 3.8;
-        } else if (i < 38) {
-            x = 3 + hash2(i, 2, 401) * 36;
-            y = 4 + hash2(i, 4, 409) * 32;
-            sx = 1 + hash2(i, 6, 419) * 3.9;
-            sy = 0.85 + hash2(i, 8, 421) * 3.6;
-        } else {
-            x = 4 + hash2(i, 2, 401) * 92;
-            y = 4 + hash2(i, 4, 409) * 92;
-            x += (fbm2(x / 38, y / 38, 51) - 0.5) * 14;
-            y += (fbm2(x / 38 + 3, y / 38, 53) - 0.5) * 12;
-            sx = 1.15 + hash2(i, 6, 419) * 4.6;
-            sy = 1 + hash2(i, 8, 421) * 4.2;
-        }
-        const stretch = hash2(i, 9, 439);
-        if (stretch < 0.3) {
-            sx *= 2.2;
-            sy *= 0.42;
-        } else if (stretch < 0.52) {
-            sx *= 0.46;
-            sy *= 2.1;
-        }
-        centers.push({ x, y, sx, sy });
-    }
-    return centers;
-}
-
 function placeCoverDust() {
-    const centers = coverDustCenters();
-    const nC = centers.length;
-    const southN = 38;
     particleData.forEach(movie => {
         if (!movie.dustKeep) return;
-        const id = movie.movieId;
-        const mode = stableUnit(id, 241);
-        const stray = mode < 0.09;
-        const [nx, ny] = gaussianPair(
-            Math.max(1e-6, stableUnit(id, 251)),
-            stableUnit(id, 271)
-        );
-        let x;
-        let y;
-        if (stray) {
-            x = 3 + stableUnit(id, 201) * 94 + nx * 2.4;
-            y = 36 + stableUnit(id, 223) * 60 + ny * 2.2;
-        } else if (mode < 0.31) {
-            const ci = Math.min(southN - 1, Math.floor(stableUnit(id, 201) * southN));
-            const c = centers[ci];
-            const tight = 0.22 + stableUnit(id, 293) * 0.95;
-            x = c.x + nx * c.sx * tight;
-            y = c.y + ny * c.sy * tight;
-        } else {
-            const ci = southN + Math.min(
-                nC - southN - 1,
-                Math.floor(stableUnit(id, 201) * (nC - southN))
-            );
-            const c = centers[ci];
-            const tight = 0.24 + stableUnit(id, 293) * 1.05;
-            x = c.x + nx * c.sx * tight;
-            y = c.y + ny * c.sy * tight;
-        }
-        movie.dustX = clampCover(x);
-        movie.dustY = clampCover(y);
-        movie.dustDepth = stableUnit(id, 277);
-        movie.dustSpeck = Math.pow(stableUnit(id, 311), 2.2);
-        movie.dustStray = stray;
+        const dust = sampleOceanDust(movie.movieId);
+        movie.dustX = dust[0];
+        movie.dustY = dust[1];
+        movie.dustDepth = movie.visualSize;
+        movie.dustSpeck = movie.visualSize;
+        movie.dustStray = false;
     });
 }
 
@@ -1331,6 +1235,7 @@ function assignVisualKeep() {
     });
     visualKeepIsMobile = window.innerWidth <= 768;
     placeCoverDust();
+    refreshPrologueRowCache();
 }
 
 function coverDustVisible() {
@@ -1341,14 +1246,25 @@ function isCoverDust(movie) {
     return Boolean(movie && movie.dustKeep && !movie.mobileKeep);
 }
 
+function refreshPrologueRowCache() {
+    prologueLandRows = [];
+    prologueDustRows = [];
+    for (let i = 0; i < particleData.length; i += 1) {
+        const movie = particleData[i];
+        if (movie.mobileKeep) prologueLandRows.push(movie);
+        else if (movie.dustKeep) prologueDustRows.push(movie);
+    }
+}
+
 function prologueVisibleRows() {
-    const land = [];
-    const dust = [];
-    particleData.forEach(movie => {
-        if (movie.mobileKeep) land.push(movie);
-        else if (movie.dustKeep && coverDustVisible()) dust.push(movie);
-    });
-    return dust.concat(land);
+    return coverDustVisible() ? prologueDustRows.concat(prologueLandRows) : prologueLandRows;
+}
+
+function eachPrologueRow(fn) {
+    if (coverDustVisible()) {
+        for (let i = 0; i < prologueDustRows.length; i += 1) fn(prologueDustRows[i]);
+    }
+    for (let i = 0; i < prologueLandRows.length; i += 1) fn(prologueLandRows[i]);
 }
 
 function ratingBrightness(rating) {
@@ -1406,13 +1322,11 @@ function universePose(movie, ar) {
     return { x: x * ar, y, onMap, appear };
 }
 
-function visualGroupColor(group, brightness, mapped, movie, appear, dim) {
+function visualGroupRgba(group, brightness, mapped, movie, appear, dim) {
     if (isCoverDust(movie)) {
-        const depth = Number.isFinite(movie.dustDepth) ? movie.dustDepth : 0.45;
-        const tone = depth * 0.7 + brightness * 0.3;
-        const alpha = (0.10 + tone * 0.52) * Math.max(0, appear);
-        const rgb = Math.round(198 + tone * 38);
-        return [rgb, Math.min(255, rgb + 2), Math.min(255, rgb + 8), Math.max(0.08, Math.min(0.62, alpha))];
+        const depth = movie ? movie.visualSize : 0.4;
+        const alpha = (0.08 + brightness * 0.16 + depth * 0.12) * Math.max(0, appear);
+        return [220, 220, 226, Math.max(0.08, Math.min(0.36, alpha))];
     }
     const edge = movie ? movie.visualEdge : 0.55;
     const voidness = movie ? movie.visualVoid : 0;
@@ -1444,18 +1358,18 @@ function visualGroupColor(group, brightness, mapped, movie, appear, dim) {
     return [rgb[0], rgb[1], rgb[2], Math.max(minA, Math.min(maxA, alpha))];
 }
 
+function visualGroupColor(group, brightness, mapped, movie, appear, dim) {
+    const rgba = visualGroupRgba(group, brightness, mapped, movie, appear, dim);
+    return `rgba(${rgba[0]}, ${rgba[1]}, ${rgba[2]}, ${rgba[3]})`;
+}
+
 function universeSymbolSize(movie, brightness, appear, dim) {
     const size = movie ? movie.visualSize : 0.4;
     const shown = Math.max(0.55, appear);
     const glow = brightness >= 0.85 ? 0.3 : brightness >= 0.72 ? 0.1 : 0;
     if (isCoverDust(movie)) {
-        const speck = Number.isFinite(movie.dustSpeck) ? movie.dustSpeck : 0.3;
-        const depth = Number.isFinite(movie.dustDepth) ? movie.dustDepth : 0.45;
-        const y = movie && Number.isFinite(movie.dustY) ? movie.dustY : 50;
-        const floorTaper = 0.7 + 0.3 * Math.min(1, Math.max(0, y / 40));
-        const base = movie.dustStray ? 0.92 : 1;
-        const dust = base + speck * 0.68 + depth * 0.08;
-        return Math.max(0.92, Math.min(1.72, dust * floorTaper * Math.max(0.45, appear)));
+        const depth = 1.1 + size * 1.05 + glow * 0.15;
+        return Math.max(1.1, Math.min(2.3, depth * Math.max(0.45, appear)));
     }
     if (prologueState === PROLOGUE_STATES.WORLD_MAP) {
         const base = 2 + size * 0.55;
@@ -1521,6 +1435,9 @@ function setPrologueState(nextState, focusGroup = null) {
     document.documentElement.dataset.prologueState = nextState;
     if (focusGroup) document.documentElement.dataset.prologueFocus = focusGroup;
     else delete document.documentElement.dataset.prologueFocus;
+    lastUniverseMotionKey = '';
+    universeHandoffToken += 1;
+    universeMotionOverlay = false;
     syncVisualRegionDock();
     startUniverseLoop();
 }
@@ -1572,19 +1489,7 @@ function updateDatasetKpis(data) {
     const formattedCount = count.toLocaleString('zh-CN');
     const formattedYearRange = `${yearRange[0]}–${yearRange[1]}`;
     const regionStats = REGION_LABELS.map((_, code) => summarize(data.filter(movie => movie.regionCode === code)));
-    const year1994 = summarize(data.filter(movie => movie.year === 1994));
-    const other1990s = summarize(data.filter(movie => movie.year >= 1990 && movie.year <= 1999 && movie.year !== 1994));
     const english = summarize(data.filter(movie => movie.langCode === 0));
-    const before2010 = summarize(data.filter(movie => movie.year < 2010));
-    const from2010 = summarize(data.filter(movie => movie.year >= 2010));
-    const pre1990 = summarize(data.filter(movie => movie.year < 1990));
-    const decade2010s = summarize(data.filter(movie => movie.year >= 2010 && movie.year <= 2019));
-    const cutoffGaps = [];
-    for (let cutoff = 1990; cutoff <= 2020; cutoff += 1) {
-        const before = summarize(data.filter(movie => movie.year < cutoff));
-        const after = summarize(data.filter(movie => movie.year >= cutoff));
-        cutoffGaps.push(before.mean - after.mean);
-    }
     const europeRows = data.filter(movie => movie.regionCode === 1);
     const nonEuropeRows = data.filter(movie => movie.regionCode !== 1);
     const europe = summarize(europeRows);
@@ -1610,21 +1515,8 @@ function updateDatasetKpis(data) {
         'europe-raw-gap': europeRawGap.toFixed(2),
         'europe-standardized-gap': europeStandardizedGap.toFixed(2),
         'europe-gap-reduction': (europeRawGap - europeStandardizedGap).toFixed(2),
-        'year-1994-count': year1994.n.toLocaleString('zh-CN'),
-        'year-1994-mean': year1994.mean.toFixed(2),
-        'year-1994-high-share': `${year1994.highShare.toFixed(1)}%`,
-        'other-1990s-high-share': `${other1990s.highShare.toFixed(1)}%`,
-        'year-1994-high-delta': `${Math.abs(year1994.highShare - other1990s.highShare).toFixed(1)} 个百分点`,
         'english-count': english.n.toLocaleString('zh-CN'),
         'english-share': `${(english.n / data.length * 100).toFixed(1)}%`,
-        'pre-2010-count': before2010.n.toLocaleString('zh-CN'),
-        'pre-2010-mean': before2010.mean.toFixed(2),
-        'post-2010-count': from2010.n.toLocaleString('zh-CN'),
-        'post-2010-mean': from2010.mean.toFixed(2),
-        'cutoff-gap-min': Math.min(...cutoffGaps).toFixed(2),
-        'cutoff-gap-max': Math.max(...cutoffGaps).toFixed(2),
-        'pre-1990-below-five': `${pre1990.belowFive.toFixed(1)}%`,
-        'decade-2010s-below-five': `${decade2010s.belowFive.toFixed(1)}%`,
         'europe-detail-count': regionStats[1].n.toLocaleString('zh-CN'),
         'europe-q1': regionStats[1].q1.toFixed(1),
         'europe-below-five': `${regionStats[1].belowFive.toFixed(1)}%`,
@@ -1869,7 +1761,7 @@ const SCENE_INTERACTIONS = {
         label: '第一幕 · 地区分布',
         prompt: '逐个地区查看原始均分与年代×主类型标准化均分。',
         type: 'buttons',
-        defaultValue: '3',
+        defaultValue: '1',
         options: REGION_LABELS.map((label, index) => ({ value: String(index), label })),
         filter: (row, value) => row.regionCode === Number(value),
         metrics: value => {
@@ -1891,29 +1783,11 @@ const SCENE_INTERACTIONS = {
             return `${REGION_LABELS[Number(value)]}收录 ${stats.n.toLocaleString('zh-CN')} 部：原始均分 ${stats.mean.toFixed(2)}，统一年代×主类型构成后为 ${standardized.mean.toFixed(2)}。`;
         }
     },
-    'decade-bubble': {
-        label: '第四幕 · 时间的坡度（上）',
-        prompt: '选择年代，一起查看电影数与高分占比。',
-        type: 'buttons',
-        defaultValue: '1990s',
-        options: ['Pre-1990s', '1990s', '2000s', '2010s', '2020s'].map(value => ({ value, label: value })),
-        filter: (row, value) => decadeOf(row.year) === value,
-        metrics: value => standardMetrics(particleData.filter(row => decadeOf(row.year) === value)),
-        insight: value => {
-            const rows = particleData.filter(row => decadeOf(row.year) === value);
-            const year1994 = rows.filter(row => row.year === 1994);
-            const year1994Stats = summarize(year1994);
-            const other1990s = summarize(rows.filter(row => row.year !== 1994));
-            return value === '1990s'
-                ? `1994 年高分占比 ${year1994Stats.highShare.toFixed(1)}%，九十年代其余年份为 ${other1990s.highShare.toFixed(1)}%。`
-                : `${value} 收录 ${rows.length.toLocaleString('zh-CN')} 部，均分 ${summarize(rows).mean.toFixed(2)}，高分占比 ${summarize(rows).highShare.toFixed(1)}%。`;
-        }
-    },
     'language-babel': {
         label: '第三幕 · 分析语言组',
         prompt: '切换分析语言组，同时读取占比、均值和高分占比。此处语言均指主要语言；混合语种按片单首位归组。',
         type: 'buttons',
-        defaultValue: '3',
+        defaultValue: '0',
         options: languageOptionList(false),
         filter: (row, value) => row.langCode === Number(value),
         metrics: value => {
@@ -1932,39 +1806,11 @@ const SCENE_INTERACTIONS = {
             return `${LANGUAGE_LABELS[Number(value)]}组收录 ${stats.n.toLocaleString('zh-CN')} 部，占全部电影 ${(stats.n / particleData.length * 100).toFixed(1)}%，均分 ${stats.mean.toFixed(2)}。`;
         }
     },
-    'century-decline': {
-        label: '第五幕 · 分界线实验',
-        prompt: '移动分界年份，观察“此前／此后”差异是否稳定。',
-        type: 'range',
-        defaultValue: 2010,
-        min: 1990,
-        max: 2020,
-        step: 1,
-        formatValue: value => `${value} 年`,
-        filter: () => true,
-        metrics: value => {
-            const cutoff = Number(value);
-            const before = summarize(particleData.filter(row => row.year < cutoff));
-            const after = summarize(particleData.filter(row => row.year >= cutoff));
-            return [
-                metric('此前均分', before.mean.toFixed(2), `n=${before.n.toLocaleString('zh-CN')}`),
-                metric('此后均分', after.mean.toFixed(2), `n=${after.n.toLocaleString('zh-CN')}`),
-                metric('此前高分占比', `${before.highShare.toFixed(1)}%`, '评分 ≥ 8.5'),
-                metric('此后高分占比', `${after.highShare.toFixed(1)}%`, '评分 ≥ 8.5')
-            ];
-        },
-        insight: value => {
-            const cutoff = Number(value);
-            const before = summarize(particleData.filter(row => row.year < cutoff));
-            const after = summarize(particleData.filter(row => row.year >= cutoff));
-            return `以 ${value} 年切分，较早一组比此后高 ${(before.mean - after.mean).toFixed(2)} 分；移动切点可检验差距是否稳定。`;
-        }
-    },
     'european-slow': {
         label: '第二幕 · 下限检验',
         prompt: '切换地区，对比第一四分位数、中位数和低分占比。',
         type: 'buttons',
-        defaultValue: '3',
+        defaultValue: '1',
         options: REGION_LABELS.map((label, index) => ({ value: String(index), label })),
         filter: (row, value) => row.regionCode === Number(value),
         metrics: value => {
@@ -1982,7 +1828,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'chinese-dialect': {
-        label: '第六幕 · 分差随年代变化',
+        label: '第四幕 · 分差随年代变化',
         prompt: '切换年代，比较普通话与方言电影的均分。',
         type: 'buttons',
         defaultValue: 'all',
@@ -2019,7 +1865,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'final-universe': {
-        label: '第十一幕 · 语言组星云',
+        label: '第九幕 · 语言组星云',
         prompt: '按语言组缩小星云，再随机或直接点选一部电影。',
         type: 'buttons',
         defaultValue: 'all',
@@ -2029,7 +1875,7 @@ const SCENE_INTERACTIONS = {
         insight: () => '方言（琥珀色）与普通话（灰蓝色）在星云中并列。点击任意粒子核对具体作品。'
     },
     'global-layers': {
-        label: '第七幕 · 全球参照',
+        label: '第五幕 · 全球参照',
         prompt: '把电影按语言组放回同一条 5 分线，观察谁更容易跌穿下限。点选不同观察，粒子会重新排列。',
         type: 'buttons',
         defaultValue: 'mandarin-outlier',
@@ -2116,7 +1962,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'dialect-flops': {
-        label: '第八幕 · 烂片也有',
+        label: '第六幕 · 烂片也有',
         prompt: '切开方言内部。按钮只改右侧粒子：看主体、失败尾部、四部案例，或只留低分点。',
         type: 'buttons',
         defaultValue: 'isolate',
@@ -2189,7 +2035,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'dual-director': {
-        label: '第九幕 · 寻 · 同导演对比',
+        label: '第七幕 · 寻 · 同导演对比',
         prompt: '同一批导演的方言片与普通话片都在图中。点开一部，核对具体作品。',
         type: 'buttons',
         defaultValue: 'all',
@@ -2243,7 +2089,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'three-waves': {
-        label: '第十幕 · 展 · 三波浪潮',
+        label: '第八幕 · 展 · 三波浪潮',
         prompt: '点击浪潮片单中的电影，回到具体作品。',
         type: 'buttons',
         defaultValue: 'all',
@@ -2262,7 +2108,7 @@ const SCENE_INTERACTIONS = {
         insight: () => '三波浪潮，三种方言，同一个逻辑：用更少的产量，守住更稳的下限。点击片单核对具体电影。'
     },
     'scale': {
-        label: '第十二幕 · 刻度',
+        label: '第十幕 · 刻度',
         prompt: '对照六级世界均分刻度，再随机或直接点选一部电影。',
         type: 'buttons',
         defaultValue: 'all',
@@ -2304,7 +2150,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'echo-narrative': {
-        label: '第十三幕 · 回响',
+        label: '第十一幕 · 回响',
         prompt: '',
         type: 'buttons',
         defaultValue: 'all',
@@ -2498,10 +2344,6 @@ function pickRandomMovie(sceneId) {
     const movie = candidates[Math.floor(Math.random() * candidates.length)];
     renderPickedMovie(sceneId, movie, '随机打捞');
     openMovieDetail(movie);
-    if (isCanvasParticleScene(sceneId) && universeLayer) {
-        universeLayer.highlight(movie.id);
-        return;
-    }
     if (sceneId === activeSceneId && particleChart) {
         const plottedRows = plottedSeriesData[0] || [];
         const dataIndex = plottedRows.findIndex(item => {
@@ -2605,86 +2447,72 @@ function openPickedParticle(movie) {
     openMovieDetail(movie);
 }
 
-function movieTooltipHtml(movie) {
-    if (!movie) return '';
-    const visualLabel = VISUAL_GROUP_LABELS[movie.visualGroup] || '';
-    return `<strong style="font-size:14px">${escapeHtml(movie.title)}</strong><br>`
-        + `${movie.year} · ${movie.rating.toFixed(1)} 分 · ${Number(movie.votes || 0).toLocaleString('zh-CN')} 人评价<br>`
-        + `${REGION_LABELS[movie.regionCode] || '未知地区'} · ${LANGUAGE_LABELS[movie.langCode] || '未知语言组'}`
-        + (visualLabel ? `<br>视觉地区 ${escapeHtml(visualLabel)}` : '');
-}
-
-function initUniverseLayer() {
-    const canvas = document.getElementById('universe-layer');
-    if (!canvas || universeLayer) return;
-    universeLayer = createUniverseLayer({
-        canvas,
-        onPick(movieId) {
-            const movie = Number.isInteger(movieId) ? particleData[movieId] : null;
-            if (movie) openPickedParticle(movie);
-        },
-        formatTooltip(movieId) {
-            const movie = Number.isInteger(movieId) ? particleData[movieId] : null;
-            return movieTooltipHtml(movie);
-        }
-    });
+function initPrologueMotionLayer() {
+    const canvas = document.getElementById('prologue-motion-layer');
+    if (!canvas || prologueMotionLayer) return;
+    prologueMotionLayer = createPrologueMotionLayer(canvas);
+    prologueMotionLayer.resize();
 }
 
 function initParticleEngine() {
     const container = document.getElementById('chart-container');
     particleChart = echarts.init(container, 'dark');
+    particleChart.on('click', params => {
+        if (universeMotionOverlay || isMobileViewport()) return;
+        const movieId = params.value && params.value[3];
+        const movie = particleData[movieId];
+        if (movie) openPickedParticle(movie);
+    });
     particleChart.getZr().on('click', event => {
-        if (isCanvasParticleScene(activeSceneId)) return;
+        if (universeMotionOverlay) return;
+        if (!isMobileViewport()) return;
         const movie = findNearestMovieByPixel(event.offsetX, event.offsetY, 20);
         if (movie) openPickedParticle(movie);
     });
-    initUniverseLayer();
-    document.addEventListener('visibilitychange', () => {
-        if (!document.hidden && activeSceneId === 'universe') startUniverseLoop();
-    });
+    initPrologueMotionLayer();
     setPrologueState(PROLOGUE_STATES.WORLD_MAP);
     renderParticleScene('universe');
     startUniverseLoop();
 }
 
 function universeChartAr() {
-    if (universeLayer && universeLayer.isVisible()) {
-        const size = universeLayer.cssSize();
-        return Math.max(0.5, size.width / Math.max(1, size.height));
+    if (prologueMotionLayer && prologueMotionLayer.isVisible()) {
+        const size = prologueMotionLayer.cssSize();
+        if (size.width && size.height) return Math.max(0.5, size.width / size.height);
     }
     const chartW = particleChart ? particleChart.getWidth() : window.innerWidth;
     const chartH = particleChart ? particleChart.getHeight() : window.innerHeight;
     return Math.max(0.5, chartW / Math.max(1, chartH));
 }
 
-function prologueMotionKey() {
-    return [
-        prologueState,
-        prologueMotion.reveal.toFixed(4),
-        prologueMotion.fly.toFixed(4),
-        prologueMotion.release.toFixed(4),
-        prologueMotion.gather.toFixed(4)
-    ].join('|');
-}
-
-function paintUniverseLive() {
-    if (!universeLayer || activeSceneId !== 'universe') return;
-    advancePrologueMotion(performance.now());
-    const key = prologueMotionKey();
-    if (key === lastUniverseMotionKey) return;
-    lastUniverseMotionKey = key;
+function buildUniversePlot() {
     const ar = universeChartAr();
     const rows = prologueVisibleRows();
     const moving = prologueMotionBusy();
-    universeLayer.begin(rows.length, 100 * ar);
+    if (universePlotCache.length !== rows.length) {
+        universePlotCache = rows.map(() => ({
+            value: [0, 0, '', 0, 0.5, 0, 1],
+            id: '0',
+            symbolSize: 2,
+            itemStyle: { color: 'rgba(220, 220, 226, 0.16)' }
+        }));
+    }
     for (let i = 0; i < rows.length; i += 1) {
         const d = rows[i];
         const pose = universePose(d, ar);
         const brightness = ratingBrightness(d.rating);
         const dim = prologueState === PROLOGUE_STATES.REGION_FOCUS
             && d.visualGroup !== prologueFocusGroup;
-        if (moving && isCoverDust(d)) continue;
-        if (pose.appear < 0.02) continue;
+        const item = universePlotCache[i];
+        item.id = String(d.id);
+        item.value[0] = pose.x;
+        item.value[1] = pose.y;
+        item.value[2] = d.visualGroup;
+        item.value[3] = d.id;
+        item.value[4] = brightness;
+        item.value[5] = pose.onMap;
+        item.value[6] = pose.appear;
+        item.symbolSize = universeSymbolSize(d, brightness, pose.appear, dim);
         const color = visualGroupColor(
             d.visualGroup,
             brightness,
@@ -2698,303 +2526,163 @@ function paintUniverseLive() {
             && !isCoverDust(d)
             && brightness >= 0.87
             && pose.appear > 0.55;
-        universeLayer.push(
-            pose.x,
-            pose.y,
-            universeSymbolSize(d, brightness, pose.appear, dim),
-            color,
-            glowing,
-            d.id
-        );
-    }
-    universeLayer.draw();
-    syncCoverReveal();
-}
-
-function languageStarColor(langCode, focused) {
-    if (langCode === 3) return focused ? [255, 179, 0, 0.78] : [255, 179, 0, 0.16];
-    if (langCode === 2) return focused ? [98, 176, 255, 0.72] : [98, 176, 255, 0.12];
-    return focused ? [220, 220, 226, 0.18] : [220, 220, 226, 0.07];
-}
-
-function stopPlotTween() {
-    if (plotTweenRaf) cancelAnimationFrame(plotTweenRaf);
-    plotTweenRaf = 0;
-}
-
-function scenePlotBox(sceneId) {
-    const size = universeLayer ? universeLayer.cssSize() : { width: window.innerWidth, height: window.innerHeight };
-    const compact = window.innerWidth <= 700;
-    if (!usesPlotAxes(sceneId)) {
-        return { left: 0, top: 0, width: size.width, height: size.height };
-    }
-    if (sceneId === 'global-layers') {
-        const bottom = compact ? 78 : 56;
-        return { left: 28, top: 22, width: size.width - 46, height: size.height - 22 - bottom };
-    }
-    if (sceneId === 'dialect-flops') {
-        const left = compact ? 28 : size.width * 0.16;
-        const right = compact ? 18 : size.width * 0.07;
-        const bottom = compact ? 78 : 56;
-        return { left, top: 22, width: size.width - left - right, height: size.height - 22 - bottom };
-    }
-    return { left: 8, top: 8, width: size.width - 16, height: size.height - 16 };
-}
-
-function layoutEnv(sceneId) {
-    const selected = sceneState[sceneId];
-    return {
-        selectedRegion: Number(selected ?? 3),
-        selectedLanguage: Number(selected ?? 3),
-        selectedDecade: selected,
-        cutoff: Number(selected ?? 2010),
-        globalPhase: globalLayersPhase || 'mandarin-outlier',
-        flopPhase: resolveFlopPhase(flopPhase),
-        yMin: sampleRatingExtent[0],
-        yMax: sampleRatingExtent[1],
-        yearMin: sampleYearExtent[0],
-        yearMax: sampleYearExtent[1],
-        languageOrder: LANGUAGE_DISPLAY_ORDER,
-        languageIndex: languageDisplayIndex,
-        layerOf: globalLayerOf,
-        layerX: globalLayerX,
-        flopX: dialectFlopX,
-        flopLit: isFlopLit
-    };
-}
-
-function particleLook(sceneId, d) {
-    const focused = isSceneFocused(d) === 1;
-    if (STARFIELD_SCENES.has(sceneId) || sceneId === 'echo-narrative') {
-        const dialectOrMandarin = d.langCode === 3 || d.langCode === 2;
-        return {
-            size: focused ? (d.langCode === 3 ? 2.6 : dialectOrMandarin ? 2.3 : 1.7) : 1.15,
-            color: languageStarColor(d.langCode, focused),
-            glow: focused && dialectOrMandarin && d.rating >= 8.7
-        };
-    }
-    if (sceneId === 'asian-breakout') {
-        let color = [255, 255, 255, 0.14];
-        if (focused) {
-            if (d.regionCode === 2 || d.regionCode === 3) color = [...hexToRgb(COLORS.asian), 0.86];
-            else if (d.regionCode === 0) color = [84, 112, 198, 0.55];
-            else color = [236, 232, 224, 0.5];
-        }
-        return { size: focused ? 3.2 : 1.2, color, glow: false };
-    }
-    if (sceneId === 'european-slow') {
-        if (!focused) return { size: 1.2, color: [255, 255, 255, 0.14], glow: false };
-        if (d.rating < 5) return { size: 3.4, color: [...hexToRgb(GUIDE_COLORS.threshold), 0.9], glow: false };
-        return { size: 3.1, color: [236, 232, 224, 0.84], glow: false };
-    }
-    if (sceneId === 'language-babel') {
-        const parsed = parseRgba(LANGUAGE_COLORS[d.langCode] || 'rgba(255,255,255,0.15)');
-        if (!focused) parsed[3] = Math.min(parsed[3], 0.14);
-        return { size: focused ? 3.4 : 1.3, color: parsed, glow: false };
-    }
-    if (sceneId === 'decade-bubble') {
-        const on = decadeOf(d.year) === sceneState['decade-bubble'];
-        return {
-            size: on ? 3.2 : 1.2,
-            color: on ? [185, 196, 206, 0.86] : [255, 255, 255, 0.12],
-            glow: false
-        };
-    }
-    if (sceneId === 'century-decline') {
-        const after = d.year >= Number(sceneState['century-decline']);
-        return {
-            size: 2.4,
-            color: after ? [...hexToRgb(COLORS.afterCutoff), 0.82] : [132, 182, 244, 0.48],
-            glow: false
-        };
-    }
-    if (sceneId === 'chinese-dialect' || sceneId === 'dual-director') {
-        if (d.langCode === 3) {
-            return { size: focused ? 3.4 : 1.4, color: [...hexToRgb(COLORS.dialect), focused ? 0.86 : 0.18], glow: false };
-        }
-        if (d.langCode === 2) {
-            return { size: focused ? 3.2 : 1.4, color: [...hexToRgb(COLORS.chinaBlue), focused ? 0.82 : 0.16], glow: false };
-        }
-        return { size: 1.15, color: [255, 255, 255, 0.08], glow: false };
-    }
-    if (sceneId === 'global-layers') {
-        const group = globalLayerOf(d);
-        let color = [255, 255, 255, 0.14];
-        if (group === 3) color = [...hexToRgb(COLORS.dialect), 0.8];
-        else if (group === 4) color = [...hexToRgb(COLORS.chinaBlue), 0.7];
-        else if (group >= 0) color = [255, 255, 255, 0.38];
-        return { size: group === 3 || group === 4 ? 2.8 : 1.6, color, glow: false };
-    }
-    if (sceneId === 'dialect-flops') {
-        const lit = isFlopLit(d, resolveFlopPhase(flopPhase));
-        const role = dialectFlopRole(d);
-        if (!lit) return { size: 1.2, color: [220, 220, 226, 0.1], glow: false };
-        if (role === 3) return { size: 6.5, color: [...hexToRgb(COLORS.dialect), 0.95], glow: true };
-        if (role === 2 || role === 1) return { size: 3.2, color: [...hexToRgb(COLORS.dialect), 0.8], glow: false };
-        return { size: 1.4, color: [255, 209, 102, 0.28], glow: false };
-    }
-    return { size: 1.6, color: [220, 220, 226, 0.16], glow: false };
-}
-
-function selectDrawRows(budget) {
-    if (particleData.length <= budget) return particleData;
-    const focused = [];
-    const keep = [];
-    const rest = [];
-    for (let i = 0; i < particleData.length; i += 1) {
-        const row = particleData[i];
-        if (isSceneFocused(row)) focused.push(row);
-        else if (row.mobileKeep || row.dustKeep) keep.push(row);
-        else rest.push(row);
-    }
-    if (focused.length >= budget) return focused;
-    const fill = keep.concat(rest);
-    return focused.concat(fill.slice(0, budget - focused.length));
-}
-
-function projectDataPoint(x, y, axes, box) {
-    const affine = particleChart ? seriesPixelAffine(0) : null;
-    if (affine) {
-        return [
-            affine.origin[0] + x * affine.sx + y * affine.tx,
-            affine.origin[1] + x * affine.sy + y * affine.ty
-        ];
-    }
-    return plotToPixel(x, y, axes, box);
-}
-
-function buildPixelPlot(sceneId, rows) {
-    const env = layoutEnv(sceneId);
-    const axes = layoutAxes(sceneId, env);
-    const box = scenePlotBox(sceneId);
-    const items = [];
-    for (let i = 0; i < rows.length; i += 1) {
-        const d = rows[i];
-        const point = layoutXY(sceneId, d, env);
-        const pixel = projectDataPoint(point.x, point.y, axes, box);
-        const look = particleLook(sceneId, d);
-        items.push({
-            id: d.id,
-            x: pixel[0],
-            y: pixel[1],
-            size: look.size,
-            color: look.color,
-            glow: look.glow
-        });
-    }
-    return items;
-}
-
-function blitPixelItems(items) {
-    if (!universeLayer) return;
-    universeLayer.begin(items.length, 1);
-    for (let i = 0; i < items.length; i += 1) {
-        const item = items[i];
-        universeLayer.pushPixel(item.x, item.y, item.size, item.color, item.glow, item.id);
-    }
-    universeLayer.draw();
-}
-
-function startPlotTween(snap, toItems) {
-    stopPlotTween();
-    const n = toItems.length;
-    const fromX = new Float32Array(n);
-    const fromY = new Float32Array(n);
-    const fromS = new Float32Array(n);
-    const fromR = new Float32Array(n);
-    const fromG = new Float32Array(n);
-    const fromB = new Float32Array(n);
-    const fromA = new Float32Array(n);
-    const toX = new Float32Array(n);
-    const toY = new Float32Array(n);
-    const toS = new Float32Array(n);
-    const toR = new Float32Array(n);
-    const toG = new Float32Array(n);
-    const toB = new Float32Array(n);
-    const toA = new Float32Array(n);
-    const glow = new Uint8Array(n);
-    const ids = new Int32Array(n);
-    const index = new Map();
-    for (let i = 0; i < snap.n; i += 1) index.set(snap.ids[i], i);
-    for (let i = 0; i < n; i += 1) {
-        const item = toItems[i];
-        const prev = index.get(item.id);
-        toX[i] = item.x;
-        toY[i] = item.y;
-        toS[i] = item.size;
-        toR[i] = item.color[0];
-        toG[i] = item.color[1];
-        toB[i] = item.color[2];
-        toA[i] = item.color[3];
-        glow[i] = item.glow ? 1 : 0;
-        ids[i] = item.id;
-        if (prev == null) {
-            fromX[i] = item.x;
-            fromY[i] = item.y;
-            fromS[i] = item.size;
-            fromR[i] = item.color[0];
-            fromG[i] = item.color[1];
-            fromB[i] = item.color[2];
-            fromA[i] = 0;
+        if (glowing) {
+            const hex = prologueState === PROLOGUE_STATES.WORLD_MAP && d.visualGroup === 'china'
+                ? COVER_CHINA_HEX
+                : (VISUAL_GROUP_COLORS[d.visualGroup] || VISUAL_GROUP_COLORS.unknown);
+            item.itemStyle = {
+                color,
+                shadowBlur: 6,
+                shadowColor: hexToRgba(hex, 0.38)
+            };
         } else {
-            fromX[i] = snap.xs[prev];
-            fromY[i] = snap.ys[prev];
-            fromS[i] = snap.sizes[prev];
-            fromR[i] = snap.rCh[prev];
-            fromG[i] = snap.gCh[prev];
-            fromB[i] = snap.bCh[prev];
-            fromA[i] = snap.aCh[prev];
+            item.itemStyle = { color };
         }
     }
-    const t0 = performance.now();
-    const tick = now => {
-        const t = easeCubicOut((now - t0) / TWEEN_MS);
-        universeLayer.begin(n, 1);
-        for (let i = 0; i < n; i += 1) {
-            universeLayer.pushPixel(
-                fromX[i] + (toX[i] - fromX[i]) * t,
-                fromY[i] + (toY[i] - fromY[i]) * t,
-                fromS[i] + (toS[i] - fromS[i]) * t,
-                [
-                    fromR[i] + (toR[i] - fromR[i]) * t,
-                    fromG[i] + (toG[i] - fromG[i]) * t,
-                    fromB[i] + (toB[i] - fromB[i]) * t,
-                    fromA[i] + (toA[i] - fromA[i]) * t
-                ],
-                glow[i] === 1 && t > 0.7,
-                ids[i]
-            );
+    return universePlotCache;
+}
+
+function prologueMotionKey() {
+    return [
+        prologueState,
+        prologueMotion.reveal.toFixed(4),
+        prologueMotion.fly.toFixed(4),
+        prologueMotion.release.toFixed(4),
+        prologueMotion.gather.toFixed(4)
+    ].join('|');
+}
+
+function paintUniverseMotionFrame() {
+    if (!prologueMotionLayer) return;
+    const size = prologueMotionLayer.cssSize();
+    const width = size.width || window.innerWidth;
+    const height = size.height || window.innerHeight;
+    const ar = universeChartAr();
+    const xScale = width / Math.max(1e-6, 100 * ar);
+    const yScale = height / 100;
+    const expected = prologueLandRows.length + (coverDustVisible() ? prologueDustRows.length : 0);
+    prologueMotionLayer.begin(expected);
+    eachPrologueRow(d => {
+        const pose = universePose(d, ar);
+        if (pose.appear < 0.02) return;
+        const brightness = d.brightness || ratingBrightness(d.rating);
+        const dim = prologueState === PROLOGUE_STATES.REGION_FOCUS
+            && d.visualGroup !== prologueFocusGroup;
+        prologueMotionLayer.push(
+            pose.x * xScale,
+            (100 - pose.y) * yScale,
+            universeSymbolSize(d, brightness, pose.appear, dim),
+            visualGroupRgba(
+                d.visualGroup,
+                brightness,
+                pose.onMap === 1,
+                d,
+                pose.appear,
+                dim
+            )
+        );
+    });
+    prologueMotionLayer.draw();
+}
+
+function clearUniverseEchartsData() {
+    if (!particleChart) return;
+    rememberPlottedSeries([{ data: [] }]);
+    particleChart.setOption({
+        animation: false,
+        series: [{ data: [] }]
+    }, { notMerge: false, lazyUpdate: false, silent: true });
+}
+
+function hidePrologueMotionLayer() {
+    if (universeHandoffTimer) {
+        window.clearTimeout(universeHandoffTimer);
+        universeHandoffTimer = 0;
+    }
+    if (universeFinishedHandler && particleChart) {
+        particleChart.off('finished', universeFinishedHandler);
+        universeFinishedHandler = null;
+    }
+    universeMotionOverlay = false;
+    if (prologueMotionLayer) {
+        prologueMotionLayer.setVisible(false);
+        prologueMotionLayer.clear();
+    }
+}
+
+function afterUniverseEchartsPaint(token, done) {
+    if (!particleChart) {
+        done();
+        return;
+    }
+    if (universeFinishedHandler) {
+        particleChart.off('finished', universeFinishedHandler);
+        universeFinishedHandler = null;
+    }
+    let finished = false;
+    const finish = () => {
+        if (universeFinishedHandler) {
+            particleChart.off('finished', universeFinishedHandler);
+            universeFinishedHandler = null;
         }
-        universeLayer.draw();
-        if (t < 1 && activeSceneId !== 'universe') {
-            plotTweenRaf = requestAnimationFrame(tick);
-            return;
+        if (finished || token !== universeHandoffToken) return;
+        finished = true;
+        if (universeHandoffTimer) {
+            window.clearTimeout(universeHandoffTimer);
+            universeHandoffTimer = 0;
         }
-        plotTweenRaf = 0;
+        done();
     };
-    plotTweenRaf = requestAnimationFrame(tick);
+    const onFinished = () => {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(finish);
+        });
+    };
+    universeFinishedHandler = onFinished;
+    particleChart.on('finished', onFinished);
+    universeHandoffTimer = window.setTimeout(finish, 360);
 }
 
-function paintStoryParticles(sceneId, allowTween = true) {
-    if (!universeLayer) return;
-    if (sceneId === 'universe') {
-        stopPlotTween();
-        paintUniverseLive();
-        return;
-    }
-    const items = buildPixelPlot(sceneId, selectDrawRows(TWEEN_BUDGET));
-    const canTween = allowTween
-        && !prefersReducedMotion()
-        && universeLayer.count() > 0;
-    if (!canTween) {
-        blitPixelItems(items);
-        return;
-    }
-    startPlotTween(universeLayer.snapshot(), items);
+function paintUniverseEcharts(onPainted) {
+    if (!particleChart || activeSceneId !== 'universe') return;
+    const data = buildUniversePlot();
+    rememberPlottedSeries([{ data }]);
+    const token = universeHandoffToken;
+    if (onPainted) afterUniverseEchartsPaint(token, onPainted);
+    particleChart.setOption({
+        animation: false,
+        series: [{ data }]
+    }, { notMerge: false, lazyUpdate: false, silent: true });
 }
 
-function paintLanguageStarfield() {
-    paintStoryParticles(activeSceneId, true);
+function paintUniverseLive() {
+    if (activeSceneId !== 'universe') return;
+    advancePrologueMotion(performance.now());
+    const busy = prologueMotionBusy();
+    const key = prologueMotionKey();
+    if (key === lastUniverseMotionKey) return;
+    lastUniverseMotionKey = key;
+    if (busy && prologueMotionLayer) {
+        paintUniverseMotionFrame();
+        if (!universeMotionOverlay) {
+            universeHandoffToken += 1;
+            universeMotionOverlay = true;
+            prologueMotionLayer.setVisible(true);
+            clearUniverseEchartsData();
+        }
+        syncCoverReveal();
+        return;
+    }
+    if (universeMotionOverlay) {
+        const token = universeHandoffToken;
+        paintUniverseEcharts(() => {
+            if (token !== universeHandoffToken || prologueMotionBusy()) return;
+            hidePrologueMotionLayer();
+        });
+    } else if (particleChart) {
+        paintUniverseEcharts();
+    }
+    syncCoverReveal();
 }
 
 function prologueMotionBusy() {
@@ -3010,16 +2698,12 @@ function prologueMotionBusy() {
 
 function startUniverseLoop() {
     if (universeRaf) return;
-    stopPlotTween();
     const tick = () => {
         universeRaf = 0;
-        if (activeSceneId !== 'universe' || document.hidden) return;
-        paintUniverseLive();
-        if (prologueMotionBusy()) {
+        if (activeSceneId !== 'universe') return;
+        if (!document.hidden) paintUniverseLive();
+        if (activeSceneId === 'universe' && prologueMotionBusy()) {
             universeRaf = requestAnimationFrame(tick);
-        } else {
-            lastUniverseMotionKey = '';
-            paintUniverseLive();
         }
     };
     universeRaf = requestAnimationFrame(tick);
@@ -3028,6 +2712,8 @@ function startUniverseLoop() {
 const particleScenes = {
     'universe': () => {
         const ar = universeChartAr();
+        advancePrologueMotion(performance.now());
+        const data = prologueMotionBusy() ? [] : buildUniversePlot();
         return {
             backgroundColor: 'transparent',
             animation: false,
@@ -3037,8 +2723,9 @@ const particleScenes = {
             series: [{
                 _noDim: true,
                 type: 'scatter',
-                data: [],
-                silent: true,
+                data,
+                symbolSize: 2,
+                itemStyle: {},
                 universalTransition: false
             }]
         };
@@ -3072,6 +2759,13 @@ const particleScenes = {
                 { xAxis: 5.4, yAxis: otherRegions.mean + otherRegions.sd }
             ]
         ];
+        const data = (focusedComparison ? selectedRows : particleData).map(d => [
+            focusedComparison ? (d.isHollywood ? 4 : 5) + d.jitterX : d.genreCode + d.jitterGenreX,
+            d.rating,
+            d.isHollywood ? 1 : 0,
+            d.id,
+            isSceneFocused(d)
+        ]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3099,7 +2793,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: [],
+                data: data,
                 symbolSize: val => val[2] === 1 ? 5 : 3,
                 itemStyle: { color: p => p.value[2] === 1 ? COLORS.hollywood : COLORS.asian },
                 markLine: createGuideMarkLine(guides),
@@ -3116,6 +2810,7 @@ const particleScenes = {
         const regionStats = summarize(selectedRows);
         const standardized = standardizedMeanByDecadeGenre(selectedRows, particleData);
         const overallStats = summarize(particleData);
+        const data = particleData.map(d => [regionPosition(d.regionCode) + d.jitterX, d.rating, d.regionCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3137,7 +2832,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: [],
+                data: data,
                 symbolSize: val => val[2] === 2 || val[2] === 3 ? 5 : 2,
                 itemStyle: { 
                     color: p => {
@@ -3158,52 +2853,13 @@ const particleScenes = {
             }]
         };
     },
-    'decade-bubble': () => {
-        const selectedDecade = sceneState['decade-bubble'];
-        const decadeStats = summarize(particleData.filter(row => decadeOf(row.year) === selectedDecade));
-        return {
-            backgroundColor: 'transparent',
-            animationDurationUpdate: 2000,
-            xAxis: { 
-                type: 'value', min: sampleYearExtent[0], max: sampleYearExtent[1],
-                splitLine: { show: false },
-                axisLine: { show: true, lineStyle: { color: 'rgba(255,255,255,0.3)' } },
-                axisLabel: {
-                    color: '#FFF',
-                    formatter: value => String(Math.round(value)),
-                    showMinLabel: false,
-                    showMaxLabel: false
-                },
-                name: '年份 (Year)', nameTextStyle: { color: '#FFF', fontSize: 14 }
-            },
-            yAxis: { 
-                type: 'value', min: sampleRatingExtent[0], max: sampleRatingExtent[1],
-                splitLine: { show: false },
-                axisLine: { show: true, lineStyle: { color: 'rgba(255,255,255,0.3)' } },
-                axisLabel: { color: '#FFF' }
-            },
-            series: [{
-                type: 'scatter',
-                data: [],
-                symbolSize: val => val[2] === 1 ? 5 : 2,
-                itemStyle: { 
-                    color: p => p.value[2] === 1 ? 'rgba(185, 196, 206, 0.86)' : 'rgba(255, 255, 255, 0.12)'
-                },
-                markLine: createGuideMarkLine([
-                    horizontalGuide(decadeStats.mean, `${selectedDecade} 均值 ${decadeStats.mean.toFixed(2)}`, GUIDE_COLORS.selected, 'insideEndBottom'),
-                    horizontalGuide(8.5, '编辑高分阈值 8.5', GUIDE_COLORS.threshold, 'insideEndTop'),
-                    verticalGuide(1994, '1994 年', GUIDE_COLORS.selected)
-                ]),
-                universalTransition: true
-            }]
-        };
-    },
     'language-babel': () => {
         const selectedLanguage = Number(sceneState['language-babel']);
         const languageOrder = LANGUAGE_DISPLAY_ORDER.filter(code => code !== selectedLanguage).concat(selectedLanguage);
         const languagePosition = code => languageOrder.indexOf(code);
         const languageStats = summarize(particleData.filter(row => row.langCode === selectedLanguage));
         const overallStats = summarize(particleData);
+        const data = particleData.map(d => [languagePosition(d.langCode) + d.jitterGenreX, d.rating, d.langCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3225,7 +2881,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: [],
+                data: data,
                 symbolSize: val => val[2] === selectedLanguage ? 6 : 3,
                 itemStyle: { 
                     color: p => LANGUAGE_COLORS[p.value[2]] || 'rgba(255, 255, 255, 0.15)'
@@ -3239,52 +2895,12 @@ const particleScenes = {
             }]
         };
     },
-    'century-decline': () => {
-        const cutoff = Number(sceneState['century-decline']);
-        const before = summarize(particleData.filter(row => row.year < cutoff));
-        const after = summarize(particleData.filter(row => row.year >= cutoff));
-        return {
-            backgroundColor: 'transparent',
-            animationDurationUpdate: 2000,
-            xAxis: { 
-                type: 'value', min: sampleYearExtent[0], max: sampleYearExtent[1], splitLine: { show: false },
-                axisLine: { show: true, lineStyle: { color: 'rgba(255,255,255,0.3)' } },
-                axisLabel: {
-                    color: '#FFF',
-                    formatter: value => String(Math.round(value)),
-                    showMinLabel: false,
-                    showMaxLabel: false
-                },
-                name: '年份 (Year)', nameTextStyle: { color: '#FFF', fontSize: 14 }
-            },
-            yAxis: { 
-                type: 'value', min: sampleRatingExtent[0], max: sampleRatingExtent[1], splitLine: { show: false },
-                axisLine: { show: true, lineStyle: { color: 'rgba(255,255,255,0.3)' } },
-                axisLabel: { color: '#FFF' }
-            },
-            series: [{
-                type: 'scatter',
-                data: [],
-                symbolSize: 4,
-                itemStyle: { 
-                    color: p => p.value[2] === 1 ? COLORS.afterCutoff : 'rgba(132, 182, 244, 0.48)'
-                },
-                markLine: createGuideMarkLine([
-                    horizontalGuide(before.mean, `此前均值 ${before.mean.toFixed(2)}`, GUIDE_COLORS.before, 'insideEndTop'),
-                    horizontalGuide(after.mean, `此后均值 ${after.mean.toFixed(2)}`, GUIDE_COLORS.after, 'insideEndBottom'),
-                    horizontalGuide(8.5, '编辑高分阈值 8.5', GUIDE_COLORS.threshold, 'insideEndTop'),
-                    verticalGuide(cutoff, `分界 ${cutoff}`)
-                ]),
-                markArea: horizontalDifferenceBand(before.mean, after.mean, 'rgba(255, 138, 101, 0.10)'),
-                universalTransition: true
-            }]
-        };
-    },
     'european-slow': () => {
         const selectedRegion = Number(sceneState['european-slow']);
         const regionOrder = [0, 1, 2, 3, 4].filter(code => code !== selectedRegion).concat(selectedRegion);
         const regionPosition = code => regionOrder.indexOf(code);
         const regionStats = summarize(particleData.filter(row => row.regionCode === selectedRegion));
+        const data = particleData.map(d => [regionPosition(d.regionCode) + d.jitterX, d.rating, d.regionCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3306,15 +2922,10 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: [],
+                data: data,
                 symbolSize: val => val[2] === selectedRegion ? 6 : 2,
                 itemStyle: { 
-                    color: p => {
-                        if (p.value[2] !== selectedRegion) return 'rgba(255, 255, 255, 0.14)';
-                        const row = particleData[p.value[3]];
-                        if (row && row.rating < 5) return GUIDE_COLORS.threshold;
-                        return 'rgba(236, 232, 224, 0.84)';
-                    }
+                    color: p => p.value[2] === selectedRegion ? COLORS.selectedRegion : 'rgba(255, 255, 255, 0.12)'
                 },
                 markLine: createGuideMarkLine([
                     horizontalGuide(regionStats.q1, `${REGION_LABELS[selectedRegion]} Q1 ${regionStats.q1.toFixed(2)}`, GUIDE_COLORS.q1, 'insideEndBottom'),
@@ -3332,6 +2943,7 @@ const particleScenes = {
         const selectedRows = particleData.filter(row => SCENE_INTERACTIONS['chinese-dialect'].filter(row, selectedPeriod));
         const mandarin = summarize(selectedRows.filter(row => row.langCode === 2));
         const dialect = summarize(selectedRows.filter(row => row.langCode === 3));
+        const data = particleData.map(d => [languageDisplayIndex(d.langCode) + d.jitterGenreX, d.rating, d.langCode, d.id, isSceneFocused(d)]);
         return {
             backgroundColor: 'transparent',
             animationDurationUpdate: 2000,
@@ -3353,7 +2965,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: [],
+                data: data,
                 symbolSize: val => {
                     if (val[2] !== 2 && val[2] !== 3) return 2;
                     return val[4] ? 6 : 2;
@@ -3385,6 +2997,12 @@ const particleScenes = {
         const selectedRows = particleData.filter(row => SCENE_INTERACTIONS['dual-director'].filter(row, selected));
         const mandarin = summarize(selectedRows.filter(row => row.langCode === 2));
         const dialect = summarize(selectedRows.filter(row => row.langCode === 3));
+        const dualX = code => (code === 2 ? 0 : 1);
+        const data = particleData.map(d => {
+            const inPair = d.langCode === 2 || d.langCode === 3;
+            const x = inPair ? dualX(d.langCode) + d.jitterX * 0.55 : -1.2 + d.jitterX * 0.2;
+            return [x, d.rating, d.langCode, d.id, isSceneFocused(d)];
+        });
         const dialectGuide = selected === '2' ? NaN : (dialect.n ? dialect.mean : NaN);
         const mandarinGuide = selected === '3' ? NaN : (mandarin.n ? mandarin.mean : NaN);
         return {
@@ -3409,7 +3027,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: [],
+                data: data,
                 symbolSize: val => {
                     if (val[2] !== 2 && val[2] !== 3) return 1.5;
                     return val[4] ? 6 : 2.4;
@@ -3437,6 +3055,10 @@ const particleScenes = {
         const phase = globalLayersPhase || 'pull-back';
         const compact = window.innerWidth <= 700;
         const showThreshold = phase !== 'pull-back';
+        const data = particleData.map(d => {
+            const group = globalLayerOf(d);
+            return [globalLayerX(d, group, phase), d.rating, group, d.id, 1];
+        });
         const names = compact
             ? GLOBAL_LAYER_GROUPS.map(group => group.short)
             : GLOBAL_LAYER_GROUPS.map(group => group.label);
@@ -3494,7 +3116,7 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: [],
+                data,
                 symbolSize: val => {
                     const group = val[2];
                     const movie = particleData[val[3]];
@@ -3538,21 +3160,44 @@ const particleScenes = {
             }]
         };
     },
-    'final-universe': () => ({
-        backgroundColor: 'transparent',
-        animation: false,
-        animationDurationUpdate: 0,
-        xAxis: { show: false, min: 0, max: 100 },
-        yAxis: { show: false, min: 0, max: 100 },
-        series: [{
-            type: 'scatter',
-            data: [],
-            silent: true,
-            universalTransition: false
-        }]
-    }),
+    'final-universe': () => {
+        // 随机星云坐标，按语言组上色：方言琥珀 / 普通话灰蓝 / 其他暗灰
+        const data = particleData.map(d => [d.randX, d.randY, d.langCode, d.id, isSceneFocused(d)]);
+        return {
+            backgroundColor: 'transparent',
+            animationDurationUpdate: 2000,
+            xAxis: { show: false, min: 0, max: 100 },
+            yAxis: { show: false, min: 0, max: 100 },
+            series: [{
+                type: 'scatter',
+                data: data,
+                symbolSize: 3,
+                itemStyle: { 
+                    color: p => {
+                        const lang = p.value[2];
+                        if (lang === 3) return 'rgba(255, 179, 0, 0.7)'; // 方言 (琥珀)
+                        if (lang === 2) return 'rgba(98, 176, 255, 0.7)'; // 普通话 (灰蓝)
+                        return 'rgba(255, 255, 255, 0.12)'; // 其他 (暗灰)
+                    }
+                },
+                universalTransition: true
+            }]
+        };
+    },
     'dialect-flops': () => {
         const phase = resolveFlopPhase(flopPhase);
+        const layerPhase = globalLayersPhase || 'mandarin-outlier';
+        const data = particleData.map(row => {
+            const lit = isFlopLit(row, phase);
+            const group = globalLayerOf(row);
+            return [
+                lit ? dialectFlopX(row, phase) : globalLayerX(row, group, layerPhase),
+                row.rating,
+                dialectFlopRole(row),
+                row.id,
+                lit ? 1 : 0
+            ];
+        });
         const guides = [{
             ...horizontalGuide(5, '方言片低分线', GUIDE_COLORS.threshold, 'insideEndTop'),
             type: 'solid',
@@ -3594,10 +3239,10 @@ const particleScenes = {
             },
             series: [{
                 type: 'scatter',
-                data: [],
+                data,
                 _noDim: true,
                 symbolSize: val => {
-                    if (!val || val[4] === 0) return 1.2;
+                    if (!val || val[4] === 0) return 0;
                     const role = val[2];
                     if (phase === 'cases') {
                         if (role === 3) return 9;
@@ -3610,11 +3255,15 @@ const particleScenes = {
                 },
                 itemStyle: {
                     color: p => {
-                        if (!p.value || p.value[4] === 0) return 'rgba(220, 220, 226, 0.10)';
+                        if (!p.value || p.value[4] === 0) return 'rgba(0,0,0,0)';
                         const role = p.value[2];
-                        if (phase === 'cases' && role === 3) return COLORS.dialect;
-                        if (role === 2 || role === 3) return COLORS.dialect;
-                        return 'rgba(255, 209, 102, 0.28)';
+                        if (phase === 'cases' && role === 3) return 'rgba(232, 176, 88, 0.95)';
+                        if (phase === 'tail' || phase === 'flopsOnly') {
+                            if (role === 2 || role === 3) return 'rgba(214, 98, 92, 0.86)';
+                            return 'rgba(176, 132, 72, 0.2)';
+                        }
+                        if (role === 2 || role === 3) return 'rgba(196, 118, 86, 0.76)';
+                        return 'rgba(176, 132, 72, 0.36)';
                     }
                 },
                 markLine: createGuideMarkLine(guides),
@@ -3627,43 +3276,32 @@ particleScenes['three-waves'] = particleScenes['final-universe'];
 particleScenes['scale'] = particleScenes['final-universe'];
 particleScenes['echo-narrative'] = particleScenes['final-universe'];
 
-function sceneVisualKey(sceneId) {
-    if (sceneId === 'universe') return `universe:${prologueState}:${prologueFocusGroup || ''}`;
-    if (STARFIELD_SCENES.has(sceneId)) return `starfield:${sceneId}:${String(sceneState[sceneId] ?? '')}`;
-    return `chart:${sceneId}:${String(sceneState[sceneId] ?? '')}:${globalLayersPhase}:${flopPhase}`;
-}
-
-function renderParticleScene(sceneId, force = false) {
+function renderParticleScene(sceneId) {
     runtime.activeSceneId = sceneId;
-    document.documentElement.dataset.activeScene = sceneId;
-    const isCoverUniverse = sceneId === 'universe';
-    const isStarfield = STARFIELD_SCENES.has(sceneId);
     const chartDom = document.getElementById('chart-container');
     if (chartDom) {
         if (chartDom.dataset.echoLayer) delete chartDom.dataset.echoLayer;
-        if (!chartDom.dataset.waveLayer) {
-            chartDom.classList.toggle('is-behind', isCoverUniverse || isStarfield);
-        }
+        if (!chartDom.dataset.waveLayer) chartDom.style.opacity = '1';
     }
-    if (universeLayer) universeLayer.setVisible(isCanvasParticleScene(sceneId));
-    const visualKey = sceneVisualKey(sceneId);
-    if (!force && visualKey === lastVisualKey) {
-        if (isCoverUniverse) startUniverseLoop();
-        return;
-    }
-    lastVisualKey = visualKey;
     if(!particleChart || !particleScenes[sceneId]) return;
     const option = particleScenes[sceneId]();
     const largeDataset = particleData.length > 20000;
-    const reducedMotion = prefersReducedMotion();
+    const reducedMotion = window.innerWidth <= 700
+        || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const compactMotion = reducedMotion || largeDataset;
     const isUniverse = sceneId === 'universe' || sceneId === 'final-universe' || sceneId === 'three-waves' || sceneId === 'scale' || sceneId === 'echo-narrative';
     const isGlobalLayers = sceneId === 'global-layers';
     const isDialectFlops = sceneId === 'dialect-flops';
-    option.animation = !(largeDataset || compactMotion);
-    option.animationDurationUpdate = option.animation ? (isUniverse ? 0 : 420) : 0;
+    option.animation = !(largeDataset && !isUniverse);
+    if (!isUniverse || !option.animationDurationUpdate) {
+        option.animationDurationUpdate = compactMotion ? 0 : 420;
+    }
+    if ((isGlobalLayers || isDialectFlops) && !reducedMotion) {
+        option.animation = true;
+        option.animationDurationUpdate = 1100;
+    }
     option.animationEasingUpdate = 'cubicOut';
-    if (isCoverUniverse || isStarfield) {
+    if (sceneId === 'universe') {
         option.animation = false;
         option.animationDurationUpdate = 0;
     }
@@ -3723,31 +3361,25 @@ function renderParticleScene(sceneId, force = false) {
     }
     const series = option.series && option.series[0];
     if (series) {
-        series.universalTransition = false;
+        series.universalTransition = sceneId === 'universe'
+            ? false
+            : ((isGlobalLayers || isDialectFlops) ? !reducedMotion : !compactMotion);
+        series.progressive = sceneId === 'universe' ? 0 : (largeDataset ? 6000 : 0);
+        series.progressiveThreshold = largeDataset ? 5000 : 3000;
         series.progressiveChunkMode = 'mod';
-        if (isCoverUniverse || isStarfield || isCanvasParticleScene(sceneId)) {
-            series.data = [];
-            series.progressive = 0;
-            series.silent = true;
+        if (sceneId === 'universe') {
             series.itemStyle = series.itemStyle || {};
-            series.large = false;
+            series.emphasis = {
+                scale: 1.35,
+                itemStyle: { borderColor: '#FFFFFF', borderWidth: 1 }
+            };
         } else {
-            if (largeDataset) {
-                series.large = true;
-                series.largeThreshold = 500;
-                series.progressive = 0;
-                series.progressiveThreshold = 1e9;
-            } else {
-                series.large = false;
-                series.progressive = 0;
-                series.progressiveThreshold = 3000;
-            }
             const originalColor = series.itemStyle && series.itemStyle.color;
             const originalSize = series.symbolSize;
-            const unfocusedColor = series.unfocusedColor || 'rgba(255, 255, 255, 0.12)';
+            const unfocusedColor = series.unfocusedColor || 'rgba(255, 255, 255, 0.09)';
             const unfocusedSize = Number.isFinite(Number(series.unfocusedSize))
                 ? Number(series.unfocusedSize)
-                : (largeDataset ? 1.2 : 1.5);
+                : (largeDataset ? 0.8 : 1.5);
             delete series.unfocusedColor;
             delete series.unfocusedSize;
             series.itemStyle = series.itemStyle || {};
@@ -3756,7 +3388,7 @@ function renderParticleScene(sceneId, force = false) {
                 return typeof originalColor === 'function' ? originalColor(params) : originalColor;
             };
             series.symbolSize = value => {
-                if (value && value[4] === 0) return unfocusedSize;
+                if (value && value[4] === 0) return isDialectFlops ? 0 : unfocusedSize;
                 const size = typeof originalSize === 'function' ? originalSize(value) : originalSize;
                 if (series._noDim || isGlobalLayers || isDialectFlops) return size;
                 return largeDataset ? Math.max(1.2, Math.min(3.2, Number(size) * 0.64)) : size;
@@ -3765,7 +3397,7 @@ function renderParticleScene(sceneId, force = false) {
                 ? { scale: 1.35, itemStyle: { borderColor: 'rgba(255,255,255,0.4)', borderWidth: 1, shadowBlur: 0 } }
                 : {
                     scale: largeDataset ? 1.35 : 2.2,
-                    itemStyle: { borderColor: '#FFFFFF', borderWidth: 1, shadowBlur: 0 }
+                    itemStyle: { borderColor: '#FFFFFF', borderWidth: 1, shadowBlur: 16, shadowColor: 'rgba(255,255,255,0.65)' }
                 };
         }
     }
@@ -3778,19 +3410,31 @@ function renderParticleScene(sceneId, force = false) {
         formatter: params => {
             const raw = params.value;
             if (isDialectFlops && raw && raw[4] === 0) return '';
-            return movieTooltipHtml(particleData[raw && raw[3]]);
+            const movie = particleData[raw && raw[3]];
+            if (!movie) return '';
+            const visualLabel = VISUAL_GROUP_LABELS[movie.visualGroup] || '';
+            return `<strong style="font-size:14px">${escapeHtml(movie.title)}</strong><br>`
+                + `${movie.year} · ${movie.rating.toFixed(1)} 分 · ${Number(movie.votes || 0).toLocaleString('zh-CN')} 人评价<br>`
+                + `${REGION_LABELS[movie.regionCode] || '未知地区'} · ${LANGUAGE_LABELS[movie.langCode] || '未知语言组'}`
+                + (visualLabel ? `<br>视觉地区 ${escapeHtml(visualLabel)}` : '');
         }
     };
     particleChart.setOption(option, true);
     rememberPlottedSeries(option.series);
-    if (isCoverUniverse) {
-        stopPlotTween();
-        startUniverseLoop();
-    } else if (isCanvasParticleScene(sceneId)) {
-        paintStoryParticles(sceneId, !force);
+    if (sceneId === 'universe') {
+        if (prologueMotionBusy()) {
+            lastUniverseMotionKey = '';
+            paintUniverseLive();
+            startUniverseLoop();
+        } else {
+            hidePrologueMotionLayer();
+        }
+    } else {
+        universeHandoffToken += 1;
+        hidePrologueMotionLayer();
     }
     if (isDialectFlops) {
-        scheduleFlopOverlay(0);
+        scheduleFlopOverlay(reducedMotion ? 0 : 1100);
     }
 }
 
@@ -3980,12 +3624,6 @@ function fillChinaNarrativeKpis() {
             setTextById('china-europe-mean-gap', Math.abs(Number(europe.mean) - Number(china.mean)).toFixed(2));
         }
     }
-    if (facts && facts.decades) {
-        const pre = facts.decades['Pre-1990s'];
-        const recent = facts.decades['2020s'];
-        if (pre) setTextById('decade-pre-mean', Number(pre.mean).toFixed(2));
-        if (recent) setTextById('decade-2020s-mean', Number(recent.mean).toFixed(2));
-    }
     if (facts && facts.regions) {
         const europe = facts.regions['欧洲'];
         const northAmerica = facts.regions['北美'];
@@ -4014,6 +3652,8 @@ function fillChinaNarrativeKpis() {
     if (agg && agg.flop_overall) {
         setTextById('china-dialect-below5', `${agg.flop_overall.d}%`);
         setTextById('china-mandarin-below5', `${agg.flop_overall.m}%`);
+        setTextById('overtake-flop-d', `${agg.flop_overall.d}%`);
+        setTextById('overtake-flop-m', `${agg.flop_overall.m}%`);
         setTextById('finale-flop-d', `${agg.flop_overall.d}%`);
         setTextById('finale-flop-m', `${agg.flop_overall.m}%`);
         setTextById('finale-flop-d-int', String(Math.round(Number(agg.flop_overall.d))));
@@ -4211,12 +3851,15 @@ function bindWaveScene() {
                     el.style.opacity = '0';
                 } else {
                     delete el.dataset.waveLayer;
-                    el.style.opacity = '';
-                    el.classList.toggle('is-behind', isCanvasParticleScene(activeSceneId));
+                    el.style.opacity = '1';
                 }
             }
-            if (universeLayer) {
-                universeLayer.setVisible(!hidden && isCanvasParticleScene(activeSceneId));
+            if (hidden) {
+                universeHandoffToken += 1;
+                hidePrologueMotionLayer();
+            } else if (activeSceneId === 'universe' && prologueMotionBusy()) {
+                lastUniverseMotionKey = '';
+                startUniverseLoop();
             }
         }
     });

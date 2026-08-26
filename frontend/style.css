@@ -178,44 +178,24 @@ small {
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    z-index: 2;
-    pointer-events: none;
+    z-index: 1;
+    pointer-events: auto;
     cursor: crosshair;
     transition: opacity 0.6s ease;
 }
-.universe-layer {
+.prologue-motion-layer {
     position: fixed;
     inset: 0;
     width: 100vw;
     height: 100vh;
     height: 100dvh;
     z-index: 1;
-    pointer-events: auto;
-    cursor: crosshair;
+    pointer-events: none;
     display: block;
+    opacity: 0;
+}
+.prologue-motion-layer.is-active {
     opacity: 1;
-    transition: opacity 0.16s ease;
-}
-.universe-layer.is-hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-.chart-background.is-behind {
-    opacity: 0;
-    pointer-events: none;
-}
-.universe-tooltip {
-    position: fixed;
-    z-index: 40;
-    max-width: 280px;
-    padding: 10px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    background: rgba(5, 5, 7, 0.94);
-    color: #fff;
-    font-size: 12px;
-    line-height: 1.45;
-    pointer-events: none;
 }
 .chart-background::before {
     content: "";
@@ -344,10 +324,10 @@ html[data-prologue-state="WORLD_MAP"] .chart-background::before {
     margin-bottom: 28px;
     color: var(--color-text-heading);
     font-family: var(--font-serif);
-    font-size: clamp(1.35rem, 3.6vw + 0.35rem, 4.25rem);
+    font-size: clamp(0.95rem, 4.2vw, 2.75rem);
     font-weight: 700;
     line-height: var(--leading-tight);
-    letter-spacing: var(--tracking-display);
+    letter-spacing: 0.02em;
     text-align: center;
     text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     white-space: nowrap;
@@ -556,7 +536,7 @@ html.explorer-open {
     overflow: hidden;
 }
 html.explorer-open #chart-container,
-html.explorer-open .universe-layer {
+html.explorer-open #prologue-motion-layer {
     opacity: 0 !important;
     visibility: hidden;
     pointer-events: none;
@@ -737,8 +717,8 @@ button.movie-card:focus-visible { outline: 2px solid #FFF; outline-offset: 3px; 
     .particle-step > .flop-paths,
     #step-8c .flop-paths { font-size: var(--text-sm); line-height: var(--leading-snug); }
     .intro-step .mega-title {
-        font-size: clamp(1.05rem, 5.2vw, 2.5rem);
-        letter-spacing: 0.02em;
+        font-size: clamp(0.92rem, 4.1vw, 1.65rem);
+        letter-spacing: 0.01em;
     }
     .intro-step .hero-subtitle {
         max-width: 96vw;
@@ -1055,7 +1035,7 @@ button.movie-card:focus-visible { outline: 2px solid #FFF; outline-offset: 3px; 
 /* ================= 已下线组件已清理 ================= */
 
 @media (max-width: 768px) {
-    .intro-step .mega-title { font-size: clamp(1rem, 4.8vw, 1.35rem); }
+    .intro-step .mega-title { font-size: clamp(0.88rem, 4vw, 1.2rem); }
     .visual-region-dock { width: min(94vw, 640px); }
     .visual-region-chips button { padding: 5px 8px; font-size: 0.7rem; }
 }
@@ -1227,7 +1207,7 @@ button.movie-card:focus-visible { outline: 2px solid #FFF; outline-offset: 3px; 
     border-radius: 0;
 }
 
-/* 第七幕 — 宽标题卡 + 分层正文 */
+/* 第五幕 — 宽标题卡 + 分层正文 */
 #step-8b .scene-title-card {
     max-width: min(92vw, 860px);
     margin-bottom: 12px;
@@ -2076,12 +2056,12 @@ html.wave-scene-busy.wave-overlay-hidden .scrolly-overlay {
 }
 html.wave-film-open #chart-container,
 html.wave-scene-busy #chart-container,
-html.wave-film-open .universe-layer,
-html.wave-scene-busy .universe-layer {
+html.wave-film-open #prologue-motion-layer,
+html.wave-scene-busy #prologue-motion-layer {
     pointer-events: none;
 }
-html.wave-film-open .universe-layer,
-html.wave-scene-busy .universe-layer {
+html.wave-film-open #prologue-motion-layer,
+html.wave-scene-busy #prologue-motion-layer {
     opacity: 0;
 }
 html.wave-scene-busy .wave-film-space {
@@ -2951,7 +2931,7 @@ html.wave-scene-busy .wave-film-card {
     .wave-return { margin: 4px 0 0; }
 }
 
-/* 第十二幕：一页尺子 + 按钮换拍 */
+/* 第十幕：一页尺子 + 按钮换拍 */
 #step-10 {
     --ax: 54%;
 }
@@ -2990,7 +2970,7 @@ html.wave-scene-busy .wave-film-card {
     transition: opacity 0.35s ease;
 }
 #step-10 .scale-hint.is-on { opacity: 1; }
-/* 第十二幕：标题单行、卡片加宽 */
+/* 第十幕：标题单行、卡片加宽 */
 #step-10 > h2 {
     width: fit-content;
     max-width: none;
