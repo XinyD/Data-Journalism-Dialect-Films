@@ -1,4 +1,8 @@
 import { rafThrottle, prefersReducedMotion } from './lib/schedule.js';
+import { chapterFillFromGeometry, isFarJump, narrativeProgress, pickCurrentStep } from './lib/scrolly-select.js';
+
+const STEP_HYSTERESIS = 0.12;
+const RATIO_THRESHOLDS = [0, 0.08, 0.16, 0.28, 0.4, 0.55, 0.7, 0.85, 1];
 
 export function chapterLabel(step) {
     const badge = step.querySelector('.theory-badge');
@@ -13,19 +17,30 @@ function getChapterNavFill() {
     return document.querySelector('.chapter-nav-fill');
 }
 
+function pageTop(el) {
+    return el.getBoundingClientRect().top + window.scrollY;
+}
+
+function stepGeometry() {
+    return [...document.querySelectorAll('.particle-step')].map(step => ({
+        id: step.id,
+        top: pageTop(step),
+        height: step.offsetHeight
+    }));
+}
+
 function updateChapterNavFill(currentStep) {
     const fill = getChapterNavFill();
     if (!fill || !currentStep) return;
-    const steps = [...document.querySelectorAll('.particle-step')];
-    const index = steps.indexOf(currentStep);
-    if (index < 0 || steps.length <= 1) {
-        fill.style.height = index >= 0 ? '100%' : '0%';
+    const geometry = stepGeometry();
+    if (geometry.length <= 1) {
+        fill.style.height = geometry.length ? '100%' : '0%';
         fill.style.top = '0%';
         return;
     }
-    const segment = 100 / steps.length;
-    fill.style.height = `${segment}%`;
-    fill.style.top = `${index * segment}%`;
+    const rect = chapterFillFromGeometry(geometry, currentStep.id);
+    fill.style.top = `${rect.top}%`;
+    fill.style.height = `${rect.height}%`;
 }
 
 export function updateChapterNav(currentStep) {
@@ -52,22 +67,175 @@ export function initChapterNav() {
         const label = chapterLabel(step);
         return `<li><a href="#${step.id}" data-step="${step.id}" aria-label="${label}"><span class="chapter-nav-marker" aria-hidden="true"></span><span class="chapter-nav-tip">${label}</span></a></li>`;
     }).join('');
+}
 
-    list.addEventListener('click', event => {
-        const link = event.target.closest('a[data-step]');
-        if (!link) return;
-        event.preventDefault();
-        const targetStep = document.getElementById(link.dataset.step);
+function whenScrollSettles(done) {
+    let finished = false;
+    const finish = () => {
+        if (finished) return;
+        finished = true;
+        window.removeEventListener('scrollend', onScrollEnd);
+        window.clearTimeout(timer);
+        done();
+    };
+    const onScrollEnd = () => finish();
+    if ('onscrollend' in window) {
+        window.addEventListener('scrollend', onScrollEnd, { once: true });
+    }
+    const timer = window.setTimeout(finish, 480);
+    let last = window.scrollY;
+    let still = 0;
+    const tick = () => {
+        if (finished) return;
+        if (Math.abs(window.scrollY - last) < 1) still += 1;
+        else still = 0;
+        last = window.scrollY;
+        if (still >= 3) {
+            finish();
+            return;
+        }
+        requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+}
+
+export function initScrollytelling(deps) {
+    const steps = [...document.querySelectorAll('.particle-step')];
+    const stepIds = steps.map(step => step.id);
+    const ratios = new Map(stepIds.map(id => [id, 0]));
+    let currentStep = steps[0] || null;
+    let pendingPinId = null;
+    let selectRaf = 0;
+    const bar = document.querySelector('#story-progress i');
+
+    function refreshRatiosFromView() {
+        const top = window.innerHeight * 0.22;
+        const bottom = window.innerHeight * 0.78;
+        const band = Math.max(1, bottom - top);
+        for (let i = 0; i < steps.length; i += 1) {
+            const step = steps[i];
+            const rect = step.getBoundingClientRect();
+            const visible = Math.max(0, Math.min(rect.bottom, bottom) - Math.max(rect.top, top));
+            ratios.set(step.id, visible / band);
+        }
+    }
+
+    function updateProgress() {
+        if (bar && steps.length) {
+            const first = steps[0];
+            const last = steps[steps.length - 1];
+            const start = pageTop(first);
+            const end = pageTop(last) + last.offsetHeight - window.innerHeight;
+            bar.style.width = `${narrativeProgress(window.scrollY, start, end) * 100}%`;
+        }
+        if (currentStep) updateChapterNavFill(currentStep);
+        if (window.ScaleScene) window.ScaleScene.onScroll();
+    }
+
+    function sceneIdOf(step) {
+        return (step && step.getAttribute('data-scene')) || 'universe';
+    }
+
+    function applyStep(nextStep) {
+        if (!nextStep) return;
+        const prevStep = currentStep;
+        const prevScene = sceneIdOf(prevStep);
+        const sceneId = sceneIdOf(nextStep);
+        const sameStep = nextStep === currentStep;
+        currentStep = nextStep;
+        steps.forEach(step => step.classList.toggle('is-active', step === currentStep));
+        updateChapterNav(currentStep);
+        deps.syncCoverReveal();
+        deps.maybeCountSceneStats(currentStep);
+        document.documentElement.dataset.activeScene = sceneId;
+        let prologueChanged = false;
+        if (sceneId === 'universe') {
+            const nextState = nextStep.id === 'step-0'
+                ? deps.PROLOGUE_STATES.WORLD_MAP
+                : nextStep.id === 'step-intro'
+                    ? deps.PROLOGUE_STATES.STAR_FIELD
+                    : null;
+            if (nextState && document.documentElement.dataset.prologueState !== nextState) {
+                deps.setPrologueState(nextState);
+                prologueChanged = true;
+            }
+        }
+        if (sameStep && !prologueChanged) {
+            updateProgress();
+            return;
+        }
+        deps.activateSceneInteraction(sceneId, currentStep);
+        const sameScene = prevScene === sceneId && !prologueChanged;
+        if (!sameScene || prologueChanged) {
+            deps.renderParticleScene(sceneId);
+        }
+        if (window.WaveScene) window.WaveScene.onSceneChange(sceneId);
+        if (window.ScaleScene) window.ScaleScene.onSceneChange(sceneId);
+        updateProgress();
+    }
+
+    function commitStep() {
+        if (pendingPinId) return;
+        const nextId = pickCurrentStep(stepIds, ratios, currentStep && currentStep.id, STEP_HYSTERESIS);
+        const nextStep = nextId ? document.getElementById(nextId) : null;
+        if (!nextStep || nextStep === currentStep) return;
+        applyStep(nextStep);
+    }
+
+    function scheduleSelect() {
+        if (selectRaf) return;
+        selectRaf = requestAnimationFrame(() => {
+            selectRaf = 0;
+            commitStep();
+        });
+    }
+
+    function jumpTo(targetStep) {
         if (!targetStep) return;
-        updateChapterNav(targetStep);
+        pendingPinId = targetStep.id;
+        const fromIndex = steps.indexOf(currentStep);
+        const toIndex = steps.indexOf(targetStep);
+        const far = isFarJump(fromIndex, toIndex);
+        const reduce = prefersReducedMotion();
+        const behavior = far || reduce ? 'auto' : 'smooth';
         targetStep.scrollIntoView({
             block: 'center',
-            behavior: prefersReducedMotion() ? 'auto' : 'smooth'
+            behavior
         });
-    });
+        const settle = () => {
+            if (pendingPinId !== targetStep.id) return;
+            pendingPinId = null;
+            applyStep(targetStep);
+        };
+        if (behavior === 'auto') {
+            requestAnimationFrame(() => requestAnimationFrame(settle));
+            return;
+        }
+        whenScrollSettles(settle);
+    }
 
+    const particleObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            ratios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+        scheduleSelect();
+    }, {
+        rootMargin: '-22% 0px -22% 0px',
+        threshold: RATIO_THRESHOLDS
+    });
+    steps.forEach(step => particleObserver.observe(step));
+
+    const list = document.getElementById('chapter-nav-dots');
+    if (list) {
+        list.addEventListener('click', event => {
+            const link = event.target.closest('a[data-step]');
+            if (!link) return;
+            event.preventDefault();
+            jumpTo(document.getElementById(link.dataset.step));
+        });
+    }
     const nav = document.getElementById('chapter-nav');
-    if (nav) {
+    if (nav && list) {
         nav.addEventListener('keydown', event => {
             if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
             const links = [...list.querySelectorAll('a[data-step]')];
@@ -80,50 +248,20 @@ export function initChapterNav() {
             const nextLink = links[nextIndex];
             if (!nextLink || nextIndex === currentIndex) return;
             nextLink.focus();
-            const targetStep = document.getElementById(nextLink.dataset.step);
-            if (!targetStep) return;
-            updateChapterNav(targetStep);
-            targetStep.scrollIntoView({
-                block: 'center',
-                behavior: prefersReducedMotion() ? 'auto' : 'smooth'
-            });
+            jumpTo(document.getElementById(nextLink.dataset.step));
         });
     }
 
-    const bar = document.querySelector('#story-progress i');
     const onScroll = rafThrottle(() => {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        if (bar && max > 0) bar.style.width = `${Math.min(100, (window.scrollY / max) * 100)}%`;
-        if (window.ScaleScene) window.ScaleScene.onScroll();
+        updateProgress();
+        if (!pendingPinId) {
+            refreshRatiosFromView();
+            scheduleSelect();
+        }
     });
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    refreshRatiosFromView();
+    updateProgress();
     updateChapterNav(document.querySelector('.particle-step.is-active') || steps[0]);
-}
-
-export function initScrollytelling(deps) {
-    const steps = [...document.querySelectorAll('.particle-step')];
-    let currentStep = steps[0] || null;
-
-    const particleObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting || entry.target === currentStep) return;
-            currentStep = entry.target;
-            steps.forEach(step => step.classList.toggle('is-active', step === currentStep));
-            updateChapterNav(currentStep);
-            deps.syncCoverReveal();
-            deps.maybeCountSceneStats(currentStep);
-            const sceneId = currentStep.getAttribute('data-scene') || 'universe';
-            document.documentElement.dataset.activeScene = sceneId;
-            if (sceneId === 'universe') {
-                if (currentStep.id === 'step-0') deps.setPrologueState(deps.PROLOGUE_STATES.WORLD_MAP);
-                else if (currentStep.id === 'step-intro') deps.setPrologueState(deps.PROLOGUE_STATES.STAR_FIELD);
-            }
-            deps.activateSceneInteraction(sceneId, currentStep);
-            deps.renderParticleScene(sceneId);
-            if (window.WaveScene) window.WaveScene.onSceneChange(sceneId);
-            if (window.ScaleScene) window.ScaleScene.onSceneChange(sceneId);
-        });
-    }, { rootMargin: '-22% 0px -22% 0px' });
-    steps.forEach(step => particleObserver.observe(step));
+    scheduleSelect();
 }

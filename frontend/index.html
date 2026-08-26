@@ -16,11 +16,11 @@
     <meta name="twitter:image" content="assets/og-cover.jpg">
     <!-- endbuild -->
     <!-- build:css -->
-    <link rel="stylesheet" href="build/style.c79102603c.css">
+    <link rel="stylesheet" href="build/style.c0033380f8.css">
     <!-- endbuild -->
     <!-- build:js -->
     <script defer src="build/echarts-main.f19d3377a9.js"></script>
-    <script defer src="build/app.73a04775a3.js"></script>
+    <script defer src="build/app.8bbe99916e.js"></script>
     <!-- endbuild -->
 </head>
 <body>
@@ -43,6 +43,7 @@
     </nav>
     <!-- 沉浸式全局粒子图表容器 (Prologue Background) -->
     <div id="chart-container" class="chart-background" aria-label="可交互电影粒子图；使用每幕数据卡筛选，或点击粒子查看电影"></div>
+    <canvas id="universe-layer" class="universe-layer" aria-hidden="true"></canvas>
 
     <!-- 顶层遮罩与长篇叙事 (Narrative Overlay) -->
     <main class="scrolly-overlay" id="main-overlay">
@@ -102,7 +103,7 @@
             <div class="step particle-step" id="step-7" data-scene="european-slow">
                 <span class="theory-badge">第二幕——现象 · 下限</span>
                 <h2>每五部中国电影，就有一部不及格 <span class="scale-tag data">数据可证</span></h2>
-                <p>切换地区后，当前地区会被绿色高亮；页面同时对比第一四分位数、中位数及低于 5 分的比例。</p>
+                <p>切换地区后，当前地区列被点亮；低于 5 分的点用阈值红标出。页面同时对比第一四分位数、中位数及低于 5 分的比例。</p>
                 <p>欧洲组有 <strong><span id="europe-detail-count">--</span> 部</strong>电影，第一四分位数为 <span id="europe-q1">--</span>，低于 5 分的影片占 <span id="europe-below-five">--</span>；其余地区的第一四分位数为 <span id="non-europe-q1">--</span>，低于 5 分的影片占 <span id="non-europe-below-five">--</span>。欧洲评分较高的差异，在分布下半段同样清晰。</p>
                 <p>中国大陆低于 5 分的电影占 <strong><span id="china-below5">--</span></strong>——全球最高。每五部中国电影中，就有一部不及格。这不是“观众太苛刻”，问题出在拍电影的人，不是打分的人——电影工业在批量生产低质内容。</p>
                 <p class="scene-hook">中国电影的低分困境从何而来？是观众太苛刻，还是拍电影的人出了问题？</p>
@@ -125,7 +126,7 @@
             <div class="step particle-step" id="step-3" data-scene="decade-bubble">
                 <span class="theory-badge">第四幕——时间的坡度（上）</span>
                 <h2>越近的年代，评分越低 <span class="scale-tag data">数据可证</span></h2>
-                <p>粒子按<strong>年份</strong>与评分展开，黄色标记 1990 年代。点击年代按钮，观察电影数和高分占比如何同时变化。</p>
+                <p>粒子按<strong>年份</strong>与评分展开，浅灰点亮当前选中的年代。点击年代按钮，观察电影数和高分占比如何同时变化。</p>
                 <p>1994 年共收录 <strong><span id="year-1994-count">--</span> 部</strong>电影，均分 <span id="year-1994-mean">--</span>，8.5 分及以上占 <strong><span id="year-1994-high-share">--</span></strong>；九十年代其余年份为 <strong><span id="other-1990s-high-share">--</span></strong>。两者相差 <span id="year-1994-high-delta">--</span>，数值几乎重合。</p>
                 <p>从 Pre-1990s 到 2020s，均分从 <strong><span id="decade-pre-mean">--</span></strong> 递减至 <strong><span id="decade-2020s-mean">--</span></strong>，落差超过 1 分。经典片长期留存、跨年代传播——越早的电影越经过时间筛选，留下的都是好片。但这条“时间坡度”对所有地区都一样：较早的一组始终高分。</p>
                 <p class="scene-hook">全球都有这条坡度。华语内部，还有一条更隐蔽的分界线。</p>
