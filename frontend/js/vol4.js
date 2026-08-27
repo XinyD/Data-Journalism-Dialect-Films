@@ -1,10 +1,14 @@
+import { DataService, renderLocalGallery } from './core.js';
+import { isPerformanceEntry } from './lib/perf_entry.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
     await DataService.init({ slim: true });
     
     const filters = {
         decade: document.getElementById('filter-decade'),
         region: document.getElementById('filter-region'),
-        language: document.getElementById('filter-language')
+        language: document.getElementById('filter-language'),
+        kind: document.getElementById('filter-kind')
     };
 
     function executeQuery() {
@@ -12,7 +16,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const r = filters.region.value;
         const l = filters.language.value;
         
-        const results = DataService.filter(d, r, l);
+        const kind = document.getElementById('filter-kind')?.value || 'films';
+        let results = DataService.filter(d, r, l);
+        if (kind === 'films') results = results.filter(movie => !isPerformanceEntry(movie));
+        else if (kind === 'perf') results = results.filter(movie => isPerformanceEntry(movie));
         
         const titleParts = [];
         if(d !== 'All') titleParts.push(`年代: ${d}`);

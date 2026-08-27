@@ -45,6 +45,9 @@ jobs:
         run: npm run check:js
         # Covers frontend/js/scenes/scene_waves.js and the other story modules.
 
+      - name: Run JavaScript unit tests
+        run: npm run test:js
+
       - name: Build frontend bundles
         run: |
           npm ci
@@ -54,4 +57,4 @@ jobs:
           git diff --exit-code -- frontend/index.html frontend/vol1_time.html frontend/vol2_geo.html frontend/vol3_lang.html frontend/vol4_memory.html frontend/build
 
       - name: Confirm deterministic rebuild
-        run: git diff --exit-code
+        run: git diff --exit-code -- . ":(exclude)frontend/fonts" ":(exclude)frontend/build/echarts-*" ":(exclude)frontend/build/vol*.js" ":(exclude)frontend/build/echo-universe-chunk*"

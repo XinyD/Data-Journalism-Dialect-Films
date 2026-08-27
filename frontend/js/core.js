@@ -27,7 +27,7 @@ async function fetchJson(url, timeoutMs = DEFAULT_FETCH_TIMEOUT_MS) {
     }
 }
 
-const StoryUI = {
+export const StoryUI = {
     counted: new Set(),
 
     showBootError(error) {
@@ -112,7 +112,7 @@ const StoryUI = {
     }
 };
 
-const DataService = {
+export const DataService = {
     dataset: [],
     meta: {},
     visualMasks: null,
@@ -315,7 +315,7 @@ const DataService = {
 };
 
 // ECharts Cinematic Theme Tokens
-const TOKENS = {
+export const TOKENS = {
     bg: 'transparent',
     primary: '#8FB2FF',
     secondary: '#5CC8A1',
@@ -326,7 +326,7 @@ const TOKENS = {
     fontFamily: 'Noto Sans SC, PingFang SC, sans-serif'
 };
 
-function getBaseChartOption() {
+export function getBaseChartOption() {
     return {
         backgroundColor: TOKENS.bg,
         textStyle: { fontFamily: TOKENS.fontFamily, color: TOKENS.textMain },
@@ -451,7 +451,7 @@ async function openSharedMovieDetail(movie) {
 }
 
 // Shared Gallery Renderer
-function renderLocalGallery(movies, title, containerId = 'movie-grid', limit = 12) {
+export function renderLocalGallery(movies, title, containerId = 'movie-grid', limit = 12) {
     const gridEl = document.getElementById(containerId);
     const subtitleEl = document.getElementById('gallery-subtitle');
     
@@ -507,6 +507,8 @@ window.fetchJson = fetchJson;
 window.ANALYSIS_LANGUAGE_LABELS = ANALYSIS_LANGUAGE_LABELS;
 window.openSharedMovieDetail = openSharedMovieDetail;
 window.renderLocalGallery = renderLocalGallery;
+window.getBaseChartOption = getBaseChartOption;
+window.TOKENS = TOKENS;
 
 function installGlobalErrorHandlers() {
     window.addEventListener('error', event => {

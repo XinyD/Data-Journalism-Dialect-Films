@@ -178,10 +178,44 @@ small {
     width: 100vw;
     height: 100vh;
     height: 100dvh;
+    z-index: 2;
+    pointer-events: none;
+    cursor: crosshair;
+    transition: opacity 0.6s ease;
+}
+.universe-layer {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     z-index: 1;
     pointer-events: auto;
     cursor: crosshair;
-    transition: opacity 0.6s ease;
+    display: block;
+    opacity: 1;
+    transition: opacity 0.16s ease;
+}
+.universe-layer.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.chart-background.is-behind {
+    opacity: 0;
+    pointer-events: none;
+}
+.universe-tooltip {
+    position: fixed;
+    z-index: 40;
+    max-width: 280px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(5, 5, 7, 0.94);
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.45;
+    pointer-events: none;
 }
 .chart-background::before {
     content: "";
@@ -215,15 +249,22 @@ html[data-prologue-state="WORLD_MAP"] .chart-background::before {
 .prologue-section { position: relative; pointer-events: none; }
 .particle-step {
     position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
+    min-height: 72svh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
-    padding: 7vh 10vw;
+    padding: 8vh 10vw 6vh;
     pointer-events: none;
+}
+.intro-step,
+#step-intro,
+#step-8c,
+#step-8e,
+#step-9,
+#step-10,
+#step-11 {
+    min-height: 100svh;
 }
 .particle-step > h2,
 .particle-step > p:not(.hero-subtitle):not(.scene-hook),
@@ -240,9 +281,9 @@ html[data-prologue-state="WORLD_MAP"] .chart-background::before {
     border-radius: 8px;
     background: rgba(10, 10, 12, 0.7);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.34);
-    opacity: 0.12;
-    transform: translateY(32px) scale(0.97);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
     pointer-events: auto;
 }
 .particle-step > h2 {
@@ -447,26 +488,18 @@ html[data-cover-skipped] .intro-step .scene-hook {
 /* Collapsed + active: turn the summary into a glowing capsule that breathes,
    so the "verify the data" affordance is impossible to miss while reading. */
 .particle-step.is-active .scene-lab:not([open]) .scene-lab-heading {
-    border-left-color: var(--color-accent);
-    background: rgba(229, 57, 53, 0.09);
-    box-shadow: 0 0 0 1px rgba(229, 57, 53, 0.22), 0 6px 22px rgba(229, 57, 53, 0.1);
-    animation: sceneLabPulse 2.4s ease-in-out infinite;
+    border-left-color: rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.04);
+    box-shadow: none;
 }
-.particle-step.is-active .scene-lab:not([open]) .scene-lab-heading b { color: #E8E8EC; }
-@keyframes sceneLabPulse {
-    0%, 100% { box-shadow: 0 0 0 1px rgba(229, 57, 53, 0.22), 0 6px 22px rgba(229, 57, 53, 0.10); }
-    50%      { box-shadow: 0 0 0 1px rgba(229, 57, 53, 0.40), 0 8px 28px rgba(229, 57, 53, 0.20); }
-}
+.particle-step.is-active .scene-lab:not([open]) .scene-lab-heading b { color: #C4C4CA; }
 .scene-lab-heading:hover,
 .scene-lab-heading:focus-visible {
     border-left-color: var(--color-accent);
     background: rgba(229, 57, 53, 0.14);
     outline: none;
 }
-.scene-lab[open] .scene-lab-heading { border-left-color: rgba(229, 57, 53, 0.42); background: transparent; animation: none; }
-@media (prefers-reduced-motion: reduce) {
-    .particle-step.is-active .scene-lab:not([open]) .scene-lab-heading { animation: none; }
-}
+.scene-lab[open] .scene-lab-heading { border-left-color: rgba(229, 57, 53, 0.42); background: transparent; }
 .scene-lab-body { padding: 12px 13px 13px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
 .scene-question { margin: 0 0 9px; color: #C8C8CC; font-size: 0.82rem; line-height: 1.5; }
 .scene-control { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
@@ -522,7 +555,8 @@ html.explorer-open .explorer-space {
 html.explorer-open {
     overflow: hidden;
 }
-html.explorer-open #chart-container {
+html.explorer-open #chart-container,
+html.explorer-open .universe-layer {
     opacity: 0 !important;
     visibility: hidden;
     pointer-events: none;
@@ -1065,9 +1099,8 @@ button.movie-card:focus-visible { outline: 2px solid #FFF; outline-offset: 3px; 
 .scene-hook {
     max-width: min(96vw, 100%);
     width: max-content;
-    margin: 0 auto 5vh;
-    margin-top: auto;
-    padding: 32px 0 0;
+    margin: 2.5rem auto 2vh;
+    padding: 16px 0 0;
     border: none;
     background: none;
     box-shadow: none;
@@ -1075,9 +1108,9 @@ button.movie-card:focus-visible { outline: 2px solid #FFF; outline-offset: 3px; 
     align-self: center;
     text-align: center;
     white-space: nowrap;
-    opacity: 0.12;
-    transform: translateY(32px) scale(0.97);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
     pointer-events: auto;
     font-family: var(--font-serif);
     font-size: clamp(0.5625rem, 1.05vw + 0.42rem, var(--text-sm));
@@ -2042,8 +2075,14 @@ html.wave-scene-busy.wave-overlay-hidden .scrolly-overlay {
     opacity: 0;
 }
 html.wave-film-open #chart-container,
-html.wave-scene-busy #chart-container {
+html.wave-scene-busy #chart-container,
+html.wave-film-open .universe-layer,
+html.wave-scene-busy .universe-layer {
     pointer-events: none;
+}
+html.wave-film-open .universe-layer,
+html.wave-scene-busy .universe-layer {
+    opacity: 0;
 }
 html.wave-scene-busy .wave-film-space {
     transition: none;
