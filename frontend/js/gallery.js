@@ -1,12 +1,13 @@
 import { runtime } from './runtime.js';
 import { escapeHtml } from './lib/dom.js';
 import { populateMovieDetail } from './lib/movie-detail.js';
+import { isPerformanceEntry } from './lib/perf_entry.js';
 
 const REGION_LABELS = {
     North_America: '北美',
     Europe: '欧洲',
     East_Asia: '东亚',
-    China: '中国大陆',
+    China: '中国（含港澳台）',
     Other: '其他'
 };
 
@@ -106,7 +107,7 @@ export function initGallery() {
         }
     });
 
-    ['decade', 'region', 'language', 'sort'].forEach(type => {
+    ['decade', 'region', 'language', 'kind', 'sort'].forEach(type => {
         document.getElementById(`filter-${type}`)?.addEventListener('change', applyGalleryFilters);
     });
 }
@@ -116,7 +117,12 @@ export function applyGalleryFilters() {
     const reg = document.getElementById('filter-region').value;
     const lang = document.getElementById('filter-language').value;
     const sorter = SORTERS[document.getElementById('filter-sort')?.value] || null;
-    const matches = window.DataService.filter(dec, reg, lang);
+    const kind = document.getElementById('filter-kind')?.value || 'films';
+    const matches = window.DataService.filter(dec, reg, lang).filter(movie => {
+        if (kind === 'films') return !isPerformanceEntry(movie);
+        if (kind === 'perf') return isPerformanceEntry(movie);
+        return true;
+    });
     galleryFilteredMovies = sorter ? [...matches].sort(sorter) : matches;
     galleryPage = 0;
     renderGalleryPage();
@@ -128,6 +134,8 @@ export function clearGalleryFilters() {
         const select = document.getElementById(`filter-${type}`);
         if (select) select.value = 'All';
     });
+    const kind = document.getElementById('filter-kind');
+    if (kind) kind.value = 'films';
     applyGalleryFilters();
 }
 

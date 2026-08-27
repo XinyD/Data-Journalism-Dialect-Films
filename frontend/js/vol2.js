@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         North_America: '北美',
         Europe: '欧洲',
         East_Asia: '东亚',
-        China: '中国大陆',
+        China: '中国（含港澳台）',
         Other: '其他'
     };
     const grouped = {};

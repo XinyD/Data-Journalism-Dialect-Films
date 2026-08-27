@@ -2,10 +2,10 @@
   "style": "build/style.c79102603c.css",
   "echartsMain": "build/echarts-main.f19d3377a9.js",
   "echartsVolume": "build/echarts-volume.6d75e0bd14.js",
-  "app": "build/app.73a04775a3.js",
+  "app": "build/app.86c98acb05.js",
   "echoChunk": "build/echo-universe-chunk.2ec962d5f7.js",
-  "vol1": "build/vol1.6b8a895bfa.js",
-  "vol2": "build/vol2.70f133a956.js",
-  "vol3": "build/vol3.1ead872395.js",
-  "vol4": "build/vol4.65fffd2020.js"
+  "vol1": "build/vol1.0de71a5bc0.js",
+  "vol2": "build/vol2.fcbdf8bd98.js",
+  "vol3": "build/vol3.19095d3a4b.js",
+  "vol4": "build/vol4.7fb3333e39.js"
 }
