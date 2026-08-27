@@ -1475,7 +1475,7 @@ html[data-global-phase="mandarin-outlier"] #step-8b.is-active .mandarin-outlier-
 }
 #step-8c .flop-align-row {
     display: grid;
-    grid-template-columns: minmax(0, 560px);
+    grid-template-columns: minmax(0, 620px);
     gap: 8px 24px;
     width: 100%;
     max-width: none;
@@ -1487,11 +1487,14 @@ html[data-global-phase="mandarin-outlier"] #step-8b.is-active .mandarin-outlier-
 #step-8c .flop-cases {
     pointer-events: auto;
 }
+#step-8c .flop-paths,
+#step-8c .flop-genre-col {
+    max-width: 620px;
+}
 #step-8c .flop-genre-col {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 560px;
 }
 #step-8c .scene-lab { margin-top: 8px; }
 #step-8c.is-active > h2,
@@ -1533,7 +1536,7 @@ html[data-global-phase="mandarin-outlier"] #step-8b.is-active .mandarin-outlier-
     display: flex;
 }
 html[data-flop-phase="cases"] #step-8c.is-active .flop-align-row {
-    grid-template-columns: minmax(0, 560px) 1fr;
+    grid-template-columns: minmax(0, 620px) 1fr;
 }
 html[data-flop-phase="cases"] #step-8c.is-active .flop-cases {
     display: flex;
@@ -1629,6 +1632,10 @@ html[data-flop-phase="cases"] #step-8c.is-active .flop-case-card.is-lit {
     margin-bottom: 6px;
 }
 .dim-card small { color: #A5A5AC; font-size: 0.76rem; line-height: 1.5; }
+/* 第九幕导语：加宽卡片，在冒号后收成两行 */
+#step-9 > p:not(.scene-hook) {
+    max-width: 730px;
+}
 #step-9 .five-dims {
     gap: 12px;
     margin: 20px 0;
@@ -1643,7 +1650,19 @@ html[data-flop-phase="cases"] #step-8c.is-active .flop-case-card.is-lit {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-narrative);
     overflow: hidden;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
 }
+#step-9.is-active .dim-card {
+    opacity: 1;
+    transform: none;
+}
+#step-9.is-active .dim-card:nth-child(1) { transition-delay: 0s; }
+#step-9.is-active .dim-card:nth-child(2) { transition-delay: 0.05s; }
+#step-9.is-active .dim-card:nth-child(3) { transition-delay: 0.1s; }
+#step-9.is-active .dim-card:nth-child(4) { transition-delay: 0.15s; }
+#step-9.is-active .dim-card:nth-child(5) { transition-delay: 0.2s; }
 #step-9 .dim-title {
     display: block;
     margin: 0;
@@ -4623,6 +4642,7 @@ html[data-echo-immersive] #echo-universe #echo-asset-card {
         line-height: 1.52;
     }
     #step-10 { --ax: 46%; }
+    #step-9 > p:not(.scene-hook) { max-width: 76vw; }
     #step-10 > h2 { width: auto; max-width: 76vw; }
     #step-10 > p:not(.scene-hook) { max-width: 76vw; font-size: var(--text-sm); }
     #step-10 .scale-board {

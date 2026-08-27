@@ -11,6 +11,7 @@ export function createFlopLinkSync(paint) {
 export function paintFlopGraphic(particleChart, elements) {
     if (!particleChart) return;
     particleChart.setOption({
+        animation: false,
         graphic: elements
     }, { notMerge: false, lazyUpdate: true, silent: true });
 }

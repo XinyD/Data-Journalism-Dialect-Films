@@ -111,7 +111,7 @@ let flopCardTimer = 0;
 let flopLinksReady = false;
 
 const FLOP_CASE_PATHS = [
-    { movieId: '26796665', path: '杂糅动作' },
+    { movieId: '26796665', path: '类型杂糅' },
     { movieId: '22557335', path: '特效堆砌' },
     { movieId: '6068516', path: '合家欢拼贴' },
     { movieId: '3874981', path: '工业化特效' }
@@ -133,10 +133,28 @@ const GLOBAL_LAYER_GROUPS = [
     { index: 3, jsonName: '华语 · 方言', label: '华语方言', short: '方言', fallback: '6.4%' },
     { index: 4, jsonName: '华语 · 普通话', label: '华语普通话', short: '普通话', fallback: '24.4%' }
 ];
+const BOUNDARY_LAYER_GROUPS = [
+    ...GLOBAL_LAYER_GROUPS.slice(0, 4),
+    { index: 4, jsonName: '北美 · 英语', label: '北美英语', short: '北美英', fallback: '8.8%' },
+    { ...GLOBAL_LAYER_GROUPS[4], index: 5 }
+];
+const OUTLIER_COLUMN_X = [0, 0.72, 1.44, 2.16, 3.55];
+
+function globalLayerRowRegion(row) {
+    return row.region || (row.detail && row.detail.region);
+}
+
+function globalLayerRowLanguage(row) {
+    return row.language || (row.detail && row.detail.language);
+}
+
+function isNorthAmericaEnglish(row) {
+    return globalLayerRowRegion(row) === 'North_America' && globalLayerRowLanguage(row) === 'English';
+}
 
 function globalLayerOf(row) {
-    const region = row.region || (row.detail && row.detail.region);
-    const language = row.language || (row.detail && row.detail.language);
+    const region = globalLayerRowRegion(row);
+    const language = globalLayerRowLanguage(row);
     if (region === 'Europe' && language === 'European_Languages') return 0;
     if (region === 'Europe' && language === 'English') return 1;
     if (region === 'East_Asia') return 2;
@@ -152,12 +170,33 @@ function globalLayerRate(jsonName, fallback) {
     return layer ? `${layer.below5}%` : fallback;
 }
 
+function globalLayerXMax(phase) {
+    if (phase === 'pull-back') return 5.8;
+    if (phase === 'four-groups') return 3.5;
+    if (phase === 'boundary') return 5.6;
+    return 4.7;
+}
+
 function globalLayerX(row, group, phase) {
     if (phase === 'pull-back') {
         return languageDisplayIndex(row.langCode) + row.jitterGenreX * 2.2 + row.jitterX * 1.6;
     }
+    if (phase === 'boundary') {
+        if (isNorthAmericaEnglish(row)) return 4 + row.jitterGenreX;
+        if (group === 4) return 5 + row.jitterGenreX;
+        if (group < 0) return -0.55 + row.jitterGenreX * 0.2;
+        return group + row.jitterGenreX;
+    }
     if (group < 0) {
         return -0.55 + row.jitterGenreX * 0.2;
+    }
+    if (phase === 'four-groups') {
+        if (group === 4) return 4.2 + row.jitterGenreX * 0.15;
+        return group + row.jitterGenreX;
+    }
+    if (phase === 'mandarin-outlier') {
+        if (group === 4) return OUTLIER_COLUMN_X[4] + row.jitterGenreX * 1.35;
+        return group * OUTLIER_COLUMN_X[1] + row.jitterGenreX * 0.85;
     }
     return group + row.jitterGenreX;
 }
@@ -291,6 +330,7 @@ function syncFlopCaseCards(lit) {
 function paintDialectFlopOverlay() {
     if (activeSceneId !== 'dialect-flops' || !particleChart) return;
     particleChart.setOption({
+        animation: false,
         graphic: dialectFlopGraphics(flopPhase)
     }, { notMerge: false, lazyUpdate: true, silent: true });
 }
@@ -312,15 +352,19 @@ function unbindFlopCaseLinkSync() {
 }
 
 function setFlopPhase(phase, { render = true, refreshLab = false } = {}) {
-    flopPhase = resolveFlopPhase(phase);
+    const nextPhase = resolveFlopPhase(phase);
+    const samePhase = nextPhase === flopPhase
+        && activeSceneId === 'dialect-flops'
+        && document.documentElement.dataset.flopPhase === nextPhase;
+    flopPhase = nextPhase;
     runtime.flopPhase = flopPhase;
     runtime.activeSceneId = activeSceneId;
-    runtime.flopLinksReady = flopLinksReady;
     document.documentElement.dataset.flopPhase = flopPhase;
     sceneState['dialect-flops'] = flopPhase;
-    syncFlopCaseCards(false);
+    if (!samePhase) syncFlopCaseCards(false);
     if (flopPhase === 'cases') bindFlopCaseLinkSync();
     else unbindFlopCaseLinkSync();
+    runtime.flopLinksReady = flopLinksReady;
     if (refreshLab) updateSceneLab('dialect-flops');
     if (render && activeSceneId === 'dialect-flops') {
         renderParticleScene('dialect-flops');
@@ -337,9 +381,11 @@ function dialectFlopGraphics(phase) {
             right: 36,
             bottom: 92,
             silent: true,
+            animation: false,
             children: [
                 {
                     type: 'text',
+                    animation: false,
                     style: {
                         text: `${stats.flopN.toLocaleString('zh-CN')} 部`,
                         fill: '#FF7A73',
@@ -349,6 +395,7 @@ function dialectFlopGraphics(phase) {
                 {
                     type: 'text',
                     y: 26,
+                    animation: false,
                     style: {
                         text: '<5分',
                         fill: '#C8C8CC',
@@ -381,6 +428,7 @@ function dialectFlopGraphics(phase) {
                 type: 'line',
                 id: `flop-link-${item.movieId}`,
                 silent: true,
+                animation: false,
                 shape: {
                     x1: pixel[0],
                     y1: pixel[1],
@@ -601,7 +649,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (StoryUI.prefersReducedMotion()) syncCoverReveal(true);
 
     const onParticleResizeFrame = rafThrottle(() => {
-        cancelFlopOverlay();
         if (particleChart) particleChart.resize();
         if (prologueMotionLayer) prologueMotionLayer.resize();
         if (window.WaveScene) window.WaveScene.onResize();
@@ -612,7 +659,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     const onParticleResizeDebounced = debounce(() => {
         if (isMobileViewport() !== visualKeepIsMobile) assignVisualKeep();
-        if (particleChart) renderParticleScene(activeSceneId);
+        if (particleChart) renderParticleScene(activeSceneId, { animate: false });
     }, 200);
     window.addEventListener('resize', () => {
         onParticleResizeFrame();
@@ -2316,10 +2363,13 @@ function updateSceneLab(sceneId) {
 }
 
 function activateSceneInteraction(sceneId, step) {
+    const alreadyHere = activeSceneId === sceneId;
     activeSceneId = sceneId;
     if (sceneId === 'global-layers') syncGlobalLayersPhase();
     if (sceneId === 'dialect-flops') {
-        setFlopPhase(resolveFlopPhase(sceneState[sceneId] || 'isolate'), { render: false, refreshLab: true });
+        if (!alreadyHere) {
+            setFlopPhase(resolveFlopPhase(sceneState[sceneId] || 'isolate'), { render: false, refreshLab: true });
+        }
     } else {
         cancelFlopOverlay();
         syncFlopCaseCards(false);
@@ -3055,14 +3105,20 @@ const particleScenes = {
         const phase = globalLayersPhase || 'pull-back';
         const compact = window.innerWidth <= 700;
         const showThreshold = phase !== 'pull-back';
+        const layerGroups = phase === 'boundary' ? BOUNDARY_LAYER_GROUPS : GLOBAL_LAYER_GROUPS;
         const data = particleData.map(d => {
             const group = globalLayerOf(d);
             return [globalLayerX(d, group, phase), d.rating, group, d.id, 1];
         });
         const names = compact
-            ? GLOBAL_LAYER_GROUPS.map(group => group.short)
-            : GLOBAL_LAYER_GROUPS.map(group => group.label);
-        const rates = GLOBAL_LAYER_GROUPS.map(group => globalLayerRate(group.jsonName, group.fallback));
+            ? layerGroups.map(group => group.short)
+            : layerGroups.map(group => group.label);
+        const rates = layerGroups.map(group => globalLayerRate(group.jsonName, group.fallback));
+        const labelAt = i => {
+            if (!names[i]) return '';
+            if (phase === 'axes') return names[i];
+            return `${names[i]}\n${rates[i]}`;
+        };
         const guides = showThreshold
             ? [{
                 ...horizontalGuide(5, '5.0｜低分下限', GUIDE_COLORS.threshold, 'insideEndTop'),
@@ -3077,8 +3133,8 @@ const particleScenes = {
             xAxis: {
                 type: 'value',
                 min: phase === 'pull-back' ? -0.8 : -0.7,
-                max: phase === 'pull-back' ? 5.8 : 4.7,
-                interval: 1,
+                max: globalLayerXMax(phase),
+                interval: phase === 'mandarin-outlier' ? OUTLIER_COLUMN_X[1] : 1,
                 splitLine: { show: false },
                 axisLine: { show: true, lineStyle: { color: 'rgba(255,255,255,0.28)' } },
                 axisLabel: {
@@ -3089,15 +3145,21 @@ const particleScenes = {
                     lineHeight: 16,
                     rotate: compact ? 30 : 0,
                     formatter: val => {
+                        if (phase === 'pull-back') {
+                            const i = Math.round(val);
+                            if (Math.abs(val - i) >= 0.1 || i < 0 || i > 5) return '';
+                            return LANGUAGE_LABELS[LANGUAGE_DISPLAY_ORDER[i]] || '';
+                        }
+                        if (phase === 'mandarin-outlier') {
+                            const idx = OUTLIER_COLUMN_X.findIndex(x => Math.abs(val - x) < 0.08);
+                            return idx < 0 ? '' : labelAt(idx);
+                        }
                         const i = Math.round(val);
                         if (Math.abs(val - i) >= 0.1 || i < 0) return '';
-                        if (phase === 'pull-back') {
-                            return i <= 5 ? (LANGUAGE_LABELS[LANGUAGE_DISPLAY_ORDER[i]] || '') : '';
-                        }
-                        if (i > 4) return '';
-                        if (phase === 'four-groups' && i === 4) return '';
-                        if (phase === 'axes') return names[i] || '';
-                        return `${names[i]}\n${rates[i]}`;
+                        if (phase === 'four-groups' && i >= 4) return '';
+                        if (phase === 'boundary' && i > 5) return '';
+                        if (phase !== 'boundary' && i > 4) return '';
+                        return labelAt(i);
                     }
                 },
                 name: '语言组',
@@ -3120,14 +3182,20 @@ const particleScenes = {
                 symbolSize: val => {
                     const group = val[2];
                     const movie = particleData[val[3]];
+                    const northAmerica = movie && isNorthAmericaEnglish(movie);
                     if (phase === 'pull-back') {
                         return movie && (movie.langCode === 2 || movie.langCode === 3) ? 4 : 2;
                     }
+                    if (phase === 'four-groups') {
+                        return (group === 4 || group < 0) ? 0 : 2.8;
+                    }
+                    if (phase === 'boundary') {
+                        if (group < 0 && !northAmerica) return 1.5;
+                        return 2.4;
+                    }
                     if (group < 0) return 1.5;
-                    if (phase === 'four-groups' && group === 4) return 2;
                     if (phase === 'mandarin-outlier' && group === 4) return 2.4;
                     if (phase === 'mandarin-outlier') return 2.1;
-                    if (phase === 'boundary') return 2.4;
                     return 2.8;
                 },
                 itemStyle: {
@@ -3135,21 +3203,32 @@ const particleScenes = {
                         const group = p.value[2];
                         const movie = particleData[p.value[3]];
                         const below = p.value[1] < 5;
+                        const northAmerica = movie && isNorthAmericaEnglish(movie);
                         if (phase === 'pull-back') {
                             if (movie && movie.langCode === 3) return COLORS.dialect;
                             if (movie && movie.langCode === 2) return COLORS.chinaBlue;
                             return 'rgba(255, 255, 255, 0.08)';
                         }
-                        if (group < 0) return 'rgba(255, 255, 255, 0.05)';
-                        if (phase === 'four-groups' && group === 4) {
-                            return 'rgba(98, 176, 255, 0.16)';
+                        if (phase === 'four-groups') {
+                            if (group === 4 || group < 0) return 'rgba(0, 0, 0, 0)';
+                            if (group === 3) return 'rgba(255, 179, 0, 0.55)';
+                            return 'rgba(255, 255, 255, 0.38)';
                         }
                         if (phase === 'mandarin-outlier') {
+                            if (group < 0) return 'rgba(255, 255, 255, 0.05)';
                             if (group === 4) {
                                 return below ? 'rgba(98, 176, 255, 0.42)' : 'rgba(98, 176, 255, 0.26)';
                             }
                             return group === 3 ? 'rgba(255, 179, 0, 0.28)' : 'rgba(255, 255, 255, 0.14)';
                         }
+                        if (phase === 'boundary') {
+                            if (northAmerica) return 'rgba(132, 164, 214, 0.50)';
+                            if (group < 0) return 'rgba(255, 255, 255, 0.05)';
+                            if (group === 4) return 'rgba(98, 176, 255, 0.55)';
+                            if (group === 3) return 'rgba(255, 179, 0, 0.55)';
+                            return 'rgba(255, 255, 255, 0.38)';
+                        }
+                        if (group < 0) return 'rgba(255, 255, 255, 0.05)';
                         if (group === 4) return 'rgba(98, 176, 255, 0.55)';
                         if (group === 3) return 'rgba(255, 179, 0, 0.55)';
                         return 'rgba(255, 255, 255, 0.38)';
@@ -3276,7 +3355,7 @@ particleScenes['three-waves'] = particleScenes['final-universe'];
 particleScenes['scale'] = particleScenes['final-universe'];
 particleScenes['echo-narrative'] = particleScenes['final-universe'];
 
-function renderParticleScene(sceneId) {
+function renderParticleScene(sceneId, { animate } = {}) {
     runtime.activeSceneId = sceneId;
     const chartDom = document.getElementById('chart-container');
     if (chartDom) {
@@ -3285,6 +3364,7 @@ function renderParticleScene(sceneId) {
     }
     if(!particleChart || !particleScenes[sceneId]) return;
     const option = particleScenes[sceneId]();
+    const wantMotion = animate !== false;
     const largeDataset = particleData.length > 20000;
     const reducedMotion = window.innerWidth <= 700
         || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -3296,12 +3376,16 @@ function renderParticleScene(sceneId) {
     if (!isUniverse || !option.animationDurationUpdate) {
         option.animationDurationUpdate = compactMotion ? 0 : 420;
     }
-    if ((isGlobalLayers || isDialectFlops) && !reducedMotion) {
+    if ((isGlobalLayers || isDialectFlops) && !reducedMotion && wantMotion) {
         option.animation = true;
         option.animationDurationUpdate = 1100;
     }
     option.animationEasingUpdate = 'cubicOut';
     if (sceneId === 'universe') {
+        option.animation = false;
+        option.animationDurationUpdate = 0;
+    }
+    if (!wantMotion) {
         option.animation = false;
         option.animationDurationUpdate = 0;
     }
@@ -3361,7 +3445,7 @@ function renderParticleScene(sceneId) {
     }
     const series = option.series && option.series[0];
     if (series) {
-        series.universalTransition = sceneId === 'universe'
+        series.universalTransition = sceneId === 'universe' || !wantMotion
             ? false
             : ((isGlobalLayers || isDialectFlops) ? !reducedMotion : !compactMotion);
         series.progressive = sceneId === 'universe' ? 0 : (largeDataset ? 6000 : 0);
@@ -3434,7 +3518,7 @@ function renderParticleScene(sceneId) {
         hidePrologueMotionLayer();
     }
     if (isDialectFlops) {
-        scheduleFlopOverlay(reducedMotion ? 0 : 1100);
+        scheduleFlopOverlay((reducedMotion || !wantMotion) ? 0 : 1100);
     }
 }
 

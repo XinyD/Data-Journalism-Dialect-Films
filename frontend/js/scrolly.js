@@ -214,10 +214,9 @@ export function initScrollytelling(deps) {
         whenScrollSettles(settle);
     }
 
-    const particleObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            ratios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
-        });
+    const particleObserver = new IntersectionObserver(() => {
+        if (pendingPinId) return;
+        refreshRatiosFromView();
         scheduleSelect();
     }, {
         rootMargin: '-22% 0px -22% 0px',
