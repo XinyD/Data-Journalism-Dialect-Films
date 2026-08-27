@@ -126,7 +126,7 @@ ${o[s]}`}},name:"\u8BED\u8A00\u7EC4",nameTextStyle:{color:"rgba(255,255,255,0.55
                 <span class="hist-label">${ve(s)}</span>
                 <div class="hist-bar-track"><div class="hist-bar" style="width:${f}%"></div></div>
                 <span class="hist-count">${a[s]}</span>
-            </div>`}).join("");let l=document.getElementById("dd-share"),i=document.getElementById("dd-diff");l&&(l.textContent=n.share_positive+"%",l.classList.remove("is-pending")),i&&(i.textContent="+"+n.mean_diff.toFixed(2),i.classList.remove("is-pending")),_("scale-dd-share",`${n.share_positive}%`)}let t=document.getElementById("lang-bars");if(t&&fe.lang_diversity){let n=fe.lang_diversity;t.innerHTML=n.map(a=>{let r=(a.mean/10*100).toFixed(1);return`<div class="lang-row">
+            </div>`}).join("");let l=document.getElementById("dd-share"),i=document.getElementById("dd-diff");l&&(l.textContent=n.share_positive+"%",l.classList.remove("is-pending")),i&&(i.textContent="+"+n.mean_diff.toFixed(2),i.classList.remove("is-pending")),_("scale-dd-share",`${n.share_positive}%`)}let t=document.getElementById("lang-bars");if(t&&fe.lang_diversity){let n=fe.lang_diversity.slice(0,6);t.innerHTML=n.map(a=>{let r=(a.mean/10*100).toFixed(1);return`<div class="lang-row">
                 <span class="lang-name">${ve(a.name)}</span>
                 <div class="lang-bar-track"><div class="lang-bar" style="width:${r}%"></div></div>
                 <span class="lang-value">${a.mean.toFixed(2)}<small> n=${a.n}</small></span>

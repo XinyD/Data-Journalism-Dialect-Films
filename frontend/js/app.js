@@ -3884,7 +3884,7 @@ function fillFinaleData() {
     // 层 3：语言多样性条
     const langContainer = document.getElementById('lang-bars');
     if (langContainer && dialectAgg.lang_diversity) {
-        const langs = dialectAgg.lang_diversity;
+        const langs = dialectAgg.lang_diversity.slice(0, 6);
         langContainer.innerHTML = langs.map(l => {
             const pct = (l.mean / 10 * 100).toFixed(1);
             return `<div class="lang-row">
