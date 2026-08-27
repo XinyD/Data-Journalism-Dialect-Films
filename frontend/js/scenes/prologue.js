@@ -41,8 +41,33 @@ function growChannel(prev, size) {
     return next;
 }
 
+function growIndex(prev, size) {
+    const next = new Uint32Array(size);
+    if (prev) next.set(prev);
+    return next;
+}
+
+function makeCircleSprite(ri, gi, bi, px) {
+    const canvas = document.createElement('canvas');
+    const dim = px + 2;
+    canvas.width = dim;
+    canvas.height = dim;
+    const sctx = canvas.getContext('2d');
+    if (!sctx) return canvas;
+    sctx.fillStyle = `rgb(${ri},${gi},${bi})`;
+    sctx.beginPath();
+    sctx.arc(dim / 2, dim / 2, px / 2, 0, Math.PI * 2);
+    sctx.fill();
+    return canvas;
+}
+
 export function createPrologueMotionLayer(canvas) {
-    const ctx = canvas ? canvas.getContext('2d', { alpha: true }) : null;
+    const ctx = canvas
+        ? (canvas.getContext('2d', { alpha: true, desynchronized: true })
+            || canvas.getContext('2d', { alpha: true }))
+        : null;
+    const buffer = typeof document !== 'undefined' ? document.createElement('canvas') : null;
+    const bctx = buffer ? buffer.getContext('2d', { alpha: true }) : null;
     let cssW = 0;
     let cssH = 0;
     let dpr = 1;
@@ -50,44 +75,71 @@ export function createPrologueMotionLayer(canvas) {
     let count = 0;
     let xs = new Float32Array(0);
     let ys = new Float32Array(0);
-    let sizes = new Float32Array(0);
-    let rCh = new Float32Array(0);
-    let gCh = new Float32Array(0);
-    let bCh = new Float32Array(0);
-    let aCh = new Float32Array(0);
+    const sprites = new Map();
+    const buckets = new Map();
 
     function ensureCapacity(next) {
         if (next <= xs.length) return;
         const size = Math.max(next, Math.ceil((xs.length || 1024) * 1.5));
         xs = growChannel(xs, size);
         ys = growChannel(ys, size);
-        sizes = growChannel(sizes, size);
-        rCh = growChannel(rCh, size);
-        gCh = growChannel(gCh, size);
-        bCh = growChannel(bCh, size);
-        aCh = growChannel(aCh, size);
+    }
+
+    function resetBuckets() {
+        buckets.forEach(bucket => {
+            bucket.n = 0;
+        });
+    }
+
+    function addToBucket(key, rgb, aQuant, stamp, index) {
+        let bucket = buckets.get(key);
+        if (!bucket) {
+            bucket = { rgb, aQuant, stamp, n: 0, idx: new Uint32Array(64) };
+            buckets.set(key, bucket);
+        }
+        if (bucket.n === bucket.idx.length) {
+            bucket.idx = growIndex(bucket.idx, bucket.idx.length * 2);
+        }
+        bucket.idx[bucket.n] = index;
+        bucket.n += 1;
+    }
+
+    function spriteFor(rgb, stamp, ri, gi, bi) {
+        const key = rgb * 8 + stamp;
+        const cached = sprites.get(key);
+        if (cached) return cached;
+        const sprite = makeCircleSprite(ri, gi, bi, stamp);
+        sprites.set(key, sprite);
+        return sprite;
     }
 
     function resize() {
-        if (!canvas || !ctx) return;
-        dpr = Math.min(2, window.devicePixelRatio || 1);
+        if (!canvas || !ctx || !buffer || !bctx) return;
+        dpr = Math.min(1.25, window.devicePixelRatio || 1);
         cssW = window.innerWidth;
         cssH = window.innerHeight;
         canvas.width = Math.max(1, Math.round(cssW * dpr));
         canvas.height = Math.max(1, Math.round(cssH * dpr));
         canvas.style.width = `${cssW}px`;
         canvas.style.height = `${cssH}px`;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        buffer.width = Math.max(1, cssW);
+        buffer.height = Math.max(1, cssH);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'low';
+        bctx.imageSmoothingEnabled = false;
     }
 
     function setVisible(next) {
         visible = Boolean(next);
         if (canvas) canvas.classList.toggle('is-active', visible);
-        if (!visible && ctx) ctx.clearRect(0, 0, cssW, cssH);
+        if (!visible && ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (!visible && bctx && buffer) bctx.clearRect(0, 0, buffer.width, buffer.height);
     }
 
     function begin(expected = 0) {
         count = 0;
+        resetBuckets();
         if (expected) ensureCapacity(expected);
         if (!cssW || !cssH) resize();
     }
@@ -97,58 +149,77 @@ export function createPrologueMotionLayer(canvas) {
         const rgba = Array.isArray(color) ? color : parseRgba(color);
         if (rgba[3] <= 0.01) return;
         ensureCapacity(count + 1);
+        const ri = rgba[0] | 0;
+        const gi = rgba[1] | 0;
+        const bi = rgba[2] | 0;
+        const q = (rgba[3] * 32) | 0;
+        const stamp = Math.max(2, Math.min(6, Math.round(size)));
         xs[count] = x;
         ys[count] = y;
-        sizes[count] = size;
-        rCh[count] = rgba[0];
-        gCh[count] = rgba[1];
-        bCh[count] = rgba[2];
-        aCh[count] = rgba[3];
+        const rgb = (ri << 16) | (gi << 8) | bi;
+        addToBucket(rgb * 264 + q * 8 + stamp, rgb, q, stamp, count);
         count += 1;
     }
 
     function draw() {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, cssW, cssH);
-        let lastRgb = -1;
-        let lastA = -1;
-        let pathOpen = false;
-        const flush = () => {
-            if (!pathOpen) return;
-            ctx.fill();
-            pathOpen = false;
-        };
-        for (let i = 0; i < count; i += 1) {
-            const size = sizes[i];
-            const alpha = aCh[i];
-            if (size <= 0.2 || alpha <= 0.01) continue;
-            const ri = rCh[i] | 0;
-            const gi = gCh[i] | 0;
-            const bi = bCh[i] | 0;
-            const rgb = (ri << 16) | (gi << 8) | bi;
-            const quantized = ((alpha * 32) | 0) / 32;
-            if (rgb !== lastRgb || quantized !== lastA) {
-                flush();
-                if (rgb !== lastRgb) {
-                    ctx.fillStyle = `rgb(${ri},${gi},${bi})`;
-                    lastRgb = rgb;
-                }
-                if (quantized !== lastA) {
-                    ctx.globalAlpha = quantized;
-                    lastA = quantized;
-                }
-            }
-            if (!pathOpen) {
-                ctx.beginPath();
-                pathOpen = true;
-            }
-            const radius = Math.max(0.55, size / 2);
-            const x = xs[i];
-            const y = ys[i];
-            ctx.moveTo(x + radius, y);
-            ctx.arc(x, y, radius, 0, Math.PI * 2);
+        if (!ctx || !bctx || !buffer || !canvas) return;
+        bctx.clearRect(0, 0, buffer.width, buffer.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (!count) {
+            bctx.globalAlpha = 1;
+            ctx.globalAlpha = 1;
+            return;
         }
-        flush();
+        let lastRgb = -1;
+        let lastQ = -1;
+        let lastStamp = -1;
+        let sprite = null;
+        buckets.forEach(bucket => {
+            if (!bucket.n) return;
+            if (bucket.aQuant !== lastQ) {
+                bctx.globalAlpha = bucket.aQuant / 32;
+                lastQ = bucket.aQuant;
+            }
+            const idx = bucket.idx;
+            const stamp = bucket.stamp;
+            if (stamp <= 3) {
+                if (bucket.rgb !== lastRgb) {
+                    bctx.fillStyle = `rgb(${(bucket.rgb >> 16) & 255},${(bucket.rgb >> 8) & 255},${bucket.rgb & 255})`;
+                    lastRgb = bucket.rgb;
+                    lastStamp = -1;
+                }
+                const half = stamp / 2;
+                for (let n = 0; n < bucket.n; n += 1) {
+                    const i = idx[n];
+                    bctx.fillRect(
+                        Math.round(xs[i] - half),
+                        Math.round(ys[i] - half),
+                        stamp,
+                        stamp
+                    );
+                }
+                return;
+            }
+            if (bucket.rgb !== lastRgb || stamp !== lastStamp) {
+                sprite = spriteFor(
+                    bucket.rgb,
+                    stamp,
+                    (bucket.rgb >> 16) & 255,
+                    (bucket.rgb >> 8) & 255,
+                    bucket.rgb & 255
+                );
+                lastRgb = bucket.rgb;
+                lastStamp = stamp;
+            }
+            const ox = sprite.width / 2;
+            const oy = sprite.height / 2;
+            for (let n = 0; n < bucket.n; n += 1) {
+                const i = idx[n];
+                bctx.drawImage(sprite, Math.round(xs[i] - ox), Math.round(ys[i] - oy));
+            }
+        });
+        bctx.globalAlpha = 1;
+        ctx.drawImage(buffer, 0, 0, canvas.width, canvas.height);
         ctx.globalAlpha = 1;
     }
 
@@ -165,7 +236,9 @@ export function createPrologueMotionLayer(canvas) {
         draw,
         clear() {
             count = 0;
-            if (ctx) ctx.clearRect(0, 0, cssW, cssH);
+            resetBuckets();
+            if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (bctx && buffer) bctx.clearRect(0, 0, buffer.width, buffer.height);
         }
     };
 }

@@ -489,6 +489,12 @@ let universeBreathMix = 0;
 let universeIdleSince = 0;
 let universeIdleEchartsPainted = false;
 let lastUniverseIdlePaint = 0;
+let universeIdlePoseValid = false;
+let universeIdlePoseCount = 0;
+let universeIdlePoseX = new Float32Array(0);
+let universeIdlePoseY = new Float32Array(0);
+let universeIdlePoseOnMap = new Float32Array(0);
+let universeIdlePoseAppear = new Float32Array(0);
 const VISUAL_BUDGET_DESKTOP = 10800;
 const VISUAL_BUDGET_MOBILE = 7200;
 const DUST_BUDGET_DESKTOP = 7500;
@@ -1291,6 +1297,7 @@ function assignVisualKeep() {
     visualKeepIsMobile = window.innerWidth <= 768;
     placeCoverDust();
     refreshPrologueRowCache();
+    universeIdlePoseValid = false;
 }
 
 function coverDustVisible() {
@@ -1308,6 +1315,21 @@ function universeIdleBreathing() {
 function resetUniverseIdlePaint() {
     universeIdleEchartsPainted = false;
     lastUniverseIdlePaint = 0;
+    universeIdlePoseValid = false;
+}
+
+function ensureIdlePoseCapacity(next) {
+    if (next <= universeIdlePoseX.length) return;
+    const size = Math.max(next, Math.ceil((universeIdlePoseX.length || 1024) * 1.5));
+    const grow = prev => {
+        const copy = new Float32Array(size);
+        if (prev.length) copy.set(prev);
+        return copy;
+    };
+    universeIdlePoseX = grow(universeIdlePoseX);
+    universeIdlePoseY = grow(universeIdlePoseY);
+    universeIdlePoseOnMap = grow(universeIdlePoseOnMap);
+    universeIdlePoseAppear = grow(universeIdlePoseAppear);
 }
 
 function setUniverseHitLayerHidden(hidden) {
@@ -2651,7 +2673,7 @@ function prologueMotionKey() {
     ].join('|');
 }
 
-function paintUniverseMotionFrame() {
+function paintUniverseMotionFrame(reusePose = false) {
     if (!prologueMotionLayer) return;
     const size = prologueMotionLayer.cssSize();
     const width = size.width || window.innerWidth;
@@ -2660,27 +2682,53 @@ function paintUniverseMotionFrame() {
     const xScale = width / Math.max(1e-6, 100 * ar);
     const yScale = height / 100;
     const expected = prologueLandRows.length + (coverDustVisible() ? prologueDustRows.length : 0);
+    const cachePose = !reusePose && !prologueMotionBusy();
+    if (cachePose) ensureIdlePoseCapacity(expected);
     prologueMotionLayer.begin(expected);
+    let i = 0;
     eachPrologueRow(d => {
-        const pose = universePose(d, ar);
-        if (pose.appear < 0.02) return;
+        let x;
+        let y;
+        let onMap;
+        let appear;
+        if (reusePose && i < universeIdlePoseCount) {
+            x = universeIdlePoseX[i];
+            y = universeIdlePoseY[i];
+            onMap = universeIdlePoseOnMap[i];
+            appear = universeIdlePoseAppear[i];
+        } else {
+            const pose = universePose(d, ar);
+            x = pose.x;
+            y = pose.y;
+            onMap = pose.onMap;
+            appear = pose.appear;
+            if (cachePose) {
+                universeIdlePoseX[i] = x;
+                universeIdlePoseY[i] = y;
+                universeIdlePoseOnMap[i] = onMap;
+                universeIdlePoseAppear[i] = appear;
+            }
+        }
+        i += 1;
+        if (appear < 0.02) return;
         const brightness = d.brightness || ratingBrightness(d.rating);
         const dim = prologueState === PROLOGUE_STATES.REGION_FOCUS
             && d.visualGroup !== prologueFocusGroup;
         prologueMotionLayer.push(
-            pose.x * xScale,
-            (100 - pose.y) * yScale,
-            universeSymbolSize(d, brightness, pose.appear, dim),
+            x * xScale,
+            (100 - y) * yScale,
+            universeSymbolSize(d, brightness, appear, dim),
             visualGroupRgba(
                 d.visualGroup,
                 brightness,
-                pose.onMap === 1,
+                onMap === 1,
                 d,
-                pose.appear,
+                appear,
                 dim
             )
         );
     });
+    if (cachePose) universeIdlePoseCount = i;
     prologueMotionLayer.draw();
 }
 
@@ -2775,7 +2823,8 @@ function paintUniverseLive(now = performance.now()) {
         if (key === lastUniverseMotionKey) return;
         lastUniverseMotionKey = key;
         if (prologueMotionLayer) {
-            paintUniverseMotionFrame();
+            universeIdlePoseValid = false;
+            paintUniverseMotionFrame(false);
             if (!universeMotionOverlay) {
                 universeHandoffToken += 1;
                 universeMotionOverlay = true;
@@ -2813,7 +2862,8 @@ function paintUniverseLive(now = performance.now()) {
         universeMotionOverlay = true;
         prologueMotionLayer.setVisible(true);
     }
-    paintUniverseMotionFrame();
+    paintUniverseMotionFrame(universeIdlePoseValid);
+    universeIdlePoseValid = true;
 
     if (!universeIdleEchartsPainted && particleChart) {
         const mix = universeBreathMix;
