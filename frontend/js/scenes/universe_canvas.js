@@ -5,6 +5,20 @@
 
 const FALLBACK_RGBA = [220, 220, 226, 1];
 
+// Hover cards must not pop over the prose while reading: they only appear after
+// the pointer rests on one particle for TOOLTIP_DWELL_MS, and any scroll cancels.
+const TOOLTIP_DWELL_MS = 1000;
+const TOOLTIP_MOVE_TOLERANCE_PX = 6;
+
+export function dwellAnchorUpdate(anchor, index, clientX, clientY, tolerancePx) {
+    if (anchor && anchor.index === index) {
+        const dx = clientX - anchor.x;
+        const dy = clientY - anchor.y;
+        if (dx * dx + dy * dy <= tolerancePx * tolerancePx) return anchor;
+    }
+    return { index, x: clientX, y: clientY };
+}
+
 export function parseRgba(color) {
     if (typeof color !== 'string' || !color) return FALLBACK_RGBA.slice();
     const s = color.trim();
@@ -92,6 +106,9 @@ export function createUniverseLayer({ canvas, onPick, formatTooltip }) {
     let glow = new Uint8Array(0);
     let ids = new Int32Array(0);
     let hoverIndex = -1;
+    let tooltipIndex = -1;
+    let dwellTimer = 0;
+    let dwellAnchor = null;
 
     function ensure(n) {
         if (cap >= n) return;
@@ -121,6 +138,7 @@ export function createUniverseLayer({ canvas, onPick, formatTooltip }) {
     function hideTooltip() {
         tooltip.hidden = true;
         tooltip.innerHTML = '';
+        tooltipIndex = -1;
     }
 
     function showTooltip(index, clientX, clientY) {
@@ -135,6 +153,7 @@ export function createUniverseLayer({ canvas, onPick, formatTooltip }) {
         }
         tooltip.innerHTML = html;
         tooltip.hidden = false;
+        tooltipIndex = index;
         const pad = 14;
         const tw = tooltip.offsetWidth || 220;
         const th = tooltip.offsetHeight || 72;
@@ -197,7 +216,27 @@ export function createUniverseLayer({ canvas, onPick, formatTooltip }) {
         return nearestIndex(offsetX, offsetY, xs, ys, count, radiusPx);
     }
 
+    function cancelDwell() {
+        if (dwellTimer) {
+            window.clearTimeout(dwellTimer);
+            dwellTimer = 0;
+        }
+    }
+
+    function cancelDwellAndHide() {
+        cancelDwell();
+        dwellAnchor = null;
+        hideTooltip();
+    }
+
+    function onWindowScroll() {
+        if (dwellTimer || !tooltip.hidden) cancelDwellAndHide();
+    }
+
+    // 立即路径：点击与程序化高亮（随机打捞/片单）
     function setHover(index, clientX, clientY) {
+        cancelDwell();
+        dwellAnchor = null;
         if (index === hoverIndex) {
             if (index >= 0) showTooltip(index, clientX, clientY);
             return;
@@ -212,11 +251,37 @@ export function createUniverseLayer({ canvas, onPick, formatTooltip }) {
         if (!visible) return;
         const rect = canvas.getBoundingClientRect();
         const index = hitIndex(event.clientX - rect.left, event.clientY - rect.top, 16);
-        setHover(index, event.clientX, event.clientY);
+        if (index !== hoverIndex) {
+            hoverIndex = index;
+            draw();
+        }
+        if (index < 0) {
+            cancelDwellAndHide();
+            return;
+        }
+        if (tooltipIndex === index) {
+            showTooltip(index, event.clientX, event.clientY);
+            return;
+        }
+        hideTooltip();
+        const nextAnchor = dwellAnchorUpdate(dwellAnchor, index, event.clientX, event.clientY, TOOLTIP_MOVE_TOLERANCE_PX);
+        const anchorMoved = nextAnchor !== dwellAnchor;
+        dwellAnchor = nextAnchor;
+        if (anchorMoved) {
+            cancelDwell();
+            dwellTimer = window.setTimeout(() => {
+                dwellTimer = 0;
+                if (visible && hoverIndex === index && dwellAnchor && dwellAnchor.index === index) {
+                    showTooltip(index, dwellAnchor.x, dwellAnchor.y);
+                }
+            }, TOOLTIP_DWELL_MS);
+        }
     }
 
     function onPointerLeave() {
-        setHover(-1);
+        hoverIndex = -1;
+        cancelDwellAndHide();
+        draw();
     }
 
     function onClick(event) {
@@ -231,6 +296,7 @@ export function createUniverseLayer({ canvas, onPick, formatTooltip }) {
     canvas.addEventListener('pointermove', onPointerMove, { passive: true });
     canvas.addEventListener('pointerleave', onPointerLeave);
     canvas.addEventListener('click', onClick);
+    window.addEventListener('scroll', onWindowScroll, { passive: true });
 
     resize();
 
@@ -253,6 +319,20 @@ export function createUniverseLayer({ canvas, onPick, formatTooltip }) {
             gCh[i] = rgba[1];
             bCh[i] = rgba[2];
             aCh[i] = rgba[3];
+            glow[i] = isGlow ? 1 : 0;
+            ids[i] = movieId;
+        },
+        pushPixelRGBA(px, py, size, r, g, b, a, isGlow, movieId) {
+            const i = count;
+            count += 1;
+            ensure(count);
+            xs[i] = px;
+            ys[i] = py;
+            sizes[i] = size;
+            rCh[i] = r;
+            gCh[i] = g;
+            bCh[i] = b;
+            aCh[i] = a;
             glow[i] = isGlow ? 1 : 0;
             ids[i] = movieId;
         },
@@ -313,7 +393,7 @@ export function createUniverseLayer({ canvas, onPick, formatTooltip }) {
             canvas.classList.toggle('is-hidden', !visible);
             canvas.setAttribute('aria-hidden', visible ? 'false' : 'true');
             if (!visible) {
-                hideTooltip();
+                cancelDwellAndHide();
                 hoverIndex = -1;
             }
         },

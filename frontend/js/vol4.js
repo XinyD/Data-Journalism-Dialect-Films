@@ -1,3 +1,4 @@
+import { DataService, renderLocalGallery } from './core.js';
 import { isPerformanceEntry } from './lib/perf_entry.js';
 
 document.addEventListener('DOMContentLoaded', async () => {

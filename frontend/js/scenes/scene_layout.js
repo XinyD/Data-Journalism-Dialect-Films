@@ -72,7 +72,7 @@ export function layoutXY(sceneId, movie, env) {
         case 'chinese-dialect':
             return { x: env.languageIndex(movie.langCode) + movie.jitterGenreX, y: movie.rating };
         case 'dual-director': {
-            const inPair = movie.langCode === 2 || movie.langCode === 3;
+            const inPair = (movie.langCode === 2 || movie.langCode === 3) && movie.regionCode === 3;
             const x = inPair
                 ? (movie.langCode === 2 ? 0 : 1) + movie.jitterX * 0.55
                 : -1.2 + movie.jitterX * 0.2;

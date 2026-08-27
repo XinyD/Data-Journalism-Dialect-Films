@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
     dataToPixel,
+    dwellAnchorUpdate,
     nearestIndex,
     parseRgba
 } from '../frontend/js/scenes/universe_canvas.js';
@@ -36,4 +37,12 @@ test('nearestIndex returns -1 when outside radius or empty', () => {
     const ys = new Float32Array([10, 50]);
     assert.equal(nearestIndex(100, 100, xs, ys, 2, 5), -1);
     assert.equal(nearestIndex(10, 10, xs, ys, 0, 20), -1);
+});
+
+test('dwellAnchorUpdate keeps the anchor within tolerance, resets beyond it', () => {
+    const anchor = { index: 4, x: 100, y: 100 };
+    assert.equal(dwellAnchorUpdate(anchor, 4, 103, 104, 6), anchor);
+    assert.deepEqual(dwellAnchorUpdate(anchor, 4, 110, 100, 6), { index: 4, x: 110, y: 100 });
+    assert.deepEqual(dwellAnchorUpdate(anchor, 5, 101, 100, 6), { index: 5, x: 101, y: 100 });
+    assert.deepEqual(dwellAnchorUpdate(null, 1, 10, 10, 6), { index: 1, x: 10, y: 10 });
 });

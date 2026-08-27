@@ -2718,9 +2718,9 @@ function paintUniverseLive() {
 }
 
 function languageStarColor(langCode, focused) {
-    if (langCode === 3) return focused ? [255, 179, 0, 0.78] : [255, 179, 0, 0.16];
-    if (langCode === 2) return focused ? [98, 176, 255, 0.72] : [98, 176, 255, 0.12];
-    return focused ? [220, 220, 226, 0.18] : [220, 220, 226, 0.07];
+    if (langCode === 3) return focused ? [255, 179, 0, 0.78] : [255, 179, 0, 0.24];
+    if (langCode === 2) return focused ? [98, 176, 255, 0.72] : [98, 176, 255, 0.18];
+    return focused ? [220, 220, 226, 0.26] : [220, 220, 226, 0.12];
 }
 
 function stopPlotTween() {
@@ -2780,7 +2780,7 @@ function particleLook(sceneId, d) {
         };
     }
     if (sceneId === 'asian-breakout') {
-        let color = [255, 255, 255, 0.14];
+        let color = [255, 255, 255, 0.20];
         if (focused) {
             if (d.regionCode === 2 || d.regionCode === 3) color = [...hexToRgb(COLORS.asian), 0.86];
             else if (d.regionCode === 0) color = [84, 112, 198, 0.55];
@@ -2789,20 +2789,20 @@ function particleLook(sceneId, d) {
         return { size: focused ? 3.2 : 1.2, color, glow: false };
     }
     if (sceneId === 'european-slow') {
-        if (!focused) return { size: 1.2, color: [255, 255, 255, 0.14], glow: false };
+        if (!focused) return { size: 1.2, color: [255, 255, 255, 0.20], glow: false };
         if (d.rating < 5) return { size: 3.4, color: [...hexToRgb(GUIDE_COLORS.threshold), 0.9], glow: false };
         return { size: 3.1, color: [236, 232, 224, 0.84], glow: false };
     }
     if (sceneId === 'language-babel') {
         const parsed = parseRgba(LANGUAGE_COLORS[d.langCode] || 'rgba(255,255,255,0.15)');
-        if (!focused) parsed[3] = Math.min(parsed[3], 0.14);
+        if (!focused) parsed[3] = Math.min(parsed[3], 0.20);
         return { size: focused ? 3.4 : 1.3, color: parsed, glow: false };
     }
     if (sceneId === 'decade-bubble') {
         const on = decadeOf(d.year) === sceneState['decade-bubble'];
         return {
             size: on ? 3.2 : 1.2,
-            color: on ? [185, 196, 206, 0.86] : [255, 255, 255, 0.12],
+            color: on ? [185, 196, 206, 0.86] : [255, 255, 255, 0.18],
             glow: false
         };
     }
@@ -2815,17 +2815,18 @@ function particleLook(sceneId, d) {
         };
     }
     if (sceneId === 'chinese-dialect' || sceneId === 'dual-director') {
-        if (d.langCode === 3) {
-            return { size: focused ? 3.4 : 1.4, color: [...hexToRgb(COLORS.dialect), focused ? 0.86 : 0.18], glow: false };
+        // 口径与正文一致：普通话/方言两列仅画中国（含港澳台）影片，海外华语片作暗色背景
+        if (d.regionCode === 3 && d.langCode === 3) {
+            return { size: focused ? 3.4 : 1.4, color: [...hexToRgb(COLORS.dialect), focused ? 0.86 : 0.26], glow: false };
         }
-        if (d.langCode === 2) {
-            return { size: focused ? 3.2 : 1.4, color: [...hexToRgb(COLORS.chinaBlue), focused ? 0.82 : 0.16], glow: false };
+        if (d.regionCode === 3 && d.langCode === 2) {
+            return { size: focused ? 3.2 : 1.4, color: [...hexToRgb(COLORS.chinaBlue), focused ? 0.82 : 0.24], glow: false };
         }
-        return { size: 1.15, color: [255, 255, 255, 0.08], glow: false };
+        return { size: 1.15, color: [255, 255, 255, 0.14], glow: false };
     }
     if (sceneId === 'global-layers') {
         const group = globalLayerOf(d);
-        let color = [255, 255, 255, 0.14];
+        let color = [255, 255, 255, 0.20];
         if (group === 3) color = [...hexToRgb(COLORS.dialect), 0.8];
         else if (group === 4) color = [...hexToRgb(COLORS.chinaBlue), 0.7];
         else if (group >= 0) color = [255, 255, 255, 0.38];
@@ -2834,12 +2835,12 @@ function particleLook(sceneId, d) {
     if (sceneId === 'dialect-flops') {
         const lit = isFlopLit(d, resolveFlopPhase(flopPhase));
         const role = dialectFlopRole(d);
-        if (!lit) return { size: 1.2, color: [220, 220, 226, 0.1], glow: false };
+        if (!lit) return { size: 1.2, color: [220, 220, 226, 0.16], glow: false };
         if (role === 3) return { size: 6.5, color: [...hexToRgb(COLORS.dialect), 0.95], glow: true };
         if (role === 2 || role === 1) return { size: 3.2, color: [...hexToRgb(COLORS.dialect), 0.8], glow: false };
-        return { size: 1.4, color: [255, 209, 102, 0.28], glow: false };
+        return { size: 1.4, color: [255, 209, 102, 0.36], glow: false };
     }
-    return { size: 1.6, color: [220, 220, 226, 0.16], glow: false };
+    return { size: 1.6, color: [220, 220, 226, 0.22], glow: false };
 }
 
 function selectDrawRows(budget) {
@@ -2957,16 +2958,14 @@ function startPlotTween(snap, toItems) {
         const t = easeCubicOut((now - t0) / TWEEN_MS);
         universeLayer.begin(n, 1);
         for (let i = 0; i < n; i += 1) {
-            universeLayer.pushPixel(
+            universeLayer.pushPixelRGBA(
                 fromX[i] + (toX[i] - fromX[i]) * t,
                 fromY[i] + (toY[i] - fromY[i]) * t,
                 fromS[i] + (toS[i] - fromS[i]) * t,
-                [
-                    fromR[i] + (toR[i] - fromR[i]) * t,
-                    fromG[i] + (toG[i] - fromG[i]) * t,
-                    fromB[i] + (toB[i] - fromB[i]) * t,
-                    fromA[i] + (toA[i] - fromA[i]) * t
-                ],
+                fromR[i] + (toR[i] - fromR[i]) * t,
+                fromG[i] + (toG[i] - fromG[i]) * t,
+                fromB[i] + (toB[i] - fromB[i]) * t,
+                fromA[i] + (toA[i] - fromA[i]) * t,
                 glow[i] === 1 && t > 0.7,
                 ids[i]
             );
