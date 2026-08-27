@@ -1,8 +1,8 @@
 {
-  "style": "build/style.069d793bbe.css",
+  "style": "build/style.36d6e4873e.css",
   "echartsMain": "build/echarts-main.f19d3377a9.js",
   "echartsVolume": "build/echarts-volume.6d75e0bd14.js",
-  "app": "build/app.7fa068d8ea.js",
+  "app": "build/app.03a6bd678b.js",
   "echoChunk": "build/echo-universe-chunk.2ec962d5f7.js",
   "vol1": "build/vol1.6b8a895bfa.js",
   "vol2": "build/vol2.70f133a956.js",

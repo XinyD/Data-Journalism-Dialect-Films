@@ -112,6 +112,12 @@ export function createPrologueMotionLayer(canvas) {
         ctx.clearRect(0, 0, cssW, cssH);
         let lastRgb = -1;
         let lastA = -1;
+        let pathOpen = false;
+        const flush = () => {
+            if (!pathOpen) return;
+            ctx.fill();
+            pathOpen = false;
+        };
         for (let i = 0; i < count; i += 1) {
             const size = sizes[i];
             const alpha = aCh[i];
@@ -120,27 +126,29 @@ export function createPrologueMotionLayer(canvas) {
             const gi = gCh[i] | 0;
             const bi = bCh[i] | 0;
             const rgb = (ri << 16) | (gi << 8) | bi;
-            if (rgb !== lastRgb) {
-                ctx.fillStyle = `rgb(${ri},${gi},${bi})`;
-                lastRgb = rgb;
-            }
             const quantized = ((alpha * 32) | 0) / 32;
-            if (quantized !== lastA) {
-                ctx.globalAlpha = quantized;
-                lastA = quantized;
+            if (rgb !== lastRgb || quantized !== lastA) {
+                flush();
+                if (rgb !== lastRgb) {
+                    ctx.fillStyle = `rgb(${ri},${gi},${bi})`;
+                    lastRgb = rgb;
+                }
+                if (quantized !== lastA) {
+                    ctx.globalAlpha = quantized;
+                    lastA = quantized;
+                }
             }
-            const radius = size / 2;
+            if (!pathOpen) {
+                ctx.beginPath();
+                pathOpen = true;
+            }
+            const radius = Math.max(0.55, size / 2);
             const x = xs[i];
             const y = ys[i];
-            if (radius <= 1.55) {
-                const span = Math.max(0.8, size);
-                ctx.fillRect(x - span / 2, y - span / 2, span, span);
-                continue;
-            }
-            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
             ctx.arc(x, y, radius, 0, Math.PI * 2);
-            ctx.fill();
         }
+        flush();
         ctx.globalAlpha = 1;
     }
 

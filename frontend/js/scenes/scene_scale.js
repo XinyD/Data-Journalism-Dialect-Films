@@ -132,12 +132,14 @@
         }
         if (diag) {
             diag.style.opacity = beat === 8 ? '1' : '0';
+            diag.classList.toggle('on', beat === 8);
             [...diag.querySelectorAll('li')].forEach((li, i) => {
                 li.classList.toggle('is-on', beat === 8 && (rm || i === 0 || li.dataset.ready === '1'));
             });
         }
         if (mani) {
             mani.style.opacity = beat === 9 ? '1' : '0';
+            mani.classList.toggle('on', beat === 9);
             [...mani.querySelectorAll('p')].forEach((el, i) => {
                 el.classList.toggle('is-on', beat === 9 && (rm || i === 0 || el.dataset.ready === '1'));
             });

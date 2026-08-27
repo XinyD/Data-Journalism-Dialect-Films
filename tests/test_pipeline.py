@@ -357,7 +357,8 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         )
         for stale_title in stale_titles:
             self.assertNotIn(stale_title, html)
-        self.assertIn('方言电影为什么“赢”了？', html)
+        self.assertIn('「言」之有物：从数据看中国电影的答案', html)
+        self.assertNotIn('方言电影为什么“赢”了？', html)
 
     def test_comparison_scenes_have_direct_reference_lines(self):
         app_js = (TASTE_ROOT / "frontend" / "js" / "app.js").read_text(encoding="utf-8")
@@ -366,18 +367,28 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         self.assertIn("function createGuideMarkLine", app_js)
         self.assertIn("function horizontalDifferenceBand", app_js)
         self.assertIn("function standardizedMeanByDecadeGenre", app_js)
-        self.assertEqual(app_js.count("markLine: createGuideMarkLine("), 10)
+        self.assertEqual(app_js.count("markLine: createGuideMarkLine("), 8)
         self.assertGreaterEqual(app_js.count("markArea:"), 5)
         self.assertIn("标准化均值", app_js)
         self.assertIn("编辑高分阈值 8.5", app_js)
         self.assertIn("低分界线 5.0", app_js)
-        self.assertIn("'dual-director': () =>", app_js)
+        for scene_id in (
+            "language-babel",
+            "chinese-dialect",
+            "global-layers",
+            "dialect-flops",
+            "dual-director",
+            "asian-breakout",
+            "european-slow",
+        ):
+            self.assertIn(f"'{scene_id}': () =>", app_js)
         self.assertNotIn("'breakout-2011'", app_js)
+        self.assertNotIn("century-decline", app_js)
+        self.assertNotIn("max: 2020", app_js)
         self.assertGreaterEqual(app_js.count("type: 'value', min: -0.8, max:"), 2)
         self.assertIn("const LANGUAGE_DISPLAY_ORDER = [0, 1, 4, 2, 3, 5]", app_js)
         self.assertIn("const languageOrder = LANGUAGE_DISPLAY_ORDER.filter", app_js)
         self.assertIn("verticalGuide(languagePosition(selectedLanguage)", app_js)
-        self.assertIn("max: 2020", app_js)
 
     def test_editorial_copy_leads_with_findings_instead_of_repeated_disclaimers(self):
         # 方言主线前端文案守护：禁止旧版重复免责声明短语回归；
@@ -469,7 +480,8 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         self.assertIn("224 标签", readme)
         self.assertIn("15.4%", readme)
         self.assertIn("239KB", readme)
-        self.assertIn("max: 2020", readme)
+        self.assertNotIn("century-decline", readme)
+        self.assertNotIn("max: 2020", readme)
         self.assertNotIn("220 标签", readme)
         self.assertIn("python rebuild.py", workflow)
         self.assertIn("python -m unittest discover -s tests -v", workflow)
@@ -969,7 +981,7 @@ class HomepageChinaKpiTests(unittest.TestCase):
             self.assertIn(f'id="{dynamic_id}"', html)
         self.assertIn("2026 年，一部没有头部 IP、巨额投资与流量明星加持的潮汕方言电影", html)
         self.assertNotIn("后续年份没有进入当前快照", html)
-        self.assertIn("这是比较门槛，不是数据截止年份", html)
+        self.assertNotIn("这是比较门槛，不是数据截止年份", html)
 
     def test_dialect_mean_fill_uses_china_type_controlled(self):
         app_js = (TASTE_ROOT / "frontend" / "js" / "app.js").read_text(encoding="utf-8")

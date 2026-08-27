@@ -40,9 +40,8 @@ function assertSame(label, actual, expected) {
 }
 
 function extractFlopCaseIds(html) {
-    return [...html.matchAll(/data-movie-id="(\d+)"/g)]
-        .map(item => item[1])
-        .filter(id => FLOP_CASE_IDS.includes(id));
+    return [...html.matchAll(/class="flop-case-card"[^>]*data-movie-id="(\d+)"/g)]
+        .map(item => item[1]);
 }
 
 const indexHtml = read('frontend/index.html');

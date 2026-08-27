@@ -101,6 +101,7 @@ let narrativeFacts = null;
 let globalLayersPhase = 'mandarin-outlier';
 let flopPhase = 'isolate';
 let flopCasesBound = false;
+let directorCasesBound = false;
 let flopCaseLinkBound = false;
 let flopStatsCache = null;
 let flopGenreCache = null;
@@ -483,6 +484,11 @@ let coverLayout = { centroids: {}, packed: {}, rings: {}, scales: {} };
 let universeRaf = 0;
 let lastUniverseMotionKey = '';
 let universePlotCache = [];
+let universePaintNow = 0;
+let universeBreathMix = 0;
+let universeIdleSince = 0;
+let universeIdleEchartsPainted = false;
+let lastUniverseIdlePaint = 0;
 const VISUAL_BUDGET_DESKTOP = 10800;
 const VISUAL_BUDGET_MOBILE = 7200;
 const DUST_BUDGET_DESKTOP = 7500;
@@ -652,9 +658,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (particleChart) particleChart.resize();
         if (prologueMotionLayer) prologueMotionLayer.resize();
         if (window.WaveScene) window.WaveScene.onResize();
-        if (activeSceneId === 'universe' && prologueMotionBusy()) {
+        if (activeSceneId === 'universe') {
             lastUniverseMotionKey = '';
+            resetUniverseIdlePaint();
             paintUniverseLive();
+            startUniverseLoop();
         }
     });
     const onParticleResizeDebounced = debounce(() => {
@@ -1293,6 +1301,37 @@ function isCoverDust(movie) {
     return Boolean(movie && movie.dustKeep && !movie.mobileKeep);
 }
 
+function universeIdleBreathing() {
+    return activeSceneId === 'universe' && !prefersReducedMotion();
+}
+
+function resetUniverseIdlePaint() {
+    universeIdleEchartsPainted = false;
+    lastUniverseIdlePaint = 0;
+}
+
+function setUniverseHitLayerHidden(hidden) {
+    if (hidden) document.documentElement.dataset.universeIdle = 'true';
+    else delete document.documentElement.dataset.universeIdle;
+}
+
+function universeBreathStarry(movie, dim) {
+    return isCoverDust(movie)
+        || prologueState === PROLOGUE_STATES.STAR_FIELD
+        || (prologueState === PROLOGUE_STATES.REGION_FOCUS && dim);
+}
+
+function universeBreathScale(movie, dim, kind) {
+    if (universeBreathMix <= 0.001) return 1;
+    const t = universePaintNow * 0.001;
+    const freq = movie && Number.isFinite(movie.visualFreq) ? movie.visualFreq : 0.18;
+    const phase = movie && Number.isFinite(movie.visualPhase) ? movie.visualPhase : 0;
+    const wave = Math.sin(t * freq * Math.PI * 2 + phase);
+    const starry = universeBreathStarry(movie, dim);
+    const amp = kind === 'size' ? (starry ? 0.08 : 0.03) : (starry ? 0.28 : 0.12);
+    return 1 + wave * amp * universeBreathMix;
+}
+
 function refreshPrologueRowCache() {
     prologueLandRows = [];
     prologueDustRows = [];
@@ -1370,39 +1409,44 @@ function universePose(movie, ar) {
 }
 
 function visualGroupRgba(group, brightness, mapped, movie, appear, dim) {
+    let rgba;
     if (isCoverDust(movie)) {
         const depth = movie ? movie.visualSize : 0.4;
         const alpha = (0.08 + brightness * 0.16 + depth * 0.12) * Math.max(0, appear);
-        return [220, 220, 226, Math.max(0.08, Math.min(0.36, alpha))];
-    }
-    const edge = movie ? movie.visualEdge : 0.55;
-    const voidness = movie ? movie.visualVoid : 0;
-    const falloff = mapped ? 0.35 + 0.65 * Math.pow(Math.max(0.08, edge), 1.05) : 1;
-    const air = 1 - voidness * 0.28;
-    const shown = Math.max(0.2, appear);
-    const onCover = prologueState === PROLOGUE_STATES.WORLD_MAP;
-    if (!mapped) {
-        const depth = movie ? movie.visualSize : 0.4;
-        if (prologueState === PROLOGUE_STATES.STAR_FIELD) {
-            const alpha = (0.08 + brightness * 0.16 + depth * 0.12) * Math.max(0, appear);
-            return [220, 220, 226, Math.max(0.08, Math.min(0.36, alpha))];
+        rgba = [220, 220, 226, Math.max(0.08, Math.min(0.36, alpha))];
+    } else {
+        const edge = movie ? movie.visualEdge : 0.55;
+        const voidness = movie ? movie.visualVoid : 0;
+        const falloff = mapped ? 0.35 + 0.65 * Math.pow(Math.max(0.08, edge), 1.05) : 1;
+        const air = 1 - voidness * 0.28;
+        const shown = Math.max(0.2, appear);
+        const onCover = prologueState === PROLOGUE_STATES.WORLD_MAP;
+        if (!mapped) {
+            const depth = movie ? movie.visualSize : 0.4;
+            if (prologueState === PROLOGUE_STATES.STAR_FIELD) {
+                const alpha = (0.08 + brightness * 0.16 + depth * 0.12) * Math.max(0, appear);
+                rgba = [220, 220, 226, Math.max(0.08, Math.min(0.36, alpha))];
+            } else if (prologueState === PROLOGUE_STATES.REGION_FOCUS && dim) {
+                const alpha = (0.06 + brightness * 0.08 + depth * 0.06) * Math.max(0, appear);
+                rgba = [220, 220, 226, Math.max(0.06, Math.min(0.20, alpha))];
+            } else {
+                const alpha = (0.22 + brightness * 0.33) * air * shown * (dim ? 0.62 : 1);
+                rgba = [220, 220, 226, Math.max(0.16, Math.min(0.55, alpha))];
+            }
+        } else {
+            let hex = VISUAL_GROUP_COLORS[group] || VISUAL_GROUP_COLORS.unknown;
+            if (onCover && group === 'china') hex = COVER_CHINA_HEX;
+            const coverBoost = onCover ? (group === 'china' ? 1.10 : 1) : 1;
+            const alpha = (0.38 + brightness * 0.47) * falloff * air * shown * coverBoost;
+            const focused = prologueState === PROLOGUE_STATES.REGION_FOCUS && !dim;
+            const minA = onCover ? (group === 'china' ? 0.46 : 0.42) : focused ? 0.42 : 0.28;
+            const maxA = onCover ? (group === 'china' ? 0.92 : 0.86) : focused ? 0.88 : 0.85;
+            const rgb = hexToRgb(hex);
+            rgba = [rgb[0], rgb[1], rgb[2], Math.max(minA, Math.min(maxA, alpha))];
         }
-        if (prologueState === PROLOGUE_STATES.REGION_FOCUS && dim) {
-            const alpha = (0.06 + brightness * 0.08 + depth * 0.06) * Math.max(0, appear);
-            return [220, 220, 226, Math.max(0.06, Math.min(0.20, alpha))];
-        }
-        const alpha = (0.22 + brightness * 0.33) * air * shown * (dim ? 0.62 : 1);
-        return [220, 220, 226, Math.max(0.16, Math.min(0.55, alpha))];
     }
-    let hex = VISUAL_GROUP_COLORS[group] || VISUAL_GROUP_COLORS.unknown;
-    if (onCover && group === 'china') hex = COVER_CHINA_HEX;
-    const coverBoost = onCover ? (group === 'china' ? 1.10 : 1) : 1;
-    const alpha = (0.38 + brightness * 0.47) * falloff * air * shown * coverBoost;
-    const focused = prologueState === PROLOGUE_STATES.REGION_FOCUS && !dim;
-    const minA = onCover ? (group === 'china' ? 0.46 : 0.42) : focused ? 0.42 : 0.28;
-    const maxA = onCover ? (group === 'china' ? 0.92 : 0.86) : focused ? 0.88 : 0.85;
-    const rgb = hexToRgb(hex);
-    return [rgb[0], rgb[1], rgb[2], Math.max(minA, Math.min(maxA, alpha))];
+    rgba[3] = Math.max(0.02, rgba[3] * universeBreathScale(movie, dim, 'alpha'));
+    return rgba;
 }
 
 function visualGroupColor(group, brightness, mapped, movie, appear, dim) {
@@ -1414,24 +1458,24 @@ function universeSymbolSize(movie, brightness, appear, dim) {
     const size = movie ? movie.visualSize : 0.4;
     const shown = Math.max(0.55, appear);
     const glow = brightness >= 0.85 ? 0.3 : brightness >= 0.72 ? 0.1 : 0;
+    let result;
     if (isCoverDust(movie)) {
         const depth = 1.1 + size * 1.05 + glow * 0.15;
-        return Math.max(1.1, Math.min(2.3, depth * Math.max(0.45, appear)));
-    }
-    if (prologueState === PROLOGUE_STATES.WORLD_MAP) {
+        result = Math.max(1.1, Math.min(2.3, depth * Math.max(0.45, appear)));
+    } else if (prologueState === PROLOGUE_STATES.WORLD_MAP) {
         const base = 2 + size * 0.55;
-        return Math.max(2, Math.min(2.8, (base + glow * 0.5) * shown));
-    }
-    if (prologueState === PROLOGUE_STATES.STAR_FIELD) {
+        result = Math.max(2, Math.min(2.8, (base + glow * 0.5) * shown));
+    } else if (prologueState === PROLOGUE_STATES.STAR_FIELD) {
         const depth = 1.1 + size * 1.05 + glow * 0.15;
-        return Math.max(1.1, Math.min(2.3, depth * Math.max(0.45, appear)));
-    }
-    if (dim) {
+        result = Math.max(1.1, Math.min(2.3, depth * Math.max(0.45, appear)));
+    } else if (dim) {
         const depth = 1.1 + size * 0.7;
-        return Math.max(1.1, Math.min(1.9, depth * Math.max(0.45, appear)));
+        result = Math.max(1.1, Math.min(1.9, depth * Math.max(0.45, appear)));
+    } else {
+        const base = 2.3 + size * 1.05 + glow * 0.2;
+        result = Math.max(2.3, Math.min(3.5, base * shown));
     }
-    const base = 2.3 + size * 1.05 + glow * 0.2;
-    return Math.max(2.3, Math.min(3.5, base * shown));
+    return Math.max(0.6, result * universeBreathScale(movie, dim, 'size'));
 }
 
 function beginPrologueMotion(nextState, focusGroup) {
@@ -1485,6 +1529,9 @@ function setPrologueState(nextState, focusGroup = null) {
     lastUniverseMotionKey = '';
     universeHandoffToken += 1;
     universeMotionOverlay = false;
+    resetUniverseIdlePaint();
+    universeIdleSince = 0;
+    setUniverseHitLayerHidden(false);
     syncVisualRegionDock();
     startUniverseLoop();
 }
@@ -1755,7 +1802,7 @@ function createGuideMarkLine(guides) {
 
 const SCENE_INTERACTIONS = {
     universe: {
-        label: '序章 · 电影星图',
+        label: '星图 · 全样本',
         prompt: '选择一个地区，查看电影数、平均分和年份跨度。',
         type: 'buttons',
         defaultValue: 'all',
@@ -1805,7 +1852,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'asian-breakout': {
-        label: '第一幕 · 地区分布',
+        label: '第八幕 · 刻度 · 坐标系',
         prompt: '逐个地区查看原始均分与年代×主类型标准化均分。',
         type: 'buttons',
         defaultValue: '1',
@@ -1831,7 +1878,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'language-babel': {
-        label: '第三幕 · 分析语言组',
+        label: '第一幕 · 对照 · 语言',
         prompt: '切换分析语言组，同时读取占比、均值和高分占比。此处语言均指主要语言；混合语种按片单首位归组。',
         type: 'buttons',
         defaultValue: '0',
@@ -1854,7 +1901,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'european-slow': {
-        label: '第二幕 · 下限检验',
+        label: '第九幕 · 刻度 · 下限',
         prompt: '切换地区，对比第一四分位数、中位数和低分占比。',
         type: 'buttons',
         defaultValue: '1',
@@ -1875,7 +1922,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'chinese-dialect': {
-        label: '第四幕 · 分差随年代变化',
+        label: '第二幕 · 拐点 · 2010',
         prompt: '切换年代，比较普通话与方言电影的均分。',
         type: 'buttons',
         defaultValue: 'all',
@@ -1912,7 +1959,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'final-universe': {
-        label: '第九幕 · 语言组星云',
+        label: '第七幕 · 立 · 好故事的五维',
         prompt: '按语言组缩小星云，再随机或直接点选一部电影。',
         type: 'buttons',
         defaultValue: 'all',
@@ -1922,7 +1969,7 @@ const SCENE_INTERACTIONS = {
         insight: () => '方言（琥珀色）与普通话（灰蓝色）在星云中并列。点击任意粒子核对具体作品。'
     },
     'global-layers': {
-        label: '第五幕 · 全球参照',
+        label: '第三幕 · 参照 · 全球',
         prompt: '把电影按语言组放回同一条 5 分线，观察谁更容易跌穿下限。点选不同观察，粒子会重新排列。',
         type: 'buttons',
         defaultValue: 'mandarin-outlier',
@@ -2009,7 +2056,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'dialect-flops': {
-        label: '第六幕 · 烂片也有',
+        label: '第四幕 · 破 · 语言不是答案',
         prompt: '切开方言内部。按钮只改右侧粒子：看主体、失败尾部、四部案例，或只留低分点。',
         type: 'buttons',
         defaultValue: 'isolate',
@@ -2082,8 +2129,8 @@ const SCENE_INTERACTIONS = {
         }
     },
     'dual-director': {
-        label: '第七幕 · 寻 · 同导演对比',
-        prompt: '同一批导演的方言片与普通话片都在图中。点开一部，核对具体作品。',
+        label: '第五幕 · 寻 · 同导演',
+        prompt: '同一批导演的方言片与普通话片都在图中。点开对照卡，核对具体作品。',
         type: 'buttons',
         defaultValue: 'all',
         options: [
@@ -2132,11 +2179,11 @@ const SCENE_INTERACTIONS = {
         insight: () => {
             const dd = dialectAgg && dialectAgg.dual_director;
             if (!dd) return '把导演变量锁住：同一人拍方言片和普通话片，评分仍可能不同。';
-            return `${dd.total} 位双栖导演中，${dd.share_positive}% 的方言片评分更高，平均分差 +${dd.mean_diff.toFixed(2)}。质量差异来自项目本身的投入度和创作态度。`;
+            return `${dd.total} 位双栖导演中，${dd.share_positive}% 的方言片评分更高，平均分差 +${dd.mean_diff.toFixed(2)}。落到片子上，普通话讲透了一样高，方言敷衍了一样低——差的是内容，不是语言。`;
         }
     },
     'three-waves': {
-        label: '第八幕 · 展 · 三波浪潮',
+        label: '第六幕 · 展 · 浪潮',
         prompt: '点击浪潮片单中的电影，回到具体作品。',
         type: 'buttons',
         defaultValue: 'all',
@@ -2155,7 +2202,7 @@ const SCENE_INTERACTIONS = {
         insight: () => '三波浪潮，三种方言，同一个逻辑：用更少的产量，守住更稳的下限。点击片单核对具体电影。'
     },
     'scale': {
-        label: '第十幕 · 刻度',
+        label: '第十幕 · 刻度 · 立尺',
         prompt: '对照六级世界均分刻度，再随机或直接点选一部电影。',
         type: 'buttons',
         defaultValue: 'all',
@@ -2197,7 +2244,7 @@ const SCENE_INTERACTIONS = {
         }
     },
     'echo-narrative': {
-        label: '第十一幕 · 回响',
+        label: '终章 · 回响',
         prompt: '',
         type: 'buttons',
         defaultValue: 'all',
@@ -2507,14 +2554,16 @@ function initPrologueMotionLayer() {
 function initParticleEngine() {
     const container = document.getElementById('chart-container');
     particleChart = echarts.init(container, 'dark');
+    runtime.particleChart = particleChart;
+    runtime.renderParticleScene = renderParticleScene;
     particleChart.on('click', params => {
-        if (universeMotionOverlay || isMobileViewport()) return;
+        if (prologueMotionBusy() || isMobileViewport()) return;
         const movieId = params.value && params.value[3];
         const movie = particleData[movieId];
         if (movie) openPickedParticle(movie);
     });
     particleChart.getZr().on('click', event => {
-        if (universeMotionOverlay) return;
+        if (prologueMotionBusy()) return;
         if (!isMobileViewport()) return;
         const movie = findNearestMovieByPixel(event.offsetX, event.offsetY, 20);
         if (movie) openPickedParticle(movie);
@@ -2654,6 +2703,7 @@ function hidePrologueMotionLayer() {
         universeFinishedHandler = null;
     }
     universeMotionOverlay = false;
+    setUniverseHitLayerHidden(false);
     if (prologueMotionLayer) {
         prologueMotionLayer.setVisible(false);
         prologueMotionLayer.clear();
@@ -2705,32 +2755,73 @@ function paintUniverseEcharts(onPainted) {
     }, { notMerge: false, lazyUpdate: false, silent: true });
 }
 
-function paintUniverseLive() {
+function paintUniverseLive(now = performance.now()) {
     if (activeSceneId !== 'universe') return;
-    advancePrologueMotion(performance.now());
+    advancePrologueMotion(now);
     const busy = prologueMotionBusy();
-    const key = prologueMotionKey();
-    if (key === lastUniverseMotionKey) return;
-    lastUniverseMotionKey = key;
-    if (busy && prologueMotionLayer) {
-        paintUniverseMotionFrame();
-        if (!universeMotionOverlay) {
-            universeHandoffToken += 1;
-            universeMotionOverlay = true;
-            prologueMotionLayer.setVisible(true);
-            clearUniverseEchartsData();
+    const breathing = universeIdleBreathing();
+    if (busy || !breathing) {
+        universeIdleSince = 0;
+        universeBreathMix = 0;
+    } else {
+        if (!universeIdleSince) universeIdleSince = now;
+        universeBreathMix = smooth01((now - universeIdleSince) / 600);
+    }
+    universePaintNow = now;
+
+    if (busy) {
+        universeIdleEchartsPainted = false;
+        const key = prologueMotionKey();
+        if (key === lastUniverseMotionKey) return;
+        lastUniverseMotionKey = key;
+        if (prologueMotionLayer) {
+            paintUniverseMotionFrame();
+            if (!universeMotionOverlay) {
+                universeHandoffToken += 1;
+                universeMotionOverlay = true;
+                prologueMotionLayer.setVisible(true);
+                clearUniverseEchartsData();
+                setUniverseHitLayerHidden(false);
+            }
         }
         syncCoverReveal();
         return;
     }
-    if (universeMotionOverlay) {
-        const token = universeHandoffToken;
-        paintUniverseEcharts(() => {
-            if (token !== universeHandoffToken || prologueMotionBusy()) return;
-            hidePrologueMotionLayer();
-        });
-    } else if (particleChart) {
+
+    if (!breathing) {
+        if (universeMotionOverlay) {
+            const token = universeHandoffToken;
+            paintUniverseEcharts(() => {
+                if (token !== universeHandoffToken || prologueMotionBusy()) return;
+                hidePrologueMotionLayer();
+            });
+        } else if (particleChart) {
+            paintUniverseEcharts();
+        }
+        syncCoverReveal();
+        return;
+    }
+
+    const minDt = isMobileViewport() ? 50 : 42;
+    if (lastUniverseIdlePaint && now - lastUniverseIdlePaint < minDt) {
+        syncCoverReveal();
+        return;
+    }
+    lastUniverseIdlePaint = now;
+
+    if (prologueMotionLayer && !universeMotionOverlay) {
+        universeMotionOverlay = true;
+        prologueMotionLayer.setVisible(true);
+    }
+    paintUniverseMotionFrame();
+
+    if (!universeIdleEchartsPainted && particleChart) {
+        const mix = universeBreathMix;
+        universeBreathMix = 0;
+        if (prologueMotionLayer) setUniverseHitLayerHidden(true);
         paintUniverseEcharts();
+        universeBreathMix = mix;
+        universeIdleEchartsPainted = true;
     }
     syncCoverReveal();
 }
@@ -2748,11 +2839,11 @@ function prologueMotionBusy() {
 
 function startUniverseLoop() {
     if (universeRaf) return;
-    const tick = () => {
+    const tick = now => {
         universeRaf = 0;
         if (activeSceneId !== 'universe') return;
-        if (!document.hidden) paintUniverseLive();
-        if (activeSceneId === 'universe' && prologueMotionBusy()) {
+        if (!document.hidden) paintUniverseLive(now);
+        if (activeSceneId === 'universe' && (prologueMotionBusy() || universeIdleBreathing())) {
             universeRaf = requestAnimationFrame(tick);
         }
     };
@@ -2763,7 +2854,7 @@ const particleScenes = {
     'universe': () => {
         const ar = universeChartAr();
         advancePrologueMotion(performance.now());
-        const data = prologueMotionBusy() ? [] : buildUniversePlot();
+        const data = (prologueMotionBusy() || universeIdleBreathing()) ? [] : buildUniversePlot();
         return {
             backgroundColor: 'transparent',
             animation: false,
@@ -2774,6 +2865,7 @@ const particleScenes = {
                 _noDim: true,
                 type: 'scatter',
                 data,
+                symbol: 'circle',
                 symbolSize: 2,
                 itemStyle: {},
                 universalTransition: false
@@ -3047,7 +3139,8 @@ const particleScenes = {
         const selectedRows = particleData.filter(row => SCENE_INTERACTIONS['dual-director'].filter(row, selected));
         const mandarin = summarize(selectedRows.filter(row => row.langCode === 2));
         const dialect = summarize(selectedRows.filter(row => row.langCode === 3));
-        const dualX = code => (code === 2 ? 0 : 1);
+        const dualOrder = selected === '2' ? [3, 2] : [2, 3];
+        const dualX = code => dualOrder.indexOf(code);
         const data = particleData.map(d => {
             const inPair = d.langCode === 2 || d.langCode === 3;
             const x = inPair ? dualX(d.langCode) + d.jitterX * 0.55 : -1.2 + d.jitterX * 0.2;
@@ -3065,7 +3158,9 @@ const particleScenes = {
                     formatter: val => {
                         const i = Math.round(val);
                         if (Math.abs(val - i) >= 0.1) return '';
-                        return i === 0 ? '普通话' : i === 1 ? '方言' : '';
+                        return i === 0 || i === 1
+                            ? (dualOrder[i] === 2 ? '普通话' : '方言')
+                            : '';
                     },
                     color: '#FFF', fontSize: 13, fontWeight: 'bold'
                 }
@@ -3357,6 +3452,13 @@ particleScenes['echo-narrative'] = particleScenes['final-universe'];
 
 function renderParticleScene(sceneId, { animate } = {}) {
     runtime.activeSceneId = sceneId;
+    if (sceneId !== 'universe') {
+        setUniverseHitLayerHidden(false);
+        if (universeRaf) {
+            cancelAnimationFrame(universeRaf);
+            universeRaf = 0;
+        }
+    }
     const chartDom = document.getElementById('chart-container');
     if (chartDom) {
         if (chartDom.dataset.echoLayer) delete chartDom.dataset.echoLayer;
@@ -3505,15 +3607,17 @@ function renderParticleScene(sceneId, { animate } = {}) {
     };
     particleChart.setOption(option, true);
     rememberPlottedSeries(option.series);
+    runtime.renderParticleScene = renderParticleScene;
     if (sceneId === 'universe') {
-        if (prologueMotionBusy()) {
-            lastUniverseMotionKey = '';
-            paintUniverseLive();
-            startUniverseLoop();
-        } else {
-            hidePrologueMotionLayer();
-        }
+        lastUniverseMotionKey = '';
+        resetUniverseIdlePaint();
+        paintUniverseLive();
+        startUniverseLoop();
     } else {
+        if (universeRaf) {
+            cancelAnimationFrame(universeRaf);
+            universeRaf = 0;
+        }
         universeHandoffToken += 1;
         hidePrologueMotionLayer();
     }
@@ -3611,29 +3715,37 @@ function spreadScaleValues(values, minGap = 5, bounds = { top: 8, bottom: 92 }) 
     return ys;
 }
 
-function fillWorldScale() {
-    const rungs = getWorldScaleRungs();
-    const rungsEl = document.getElementById('world-scale-rungs');
-    if (!rungs || !rungsEl) return;
+function hexRgba(hex, alpha) {
+    if (!hex || hex.charAt(0) !== '#') return `rgba(200,194,180,${alpha})`;
+    const n = parseInt(hex.slice(1), 16);
+    if (!Number.isFinite(n)) return `rgba(200,194,180,${alpha})`;
+    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
+}
 
+function getWorldScaleLayout() {
+    const rungs = getWorldScaleRungs();
+    if (!rungs) return null;
     const shown = Object.fromEntries(rungs.map(rung => [rung.key, Number(rung.score.toFixed(2))]));
     const scores = rungs.map(rung => shown[rung.key]);
     const top = Math.max(...scores) + 0.15;
     const bot = Math.min(...scores) - 0.13;
     const yPct = score => ((top - score) / (top - bot)) * 100;
-    const plus = value => `+${Math.abs(value).toFixed(2)}`;
     const keys = rungs.map(rung => rung.key);
     const linearY = Object.fromEntries(keys.map(key => [key, yPct(shown[key])]));
-    const spreadY = spreadScalePositions(linearY, keys);
+    return { rungs, shown, keys, spreadY: spreadScalePositions(linearY, keys) };
+}
 
-    const glow = hex => {
-        const n = parseInt(hex.slice(1), 16);
-        return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},0.16)`;
-    };
+function fillWorldScale() {
+    const layout = getWorldScaleLayout();
+    const rungsEl = document.getElementById('world-scale-rungs');
+    if (!layout || !rungsEl) return;
+
+    const { rungs, shown, spreadY } = layout;
+    const plus = value => `+${Math.abs(value).toFixed(2)}`;
     rungsEl.innerHTML = rungs.map(rung => {
         const score = shown[rung.key];
         const tag = rung.isKey ? '<span class="tagline">我们最好的成绩</span>' : '';
-        return `<button type="button" class="world-scale-rung" style="--y:${spreadY[rung.key].toFixed(2)}%;--c:${rung.color};--c-bg:${glow(rung.color)}" data-key="${rung.key}" data-name="${escapeHtml(rung.name)}" data-score="${score.toFixed(2)}" data-med="${Number.isFinite(Number(rung.med)) ? Number(rung.med).toFixed(1) : ''}" data-n="${Number(rung.n).toLocaleString('zh-CN')}" data-note="${escapeHtml(rung.note)}" aria-label="${escapeHtml(rung.name)} 均分 ${score.toFixed(2)}">
+        return `<button type="button" class="world-scale-rung" style="--y:${spreadY[rung.key].toFixed(2)}%;--c:${rung.color};--c-bg:${hexRgba(rung.color, 0.16)}" data-key="${rung.key}" data-name="${escapeHtml(rung.name)}" data-score="${score.toFixed(2)}" data-med="${Number.isFinite(Number(rung.med)) ? Number(rung.med).toFixed(1) : ''}" data-n="${Number(rung.n).toLocaleString('zh-CN')}" data-note="${escapeHtml(rung.note)}" aria-label="${escapeHtml(rung.name)} 均分 ${score.toFixed(2)}">
             <span class="guide"></span><span class="bloom"></span><span class="tick"></span>
             <span class="who">${escapeHtml(rung.name)}</span>
             <span class="score">0.00</span>${tag}
@@ -3821,11 +3933,37 @@ function fillChinaNarrativeKpis() {
 // ===============================
 // 数据填充函数（dialect_aggregates.json）
 // ===============================
+function fillDirectorCases() {
+    document.querySelectorAll('#step-8d .director-film[data-movie-id]').forEach(button => {
+        const movie = findPublicationMovie(button.dataset.movieId);
+        if (!movie) return;
+        const title = button.querySelector('.director-film-title');
+        const rating = button.querySelector('.director-film-rating');
+        const score = Number(movie.rating);
+        if (title) title.textContent = movie.title;
+        if (rating && Number.isFinite(score)) rating.textContent = score.toFixed(1);
+        button.classList.toggle('is-high', Number.isFinite(score) && score >= 7.5);
+        button.classList.toggle('is-low', Number.isFinite(score) && score < 6);
+    });
+    if (directorCasesBound) return;
+    const step = document.getElementById('step-8d');
+    if (!step) return;
+    step.addEventListener('click', event => {
+        const button = event.target.closest('.director-film[data-movie-id]');
+        if (!button) return;
+        const movie = findPublicationMovie(button.dataset.movieId);
+        if (!movie) return;
+        renderPickedMovie('dual-director', movie, '对照片');
+        openMovieDetail(movie);
+    });
+    directorCasesBound = true;
+}
+
 function fillFlopNarrative() {
     const stats = dialectFlopStats();
     const lead = document.getElementById('flop-lead-copy');
     if (lead && stats.n) {
-        lead.innerHTML = `${stats.n.toLocaleString('zh-CN')} 部方言片中仍有 <strong>${stats.flopN.toLocaleString('zh-CN')}</strong> 部低于 5 分。`;
+        lead.innerHTML = `${stats.n.toLocaleString('zh-CN')} 部方言片中仍有 <strong>${stats.flopN.toLocaleString('zh-CN')}</strong> 部低于 5 分。问题不在语言，在创作路径。`;
     }
     document.querySelectorAll('#step-8c .flop-case-card[data-movie-id]').forEach(card => {
         const movie = caseMovieById(card.dataset.movieId);
@@ -3849,6 +3987,7 @@ function fillFlopNarrative() {
             flopCasesBound = true;
         }
     }
+    fillDirectorCases();
 }
 
 function fillDialectFlopsCards() {
@@ -3870,29 +4009,15 @@ function fillDialectFlopsCards() {
 
 function fillFinaleData() {
     if (!dialectAgg) return;
-    // 层 1：同导演对比直方图
-    const histContainer = document.getElementById('director-hist');
-    if (histContainer && dialectAgg.dual_director) {
+    if (dialectAgg.dual_director) {
         const dd = dialectAgg.dual_director;
-        const hist = dd.hist;
-        const buckets = Object.keys(hist);
-        const maxCount = Math.max(...Object.values(hist));
-        histContainer.innerHTML = buckets.map(b => {
-            const pct = (hist[b] / maxCount * 100).toFixed(1);
-            const positive = b.startsWith('+') || b.startsWith('≥');
-            const cls = positive ? ' positive' : (b === '0' ? '' : ' negative');
-            return `<div class="hist-row${cls}">
-                <span class="hist-label">${escapeHtml(b)}</span>
-                <div class="hist-bar-track"><div class="hist-bar" style="width:${pct}%"></div></div>
-                <span class="hist-count">${hist[b]}</span>
-            </div>`;
-        }).join('');
         const ddShare = document.getElementById('dd-share');
         const ddDiff = document.getElementById('dd-diff');
         if (ddShare) { ddShare.textContent = dd.share_positive + '%'; ddShare.classList.remove('is-pending'); }
         if (ddDiff) { ddDiff.textContent = '+' + dd.mean_diff.toFixed(2); ddDiff.classList.remove('is-pending'); }
         setTextById('scale-dd-share', `${dd.share_positive}%`);
     }
+    fillDirectorCases();
     // 层 3：语言多样性条
     const langContainer = document.getElementById('lang-bars');
     if (langContainer && dialectAgg.lang_diversity) {
@@ -3941,8 +4066,9 @@ function bindWaveScene() {
             if (hidden) {
                 universeHandoffToken += 1;
                 hidePrologueMotionLayer();
-            } else if (activeSceneId === 'universe' && prologueMotionBusy()) {
+            } else if (activeSceneId === 'universe') {
                 lastUniverseMotionKey = '';
+                resetUniverseIdlePaint();
                 startUniverseLoop();
             }
         }
