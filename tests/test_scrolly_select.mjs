@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { chapterFillFromGeometry, isFarJump, narrativeProgress, pickCurrentStep } from '../frontend/js/lib/scrolly-select.js';
+import { chapterFillFromGeometry, isFarJump, narrativeProgress, nextStoryStepIndex, pickCurrentStep, storyArrowDelta } from '../frontend/js/lib/scrolly-select.js';
 
 const ids = ['step-0', 'step-intro', 'step-2', 'step-7', 'step-8e'];
 
@@ -41,6 +41,24 @@ test('narrativeProgress is clamped to the story range', () => {
     assert.equal(narrativeProgress(250, 0, 1000), 0.25);
     assert.equal(narrativeProgress(2000, 0, 1000), 1);
     assert.equal(narrativeProgress(100, 200, 1200), 0);
+});
+
+test('storyArrowDelta maps arrow keys to one step', () => {
+    assert.equal(storyArrowDelta('ArrowDown'), 1);
+    assert.equal(storyArrowDelta('ArrowRight'), 1);
+    assert.equal(storyArrowDelta('ArrowUp'), -1);
+    assert.equal(storyArrowDelta('ArrowLeft'), -1);
+    assert.equal(storyArrowDelta('PageDown'), 0);
+    assert.equal(storyArrowDelta('a'), 0);
+});
+
+test('nextStoryStepIndex advances and stops at the ends', () => {
+    assert.equal(nextStoryStepIndex(0, 1, 10), 1);
+    assert.equal(nextStoryStepIndex(9, 1, 10), 9);
+    assert.equal(nextStoryStepIndex(0, -1, 10), 0);
+    assert.equal(nextStoryStepIndex(3, -1, 10), 2);
+    assert.equal(nextStoryStepIndex(2, 0, 10), 2);
+    assert.equal(nextStoryStepIndex(0, 1, 0), 0);
 });
 
 test('chapterFillFromGeometry uses real step heights', () => {

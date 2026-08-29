@@ -1,4 +1,4 @@
-# 「言」之有物：从数据看中国电影的答案
+# 听不懂，也看完了：方言电影四十年
 
 [![Validate publication](https://github.com/XinyD/Data-Journalism-Dialect-Films/actions/workflows/validate.yml/badge.svg)](https://github.com/XinyD/Data-Journalism-Dialect-Films/actions/workflows/validate.yml)
 
