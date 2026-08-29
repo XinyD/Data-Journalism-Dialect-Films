@@ -318,9 +318,6 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
             self.assertNotIn(stale_claim, story_js)
         # 封面与方法论页的动态占位 id（运行时由载荷填充，禁止写死）
         for dynamic_id in (
-            "hero-sample-count",
-            "sample-year-range",
-            "minimum-vote-count",
             "source-record-count",
             "methodology-minimum-vote-count",
             "methodology-sample-count",
@@ -1000,7 +997,7 @@ class HomepageChinaKpiTests(unittest.TestCase):
         self.assertIn('id="step-8c" data-scene="dialect-flops"', html)
         self.assertIn('id="step-8f" data-scene="china-high8"', html)
         self.assertIn('第一部 · 港片那二十年', html)
-        self.assertIn('第二部 · 份额下降以后的口碑', html)
+        self.assertIn('第二部 · 占比下降以后的口碑', html)
         self.assertIn('第三部 · 高分方言片的特征', html)
         self.assertIn('第四部 · 方言电影的大众化路径', html)
         self.assertIn('id="wave-hk-n"', html)
@@ -1009,14 +1006,30 @@ class HomepageChinaKpiTests(unittest.TestCase):
         self.assertIn('id="china-dialect-2020-n"', html)
         self.assertIn('id="china-high8-drama-n"', html)
         self.assertNotIn("把人写清楚", html)
+        self.assertNotIn("一场、一句", html)
+        self.assertNotIn("分数不会跟着走", html)
+        self.assertNotIn("银幕上的日常", html)
         self.assertNotIn("《阳光普照》《孤味》写家里的人", html)
         self.assertNotIn("《路边野餐》写地方上的时间和路", html)
         self.assertIn("菜头最后一支烟，没有在车里点", html)
-        self.assertIn("原版就该是四川话", html)
-        self.assertIn("谢南枝她带这么多孩子得多辛苦", html)
+        self.assertIn("四川话才是它本来的腔调", html)
+        self.assertIn("木生 1960 年就死了", html)
+        self.assertIn("谢南枝", html)
         self.assertNotIn("方言片也会拍砸", html)
         self.assertNotIn("仍有", html)
-        self.assertIn("不到五分的，只有这些", html)
+        self.assertIn("不到 5 分的，长这样", html)
+        for stale in (
+            "县太爷和江湖",
+            "一个账房先生的故事",
+            "妈妈做的一碗汤",
+            "后来自己拍的",
+            "台湾也拍出了闽南语电影",
+            "几乎全是素人",
+            "广东话",
+            "第一拨",
+            "2021 到 2025 年没有进入这份快照",
+        ):
+            self.assertNotIn(stale, html)
         self.assertNotIn("后续年份没有进入当前快照", html)
         self.assertNotIn("这是比较门槛，不是数据截止年份", html)
         for outline_voice in (

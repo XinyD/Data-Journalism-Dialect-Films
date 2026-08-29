@@ -1660,16 +1660,12 @@ function updateDatasetKpis(data) {
     const europeRawGap = europe.mean - nonEurope.mean;
     const europeStandardizedGap = europeStandardized.mean - nonEuropeStandardized.mean;
     const values = {
-        'hero-sample-count': formattedCount,
         'particle-sample-count': formattedCount,
         'methodology-sample-count': formattedCount,
-        'minimum-vote-count': minimumVotes.toLocaleString('zh-CN'),
         'methodology-minimum-vote-count': minimumVotes.toLocaleString('zh-CN'),
-        'sample-year-range': formattedYearRange,
         'methodology-year-range': formattedYearRange,
         'source-record-count': Number(meta.sourceRecordCount || 0).toLocaleString('zh-CN'),
         'europe-count': regionStats[1].n.toLocaleString('zh-CN'),
-        'china-count': regionStats[3].n.toLocaleString('zh-CN'),
         'europe-mean': regionStats[1].mean.toFixed(2),
         'non-europe-count': nonEurope.n.toLocaleString('zh-CN'),
         'non-europe-mean': nonEurope.mean.toFixed(2),
@@ -1690,19 +1686,16 @@ function updateDatasetKpis(data) {
             const china = data.filter(movie => movie.year >= 2022 && movie.regionCode === 3).length;
             return total ? `${Math.round(china / total * 100)}%` : '--';
         })(),
-        'intro-sample-count': formattedCount,
         'methodology-year-range-repeat': formattedYearRange,
         'overall-unweighted-mean': average.toFixed(2),
         'overall-vote-weighted-mean': voteWeightedAverage.toFixed(2)
     };
     Object.entries(values).forEach(([id, value]) => {
-        if (id === 'hero-sample-count') return;
         const node = document.getElementById(id);
         if (!node) return;
         node.innerText = value;
         if (node.classList.contains('is-pending')) node.classList.remove('is-pending');
     });
-    window.StoryUI.animateCount(document.getElementById('hero-sample-count'), formattedCount, count);
     fillChinaNarrativeKpis();
 }
 
@@ -1890,105 +1883,7 @@ const SCENE_INTERACTIONS = {
         },
         insight: value => value === 'all'
             ? `共有 ${particleData.length.toLocaleString('zh-CN')} 部电影达到年份、评分和评价人数门槛。选择地区后可查看其电影数与评分分布。`
-            : `${REGION_LABELS[Number(value)]}被单独点亮。点击右侧任意粒子，可从集合回到具体电影。`
-    },
-    'hollywood-entropy': {
-        label: '第一幕 · 类型与离散度',
-        prompt: '选择类型，比较北美与其他地区的评分离散程度。',
-        type: 'buttons',
-        defaultValue: 'all',
-        options: [{ value: 'all', label: '全部类型' }, ...GENRES.map((label, index) => ({ value: String(index), label }))],
-        filter: (row, value) => value === 'all' || row.genreCode === Number(value),
-        metrics: value => {
-            const rows = particleData.filter(row => SCENE_INTERACTIONS['hollywood-entropy'].filter(row, value));
-            const northAmerica = summarize(rows.filter(row => row.regionCode === 0));
-            const others = summarize(rows.filter(row => row.regionCode !== 0));
-            return [
-                metric('北美均分', northAmerica.n ? northAmerica.mean.toFixed(2) : '--', `n=${northAmerica.n}`),
-                metric('其他地区均分', others.n ? others.mean.toFixed(2) : '--', `n=${others.n}`),
-                metric('北美标准差', northAmerica.n ? northAmerica.sd.toFixed(2) : '--', '越小越集中'),
-                metric('其他地区标准差', others.n ? others.sd.toFixed(2) : '--', value === 'all' ? '全部类型' : GENRES[Number(value)])
-            ];
-        },
-        insight: value => {
-            const rows = particleData.filter(row => SCENE_INTERACTIONS['hollywood-entropy'].filter(row, value));
-            const northAmerica = summarize(rows.filter(row => row.regionCode === 0));
-            const others = summarize(rows.filter(row => row.regionCode !== 0));
-            const genre = value === 'all' ? '全部类型合计' : GENRES[Number(value)];
-            if (!northAmerica.n || !others.n) return `${genre}缺少其中一个地区组，暂时无法计算两组标准差。`;
-            const direction = northAmerica.sd < others.sd ? '更集中' : '更分散';
-            return `${genre}：北美评分标准差 ${northAmerica.sd.toFixed(2)}，其他地区 ${others.sd.toFixed(2)}；北美电影的评分${direction}。`;
-        }
-    },
-    'asian-breakout': {
-        label: '第七幕 · 跟世界比',
-        prompt: '点一个地区，看电影数量和平均分。',
-        type: 'buttons',
-        defaultValue: '1',
-        options: REGION_LABELS.map((label, index) => ({ value: String(index), label })),
-        filter: (row, value) => row.regionCode === Number(value),
-        metrics: value => {
-            const rows = particleData.filter(row => row.regionCode === Number(value));
-            const selected = summarize(rows);
-            const overall = summarize(particleData);
-            const standardized = standardizedMeanByDecadeGenre(rows, particleData);
-            return [
-                metric('地区电影', selected.n.toLocaleString('zh-CN'), REGION_LABELS[Number(value)]),
-                metric('平均分', selected.mean.toFixed(2), `中位数 ${selected.median.toFixed(2)}`),
-                metric('对齐后平均分', standardized.mean.toFixed(2), '年代和类型凑齐再比'),
-                metric('全部电影平均分', overall.mean.toFixed(2), `共 ${overall.n.toLocaleString('zh-CN')} 部`),
-            ];
-        },
-        insight: value => {
-            const rows = particleData.filter(row => row.regionCode === Number(value));
-            const stats = summarize(rows);
-            const standardized = standardizedMeanByDecadeGenre(rows, particleData);
-            return `${REGION_LABELS[Number(value)]} ${stats.n.toLocaleString('zh-CN')} 部，平均分 ${stats.mean.toFixed(2)}。把年代和类型凑齐再比，是 ${standardized.mean.toFixed(2)}。`;
-        }
-    },
-    'language-babel': {
-        label: '第四幕 · 不到五分的更少',
-        prompt: '点一种语言，看电影数量、平均分，以及八分半以上的比例。',
-        type: 'buttons',
-        defaultValue: '3',
-        options: languageOptionList(false),
-        filter: (row, value) => row.langCode === Number(value),
-        metrics: value => {
-            const rows = particleData.filter(row => row.langCode === Number(value));
-            const stats = summarize(rows);
-            return [
-                metric('语言组电影', stats.n.toLocaleString('zh-CN'), LANGUAGE_LABELS[Number(value)]),
-                metric('占全部电影', `${(stats.n / particleData.length * 100).toFixed(1)}%`, `共 ${particleData.length.toLocaleString('zh-CN')} 部`),
-                metric('平均分', stats.mean.toFixed(2), '这一组里每部电影一样算'),
-                metric('八分半以上', `${stats.highShare.toFixed(1)}%`, '评分 ≥ 8.5')
-            ];
-        },
-        insight: value => {
-            const rows = particleData.filter(row => row.langCode === Number(value));
-            const stats = summarize(rows);
-            return `${LANGUAGE_LABELS[Number(value)]} ${stats.n.toLocaleString('zh-CN')} 部，占全部电影 ${(stats.n / particleData.length * 100).toFixed(1)}%，平均分 ${stats.mean.toFixed(2)}。`;
-        }
-    },
-    'european-slow': {
-        label: '第九幕 · 各地区差片',
-        prompt: '点一个地区，看中位数，以及不到 5 分的比例。',
-        type: 'buttons',
-        defaultValue: '1',
-        options: REGION_LABELS.map((label, index) => ({ value: String(index), label })),
-        filter: (row, value) => row.regionCode === Number(value),
-        metrics: value => {
-            const stats = summarize(particleData.filter(row => row.regionCode === Number(value)));
-            return [
-                metric('电影数 n', stats.n.toLocaleString('zh-CN'), REGION_LABELS[Number(value)]),
-                metric('四分之一处', stats.n ? stats.q1.toFixed(2) : '--', '四分之一的电影低于这个分'),
-                metric('中位数', stats.n ? stats.median.toFixed(2) : '--', '一半在这上面，一半在下面'),
-                metric('不到 5 分', stats.n ? `${stats.belowFive.toFixed(1)}%` : '--', '差片占比')
-            ];
-        },
-        insight: value => {
-            const stats = summarize(particleData.filter(row => row.regionCode === Number(value)));
-            return `${REGION_LABELS[Number(value)]} ${stats.n.toLocaleString('zh-CN')} 部。中位数和不到 5 分的比例，是平均分看不出的。`;
-        }
+            : `${REGION_LABELS[Number(value)]}被单独点亮。点任意一颗粒子，可从集合回到具体电影。`
     },
     'chinese-dialect': {
         label: '第二部 · 份额下降以后的口碑',
@@ -2268,7 +2163,7 @@ const SCENE_INTERACTIONS = {
                 metric('平均分', stats.n ? stats.mean.toFixed(2) : '--', `${stats.n.toLocaleString('zh-CN')} 部`)
             ];
         },
-        insight: () => '星空是 1985 年以后的中国方言片，不含更早的港片和台片。'
+        insight: () => '星空是 1985 年起的中国方言片，更早的没有放进来。'
     },
     'wave-hk': {
         label: '第一部 · 方言电影的发展历程',
@@ -2319,7 +2214,7 @@ const SCENE_INTERACTIONS = {
                 metric('三波片单', count ? String(count) : '--', '港片／四川贵州／闽南')
             ];
         },
-        insight: () => '星空是 2008 到 2020 年、产地不是香港的方言片，外加一部 2026 年的《给阿嬷的情书》。2021 到 2025 年没有进入这份快照。'
+        insight: () => '星空是 2008 到 2020 年、产地不是香港的方言片，外加一部 2026 年的《给阿嬷的情书》。'
     },
     'china-2010s': {
         label: '第二部 · 份额下降以后的口碑',
@@ -2352,10 +2247,10 @@ const SCENE_INTERACTIONS = {
             const y2020 = rows.filter(row => Number(row.year) === 2020).length;
             return [
                 metric('方言片', stats.n ? stats.n.toLocaleString('zh-CN') : '--', `${y2020} 部是 2020 年`),
-                metric('平均分', stats.n ? stats.mean.toFixed(2) : '--', '2021–2025 年未进入快照')
+                metric('平均分', stats.n ? stats.mean.toFixed(2) : '--', '2021–2025 年无收录')
             ];
         },
-        insight: () => '没有 2021 到 2025 年的中国方言片进入这份样本。'
+        insight: () => '这份快照里没有 2021 到 2025 年的中国方言片。'
     },
     'china-below5': {
         label: '第二部 · 份额下降以后的口碑',
@@ -2388,7 +2283,7 @@ const SCENE_INTERACTIONS = {
                 metric('平均分', stats.n ? stats.mean.toFixed(2) : '--', '这些高分片子')
             ];
         },
-        insight: () => '八分及以上。短评里写的是一场、一句。'
+        insight: () => '八分及以上。短评里写的是具体场面。'
     },
     'scale': {
         label: '世界平均分',
@@ -2452,7 +2347,10 @@ function initSceneInteractions() {
         const config = SCENE_INTERACTIONS[sceneId];
         if (!config) return;
         step.dataset.chapter = `${String(index + 1).padStart(2, '0')} / ${String(steps.length).padStart(2, '0')}`;
-        step.dataset.sceneTitle = config.label;
+        // 数据卡标题跟随正文 badge，避免两套命名（badge 与 config.label）不一致。
+        const badge = step.querySelector('.theory-badge');
+        const labLabel = badge ? badge.textContent.trim() : config.label;
+        step.dataset.sceneTitle = labLabel;
         if (sceneState[sceneId] === undefined) sceneState[sceneId] = config.defaultValue;
 
         // Keep the opening screen as spare as the original hero. Interactive
@@ -2470,7 +2368,7 @@ function initSceneInteractions() {
         lab.innerHTML = `
             <summary class="scene-lab-heading">
                 <span class="scene-lab-toggle">展开数据</span>
-                <b>${config.label}</b>
+                <b>${labLabel}</b>
                 <i aria-hidden="true">＋</i>
             </summary>
             <div class="scene-lab-body">
@@ -4148,7 +4046,6 @@ function fillChinaNarrativeKpis() {
 
     if (agg && agg.meta && agg.meta.baseline) {
         setTextById('china-n', Number(agg.meta.baseline.china_total).toLocaleString('zh-CN'));
-        setTextById('china-count', Number(agg.meta.baseline.china_total).toLocaleString('zh-CN'));
     }
     if (facts && facts.regions && facts.regions['中国大陆']) {
         const china = facts.regions['中国大陆'];
@@ -4201,17 +4098,6 @@ function fillChinaNarrativeKpis() {
         const d1990 = agg.by_decade['1990s'];
         const d2010 = agg.by_decade['2010s'];
         const d2020 = agg.by_decade['2020s'];
-        if (d1990) {
-            setTextById('delta-1990s', Math.abs(Number(d1990.delta)).toFixed(2));
-            setTextById('dialect-delta-1990s', `${Number(d1990.delta) >= 0 ? '+' : ''}${Number(d1990.delta).toFixed(2)}`);
-            setTextById('decade-1990s-d-n', Number(d1990.d.n).toLocaleString('zh-CN'));
-            setTextById('decade-1990s-m-n', Number(d1990.m.n).toLocaleString('zh-CN'));
-        }
-        const d2000 = agg.by_decade['2000s'];
-        if (d2000) {
-            setTextById('decade-2000s-d-n', Number(d2000.d.n).toLocaleString('zh-CN'));
-            setTextById('decade-2000s-m-n', Number(d2000.m.n).toLocaleString('zh-CN'));
-        }
         if (d2010) {
             setTextById('delta-2010s', Math.abs(Number(d2010.delta)).toFixed(2));
             setTextById('dialect-delta-2010s', `${Number(d2010.delta) >= 0 ? '+' : ''}${Number(d2010.delta).toFixed(2)}`);
@@ -4389,11 +4275,25 @@ function fillFinaleData() {
         setTextById('scale-dd-share', `${dd.share_positive}%`);
     }
     fillDirectorCases();
-    // 层 3：语言多样性条
+    // 层 3：语言多样性条。台语与闽南语同源异名，合并为一行（加权均值、n 相加）。
     const langContainer = document.getElementById('lang-bars');
     if (langContainer && dialectAgg.lang_diversity) {
-        const langs = dialectAgg.lang_diversity;
-        langContainer.innerHTML = langs.map(l => {
+        const merged = [];
+        for (const item of dialectAgg.lang_diversity) {
+            if (item.name === '台语') {
+                const mnRow = merged.find(row => row.name.startsWith('闽南语'));
+                if (mnRow) {
+                    const total = mnRow.n + item.n;
+                    mnRow.mean = (mnRow.mean * mnRow.n + item.mean * item.n) / total;
+                    mnRow.n = total;
+                    continue;
+                }
+            }
+            merged.push({ ...item });
+        }
+        const mnLabel = merged.find(row => row.name.startsWith('闽南语'));
+        if (mnLabel) mnLabel.name = '闽南语／台语';
+        langContainer.innerHTML = merged.map(l => {
             const pct = (l.mean / 10 * 100).toFixed(1);
             return `<div class="lang-row">
                 <span class="lang-name">${escapeHtml(l.name)}</span>

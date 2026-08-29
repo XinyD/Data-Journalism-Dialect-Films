@@ -1661,6 +1661,12 @@ html[data-flop-phase="cases"] #step-8c.is-active .flop-case-card.is-lit {
     color: #C8C8CC;
     font: 400 0.75rem/1.5 var(--font-sans);
 }
+.director-case-card > p + p.director-case-note,
+.director-case-note {
+    margin: -4px 0 10px;
+    color: #8E8E96;
+    font: 400 0.68rem/1.5 var(--font-sans);
+}
 .director-case-films {
     display: flex;
     flex-wrap: nowrap;
