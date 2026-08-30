@@ -98,7 +98,7 @@ let sampleYearExtent = [1888, 2026];
 let sampleRatingExtent = [0, 10];
 let dialectAgg = null;
 let narrativeFacts = null;
-let globalLayersPhase = 'mandarin-outlier';
+let globalLayersPhase = 'four-groups';
 let flopPhase = 'isolate';
 let flopCasesBound = false;
 let directorCasesBound = false;
@@ -120,9 +120,9 @@ const FLOP_CASE_PATHS = [
 const FLOP_CASE_IDS = new Set(FLOP_CASE_PATHS.map(item => item.movieId));
 const FLOP_GENRE_PATHS = [
     { tag: '剧情', label: '剧情片' },
-    { tag: '喜剧', label: '商业喜剧' },
-    { tag: '动作', label: '动作类型' },
-    { tag: '家庭', label: '家庭类型' },
+    { tag: '喜剧', label: '喜剧片' },
+    { tag: '动作', label: '动作片' },
+    { tag: '家庭', label: '家庭片' },
     { tag: '纪录片', label: '纪录片' }
 ];
 const FLOP_LAB_PHASES = new Set(['isolate', 'tail', 'cases', 'flopsOnly']);
@@ -562,6 +562,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             votes: movie.votes,
             regionCode: movie.regionCode,
             region: movie.region,
+            country: movie.country || '',
             language: movie.language,
             geoRegion,
             visualGroup: visualGroupFromGeo(geoRegion),
@@ -602,7 +603,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 3. 初始化粒子引擎、逐幕互动和探索舱
     initParticleEngine();
-    initVisualRegionDock();
     initSceneInteractions();
     fillFlopNarrative();
     fillDialectFlopsCards();
@@ -627,7 +627,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateSceneLab('dialect-flops');
             updateSceneLab('dual-director');
             updateSceneLab('three-waves');
-            updateSceneLab('scale');
         })
         .catch(() => console.warn('dialect_aggregates 加载失败，内嵌卡片显示占位值'));
 
@@ -635,7 +634,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         .then(facts => {
             narrativeFacts = facts;
             fillChinaNarrativeKpis();
-            updateSceneLab('scale');
         })
         .catch(() => console.warn('narrative_facts 加载失败，部分正文数字使用聚合载荷'));
 
@@ -657,7 +655,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         syncCoverReveal,
         maybeCountSceneStats
     });
-    if (window.ScaleScene) window.ScaleScene.init();
     if (StoryUI.prefersReducedMotion()) syncCoverReveal(true);
 
     const onParticleResizeFrame = rafThrottle(() => {
@@ -1554,34 +1551,7 @@ function setPrologueState(nextState, focusGroup = null) {
     resetUniverseIdlePaint();
     universeIdleSince = 0;
     setUniverseHitLayerHidden(false);
-    syncVisualRegionDock();
     startUniverseLoop();
-}
-
-function syncVisualRegionDock() {
-    const dock = document.getElementById('visual-region-dock');
-    if (!dock) return;
-    dock.querySelectorAll('[data-visual-group]').forEach(button => {
-        const value = button.dataset.visualGroup;
-        const active = prologueState === PROLOGUE_STATES.REGION_FOCUS
-            ? value === prologueFocusGroup
-            : value === 'all';
-        button.classList.toggle('is-selected', active);
-    });
-}
-
-function initVisualRegionDock() {
-    const dock = document.getElementById('visual-region-dock');
-    if (!dock) return;
-    dock.addEventListener('click', event => {
-        const button = event.target.closest('[data-visual-group]');
-        if (!button) return;
-        const group = button.dataset.visualGroup;
-        if (group === 'all') setPrologueState(PROLOGUE_STATES.STAR_FIELD);
-        else setPrologueState(PROLOGUE_STATES.REGION_FOCUS, group);
-        if (activeSceneId === 'universe') startUniverseLoop();
-    });
-    syncVisualRegionDock();
 }
 
 function updateDatasetKpis(data) {
@@ -1822,9 +1792,103 @@ function createGuideMarkLine(guides) {
     };
 }
 
+const LEGEND_DOT = { label: '一个点一部电影', color: '#E8E8EC' };
+const LEGEND_DIALECT = { label: '方言', color: COLORS.dialect };
+const LEGEND_MANDARIN = { label: '普通话', color: COLORS.chinaBlue };
+const LEGEND_DIALECT_MANDARIN = [LEGEND_DIALECT, LEGEND_MANDARIN];
+
+const SCENE_DECODER = {
+    universe: {
+        caption: '一个点就是一部电影。产地相近的会靠在一起，颜色也按地区分。',
+        legend: [LEGEND_DOT]
+    },
+    intro: {
+        caption: '地图散开了。还是那些电影，只是先不按产地排。',
+        legend: [LEGEND_DOT]
+    },
+    'asian-breakout': {
+        caption: '左右是五大产区，上下是分数。看中国落在哪一列。',
+        legend: [
+            LEGEND_DOT,
+            { label: '东亚/中国', color: COLORS.asian },
+            { label: '其他地区', color: 'rgba(255, 255, 255, 0.42)' }
+        ]
+    },
+    'european-slow': {
+        caption: '左右仍是产区，上下是分数。发亮的是正在看的地区，红线是 5 分。',
+        legend: [
+            LEGEND_DOT,
+            { label: '正在看的地区', color: COLORS.selectedRegion }
+        ]
+    },
+    'language-babel': {
+        caption: '左右是语言，上下是分数。这一幕只对照方言和普通话，别的语言只是旁边的参照。',
+        legend: [LEGEND_DOT, LEGEND_DIALECT, LEGEND_MANDARIN]
+    },
+    'chinese-dialect': {
+        caption: '黄点是方言，蓝点是普通话。横线是两组平均分，可按年代切换。',
+        legend: LEGEND_DIALECT_MANDARIN
+    },
+    'global-layers': {
+        caption: '上下是分数，红线是 5 分。看谁更容易掉到线下面。',
+        legend: [
+            LEGEND_DOT,
+            { label: '5 分线', color: GUIDE_COLORS.threshold, mark: 'line' }
+        ]
+    },
+    'dialect-flops': {
+        caption: '这里只留下方言片。点的高低还是分数；偏红的是掉到 5 分以下的。',
+        legend: [
+            { label: '方言片', color: 'rgba(196, 118, 86, 0.9)' },
+            { label: '低分片', color: 'rgba(214, 98, 92, 0.92)' }
+        ]
+    },
+    'dual-director': {
+        caption: '同一批导演的方言片和普通话片并排。上下是分数。',
+        legend: LEGEND_DIALECT_MANDARIN
+    },
+    'three-waves': {
+        caption: '黄点是方言片。点开片单或那颗特别的点，能回到具体作品。',
+        legend: LEGEND_DIALECT_MANDARIN
+    },
+    'final-universe': {
+        caption: '黄点是方言，蓝点是普通话。点一下可以打开一部电影。',
+        legend: LEGEND_DIALECT_MANDARIN
+    },
+    'echo-narrative': {
+        caption: '黄点是方言，蓝点是普通话。看到这里：语言不是原因。',
+        legend: LEGEND_DIALECT_MANDARIN
+    }
+};
+
+function decoderSpecFor(sceneId, step) {
+    if (step && step.id === 'step-intro') return SCENE_DECODER.intro;
+    return SCENE_DECODER[sceneId] || SCENE_DECODER.universe;
+}
+
+function updateVisualDecoder(sceneId, step) {
+    const decoder = document.getElementById('visual-decoder');
+    const caption = document.getElementById('visual-decoder-caption');
+    const legendHost = decoder && decoder.querySelector('.visual-decoder-legend');
+    if (!decoder || !caption || !legendHost) return;
+    const spec = decoderSpecFor(sceneId, step);
+    caption.textContent = spec.caption;
+    decoder.removeAttribute('data-key');
+    legendHost.replaceChildren(...(spec.legend || []).map((item) => {
+        const row = document.createElement('span');
+        row.className = 'legend-item';
+        const mark = document.createElement('i');
+        mark.setAttribute('aria-hidden', 'true');
+        mark.className = item.mark === 'line' ? 'legend-line' : 'legend-swatch';
+        mark.style.background = item.color;
+        row.append(mark, document.createTextNode(item.label));
+        return row;
+    }));
+}
+
 const SCENE_INTERACTIONS = {
     universe: {
-        label: '星图 · 全样本',
+        label: '封面 · 全样本',
         prompt: '选择一个地区，查看电影数、平均分和年份跨度。',
         type: 'buttons',
         defaultValue: 'all',
@@ -1874,10 +1938,12 @@ const SCENE_INTERACTIONS = {
         }
     },
     'asian-breakout': {
-        label: '第八幕 · 刻度 · 坐标系',
-        prompt: '逐个地区查看原始均分与年代×主类型标准化均分。',
+        label: '格局 · 均分垫底',
+        prompt: '逐个地区查看原始均分与年代×主类型标准化均分。下方卡片是本幕用到的对照数字。',
         type: 'buttons',
         defaultValue: '1',
+        skipLiveInsight: true,
+        showLabInsight: true,
         options: REGION_LABELS.map((label, index) => ({ value: String(index), label })),
         filter: (row, value) => row.regionCode === Number(value),
         metrics: value => {
@@ -1900,11 +1966,16 @@ const SCENE_INTERACTIONS = {
         }
     },
     'language-babel': {
-        label: '第一幕 · 对照 · 语言',
-        prompt: '切换分析语言组，同时读取占比、均值和高分占比。此处语言均指主要语言；混合语种按片单首位归组。',
+        label: '发现 1 · 华语对照',
+        prompt: '只切换普通话与方言，读取该组电影数、均分和高分占比。粒子图上仍有英语、日语等组，只作位置参照，不进入本幕结论。下方卡片是本幕用到的对照数字。',
         type: 'buttons',
-        defaultValue: '0',
-        options: languageOptionList(false),
+        defaultValue: '3',
+        skipLiveInsight: true,
+        showLabInsight: true,
+        options: [
+            { value: '2', label: '普通话' },
+            { value: '3', label: '方言' }
+        ],
         filter: (row, value) => row.langCode === Number(value),
         metrics: value => {
             const rows = particleData.filter(row => row.langCode === Number(value));
@@ -1923,10 +1994,12 @@ const SCENE_INTERACTIONS = {
         }
     },
     'european-slow': {
-        label: '第九幕 · 刻度 · 下限',
-        prompt: '切换地区，对比第一四分位数、中位数和低分占比。',
+        label: '格局 · 下限',
+        prompt: '切换地区，对比第一四分位数、中位数和低分占比。下方卡片是本幕用到的对照数字。',
         type: 'buttons',
         defaultValue: '1',
+        skipLiveInsight: true,
+        showLabInsight: true,
         options: REGION_LABELS.map((label, index) => ({ value: String(index), label })),
         filter: (row, value) => row.regionCode === Number(value),
         metrics: value => {
@@ -1944,10 +2017,12 @@ const SCENE_INTERACTIONS = {
         }
     },
     'chinese-dialect': {
-        label: '第二幕 · 拐点 · 2010',
-        prompt: '切换年代，比较普通话与方言电影的均分。',
+        label: '发现 2 · 2010 换向',
+        prompt: '切换年代，比较普通话与方言电影的均分。下方卡片是本幕用到的对照数字。',
         type: 'buttons',
         defaultValue: 'all',
+        skipLiveInsight: true,
+        showLabInsight: true,
         options: [
             { value: 'all', label: '全部年份' },
             { value: 'Pre-1990s', label: '1990 年前' },
@@ -1976,25 +2051,45 @@ const SCENE_INTERACTIONS = {
             const rows = particleData.filter(row => SCENE_INTERACTIONS['chinese-dialect'].filter(row, value));
             const mandarin = summarize(rows.filter(row => row.langCode === 2));
             const dialect = summarize(rows.filter(row => row.langCode === 3));
+            const period = value === 'all' ? '全部年份' : (value === 'Pre-1990s' ? '1990 年前' : value);
+            if (!mandarin.n || !dialect.n) return `${period}：其中一组样本不足，暂时算不出均分差。`;
             const delta = dialect.mean - mandarin.mean;
-            return `${value === 'all' ? '全部年份' : value}：方言减普通话为 ${delta >= 0 ? '+' : ''}${delta.toFixed(2)} 分。`;
+            const abs = Math.abs(delta).toFixed(2);
+            if (value === 'all') {
+                const lead = delta > 0.05
+                    ? `方言均分比普通话高 ${abs} 分`
+                    : delta < -0.05
+                        ? `普通话均分比方言高 ${abs} 分`
+                        : '两组均分几乎持平';
+                return `全部年份合在一起，${lead}。这只是总分差；切换年代，才能看到谁先领先、谁后来追上。`;
+            }
+            if (delta > 0.05) {
+                const lead = value === '2010s' ? '方言反超' : value === '2020s' ? '方言继续领先' : '方言领先';
+                return `${period}：${lead}，均分比普通话高 ${abs} 分。`;
+            }
+            if (delta < -0.05) {
+                return `${period}：普通话仍领先，均分比方言高 ${abs} 分。`;
+            }
+            return `${period}：两组均分几乎持平。`;
         }
     },
     'final-universe': {
-        label: '第七幕 · 立 · 好故事的五维',
+        label: '归纳 · 好故事',
         prompt: '按语言组缩小星云，再随机或直接点选一部电影。',
         type: 'buttons',
         defaultValue: 'all',
         options: languageOptionList(true),
         filter: (row, value) => value === 'all' || row.langCode === Number(value),
         metrics: value => standardMetrics(particleData.filter(row => SCENE_INTERACTIONS['final-universe'].filter(row, value))),
-        insight: () => '方言（琥珀色）与普通话（灰蓝色）在星云中并列。点击任意粒子核对具体作品。'
+        insight: () => ''
     },
     'global-layers': {
-        label: '第三幕 · 参照 · 全球',
-        prompt: '把电影按语言组放回同一条 5 分线，观察谁更容易跌穿下限。点选不同观察，粒子会重新排列。',
+        label: '发现 3 · 全球下限',
+        prompt: '把电影按语言组放回同一条 5 分线，观察谁更容易跌穿下限。点选不同观察，粒子会重新排列。下方卡片是本幕用到的对照数字。',
         type: 'buttons',
-        defaultValue: 'mandarin-outlier',
+        defaultValue: 'four-groups',
+        skipLiveInsight: true,
+        showLabInsight: true,
         options: [
             { value: 'pull-back', label: '把镜头拉远' },
             { value: 'axes', label: '5 分线' },
@@ -2062,6 +2157,10 @@ const SCENE_INTERACTIONS = {
             ];
         },
         insight: value => {
+            const byName = dialectAgg && Array.isArray(dialectAgg.global_layers)
+                ? Object.fromEntries(dialectAgg.global_layers.map(layer => [layer.name, layer]))
+                : {};
+            const pct = name => (byName[name] && byName[name].below5 != null ? `${byName[name].below5}%` : '--');
             if (value === 'pull-back') {
                 return '先把镜头从华语内部拉开。粒子仍靠近上一幕的语言组位置，随后会按全球参照组重新排列。';
             }
@@ -2069,16 +2168,16 @@ const SCENE_INTERACTIONS = {
                 return 'Y 轴是豆瓣评分。我们不看谁平均分最高，只看谁更容易跌穿 5 分下限。';
             }
             if (value === 'four-groups') {
-                return '欧洲非主导语言 1.5%、英语 3.6%、日韩 5.8%、华语方言 6.4%——这四组低分尾部都比较短。';
+                return `欧洲非主导语言 ${pct('欧洲 · 非主导语言')}、英语 ${pct('欧洲 · 英语')}、日韩 ${pct('日韩')}、华语方言 ${pct('华语 · 方言')}——这四组低分尾部都比较短。`;
             }
             if (value === 'mandarin-outlier') {
-                return '华语普通话低于 5 分的比例是 24.4%。约每 4 部就有 1 部落到 5 分线以下。';
+                return `华语普通话低于 5 分的比例是 ${pct('华语 · 普通话')}。约每 4 部就有 1 部落到 5 分线以下。`;
             }
-            return '欧洲非主导语言 1.5%、英语 3.6%、日韩 5.8%、华语方言 6.4%——低分尾部都短于华语普通话 24.4%。这只说明下限更稳的共性，不能证明语言本身造成评分差异。';
+            return `欧洲非主导语言 ${pct('欧洲 · 非主导语言')}、英语 ${pct('欧洲 · 英语')}、日韩 ${pct('日韩')}、华语方言 ${pct('华语 · 方言')}——低分尾部都短于华语普通话 ${pct('华语 · 普通话')}。下限更稳是共性；华语方言在短尾组里并不更低。`;
         }
     },
     'dialect-flops': {
-        label: '第四幕 · 破 · 语言不是答案',
+        label: '反证 · 失败路径',
         prompt: '切开方言内部。按钮只改右侧粒子：看主体、失败尾部、四部案例，或只留低分点。',
         type: 'buttons',
         defaultValue: 'isolate',
@@ -2151,10 +2250,11 @@ const SCENE_INTERACTIONS = {
         }
     },
     'dual-director': {
-        label: '第五幕 · 寻 · 同导演',
+        label: '对照 · 同导演',
         prompt: '同一批导演的方言片与普通话片都在图中。点开对照卡，核对具体作品。',
         type: 'buttons',
         defaultValue: 'all',
+        skipLiveInsight: true,
         options: [
             { value: 'all', label: '两种语言' },
             { value: '3', label: '方言' },
@@ -2200,70 +2300,28 @@ const SCENE_INTERACTIONS = {
         },
         insight: () => {
             const dd = dialectAgg && dialectAgg.dual_director;
-            if (!dd) return '把导演变量锁住：同一人拍方言片和普通话片，评分仍可能不同。';
+            if (!dd) return '把导演变量锁住：同一人拍方言片和普通话片，评分仍可能有云泥之别。而有的人却可以做到口碑始终如一？';
             return `${dd.total} 位双栖导演中，${dd.share_positive}% 的方言片评分更高，平均分差 +${dd.mean_diff.toFixed(2)}。落到片子上，普通话讲透了一样高，方言敷衍了一样低——差的是内容，不是语言。`;
         }
     },
     'three-waves': {
-        label: '第六幕 · 展 · 浪潮',
-        prompt: '点击浪潮片单中的电影，回到具体作品。',
+        label: '样本 · 三波浪潮',
+        prompt: '点开三波片单里的电影，回到具体作品。',
         type: 'buttons',
         defaultValue: 'all',
-        options: [{ value: 'all', label: '方言片' }],
-        filter: (row) => row.langCode === 3,
+        skipLiveInsight: true,
+        options: [{ value: 'all', label: '三波浪潮' }],
+        filter: (row) => isChinaDialect(row),
         metrics: () => {
+            const stats = summarize(particleData.filter(isChinaDialect));
             const waves = dialectAgg && dialectAgg.wave_cases;
             const count = waves ? ['hk', 'sw', 'mn'].reduce((n, key) => n + (waves[key] || []).length, 0) : 0;
             return [
-                metric('三波片单', count ? String(count) : '--', '港／西南／闽南'),
-                metric('第一波', '港片粤语', '1985–2005'),
-                metric('第二波', '西南方言', '2010–今'),
-                metric('第三波', '闽南语新浪潮', '2008–今')
+                metric('方言电影', stats.n ? stats.n.toLocaleString('zh-CN') : '--', '中国大陆口径'),
+                metric('三波片单', count ? String(count) : '--', '港片／西南／闽南')
             ];
         },
-        insight: () => '三波浪潮，三种方言，同一个逻辑：用更少的产量，守住更稳的下限。点击片单核对具体电影。'
-    },
-    'scale': {
-        label: '第十幕 · 刻度 · 立尺',
-        prompt: '对照六级世界均分刻度，再随机或直接点选一部电影。',
-        type: 'buttons',
-        defaultValue: 'all',
-        options: languageOptionList(true),
-        filter: (row, value) => value === 'all' || row.langCode === Number(value),
-        metrics: () => {
-            const rungs = getWorldScaleRungs();
-            if (rungs) {
-                return rungs.map(rung => metric(
-                    rung.name,
-                    rung.score.toFixed(2),
-                    `n=${Number(rung.n).toLocaleString('zh-CN')}`
-                ));
-            }
-            const dialect = summarize(particleData.filter(isChinaDialect));
-            const europe = summarize(particleData.filter(row => row.regionCode === 1));
-            const northAmerica = summarize(particleData.filter(row => row.regionCode === 0));
-            return [
-                metric('方言均分', dialect.n ? dialect.mean.toFixed(2) : '--', `n=${dialect.n.toLocaleString('zh-CN')}`),
-                metric('欧洲均分', europe.n ? europe.mean.toFixed(2) : '--', `n=${europe.n.toLocaleString('zh-CN')}`),
-                metric('北美均分', northAmerica.n ? northAmerica.mean.toFixed(2) : '--', `n=${northAmerica.n.toLocaleString('zh-CN')}`)
-            ];
-        },
-        insight: () => {
-            const rungs = getWorldScaleRungs();
-            if (rungs) {
-                const shown = Object.fromEntries(rungs.map(rung => [rung.key, Number(rung.score.toFixed(2))]));
-                const premium = (shown.dia - shown.cn).toFixed(2);
-                const remain = (shown.eu - shown.dia).toFixed(2);
-                return `方言均分 ${shown.dia.toFixed(2)}，仍落后于欧洲 ${shown.eu.toFixed(2)}、北美 ${shown.na.toFixed(2)}。态度溢价 +${premium}，往上还有 ${remain}。鸿沟是质量的鸿沟，不是文化的鸿沟。`;
-            }
-            const dialect = summarize(particleData.filter(isChinaDialect));
-            const europe = summarize(particleData.filter(row => row.regionCode === 1));
-            const northAmerica = summarize(particleData.filter(row => row.regionCode === 0));
-            if (!dialect.n || !europe.n || !northAmerica.n) {
-                return '对照方言与世界主要电影产区的均分。那道鸿沟是质量的鸿沟，不是文化的鸿沟。';
-            }
-            return `方言均分 ${dialect.mean.toFixed(2)}，仍落后于世界主要电影产区：欧洲 ${europe.mean.toFixed(2)}、北美 ${northAmerica.mean.toFixed(2)}。鸿沟是质量的鸿沟，不是文化的鸿沟。`;
-        }
+        insight: () => '三波浪潮，三种方言，同一个逻辑：用更少的产量，守住更稳的下限。'
     },
     'echo-narrative': {
         label: '终章 · 回响',
@@ -2291,6 +2349,7 @@ function initSceneInteractions() {
         // Keep the opening screen as spare as the original hero. Interactive
         // evidence begins with the first actual story act below it.
         if (index === 0) return;
+        if (step.id === 'step-intro') return;
         if (sceneId === 'echo-narrative') return;
         if (document.querySelector(`[data-scene-lab="${sceneId}"]`)) return;
 
@@ -2320,6 +2379,25 @@ function initSceneInteractions() {
             step.insertBefore(lab, hook);
         } else {
             step.appendChild(lab);
+        }
+        const dataPack = step.querySelector(`[data-scene-data="${sceneId}"]`);
+        if (dataPack) {
+            const body = lab.querySelector('.scene-lab-body');
+            const metricsNode = body.querySelector('.scene-metrics');
+            body.insertBefore(dataPack, metricsNode.nextSibling);
+        }
+        if (config.showLabInsight) lab.classList.add('shows-insight');
+        const liveHost = step.querySelector(`[data-scene-insight="${sceneId}"]`);
+        const liveCopy = String(config.insight(sceneState[sceneId]) || '').trim();
+        const skipLive = config.skipLiveInsight || sceneId === 'chinese-dialect';
+        if (!skipLive && (liveHost || liveCopy)) {
+            let live = liveHost;
+            if (!live) {
+                live = document.createElement('p');
+                live.className = 'scene-insight-live';
+                live.dataset.sceneInsight = sceneId;
+                step.insertBefore(live, lab);
+            }
         }
         if (sceneId === 'global-layers') {
             const dock = document.createElement('div');
@@ -2384,7 +2462,7 @@ function buildSceneControl(sceneId, lab, config) {
 }
 
 function syncGlobalLayersPhase() {
-    const phase = sceneState['global-layers'] || 'mandarin-outlier';
+    const phase = sceneState['global-layers'] || 'four-groups';
     globalLayersPhase = phase;
     document.documentElement.dataset.globalPhase = phase;
 }
@@ -2429,6 +2507,8 @@ function updateSceneLab(sceneId) {
         return node;
     }));
     lab.querySelector('.scene-insight').textContent = config.insight(sceneState[sceneId]);
+    const live = document.querySelector(`[data-scene-insight="${sceneId}"]`);
+    if (live) live.textContent = config.insight(sceneState[sceneId]);
 }
 
 function activateSceneInteraction(sceneId, step) {
@@ -2448,6 +2528,7 @@ function activateSceneInteraction(sceneId, step) {
     const config = SCENE_INTERACTIONS[sceneId];
     const focus = config && (config.focus || config.filter);
     activeSceneFilter = focus ? row => focus(row, sceneState[sceneId]) : () => true;
+    updateVisualDecoder(sceneId, step);
 }
 
 function currentFilteredMovies(sceneId = activeSceneId) {
@@ -2898,6 +2979,37 @@ function startUniverseLoop() {
         }
     };
     universeRaf = requestAnimationFrame(tick);
+}
+
+function languageStarfieldScene(rows) {
+    const data = rows.map(d => [d.randX, d.randY, d.langCode, d.id, isSceneFocused(d)]);
+    return {
+        backgroundColor: 'transparent',
+        animationDurationUpdate: 2000,
+        xAxis: { show: false, min: 0, max: 100 },
+        yAxis: { show: false, min: 0, max: 100 },
+        series: [{
+            type: 'scatter',
+            data,
+            symbolSize: 5,
+            itemStyle: {
+                color: p => {
+                    const lang = p.value[2];
+                    if (lang === 3) return 'rgba(255, 179, 0, 0.7)';
+                    if (lang === 2) return 'rgba(98, 176, 255, 0.7)';
+                    return 'rgba(255, 255, 255, 0.12)';
+                }
+            },
+            universalTransition: true
+        }]
+    };
+}
+
+function isStarfieldScene(sceneId) {
+    return sceneId === 'universe'
+        || sceneId === 'final-universe'
+        || sceneId === 'three-waves'
+        || sceneId === 'echo-narrative';
 }
 
 const particleScenes = {
@@ -3384,30 +3496,7 @@ const particleScenes = {
             }]
         };
     },
-    'final-universe': () => {
-        // 随机星云坐标，按语言组上色：方言琥珀 / 普通话灰蓝 / 其他暗灰
-        const data = particleData.map(d => [d.randX, d.randY, d.langCode, d.id, isSceneFocused(d)]);
-        return {
-            backgroundColor: 'transparent',
-            animationDurationUpdate: 2000,
-            xAxis: { show: false, min: 0, max: 100 },
-            yAxis: { show: false, min: 0, max: 100 },
-            series: [{
-                type: 'scatter',
-                data: data,
-                symbolSize: 3,
-                itemStyle: { 
-                    color: p => {
-                        const lang = p.value[2];
-                        if (lang === 3) return 'rgba(255, 179, 0, 0.7)'; // 方言 (琥珀)
-                        if (lang === 2) return 'rgba(98, 176, 255, 0.7)'; // 普通话 (灰蓝)
-                        return 'rgba(255, 255, 255, 0.12)'; // 其他 (暗灰)
-                    }
-                },
-                universalTransition: true
-            }]
-        };
-    },
+    'final-universe': () => languageStarfieldScene(particleData),
     'dialect-flops': () => {
         const phase = resolveFlopPhase(flopPhase);
         const layerPhase = globalLayersPhase || 'mandarin-outlier';
@@ -3496,8 +3585,8 @@ const particleScenes = {
         };
     }
 };
+
 particleScenes['three-waves'] = particleScenes['final-universe'];
-particleScenes['scale'] = particleScenes['final-universe'];
 particleScenes['echo-narrative'] = particleScenes['final-universe'];
 
 function renderParticleScene(sceneId, { animate } = {}) {
@@ -3521,7 +3610,7 @@ function renderParticleScene(sceneId, { animate } = {}) {
     const reducedMotion = window.innerWidth <= 700
         || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const compactMotion = reducedMotion || largeDataset;
-    const isUniverse = sceneId === 'universe' || sceneId === 'final-universe' || sceneId === 'three-waves' || sceneId === 'scale' || sceneId === 'echo-narrative';
+    const isUniverse = isStarfieldScene(sceneId);
     const isGlobalLayers = sceneId === 'global-layers';
     const isDialectFlops = sceneId === 'dialect-flops';
     option.animation = !(largeDataset && !isUniverse);
@@ -3541,7 +3630,7 @@ function renderParticleScene(sceneId, { animate } = {}) {
         option.animation = false;
         option.animationDurationUpdate = 0;
     }
-    const hasVisibleAxes = sceneId !== 'universe' && sceneId !== 'final-universe' && sceneId !== 'three-waves' && sceneId !== 'scale' && sceneId !== 'echo-narrative';
+    const hasVisibleAxes = !isStarfieldScene(sceneId);
     option.grid = hasVisibleAxes
         ? { left: 8, right: 8, top: 8, bottom: 8, containLabel: false }
         : { left: 0, right: 0, top: 0, bottom: 0, containLabel: false };
@@ -3709,146 +3798,84 @@ function medianOf(values) {
     return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
 }
 
-function getWorldScaleRungs() {
-    const regions = narrativeFacts && narrativeFacts.regions;
-    const raw = dialectAgg && dialectAgg.type_controlled && dialectAgg.type_controlled.raw;
-    if (!regions || !regions['中国大陆'] || !regions['其他'] || !regions['北美'] || !regions['东亚'] || !regions['欧洲'] || !raw || !raw.d) {
-        return null;
-    }
-    const dialectMed = narrativeFacts.mandarin_dialect && narrativeFacts.mandarin_dialect.dialect_mixed
-        ? narrativeFacts.mandarin_dialect.dialect_mixed.median
-        : null;
-    return [
-        { key: 'cn', name: '中国电影整体', score: Number(regions['中国大陆'].mean), med: Number(regions['中国大陆'].median), n: regions['中国大陆'].n, color: '#837C6E', note: '含普通话量产大片。这是流水线逻辑下的基线。' },
-        { key: 'dia', name: '方言片', score: Number(raw.d.mean), med: dialectMed, n: raw.d.n, color: '#d4a574', isKey: true, note: '语言层切片。这是我们最好的成绩；烂片率仅 6.4%。' },
-        { key: 'oth', name: '其他地区', score: Number(regions['其他'].mean), med: Number(regions['其他'].median), n: regions['其他'].n, color: '#9A938A', note: '拉美、非洲、大洋洲等混装样本较小，仅供参考。' },
-        { key: 'na', name: '北美', score: Number(regions['北美'].mean), med: Number(regions['北美'].median), n: regions['北美'].n, color: '#7A5D82', note: '英语世界的工业中心，均分并不是最高。' },
-        { key: 'ea', name: '日韩', score: Number(regions['东亚'].mean), med: Number(regions['东亚'].median), n: regions['东亚'].n, color: '#4F8F86', note: '东亚近邻。高分样本多为演出实录，看中位数更稳。' },
-        { key: 'eu', name: '欧洲', score: Number(regions['欧洲'].mean), med: Number(regions['欧洲'].median), n: regions['欧洲'].n, color: '#6B5F8A', note: '当前最高的一级，作者电影的另一个大本营。' }
-    ];
-}
-
-function spreadScalePositions(linearYMap, keys, minGap = 9, bounds = { top: 8, bottom: 92 }) {
-    const ordered = [...keys].sort((a, b) => linearYMap[a] - linearYMap[b]);
-    const ys = ordered.map(key => linearYMap[key]);
-
-    for (let i = 1; i < ys.length; i += 1) {
-        if (ys[i] - ys[i - 1] < minGap) ys[i] = ys[i - 1] + minGap;
-    }
-    if (ys[ys.length - 1] > bounds.bottom) {
-        const overflow = ys[ys.length - 1] - bounds.bottom;
-        for (let i = 0; i < ys.length; i += 1) ys[i] -= overflow;
-    }
-    if (ys[0] < bounds.top) {
-        const underflow = bounds.top - ys[0];
-        for (let i = 0; i < ys.length; i += 1) ys[i] += underflow;
-    }
-    for (let i = ys.length - 2; i >= 0; i -= 1) {
-        if (ys[i + 1] - ys[i] < minGap) ys[i] = ys[i + 1] - minGap;
-    }
-
-    return Object.fromEntries(ordered.map((key, i) => [key, ys[i]]));
-}
-
-function spreadScaleValues(values, minGap = 5, bounds = { top: 8, bottom: 92 }) {
-    const ys = [...values];
-    for (let i = 1; i < ys.length; i += 1) {
-        if (ys[i] - ys[i - 1] < minGap) ys[i] = ys[i - 1] + minGap;
-    }
-    if (ys[ys.length - 1] > bounds.bottom) {
-        const overflow = ys[ys.length - 1] - bounds.bottom;
-        for (let i = 0; i < ys.length; i += 1) ys[i] -= overflow;
-    }
-    for (let i = ys.length - 2; i >= 0; i -= 1) {
-        if (ys[i + 1] - ys[i] < minGap) ys[i] = ys[i + 1] - minGap;
-    }
-    return ys;
-}
-
-function hexRgba(hex, alpha) {
-    if (!hex || hex.charAt(0) !== '#') return `rgba(200,194,180,${alpha})`;
-    const n = parseInt(hex.slice(1), 16);
-    if (!Number.isFinite(n)) return `rgba(200,194,180,${alpha})`;
-    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
-}
-
-function getWorldScaleLayout() {
-    const rungs = getWorldScaleRungs();
-    if (!rungs) return null;
-    const shown = Object.fromEntries(rungs.map(rung => [rung.key, Number(rung.score.toFixed(2))]));
-    const scores = rungs.map(rung => shown[rung.key]);
-    const top = Math.max(...scores) + 0.15;
-    const bot = Math.min(...scores) - 0.13;
-    const yPct = score => ((top - score) / (top - bot)) * 100;
-    const keys = rungs.map(rung => rung.key);
-    const linearY = Object.fromEntries(keys.map(key => [key, yPct(shown[key])]));
-    return { rungs, shown, keys, spreadY: spreadScalePositions(linearY, keys) };
-}
-
-function fillWorldScale() {
-    const layout = getWorldScaleLayout();
-    const rungsEl = document.getElementById('world-scale-rungs');
-    if (!layout || !rungsEl) return;
-
-    const { rungs, shown, spreadY } = layout;
-    const plus = value => `+${Math.abs(value).toFixed(2)}`;
-    rungsEl.innerHTML = rungs.map(rung => {
-        const score = shown[rung.key];
-        const tag = rung.isKey ? '<span class="tagline">我们最好的成绩</span>' : '';
-        return `<button type="button" class="world-scale-rung" style="--y:${spreadY[rung.key].toFixed(2)}%;--c:${rung.color};--c-bg:${hexRgba(rung.color, 0.16)}" data-key="${rung.key}" data-name="${escapeHtml(rung.name)}" data-score="${score.toFixed(2)}" data-med="${Number.isFinite(Number(rung.med)) ? Number(rung.med).toFixed(1) : ''}" data-n="${Number(rung.n).toLocaleString('zh-CN')}" data-note="${escapeHtml(rung.note)}" aria-label="${escapeHtml(rung.name)} 均分 ${score.toFixed(2)}">
-            <span class="guide"></span><span class="bloom"></span><span class="tick"></span>
-            <span class="who">${escapeHtml(rung.name)}</span>
-            <span class="score">0.00</span>${tag}
-        </button>`;
-    }).join('');
-
-    const premium = shown.dia - shown.cn;
-    const remain = shown.eu - shown.dia;
-    const step1 = shown.oth - shown.dia;
-    const step2 = shown.na - shown.oth;
-    const step3 = shown.ea - shown.na;
-    const step4 = shown.eu - shown.ea;
-    const premiumEl = document.getElementById('scale-gap-premium');
-    const remainEl = document.getElementById('scale-gap-remain');
-    if (premiumEl) {
-        premiumEl.style.top = `${spreadY.dia.toFixed(2)}%`;
-        premiumEl.style.height = `${(spreadY.cn - spreadY.dia).toFixed(2)}%`;
-    }
-    if (remainEl) {
-        remainEl.style.top = `${spreadY.eu.toFixed(2)}%`;
-        remainEl.style.height = `${(spreadY.dia - spreadY.eu).toFixed(2)}%`;
-    }
-    const dcPairs = [
-        ['dia', 'oth', step1],
-        ['oth', 'na', step2],
-        ['na', 'ea', step3],
-        ['ea', 'eu', step4]
-    ];
-    const dcYs = spreadScaleValues(dcPairs.map(([a, b]) => (spreadY[a] + spreadY[b]) / 2), 5);
-    dcPairs.forEach(([, , delta], i) => {
-        const dc = document.getElementById(`scale-dc-${i}`);
-        if (!dc) return;
-        dc.textContent = `+${Math.abs(delta).toFixed(2)}`;
-        dc.style.top = `${dcYs[i].toFixed(2)}%`;
+function setFindingBar(name, value, maxValue) {
+    document.querySelectorAll(`[data-finding-bar="${name}"]`).forEach(bar => {
+        const ratio = maxValue > 0 ? Math.max(0, Math.min(1, Number(value) / maxValue)) : 0;
+        bar.style.width = `${(ratio * 100).toFixed(1)}%`;
     });
+}
 
-    const sampleN = narrativeFacts.sample && narrativeFacts.sample.n
-        ? narrativeFacts.sample.n
-        : narrativeFacts.meta && narrativeFacts.meta.record_count;
-    if (sampleN) setTextById('scale-n', Number(sampleN).toLocaleString('zh-CN'));
-    setTextById('scale-cn', shown.cn.toFixed(2));
-    setTextById('scale-premium', plus(premium));
-    setTextById('scale-premium-mark', plus(premium));
-    setTextById('scale-remain', Math.abs(remain).toFixed(2));
-    setTextById('scale-remain-mark', `−${Math.abs(remain).toFixed(2)}`);
-    setTextById('scale-step1', Math.abs(step1).toFixed(2));
-    setTextById('scale-step2', Math.abs(step2).toFixed(2));
-    setTextById('scale-gap-eu', Math.abs(step1).toFixed(2));
-    setTextById('scale-gap-na', Math.abs(step2).toFixed(2));
-    setTextById('scale-median-chain', rungs.map(rung => (
-        Number.isFinite(Number(rung.med)) ? Number(rung.med).toFixed(1) : '--'
-    )).join(' → '));
-    if (window.ScaleScene) window.ScaleScene.refresh();
+function setDeltaBar(name, delta, maxAbs) {
+    document.querySelectorAll(`[data-finding-bar="${name}"]`).forEach(bar => {
+        const n = Number(delta);
+        const pct = maxAbs > 0 && Number.isFinite(n) ? Math.abs(n) / maxAbs * 50 : 0;
+        bar.classList.toggle('is-positive', Number.isFinite(n) && n >= 0);
+        bar.classList.toggle('is-negative', Number.isFinite(n) && n < 0);
+        if (!Number.isFinite(n)) {
+            bar.style.width = '0%';
+            return;
+        }
+        if (n >= 0) {
+            bar.style.left = '50%';
+            bar.style.width = `${pct}%`;
+        } else {
+            bar.style.left = `${50 - pct}%`;
+            bar.style.width = `${pct}%`;
+        }
+    });
+}
+
+function formatSignedDelta(delta) {
+    const n = Number(delta);
+    if (!Number.isFinite(n)) return '--';
+    return `${n >= 0 ? '+' : ''}${n.toFixed(2)}`;
+}
+
+function fillFindingCharts() {
+    const agg = dialectAgg;
+    if (!agg) return;
+    if (agg.flop_overall) {
+        const d = Number(agg.flop_overall.d);
+        const m = Number(agg.flop_overall.m);
+        const maxFlop = Math.max(d, m, 0.01);
+        setTextById('chart-flop-d', Number.isFinite(d) ? `${d}%` : '--');
+        setTextById('chart-flop-m', Number.isFinite(m) ? `${m}%` : '--');
+        setFindingBar('flop-d', d, maxFlop);
+        setFindingBar('flop-m', m, maxFlop);
+    }
+    if (agg.type_controlled && agg.type_controlled.raw) {
+        setTextById('chart-mean-d', Number(agg.type_controlled.raw.d.mean).toFixed(2));
+        setTextById('chart-mean-m', Number(agg.type_controlled.raw.m.mean).toFixed(2));
+        setTextById('chart-dialect-n', Number(agg.type_controlled.raw.d.n).toLocaleString('zh-CN'));
+        setTextById('chart-mandarin-n', Number(agg.type_controlled.raw.m.n).toLocaleString('zh-CN'));
+    }
+    if (agg.by_decade) {
+        const keys = ['1990s', '2000s', '2010s', '2020s'];
+        const deltas = keys.map(key => Number(agg.by_decade[key] && agg.by_decade[key].delta));
+        const maxAbs = Math.max(...deltas.map(value => Math.abs(value)).filter(Number.isFinite), 0.01);
+        keys.forEach((key, index) => {
+            setTextById(`chart-delta-${key}`, formatSignedDelta(deltas[index]));
+            setDeltaBar(`delta-${key}`, deltas[index], maxAbs);
+        });
+    }
+    if (Array.isArray(agg.global_layers)) {
+        const byName = Object.fromEntries(agg.global_layers.map(layer => [layer.name, layer]));
+        const rows = [
+            ['gl-nondom', '欧洲 · 非主导语言'],
+            ['gl-en', '欧洲 · 英语'],
+            ['gl-easia', '日韩'],
+            ['gl-dialect', '华语 · 方言'],
+            ['gl-mandarin', '华语 · 普通话']
+        ];
+        const maxRate = Math.max(...rows.map(([, name]) => Number(byName[name] && byName[name].below5) || 0), 0.01);
+        rows.forEach(([id, name]) => {
+            const layer = byName[name];
+            if (!layer) return;
+            const rate = Number(layer.below5);
+            setTextById(`chart-${id}`, `${rate}%`);
+            setFindingBar(id, rate, maxRate);
+        });
+    }
 }
 
 function fillChinaNarrativeKpis() {
@@ -3870,16 +3897,6 @@ function fillChinaNarrativeKpis() {
             setTextById('china-europe-mean-gap', Math.abs(Number(europe.mean) - Number(china.mean)).toFixed(2));
         }
     }
-    if (facts && facts.regions) {
-        const europe = facts.regions['欧洲'];
-        const northAmerica = facts.regions['北美'];
-        if (europe) {
-            setTextById('west-eu', Number(europe.mean).toFixed(2));
-        }
-        if (northAmerica) {
-            setTextById('west-na', Number(northAmerica.mean).toFixed(2));
-        }
-    }
 
     if (agg && agg.type_controlled && agg.type_controlled.raw) {
         const raw = agg.type_controlled.raw;
@@ -3893,7 +3910,7 @@ function fillChinaNarrativeKpis() {
         setTextById('dialect-count', Number(raw.d.n).toLocaleString('zh-CN'));
         setTextById('mandarin-count', Number(raw.m.n).toLocaleString('zh-CN'));
         setTextById('dialect-delta', delta);
-        setTextById('finale-dialect-mean', dialectMean);
+        setTextById('overtake-all-gap', Math.abs(Number(raw.d.mean) - Number(raw.m.mean)).toFixed(2));
     }
     if (agg && agg.flop_overall) {
         setTextById('china-dialect-below5', `${agg.flop_overall.d}%`);
@@ -3904,8 +3921,6 @@ function fillChinaNarrativeKpis() {
         setTextById('finale-flop-m', `${agg.flop_overall.m}%`);
         setTextById('finale-flop-d-int', String(Math.round(Number(agg.flop_overall.d))));
         setTextById('finale-flop-m-int', String(Math.round(Number(agg.flop_overall.m))));
-        setTextById('scale-flop-d', `${agg.flop_overall.d}%`);
-        setTextById('scale-flop-m', `${agg.flop_overall.m}%`);
         setTextById('gl-mandarin-outlier', `${agg.flop_overall.m}%`);
     }
     if (agg && agg.by_decade) {
@@ -3934,13 +3949,14 @@ function fillChinaNarrativeKpis() {
         writeLayer('gl-europe-en', '欧洲 · 英语');
         writeLayer('gl-easia', '日韩');
         writeLayer('gl-hua-dialect', '华语 · 方言');
+        writeLayer('gl-hua-dialect-world', '华语 · 方言');
         writeLayer('gl-mandarin-outlier', '华语 · 普通话');
+        writeLayer('gl-mandarin-body', '华语 · 普通话');
     }
     if (agg && agg.dual_director) {
         setTextById('dd-total-inline', Number(agg.dual_director.total).toLocaleString('zh-CN'));
         setTextById('dd-share-finale', `${agg.dual_director.share_positive}%`);
         setTextById('dd-diff-finale', `+${Number(agg.dual_director.mean_diff).toFixed(2)}`);
-        setTextById('scale-dd-share', `${agg.dual_director.share_positive}%`);
     }
     if (agg && Array.isArray(agg.genre_avg)) {
         const byName = Object.fromEntries(agg.genre_avg.map(item => [item.name, item]));
@@ -3977,7 +3993,7 @@ function fillChinaNarrativeKpis() {
             setTextById('mandarin-high-votes-median', Math.round(mandarinMedian).toLocaleString('zh-CN'));
         }
     }
-    fillWorldScale();
+    fillFindingCharts();
 }
 
 // ===============================
@@ -3996,9 +4012,9 @@ function fillDirectorCases() {
         button.classList.toggle('is-low', Number.isFinite(score) && score < 6);
     });
     if (directorCasesBound) return;
-    const step = document.getElementById('step-8d');
-    if (!step) return;
-    step.addEventListener('click', event => {
+    const host = document.getElementById('step-8d');
+    if (!host) return;
+    host.addEventListener('click', event => {
         const button = event.target.closest('.director-film[data-movie-id]');
         if (!button) return;
         const movie = findPublicationMovie(button.dataset.movieId);
@@ -4010,11 +4026,6 @@ function fillDirectorCases() {
 }
 
 function fillFlopNarrative() {
-    const stats = dialectFlopStats();
-    const lead = document.getElementById('flop-lead-copy');
-    if (lead && stats.n) {
-        lead.innerHTML = `${stats.n.toLocaleString('zh-CN')} 部方言片中仍有 <strong>${stats.flopN.toLocaleString('zh-CN')}</strong> 部低于 5 分。问题不在语言，在创作路径。`;
-    }
     document.querySelectorAll('#step-8c .flop-case-card[data-movie-id]').forEach(card => {
         const movie = caseMovieById(card.dataset.movieId);
         if (!movie) return;
@@ -4065,7 +4076,6 @@ function fillFinaleData() {
         const ddDiff = document.getElementById('dd-diff');
         if (ddShare) { ddShare.textContent = dd.share_positive + '%'; ddShare.classList.remove('is-pending'); }
         if (ddDiff) { ddDiff.textContent = '+' + dd.mean_diff.toFixed(2); ddDiff.classList.remove('is-pending'); }
-        setTextById('scale-dd-share', `${dd.share_positive}%`);
     }
     fillDirectorCases();
     // 层 3：语言多样性条
@@ -4081,7 +4091,6 @@ function fillFinaleData() {
             </div>`;
         }).join('');
     }
-    fillWorldScale();
 }
 
 function findPublicationMovie(movieId) {

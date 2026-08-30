@@ -26,6 +26,7 @@ from dialect_defs import (
     has_strict_dialect_tag, has_mandarin_tag, has_foreign_tag,
     has_minority_tag, normalize_text, lang_parts, normalize_language_tags,
     get_dialect_tags_found, first_tag_is_foreign,
+    is_tier2b_default_excluded,
 )
 
 import argparse
@@ -124,7 +125,7 @@ def classify_strict(row):
             # v4.1（2026-08-15）Tier 2b 证据审查：普通话排首+方言标签默认排除，
             # 仅经证据漏斗/补判白名单补回（Dialect_Evidence 非空且非 TIER2B_EXCLUDED）才计方言。
             evidence = str(row.get("Dialect_Evidence", "") or "").strip()
-            if evidence in ("", "TIER2B_EXCLUDED"):
+            if is_tier2b_default_excluded(evidence):
                 return {
                     "is_dialect": 0,
                     "tier": "非方言",

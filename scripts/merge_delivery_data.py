@@ -69,10 +69,10 @@ NEW_TO_OLD_COLUMN_MAP = {
     "honors": "honors",
 }
 
-# 新数据无法映射到旧数据的字段（填空）
+# 新数据无法映射到旧数据的字段（填空）。语言列若交付包自带则保留，不再整列置空。
 NEW_DATA_MISSING_COLUMNS = [
     "编剧", "上映日期", "片长", "剧情简介", "Gemini评价",
-    "IMDb", "语言", "WikidataID",
+    "IMDb", "WikidataID",
     "联网补齐来源", "联网补齐时间", "本地补齐来源", "本地补齐时间",
 ]
 
@@ -141,9 +141,18 @@ def load_new_data(path: Path) -> pd.DataFrame:
     if "制片国家/地区" in df.columns:
         df["制片国家/地区"] = df["制片国家/地区"].map(normalize_region_list)
 
+    if "语言" not in df.columns:
+        if "language" in df.columns:
+            df["语言"] = df["language"].fillna("").astype(str)
+            print("  已将 language 列映射为「语言」")
+        else:
+            df["语言"] = ""
+            print("  警告: 交付包无语言列，仅新 ID 的语言将为空（见 list_untrusted_languages.py）")
+
     # 补填空字段
     for col in NEW_DATA_MISSING_COLUMNS:
-        df[col] = ""
+        if col not in df.columns:
+            df[col] = ""
 
     # 数据来源标记
     df["数据来源"] = "douban_delivery_20260817"

@@ -2,8 +2,8 @@
   "meta": {
     "record_count": 63025,
     "minimum_vote_count": 100,
-    "sample_fingerprint": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503",
-    "口径说明_20260814": "方言定义 v4.1.1 新基线（dialect_defs.py）：方案 A + Tier 2b 证据审查 + 审计排除名单 + 空语言回填（delivery_20260817 合并数据重应用，2026-08-18）：mandarin_dialect 块为 Region=China 口径（方言3,045 / 普通话9,746，与 gen_report_strict 报告一致）；languages 块为全量口径（按 Language_Code 分组）。"
+    "sample_fingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1",
+    "口径说明_20260814": "方言定义 v4.1.1 新基线（dialect_defs.py）：方案 A + Tier 2b 证据审查 + 审计排除名单 + 空语言回填（delivery_20260817 合并数据重应用，2026-08-18） + v4.6 豆瓣语言回填（2026-08-30；Wikidata 只补 Language_Code 空缺）：mandarin_dialect 块为 Region=China 口径（方言3,067 / 普通话9,724，与 gen_report_strict 报告一致）；languages 块为全量口径（按 Language_Code 分组）。"
   },
   "sample": {
     "n": 63025,
@@ -123,64 +123,64 @@
   },
   "languages": {
     "英语": {
-      "n": 22900,
-      "mean": 6.9728,
+      "n": 23899,
+      "mean": 6.9449,
       "median": 7.1,
-      "sd": 1.2889,
+      "sd": 1.2865,
       "q1": 6.2,
-      "high_share": 11.4672,
-      "below_five_share": 7.3013,
-      "mean_votes": 14603.8
+      "high_share": 11.08,
+      "below_five_share": 7.4062,
+      "mean_votes": 15558.21
     },
     "日语": {
-      "n": 7264,
-      "mean": 7.2014,
+      "n": 7699,
+      "mean": 7.1672,
       "median": 7.3,
-      "sd": 1.1187,
+      "sd": 1.1219,
       "q1": 6.5,
-      "high_share": 12.7616,
-      "below_five_share": 3.5105,
-      "mean_votes": 6670.1
+      "high_share": 12.2743,
+      "below_five_share": 3.6109,
+      "mean_votes": 7149.22
     },
     "普通话": {
-      "n": 10027,
-      "mean": 6.1261,
+      "n": 9984,
+      "mean": 6.1256,
       "median": 6.4,
-      "sd": 1.6332,
+      "sd": 1.6348,
       "q1": 5.0,
-      "high_share": 5.196,
-      "below_five_share": 24.1049,
-      "mean_votes": 21250.45
+      "high_share": 5.1983,
+      "below_five_share": 24.1486,
+      "mean_votes": 21254.52
     },
     "方言": {
-      "n": 3338,
-      "mean": 6.6556,
-      "median": 6.7,
-      "sd": 1.0587,
-      "q1": 6.025,
-      "high_share": 4.1043,
-      "below_five_share": 6.2612,
-      "mean_votes": 24517.32
+      "n": 3360,
+      "mean": 6.6526,
+      "median": 6.6,
+      "sd": 1.0594,
+      "q1": 6.0,
+      "high_share": 4.0774,
+      "below_five_share": 6.3095,
+      "mean_votes": 24615.0
     },
     "韩语": {
-      "n": 1800,
-      "mean": 6.4492,
-      "median": 6.6,
-      "sd": 1.2232,
-      "q1": 5.8,
-      "high_share": 4.0,
-      "below_five_share": 12.7222,
-      "mean_votes": 11908.88
+      "n": 2099,
+      "mean": 6.3974,
+      "median": 6.5,
+      "sd": 1.2122,
+      "q1": 5.7,
+      "high_share": 3.5731,
+      "below_five_share": 13.292,
+      "mean_votes": 11659.35
     },
     "其他": {
-      "n": 17696,
-      "mean": 6.8128,
-      "median": 6.9,
-      "sd": 1.1567,
-      "q1": 6.1,
-      "high_share": 5.9279,
-      "below_five_share": 7.092,
-      "mean_votes": 5580.67
+      "n": 15984,
+      "mean": 6.8633,
+      "median": 7.0,
+      "sd": 1.1557,
+      "q1": 6.2,
+      "high_share": 6.3063,
+      "below_five_share": 6.8006,
+      "mean_votes": 3236.69
     }
   },
   "genre_comparison": {
@@ -2277,26 +2277,26 @@
   },
   "mandarin_dialect": {
     "mandarin": {
-      "n": 9746,
-      "mean": 6.113,
+      "n": 9724,
+      "mean": 6.1128,
       "median": 6.4,
-      "sd": 1.6361,
+      "sd": 1.6372,
       "q1": 5.0,
-      "high_share": 5.12,
-      "below_five_share": 24.4408,
-      "mean_votes": 20154.33
+      "high_share": 5.1316,
+      "below_five_share": 24.4652,
+      "mean_votes": 20110.7
     },
     "dialect_mixed": {
-      "n": 3045,
-      "mean": 6.6195,
+      "n": 3067,
+      "mean": 6.6165,
       "median": 6.6,
-      "sd": 1.0498,
+      "sd": 1.0505,
       "q1": 6.0,
-      "high_share": 3.6782,
-      "below_five_share": 6.4039,
-      "mean_votes": 24297.36
+      "high_share": 3.6518,
+      "below_five_share": 6.4558,
+      "mean_votes": 24405.95
     },
-    "mean_delta": 0.5065,
+    "mean_delta": 0.5037,
     "by_decade": {
       "1990s": {
         "mandarin": {
@@ -2369,26 +2369,26 @@
       },
       "2020s": {
         "mandarin": {
-          "n": 2041,
-          "mean": 5.7442,
+          "n": 2019,
+          "mean": 5.7391,
           "median": 5.7,
-          "sd": 1.5113,
+          "sd": 1.5146,
           "q1": 4.6,
-          "high_share": 3.8707,
-          "below_five_share": 32.6311,
-          "mean_votes": 33793.07
+          "high_share": 3.9128,
+          "below_five_share": 32.838,
+          "mean_votes": 33731.59
         },
         "dialect_mixed": {
-          "n": 57,
-          "mean": 6.3421,
-          "median": 6.5,
-          "sd": 1.3257,
-          "q1": 5.5,
-          "high_share": 5.2632,
-          "below_five_share": 15.7895,
-          "mean_votes": 36621.7
+          "n": 79,
+          "mean": 6.3051,
+          "median": 6.4,
+          "sd": 1.2616,
+          "q1": 5.45,
+          "high_share": 3.7975,
+          "below_five_share": 15.1899,
+          "mean_votes": 37405.42
         },
-        "mean_delta": 0.5979
+        "mean_delta": 0.5659
       },
       "Pre-1990s": {
         "mandarin": {

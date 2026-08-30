@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>「言」之有物：从数据看中国电影的答案</title>
+    <title>“言”之有物：从数据看中国电影的答案</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="description" content="从《给阿嬷的情书》出发，基于六万余部电影，追问：观众厌倦了什么，又在为什么买单？">
-    <meta property="og:title" content="「言」之有物：从数据看中国电影的答案">
+    <meta property="og:title" content="“言”之有物：从数据看中国电影的答案">
     <meta property="og:description" content="从《给阿嬷的情书》出发，基于六万余部电影，追问：观众厌倦了什么，又在为什么买单？">
     <meta property="og:type" content="article">
     <meta property="og:locale" content="zh_CN">
@@ -16,11 +16,11 @@
     <meta name="twitter:image" content="assets/og-cover.jpg">
     <!-- endbuild -->
     <!-- build:css -->
-    <link rel="stylesheet" href="build/style.36d6e4873e.css">
+    <link rel="stylesheet" href="build/style.f3e3cbb209.css">
     <!-- endbuild -->
     <!-- build:js -->
     <script defer src="build/echarts-main.f19d3377a9.js"></script>
-    <script defer src="build/app.5fdcff3c95.js"></script>
+    <script defer src="build/app.c745fa4e32.js"></script>
     <!-- endbuild -->
 </head>
 <body>
@@ -44,16 +44,21 @@
     <!-- 沉浸式全局粒子图表容器 (Prologue Background) -->
     <div id="chart-container" class="chart-background" aria-label="可交互电影粒子图；使用每幕数据卡筛选，或点击粒子查看电影"></div>
     <canvas id="prologue-motion-layer" class="prologue-motion-layer" aria-hidden="true"></canvas>
+    <aside id="visual-decoder" class="visual-decoder" aria-live="polite">
+        <p class="visual-decoder-legend">
+            <span class="legend-item"><i class="legend-swatch" style="background:#E8E8EC" aria-hidden="true"></i>一个点一部电影</span>
+        </p>
+        <p class="visual-decoder-caption" id="visual-decoder-caption">一个点就是一部电影。产地相近的会靠在一起，颜色也按地区分。</p>
+    </aside>
 
     <!-- 顶层遮罩与长篇叙事 (Narrative Overlay) -->
     <main class="scrolly-overlay" id="main-overlay">
-        
-        <!-- ====== Part 1 · 引入 ====== -->
+
         <section class="prologue-section">
 
             <!-- 封面 -->
             <div class="step particle-step intro-step" id="step-0" data-scene="universe">
-                <h1 class="mega-title">「<em>言</em>」之有物：从数据看中国电影的答案</h1>
+                <h1 class="mega-title">“<em>言</em>”之有物：从数据看中国电影的答案</h1>
                 <p class="hero-subtitle">——六万余部电影的数据里，藏着观众厌倦了什么，又在为什么买单。</p>
                 <div class="nut-graph" aria-live="polite">
                     <p>页面收录 <strong><span id="hero-sample-count">加载中</span> 部电影</strong>，年份覆盖 <strong><span id="sample-year-range">加载中</span></strong>，每部至少获得 <strong><span id="minimum-vote-count">--</span> 人评价</strong>，其中中国电影 <strong><span id="china-count">--</span> 部</strong>。向下阅读，粒子会随叙事重排；每一幕都能核对电影数、改变比较条件，并点开具体电影。</p>
@@ -67,76 +72,161 @@
                 <div class="intro-card">
                     <h2 class="intro-kicker">引言</h2>
                     <p>2026 年，一部没有头部 IP、巨额投资与流量明星加持的潮汕方言电影<strong class="accent">《给阿嬷的情书》</strong>意外掀起席卷海内外的观影热潮。</p>
-                    <p>上映后，它从地方院线“逆袭”至全国讨论，豆瓣评分远超同期普通话商业片。社交媒体上，无数观众说：“我听不懂潮汕话，但我看懂了。”</p>
-                    <p>热闹背后，其实藏着观众的一张“抗议票”。我们在影院看了太多斥巨资打造、操着标准普通话、画面完美无瑕的“大片”，走出来时内心却毫无波澜。这种疲惫不是今天才开始的。大制作未必被记住，听不懂的方言片却能把故事讲进去。</p>
+                    <p>上映后，它从地方院线“逆袭”至全国讨论，豆瓣评分远超同期普通话商业片。社交媒体上，无数观众在影院泣不成声，他们说：“我听不懂潮汕话，但我看懂了。”</p>
+                    <p>热闹背后，其实藏着观众的一张“抗议票”。我们在影院看了太多斥巨资打造、操着标准普通话、画面完美无瑕的大片，走出来时内心却毫无波澜。这种疲惫不是今天才开始的。大制作未必被记住，听不懂的方言片却能把故事讲进去。</p>
                     <p class="intro-question">市场何以如此？答案在不在语言？</p>
                 </div>
-                <div class="visual-region-dock" id="visual-region-dock">
-                    <p class="visual-region-hint">世界的边界先拿掉。点一个地区，看这些电影从星图里聚成地图；其他粒子保持银白，也仍可点击。</p>
-                    <div class="visual-region-chips">
-                        <button type="button" data-visual-group="all">全部电影</button>
-                        <button type="button" data-visual-group="china">中国</button>
-                        <button type="button" data-visual-group="asia">亚洲</button>
-                        <button type="button" data-visual-group="europe">欧洲</button>
-                        <button type="button" data-visual-group="north_america">北美洲</button>
-                        <button type="button" data-visual-group="south_america">南美洲</button>
-                        <button type="button" data-visual-group="africa">非洲</button>
-                        <button type="button" data-visual-group="oceania">大洋洲</button>
-                    </div>
-                </div>
-                <p class="scene-hook">为了回答这个问题，我们翻开了 <span id="intro-sample-count">--</span> 部电影。抗议票，在数据里看得见吗？</p>
+                <p class="scene-hook">为了回答这个问题，我们翻开了 <span id="intro-sample-count">--</span> 部电影。先看中国在世界尺子上站在哪。</p>
             </div>
 
-            <!-- ====== Part 2 · 对照：抗议票在数据里看得见吗？ ====== -->
+            <!-- 格局：中国在世界产区里站在哪 -->
+            <div class="step particle-step" id="step-2" data-scene="asian-breakout">
+                <span class="theory-badge">格局 · 均分垫底</span>
+                <h2>中国均分，五大地区垫底 <span class="scale-tag data">数据可证</span></h2>
+                <p class="scene-finding-line">五大主要产区里，中国大陆的平均分排在最后。</p>
+                <p>观众投下抗议票，究竟是因为什么？在拆开华语电影内部之前，先把中国放到世界这张成绩单上。</p>
+                <div class="scene-data-pack" data-scene-data="asian-breakout">
+                    <p>中国大陆 <span id="china-n">--</span> 部电影，均分 <strong><span id="china-mean">--</span></strong>，在五大主要产区中排名末位。如果把五大地区比作同一场考试，中国大陆的“班级平均分”比第一名欧洲低了约 <strong><span id="china-europe-mean-gap">--</span></strong> 分——而且这不是因为“卷子更难”：统一年代和类型构成后，差距依然存在。</p>
+                    <p>欧洲收录 <span id="europe-count">--</span> 部，均分 <span id="europe-mean">--</span>；其余地区合计 <span id="non-europe-count">--</span> 部，均分 <span id="non-europe-mean">--</span>，相差 <strong><span id="europe-raw-gap">--</span> 分</strong>。统一年代和主类型构成后，差距缩小到 <strong><span id="europe-standardized-gap">--</span> 分</strong>，构成差异对应其中约 <span id="europe-gap-reduction">--</span> 分。</p>
+                </div>
+                <p class="scene-hook">均分低只是表象。更扎眼的是下限。</p>
+            </div>
 
-            <!-- 第一幕：方言均分/烂片率优于普通话 -->
+            <div class="step particle-step" id="step-7" data-scene="european-slow">
+                <span class="theory-badge">格局 · 下限</span>
+                <h2>每五部中国电影，就有一部不及格 <span class="scale-tag data">数据可证</span></h2>
+                <p class="scene-finding-line">中国大陆低于 5 分的比例是全球最高。</p>
+                <p>均分已经垫底，而中国电影的分数下限更加扎眼。中国大陆低于 5 分的电影占 <strong><span id="china-below5">--</span></strong>——全球最高。这意味着，每五部中国电影中，就有一部不及格。</p>
+                <p><span class="scale-tag infer">推断</span> 这不是“观众失去了鉴赏力”，问题出在拍电影的人，不是打分的人——电影工业在批量生产低质内容。</p>
+                <div class="scene-data-pack" data-scene-data="european-slow">
+                    <p>欧洲组有 <strong><span id="europe-detail-count">--</span> 部</strong>电影，第一四分位数为 <span id="europe-q1">--</span>，低于 5 分的影片占 <span id="europe-below-five">--</span>；其余地区的第一四分位数为 <span id="non-europe-q1">--</span>，低于 5 分的影片占 <span id="non-europe-below-five">--</span>。欧洲评分较高的差异，在分布下半段同样清晰。</p>
+                </div>
+                <p class="scene-hook">是整部华语都差，还是某一种片子在拖后腿？</p>
+            </div>
+
+            <!-- 发现 1：方言均分/烂片率优于普通话 -->
             <div class="step particle-step" id="step-5" data-scene="language-babel">
-                <span class="theory-badge">第一幕——对照 · 语言</span>
+                <span class="theory-badge">发现 1 · 华语对照</span>
                 <h2>方言片均分更高，烂片率更低 <span class="scale-tag data">数据可证</span></h2>
-                <p>粒子按六个语言组与评分排列；语言取主要语言，混合语种按片单首位归组。英语组有 <span id="english-count">--</span> 部，占全部电影的 <strong><span id="english-share">--</span></strong>。这一幕要看的，是华语内部。</p>
-                <p>方言片均分 <strong><span id="china-dialect-mean">--</span></strong>，普通话片 <strong><span id="china-mandarin-mean">--</span></strong>；方言烂片率 <strong><span id="china-dialect-below5">--</span></strong>，普通话 <strong><span id="china-mandarin-below5">--</span></strong>。</p>
-                <p>方言也没有赢在最高分：高分率（≥8.0）方言 <strong><span id="china-dialect-high8-inline">--</span></strong>，普通话 <strong><span id="china-mandarin-high8-inline">--</span></strong>。它们赢在更少的人跌进深渊。</p>
+                <p class="scene-finding-line">不是高分更多，是烂片更少。</p>
+                <figure class="finding-chart" aria-label="中国区方言片与普通话片低于 5 分的比例对照">
+                    <figcaption>中国电影里，方言片更少跌破 5 分</figcaption>
+                    <div class="finding-rows">
+                        <div class="finding-row is-dialect">
+                            <span class="finding-name">方言</span>
+                            <div class="finding-track"><i data-finding-bar="flop-d"></i></div>
+                            <strong><span id="chart-flop-d">--</span></strong>
+                        </div>
+                        <div class="finding-row is-mandarin">
+                            <span class="finding-name">普通话</span>
+                            <div class="finding-track"><i data-finding-bar="flop-m"></i></div>
+                            <strong><span id="chart-flop-m">--</span></strong>
+                        </div>
+                    </div>
+                    <p class="finding-means">均分：方言 <span id="chart-mean-d">--</span> · 普通话 <span id="chart-mean-m">--</span></p>
+                    <p class="finding-source">华语内部（中国大陆口径）· 方言 <span id="chart-dialect-n">--</span> 部 / 普通话 <span id="chart-mandarin-n">--</span> 部 · 等权均值</p>
+                </figure>
+                <p>把镜头对准华语影片内部，方言电影并没有把均分抬上去，而是更稳地守住了下限。</p>
+                <div class="scene-data-pack" data-scene-data="language-babel">
+                    <p>粒子按六个语言组与评分排列；语言取主要语言，混合语种按片单首位归组。英语组有 <span id="english-count">--</span> 部，占全部电影的 <strong><span id="english-share">--</span></strong>。这一幕要看的，是华语内部。</p>
+                    <p>方言片均分 <strong><span id="china-dialect-mean">--</span></strong>，普通话片 <strong><span id="china-mandarin-mean">--</span></strong>；方言烂片率 <strong><span id="china-dialect-below5">--</span></strong>，普通话 <strong><span id="china-mandarin-below5">--</span></strong>。</p>
+                    <p>方言也没有赢在最高分：高分率（≥8.0）方言 <strong><span id="china-dialect-high8-inline">--</span></strong>，普通话 <strong><span id="china-mandarin-high8-inline">--</span></strong>。它们赢在更少拍成烂片。</p>
+                </div>
                 <p class="scene-hook">这个差距不是一开始就有的。换向，发生在哪一年？</p>
             </div>
 
-            <!-- Part 3d：2010 分界点 -->
             <div class="step particle-step" id="step-8" data-scene="chinese-dialect">
-                <span class="theory-badge">第二幕——拐点 · 2010</span>
+                <span class="theory-badge">发现 2 · 2010 换向</span>
                 <h2>2010：方言悄然反超普通话 <span class="scale-tag data">数据可证</span></h2>
-                <p><strong>亮蓝色</strong>代表普通话电影，<strong>金黄色</strong>代表方言电影。请选择年代，比较两组的电影数、均分与差值。</p>
-                <p>华语内部（中国大陆口径）合并全部年份时，方言片 <span id="dialect-count">--</span> 部，均分 <span id="dialect-mean">--</span>；普通话片 <span id="mandarin-count">--</span> 部，均分 <span id="mandarin-mean">--</span>，相差 <strong><span id="dialect-delta">--</span> 分</strong>。分开年代后，九十年代差值为 <span id="dialect-delta-1990s">--</span>，2010 年代变为 <span id="dialect-delta-2010s">--</span>。合并所有年份，会把这次换向压成一个总差值。</p>
-                <p>1990 年代，普通话片均分略高于方言片（差 <strong><span id="delta-1990s">--</span></strong>）。2000 年代差距缩小。2010 年代，方言片反超，均分高出普通话 <strong><span id="delta-2010s">--</span></strong>。2020 年代延续这一趋势（<strong><span id="delta-2020s">--</span></strong>）。2010 年前后出现了转向——此后方言片系统性地优于普通话片。对数据来说，这次换向清楚得很；对行业来说，它几乎不声不响。全部年份合计，方言烂片率 <strong><span id="overtake-flop-d">--</span></strong>，普通话 <strong><span id="overtake-flop-m">--</span></strong>。</p>
+                <p class="scene-finding-line">方言并不是一开始就领先的。</p>
+                <figure class="finding-chart finding-chart-delta" aria-label="分年代方言与普通话均分差">
+                    <figcaption>分年代看：换向发生在 2010 年代</figcaption>
+                    <p class="finding-delta-legend"><span>普通话更高</span><span>0</span><span>方言更高</span></p>
+                    <div class="finding-rows is-delta">
+                        <div class="finding-row">
+                            <span class="finding-name">1990s</span>
+                            <div class="finding-track is-center"><i data-finding-bar="delta-1990s"></i></div>
+                            <strong><span id="chart-delta-1990s">--</span></strong>
+                        </div>
+                        <div class="finding-row">
+                            <span class="finding-name">2000s</span>
+                            <div class="finding-track is-center"><i data-finding-bar="delta-2000s"></i></div>
+                            <strong><span id="chart-delta-2000s">--</span></strong>
+                        </div>
+                        <div class="finding-row">
+                            <span class="finding-name">2010s</span>
+                            <div class="finding-track is-center"><i data-finding-bar="delta-2010s"></i></div>
+                            <strong><span id="chart-delta-2010s">--</span></strong>
+                        </div>
+                        <div class="finding-row">
+                            <span class="finding-name">2020s</span>
+                            <div class="finding-track is-center"><i data-finding-bar="delta-2020s"></i></div>
+                            <strong><span id="chart-delta-2020s">--</span></strong>
+                        </div>
+                    </div>
+                    <p class="finding-source">差值为方言均分减去普通话均分。亮蓝是普通话，金黄是方言。</p>
+                </figure>
+                <p>华语内部对照立住了：方言下限更稳。可那是把全部年份压在一起看的，只能看见一个总分差。那么，把时间拆开，看看换向的历程。</p>
+                <p>九十年代普通话还略高，后来差距收窄，换向发生在 2010 年代，此后方言系统性地走在前面。</p>
+                <div class="scene-data-pack" data-scene-data="chinese-dialect">
+                    <p>华语内部（中国大陆口径）合并全部年份时，方言片 <span id="dialect-count">--</span> 部，均分 <span id="dialect-mean">--</span>；普通话片 <span id="mandarin-count">--</span> 部，均分 <span id="mandarin-mean">--</span>，相差 <strong><span id="dialect-delta">--</span> 分</strong>。分开年代后，九十年代差值为 <span id="dialect-delta-1990s">--</span>，2010 年代变为 <span id="dialect-delta-2010s">--</span>。合并所有年份，会把这次换向压成一个总差值。</p>
+                    <p>1990 年代，普通话片均分略高于方言片（差 <strong><span id="delta-1990s">--</span></strong>）。2000 年代差距缩小。2010 年代，方言片反超，均分高出普通话 <strong><span id="delta-2010s">--</span></strong>。2020 年代延续这一趋势（<strong><span id="delta-2020s">--</span></strong>）。2010 年前后出现了转向——此后方言片系统性地优于普通话片。全部年份合计，方言烂片率 <strong><span id="overtake-flop-d">--</span></strong>，普通话 <strong><span id="overtake-flop-m">--</span></strong>。</p>
+                </div>
                 <p class="scene-hook">这次换向，只发生在华语里吗？</p>
             </div>
 
-            <!-- Part 3e：全球参照 -->
             <div class="step particle-step" id="step-8b" data-scene="global-layers">
-                <span class="theory-badge">第三幕——参照 · 全球</span>
+                <span class="theory-badge">发现 3 · 全球下限</span>
                 <div class="scene-title-card">
                     <h2>下限更稳，并非华语独有 <span class="scale-tag data">数据可证</span></h2>
                 </div>
-                <p>2010 年之后，方言片的评分开始反超普通话片。但这不仅是中国的现象。把视野从华语拉到全球，会看到一个更大的规律：非主导语言的片子，往往更不容易拍成烂片——它们带着各自的“毛边感”，对抗着好莱坞式的光滑平整。</p>
-                <div class="scene-body-stack">
-                    <p class="global-chart-hint scene-body-card">把所有电影放回同一条 5 分线，看谁更容易跌下去。我们不看谁平均分最高，只看谁更容易跌穿下限。</p>
-                    <p class="scene-finding scene-body-card"><strong>一个更大的规律出现了：</strong>先把低分尾部较短的四组放在一起——欧洲本土语 <span id="gl-europe-nondom">--</span>、欧洲英语 <span id="gl-europe-en">--</span>、东亚产区 <span id="gl-easia">--</span>、华语方言 <span id="gl-hua-dialect">--</span>——都在 6% 左右及以下。华语普通话则远远偏离这条线。<strong>普通话的低分尾部，在全球参照里是一个异常凸起</strong>；欧洲内部也能看到非主导语低于英语的差异，但不宜概括为「所有地区都成立」。</p>
+                <p class="scene-finding-line">方言片更少跌破下限，并不是华语独有的现象。</p>
+                <figure class="finding-chart" aria-label="五组电影低于 5 分的比例">
+                    <figcaption>低于 5 分的比例：前四组靠近，华语方言并不更低；普通话远远高出</figcaption>
+                    <div class="finding-rows">
+                        <div class="finding-row">
+                            <span class="finding-name">欧非主导</span>
+                            <div class="finding-track"><i data-finding-bar="gl-nondom"></i></div>
+                            <strong><span id="chart-gl-nondom">--</span></strong>
+                        </div>
+                        <div class="finding-row">
+                            <span class="finding-name">欧英语</span>
+                            <div class="finding-track"><i data-finding-bar="gl-en"></i></div>
+                            <strong><span id="chart-gl-en">--</span></strong>
+                        </div>
+                        <div class="finding-row">
+                            <span class="finding-name">日韩</span>
+                            <div class="finding-track"><i data-finding-bar="gl-easia"></i></div>
+                            <strong><span id="chart-gl-easia">--</span></strong>
+                        </div>
+                        <div class="finding-row is-dialect">
+                            <span class="finding-name">华语方言</span>
+                            <div class="finding-track"><i data-finding-bar="gl-dialect"></i></div>
+                            <strong><span id="chart-gl-dialect">--</span></strong>
+                        </div>
+                        <div class="finding-row is-outlier">
+                            <span class="finding-name">普通话</span>
+                            <div class="finding-track"><i data-finding-bar="gl-mandarin"></i></div>
+                            <strong><span id="chart-gl-mandarin">--</span></strong>
+                        </div>
+                    </div>
+                    <p class="finding-source">纵轴比较的是谁更容易跌破 5 分，不是谁平均分最高。</p>
+                </figure>
+                <p>把同样的 5 分线放到世界上看：欧洲、日韩低于 5 分的片子也少。少拍烂片，不是只有方言片才会。</p>
+                <p>可华语并没有因此就好看了。普通话片仍大量不及格；方言片只是没那么差，拿去跟世界比，也谈不上好。那方言片里，就没有烂片吗？</p>
+                <div class="scene-data-pack" data-scene-data="global-layers">
+                    <p>低分尾部较短的四组——欧洲本土语 <span id="gl-europe-nondom">--</span>、欧洲英语 <span id="gl-europe-en">--</span>、东亚产区 <span id="gl-easia">--</span>、华语方言 <span id="gl-hua-dialect">--</span>——都在一条相近的线上。欧洲内部也能看到非主导语低于英语的差异，但不宜概括为「所有地区都成立」。</p>
+                    <p>即便如此，华语电影的形势依然严峻。一是普通话片的下限低得惊人：低于 5 分的比例为 <strong><span id="gl-mandarin-body">--</span></strong>，约每四部就有一部不及格。二是把方言片放到世界去比，也没有好到哪里去：华语方言低分占比 <strong><span id="gl-hua-dialect-world">--</span></strong>，在这四组短尾里仍是偏高的一端，远谈不上领先。<span id="gl-mandarin-outlier" hidden>--</span></p>
                 </div>
-                <p>而且这不是粤语一家独大。华语内部，上海话、闽南语、藏语、四川话、潮汕话……数十种方言的均分全部高于普通话。质量不靠一地方言独大，而是百花齐放；样本较小的方言组均分波动更大，不宜当作普适规律。</p>
-                <div class="honesty-note">
-                    <p>诚实提示：类比只支撑“下限稳”共性，不支撑“均分反转”因果。毛边感也不是语言给的。</p>
-                </div>
-                <p class="scene-hook">下限更稳是共性。可方言片，就一定是好片吗？</p>
-                <div class="mandarin-outlier-callout">
-                    <strong><span id="gl-mandarin-outlier">--</span></strong>
-                    <span>低于 5 分</span>
-                    <p>华语普通话电影中，约每 4 部就有 1 部低于 5 分。</p>
-                </div>
+                <p class="scene-hook">放到世界，方言片也并不突出。那方言片里，就没有烂片吗？</p>
             </div>
 
-            <!-- Part 3f：破·方言也有烂片 -->
+            <!-- 反证：方言也有烂片 -->
             <div class="step particle-step" id="step-8c" data-scene="dialect-flops">
-                <span class="theory-badge">第四幕——破 · 语言不是答案</span>
+                <span class="theory-badge">反证 · 失败路径</span>
                 <h2>方言片也有烂片 <span class="scale-tag data">数据可证</span></h2>
-                <p class="flop-lead" id="flop-lead-copy">方言片中仍有一部分低于 5 分。问题不在语言，在创作路径。</p>
+                <p class="scene-finding-line">失败的方言片，走的是和普通话商业片同一条敷衍路。</p>
+                <p class="flop-lead scene-insight-live" data-scene-insight="dialect-flops">方言片中仍有一部分低于 5 分。问题不在语言，在创作路径。</p>
                 <div class="flop-align-row">
                     <div class="flop-paths">
                         <p class="flop-body">它们暴露的问题，与普通话商业片中的失败模式高度相似：</p>
@@ -184,12 +274,12 @@
                 <p class="scene-hook">方言不是答案。那什么才是？</p>
             </div>
 
-            <!-- Part 3g：寻·同导演对比（由 Part 4 前移） -->
             <div class="step particle-step" id="step-8d" data-scene="dual-director">
-                <span class="theory-badge">第五幕——寻 · 同导演</span>
-                <h2>同一个导演，差的是片子，不是语言 <span class="scale-tag data">数据可证</span></h2>
+                <span class="theory-badge">对照 · 同导演</span>
+                <h2>同一个导演，拉开分数的是作品，不是语言 <span class="scale-tag data">数据可证</span></h2>
+                <p class="scene-finding-line">分数跟着内容走，不跟着语言走。</p>
                 <p>既然方言也有烂片，真正的差异到底在哪里？把导演锁住——同一人分别拍方言片和普通话片，分数为什么仍可能不同？</p>
-                <p><span id="dd-total-inline">--</span> 位同时拍过两种语言的导演中，<strong><span id="dd-share">--</span></strong> 的方言片均分更高，平均分差 <strong><span id="dd-diff">--</span></strong>。群体上，方言项目里更常出现被写完的故事。落到片子上，普通话把故事讲透，分数照样高；方言敷衍了，照样低。</p>
+                <p><span id="dd-total-inline">--</span> 位同时拍过两种语言的导演中，<strong><span id="dd-share">--</span></strong> 的方言片均分更高，平均分差 <strong><span id="dd-diff">--</span></strong>。群体上，方言项目里更常出现被写完的故事。落到片子上，普通话把故事讲透，分数照样高；方言敷衍了，照样低——差的不是语言，是内容。</p>
                 <div class="director-evidence">
                     <div class="director-cases" id="director-cases">
                         <article class="director-case-card">
@@ -208,13 +298,17 @@
                         </article>
                         <article class="director-case-card">
                             <h3>李睿珺</h3>
-                            <p>同一条甘肃农村人物线，普通话把故事讲透了，分比方言片更高。</p>
+                            <p>甘肃方言农村人物戏到 8.4，普通话城市打工片掉到 6.6——差的还是作品。</p>
                             <div class="director-case-films">
                                 <button type="button" class="director-film" data-movie-id="11537965" data-lang="dialect">
                                     <span class="director-film-title">加载中</span>
                                     <span class="director-film-meta"><span class="director-film-lang">方言</span><span class="director-film-rating">--</span></span>
                                 </button>
-                                <button type="button" class="director-film" data-movie-id="35131346" data-lang="mandarin">
+                                <button type="button" class="director-film" data-movie-id="35131346" data-lang="dialect">
+                                    <span class="director-film-title">加载中</span>
+                                    <span class="director-film-meta"><span class="director-film-lang">方言</span><span class="director-film-rating">--</span></span>
+                                </button>
+                                <button type="button" class="director-film" data-movie-id="26909423" data-lang="mandarin">
                                     <span class="director-film-title">加载中</span>
                                     <span class="director-film-meta"><span class="director-film-lang">普通话</span><span class="director-film-rating">--</span></span>
                                 </button>
@@ -261,10 +355,10 @@
                 <p class="scene-hook">分数跟着内容走。那么，认真讲出来的方言好故事，长什么样？</p>
             </div>
 
-            <!-- Part 3h：展·三波方言电影浪潮 -->
             <div class="step particle-step" id="step-8e" data-scene="three-waves">
-                <span class="theory-badge">第六幕——展 · 浪潮</span>
+                <span class="theory-badge">样本 · 三波浪潮</span>
                 <h2>三十年，三波方言浪潮</h2>
+                <p class="scene-finding-line">用更少的产量，守住更稳的下限。</p>
                 <p>同导演对比告诉我们：问题不只是“说什么语言”。数据落回具体电影。三波浪潮，三种方言，同一个逻辑：<strong>用更少的产量，守住更稳的下限</strong>；拍的是具体的人，不是光滑的符号。</p>
                 <div class="wave-portal-hint" aria-hidden="true">
                     <i class="wave-portal-hint-dot"></i>
@@ -290,21 +384,21 @@
                 <p class="scene-hook">它们真正共同具备的，是什么？</p>
             </div>
 
-            <!-- ====== Part 4 · 好故事应该是什么样的 ====== -->
             <div class="step particle-step" id="step-9" data-scene="final-universe">
-                <span class="theory-badge">第七幕——立 · 好故事的五维</span>
+                <span class="theory-badge">归纳 · 好故事</span>
                 <h2>好故事应该是什么样的？</h2>
+                <p class="scene-finding-line">这五条结合了数据和现实情况，不是纯靠数字得来的。</p>
                 <p>从前面那些真正优秀的方言电影里，可以看见它们共同具备的东西。它们没有落入电影工业化的陷阱：不追逐好莱坞式的光滑平整，而是把力气花在讲好一个故事上。</p>
                 <div class="five-dims">
                     <div class="dim-card">
-                        <strong class="dim-title">① 有根</strong>
+                        <strong class="dim-title">① 有根 <span class="scale-tag infer">推断</span></strong>
                         <p class="dim-data">动画 <span id="genre-anim">--</span> / 纪录片 <span id="genre-doc">--</span> / 历史 <span id="genre-hist">--</span> / 家庭 <span id="genre-fam">--</span>（方言片均分）</p>
                         <p class="dim-body">方言片里均分最高的四个类型有一个共同点——它们的故事都扎根于<strong>具体的地方记忆、历史事件或家庭经验</strong>。「有根」意味着叙事不是凭空编造的套路，而是来自真实的生活土壤。观众能感知到：这个故事里的人和事，是「真的」。</p>
                     </div>
                     <div class="dim-card">
-                        <strong class="dim-title">② 被认真讲</strong>
+                        <strong class="dim-title">② 被认真讲 <span class="scale-tag data">数据可证</span></strong>
                         <p class="dim-data">同导演对比：<span id="dd-share-finale">--</span> 方言均分更高，平均分差 <span id="dd-diff-finale">--</span></p>
-                        <p class="dim-body">同一双手，换了一个项目，作品质量就变了。顾长卫拍人物戏能到 8 分，拍合家欢掉到 4 分；李睿珺用普通话拍《隐入尘烟》，比自己的方言片更高；刘镇伟的粤语片既可以 9.2，也可以 4.0。差异<strong>不在语言，而在这部片子有没有把故事写完</strong>。</p>
+                        <p class="dim-body">同一双手，换了一个项目，作品质量就变了。顾长卫拍人物戏能到 8 分，拍合家欢掉到 4 分；李睿珺的甘肃方言《隐入尘烟》到 8.4，普通话《路过未来》掉到 6.6；刘镇伟的粤语片既可以 9.2，也可以 4.0。差异<strong>不在语言，而在这部片子有没有把故事写完</strong>。</p>
                     </div>
                     <div class="dim-card">
                         <strong class="dim-title">③ 人物真实 <span class="scale-tag infer">推断</span></strong>
@@ -312,127 +406,28 @@
                         <p class="dim-body">学习方言势必要接触地方风土人情——口音、用词、说话的节奏，都是人物身份的一部分。演员必须比普通话片<strong>多走一步</strong>：不是「表演一个角色」，而是先「成为那个人」。观众感知到的，是人物从地里长出来的真实感。</p>
                     </div>
                     <div class="dim-card">
-                        <strong class="dim-title">④ 能打动人</strong>
+                        <strong class="dim-title">④ 能打动人 <span class="scale-tag infer">推断</span></strong>
                         <p class="dim-data">高分片评价人数中位 <span id="dialect-high-votes-median">--</span> vs <span id="mandarin-high-votes-median">--</span></p>
                         <p class="dim-body">评价人数反映的是「被看到」的规模。方言片没有大宣发、没有流量明星，却仍能积累可观的评价基数——这说明它们<strong>不是靠营销让人走进影院，而是靠故事本身让人愿意留下评分</strong>。打动人的不是方言，而是方言背后那个被认真对待的故事。</p>
                     </div>
                     <div class="dim-card">
-                        <strong class="dim-title">⑤ 守住下限</strong>
+                        <strong class="dim-title">⑤ 守住下限 <span class="scale-tag data">数据可证</span></strong>
                         <p class="dim-data">烂片率 <span id="finale-flop-d">--</span> vs <span id="finale-flop-m">--</span>——每100部约 <span id="finale-flop-d-int">--</span> 部 vs 约 <span id="finale-flop-m-int">--</span> 部</p>
                         <p class="dim-body">这不是因为方言片都伟大，而是因为<strong>方言本身就是一道筛选门槛</strong>。选择拍方言的创作者，往往已做好「不敷衍」的准备，往往更具有对艺术的感知、对真实的追求——而这些恰恰是观众想看到的。烂片率低，是态度筛选后的副产品。</p>
                     </div>
                 </div>
-                <p class="scene-hook">好故事的样子清楚了。可把中国放回世界，这条路才刚起头。</p>
+                <p class="scene-hook">好故事的样子清楚了。答案，依然在开头那部“听不懂”的电影里。</p>
             </div>
 
-            <!-- 第八幕：刻度 · 坐标系 -->
-            <div class="step particle-step" id="step-2" data-scene="asian-breakout">
-                <span class="theory-badge">第八幕——刻度 · 坐标系</span>
-                <h2>中国均分，五大地区垫底 <span class="scale-tag data">数据可证</span></h2>
-                <p>好故事的尺子立住了。把中国放回世界坐标系，看我们离主要电影产区还有多远。粒子现在按<strong>地区</strong>与评分排列。切换地区后，数据卡会同步显示电影数、原始均分，以及按全部电影的年代×主类型构成重新加权后的均分。</p>
-                <p>欧洲收录 <span id="europe-count">--</span> 部，均分 <span id="europe-mean">--</span>；其余地区合计 <span id="non-europe-count">--</span> 部，均分 <span id="non-europe-mean">--</span>，相差 <strong><span id="europe-raw-gap">--</span> 分</strong>。统一年代和主类型构成后，差距缩小到 <strong><span id="europe-standardized-gap">--</span> 分</strong>，构成差异对应其中约 <span id="europe-gap-reduction">--</span> 分。</p>
-                <p>中国大陆 <span id="china-n">--</span> 部电影，均分 <strong><span id="china-mean">--</span></strong>，在五大主要产区中排名末位。如果把五大地区比作同一场考试，中国大陆的“班级平均分”比第一名欧洲低了约 <strong><span id="china-europe-mean-gap">--</span> 分</strong>——而且这不是因为“卷子更难”：统一年代和类型构成后，差距依然存在。</p>
-                <p class="scene-hook">均分低只是表象。更扎眼的是下限。</p>
-            </div>
-
-            <!-- 第九幕：刻度 · 下限 -->
-            <div class="step particle-step" id="step-7" data-scene="european-slow">
-                <span class="theory-badge">第九幕——刻度 · 下限</span>
-                <h2>每五部中国电影，就有一部不及格 <span class="scale-tag data">数据可证</span></h2>
-                <p>坐标系看的是平均分。下限更扎眼。切换地区后，当前地区会被绿色高亮；页面同时对比第一四分位数、中位数及低于 5 分的比例。</p>
-                <p>欧洲组有 <strong><span id="europe-detail-count">--</span> 部</strong>电影，第一四分位数为 <span id="europe-q1">--</span>，低于 5 分的影片占 <span id="europe-below-five">--</span>；其余地区的第一四分位数为 <span id="non-europe-q1">--</span>，低于 5 分的影片占 <span id="non-europe-below-five">--</span>。欧洲评分较高的差异，在分布下半段同样清晰。</p>
-                <p>中国大陆低于 5 分的电影占 <strong><span id="china-below5">--</span></strong>——全球最高。每五部中国电影中，就有一部不及格。这不是“观众失去了鉴赏力”，问题出在拍电影的人，不是打分的人——电影工业在批量生产低质内容。</p>
-                <p class="scene-hook">均分垫底，下限更扎眼。把尺子立起来，看看差在哪。</p>
-            </div>
-
-            <!-- 第十幕：刻度 · 立尺 -->
-            <div class="step particle-step" id="step-10" data-scene="scale">
-                <span class="theory-badge">第十幕——刻度 · 立尺</span>
-                <h2>鸿沟是质量的鸿沟，不是文化的鸿沟</h2>
-                <p>方言 <span id="finale-dialect-mean">--</span> &lt; 欧洲 <span id="west-eu">--</span>、北美 <span id="west-na">--</span>。今天我们在平均分上仍落后于世界主要电影产区。把质量做好，追上乃至并肩，并非奢望。</p>
-                <div class="scale-board" id="scale-board">
-                    <div class="scale-copy">
-                        <p class="scale-hint" id="scale-hint">点「下一拍」或「立尺」，把六级刻度亮起来。</p>
-                        <div class="scale-block scale-core" id="scale-core">
-                            <span class="scale-rule"></span>
-                            <p class="scale-l1">流水线的价格是 <b id="scale-cn">--</b>。<br>态度的溢价是 <b id="scale-premium">--</b>。</p>
-                            <p class="scale-l2">追上欧洲，只差 <span id="scale-gap-eu">--</span>；追上北美，只差 <span id="scale-gap-na">--</span>。<br>每一步都被证明可行。</p>
-                            <p class="scale-fn">中位数同样成立：<span id="scale-median-chain">--</span>。<br>日韩含较多演出实录、其他地区样本较小，均以中位数为稳。</p>
-                        </div>
-                        <div class="scale-block scale-diag" id="scale-diag">
-                            <h3>差距不在文化，也不在语言。</h3>
-                            <ul>
-                                <li>
-                                    <div class="scale-li-top"><i>01</i><b>差在内容</b><span class="scale-tag logic">第五幕 · 同导演对照</span></div>
-                                    <p>同一双手，分数跟着片子走，不跟着语言走。群体上 <span id="scale-dd-share">--</span> 方言均分更高，是因为那些项目本身常常是被写完的故事。对应第七幕「被认真讲」。</p>
-                                </li>
-                                <li>
-                                    <div class="scale-li-top"><i>02</i><b>差在下限</b><span class="scale-tag logic">烂片率 · 冻结基线</span></div>
-                                    <p>方言 <span id="scale-flop-d">--</span>，普通话 <span id="scale-flop-m">--</span>。对应第七幕「守住下限」。</p>
-                                </li>
-                                <li>
-                                    <div class="scale-li-top"><i>03</i><b>差在真实与独特</b><span class="scale-tag logic">第七幕 · 有根</span></div>
-                                    <p>扎根真实土壤、人物真实——高分片的公共剪影。对应第七幕「有根」与「人物真实」。</p>
-                                </li>
-                                <li>
-                                    <div class="scale-li-top"><i>04</i><b>差在流水线的敷衍</b><span class="scale-tag logic">第四幕 · 失败路径</span></div>
-                                    <p>普通话工业化量产稀释品质；三波浪潮用更少产量守住下限。对应第四幕失败路径与第五幕对照。</p>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="scale-block scale-mani" id="scale-mani">
-                            <p>打破流水线，不靠数量堆砌。</p>
-                            <p>坚持讲好故事、拍高质量的电影。</p>
-                            <p>前两级台阶各只差 <span id="scale-step1">--</span> 与 <span id="scale-step2">--</span> —— 每一步都被证明可行。</p>
-                            <p class="scale-hot">我们的电影，可以追上国际；更可以带着自己的泥土，走向世界。</p>
-                        </div>
-                        <aside class="scale-detail" id="scale-detail" aria-live="polite" hidden>
-                            <button type="button" class="scale-detail-x" id="scale-detail-x" aria-label="关闭底账">×</button>
-                            <b id="scale-d-name"></b>
-                            <span id="scale-d-meta"></span>
-                            <p id="scale-d-note"></p>
-                        </aside>
-                    </div>
-                    <div class="world-scale" id="world-scale" aria-label="世界均分刻度">
-                        <span class="world-scale-kicker">世界均分刻度 · 五产区</span>
-                        <span class="world-scale-count">n = <span id="scale-n">--</span></span>
-                        <div class="world-scale-axis" aria-hidden="true"></div>
-                        <div class="world-scale-rungs" id="world-scale-rungs"></div>
-                        <div class="world-scale-gap is-premium" id="scale-gap-premium">
-                            <i></i>
-                            <span><b id="scale-premium-mark">--</b><em>态度的溢价</em></span>
-                        </div>
-                        <div class="world-scale-gap is-remain" id="scale-gap-remain">
-                            <i></i>
-                            <span><b id="scale-remain-mark">--</b><em>四级台阶</em></span>
-                            <b class="world-scale-dc" id="scale-dc-0"></b>
-                            <b class="world-scale-dc" id="scale-dc-1"></b>
-                            <b class="world-scale-dc" id="scale-dc-2"></b>
-                            <b class="world-scale-dc" id="scale-dc-3"></b>
-                        </div>
-                    </div>
-                </div>
-                <div class="scale-controls" id="scale-controls">
-                    <button type="button" data-scale-step="-1">上一拍</button>
-                    <button type="button" data-scale-step="1">下一拍</button>
-                    <button type="button" data-scale-beat="6">立尺</button>
-                    <button type="button" data-scale-beat="7">两段差距</button>
-                    <button type="button" data-scale-beat="8">为什么差</button>
-                    <button type="button" data-scale-beat="9">往上走</button>
-                </div>
-                <p class="scene-hook">质量可以追上。答案，还在开头那部听不懂的电影里。</p>
-            </div>
-
-            <!-- 终章·回响 -->
             <div class="step particle-step" id="step-11" data-scene="echo-narrative">
-                <span class="theory-badge">终章——回响</span>
+                <span class="theory-badge">终章 · 回响</span>
                 <div class="finale-layer">
                     <div class="finale-echo-card">
                         <p>回到开头那个问题：一部听不懂的方言片，凭什么问出中国电影的答案？</p>
-                        <p>因为它讲了一个有根的、被认真讲的、关于真实的人的故事。</p>
+                        <p>因为它讲了一个有根的、被认真讲的、关于真实的人的故事。方言片更少拍成烂片，但语言不是原因。</p>
                         <p class="intro-question">语言不是答案，好故事才是。</p>
-                        <p>《给阿嬷的情书》的火爆说明，观众从未失去鉴赏力，只是厌倦了套路。观众愿意买单的，始终是好故事。这是一次从中华文化土壤中生长出来的胜利。</p>
-                        <p>中国电影要走向世界，靠的绝不是模仿好莱坞的特效大片，而是敢于把镜头对准那些浸润着中华优秀传统文化、带着泥土气息的一个个具体的人。因为越是民族的、越是本土的，越是世界的。</p>
+                        <p>《给阿嬷的情书》的火爆说明，观众从未失去鉴赏力，只是厌倦了套路。这是一次从中华文化土壤中生长出来的胜利。</p>
+                        <p>观众愿意买单的，始终是好故事。中国电影要走向世界，靠的绝不是模仿好莱坞的特效大片，而是敢于把镜头对准那些浸润着中华优秀传统文化、带着泥土气息的一个个具体的人。因为越是民族的，越是世界的。</p>
                     </div>
                     <div class="lang-bars" id="lang-bars">
                         <!-- JS 填充 10 行语言组均分条 -->
@@ -543,8 +538,10 @@
         <footer class="methodology-footer">
             <h3>数据、方法与局限</h3>
             <p><strong>数据范围：</strong> 从 <span id="source-record-count">加载中</span> 条源记录中保留片名、年份、评分完整且评价人数不少于 <span id="methodology-minimum-vote-count">--</span> 的电影，再按豆瓣条目 URL、规范化片名与年份去重。当前发布版本纳入 <strong><span id="methodology-sample-count">加载中</span> 部</strong>，年份范围为 <span id="methodology-year-range">加载中</span>。这是一份按上述门槛筛选的观察性样本，未按全球电影总体进行概率抽样。</p>
-            <p><strong>条目与分类：</strong>“电影”沿用豆瓣电影频道的宽口径，包含长片、短片、纪录片、动画、演出影像及部分电视条目。地区取第一制片国家／地区，主类型取类型列表第一项；语言统一为英语、日语、韩语、普通话、方言、其他六组。分组按主要语言，混合语种按片单首位归组；方言组沿用中国方言清单。</p>
-            <p><strong>时间完整性：</strong> 当前快照覆盖 <span id="methodology-year-range-repeat">加载中</span>。2022 年及以后共 <span id="year-2022plus-count">--</span> 部，其中中国大陆 <span id="year-2022plus-china-count">--</span> 部（约 <span id="year-2022plus-china-share">--</span>）。2020s 中国方言片 <span id="china-dialect-2020s-n">--</span> 部。主故事不再做全球年份切点实验；若需查看「年代越近均分越低」的时间坡度，见 <a href="vol1_time.html">卷一</a>。</p>
+            <p><strong>条目与分类：</strong>“电影”沿用豆瓣电影频道的宽口径，包含长片、短片、纪录片、动画、演出影像及部分电视条目。地区取第一制片国家／地区，主类型取类型列表第一项；语言统一为英语、日语、韩语、普通话、方言、其他六组。分组按主要语言，混合语种按片单首位归组；方言组沿用中国方言清单。正文对照采用中国大陆口径。年份取豆瓣条目所记年份，个别条目为重映或公映年份。各幕对照中的「普通话」组是中国地区条目里语言非方言的全部影片，含少量以英语等其他语言为主的条目（约 240 部）。</p>
+            <p><strong>语言字段完整性：</strong> 数据集由两个批次构成。2020 年及以前条目 92–94% 含语言字段；2021 年起批次（最终入样 9,541 条）语言字段完整率为 0%，一律默认为「汉语普通话」。因此 2021–2026 的 1,631 部中国电影全部计入普通话组，不参与方言／普通话对比。正文所述差距为保守估计。</p>
+            <p><strong>时间完整性：</strong> 当前快照覆盖 <span id="methodology-year-range-repeat">加载中</span>。2022 年及以后共 <span id="year-2022plus-count">--</span> 部，其中中国大陆 <span id="year-2022plus-china-count">--</span> 部（约 <span id="year-2022plus-china-share">--</span>）。2020s 中国方言片 <span id="china-dialect-2020s-n">--</span> 部。主故事不再做全球年份切点实验。</p>
+            <p><strong>待核查：</strong> 2021–2026 的入样条目中，评分 8.0 以上的 121 部里有相当比例为演唱会、线上演出与综艺影像。此前的戏曲／演唱会排除清单（49 部）覆盖不到这一批。这部分条目可能抬高普通话组均分，需在下一版评估是否纳入排除。</p>
             <p><strong>粒子引擎：</strong> 序章基于 HTML5 Canvas 与 ECharts，对当前 <span id="particle-sample-count">加载中</span> 条发布记录实时映射。为保证万级粒子的滚动性能，序章宇宙场景关闭过渡动画与渐进渲染；其他大数据场景启用渐进渲染。筛选、悬停和点选仍基于完整记录。</p>
             <p><strong>计算口径：</strong> 每部电影等权计入；全部电影的等权均分为 <span id="overall-unweighted-mean">--</span>，按评价人数加权后为 <span id="overall-vote-weighted-mean">--</span>。平均数、中位数、总体标准差与四分位数会随当前筛选实时重算。各幕数据卡的高分占比参考线为 8.5 分；正文叙述的方言／普通话高分率采用 ≥8.0 分（<span id="china-dialect-high8">--</span> vs <span id="china-mandarin-high8">--</span>）。</p>
             <p><strong>解释边界：</strong> 页面未设置总体抽样权重，也未做显著性检验、因果识别或跨平台评分校准。结论适用于上述数据范围；讨论全球电影或具体成因时，还需要其他数据与方法。“工业化导致低分”在本报道中为推测性解读，数据集无直接工业化指标。</p>

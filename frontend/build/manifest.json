@@ -1,11 +1,6 @@
 {
-  "style": "build/style.36d6e4873e.css",
+  "style": "build/style.f3e3cbb209.css",
   "echartsMain": "build/echarts-main.f19d3377a9.js",
-  "echartsVolume": "build/echarts-volume.6d75e0bd14.js",
-  "app": "build/app.5fdcff3c95.js",
-  "echoChunk": "build/echo-universe-chunk.2ec962d5f7.js",
-  "vol1": "build/vol1.6b8a895bfa.js",
-  "vol2": "build/vol2.70f133a956.js",
-  "vol3": "build/vol3.1ead872395.js",
-  "vol4": "build/vol4.65fffd2020.js"
+  "app": "build/app.c745fa4e32.js",
+  "echoChunk": "build/echo-universe-chunk.2ec962d5f7.js"
 }

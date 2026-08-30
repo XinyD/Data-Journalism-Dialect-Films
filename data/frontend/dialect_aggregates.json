@@ -1,12 +1,12 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "sampleFingerprint": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503",
+    "sampleFingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1",
     "baseline": {
-      "china_dialect": 3045,
-      "china_mandarin": 9746,
+      "china_dialect": 3067,
+      "china_mandarin": 9724,
       "china_total": 12791,
-      "dialect_all_regions": 3338,
+      "dialect_all_regions": 3360,
       "publication_records": 63025
     },
     "methodology": "Region=China；dialect=Is_Dialect==1；below5=豆瓣评分<5占比；yearly 双方n>=5（1990-2020）；lang_diversity min n>=10 top10；genre_avg min n>=30 top8；口径固化自 sync_preview_dialect_v43_20260819.py"
@@ -66,16 +66,16 @@
     },
     "2020s": {
       "d": {
-        "n": 57,
-        "mean": 6.34,
-        "below5": 15.8
+        "n": 79,
+        "mean": 6.31,
+        "below5": 15.2
       },
       "m": {
-        "n": 2041,
+        "n": 2019,
         "mean": 5.74,
-        "below5": 32.6
+        "below5": 32.8
       },
-      "delta": 0.6
+      "delta": 0.57
     }
   },
   "flop_decade": {
@@ -92,13 +92,13 @@
       "m": 36.1
     },
     "2020s": {
-      "d": 15.8,
-      "m": 32.6
+      "d": 15.2,
+      "m": 32.8
     }
   },
   "flop_overall": {
-    "d": 6.4,
-    "m": 24.4
+    "d": 6.5,
+    "m": 24.5
   },
   "yearly": {
     "1990": -0.23,
@@ -131,43 +131,43 @@
     "2017": 1.21,
     "2018": 0.54,
     "2019": 0.51,
-    "2020": 0.59
+    "2020": 0.66
   },
   "type_controlled": {
     "raw": {
       "d": {
-        "n": 3045,
+        "n": 3067,
         "mean": 6.62,
-        "below5": 6.4
+        "below5": 6.5
       },
       "m": {
-        "n": 9746,
+        "n": 9724,
         "mean": 6.11,
-        "below5": 24.4
+        "below5": 24.5
       }
     },
     "exclude": {
       "d": {
-        "n": 2910,
+        "n": 2930,
         "mean": 6.58,
-        "below5": 6.6
+        "below5": 6.7
       },
       "m": {
-        "n": 8695,
+        "n": 8675,
         "mean": 5.93,
-        "below5": 27.0
+        "below5": 27.1
       }
     },
     "drama": {
       "d": {
-        "n": 1299,
-        "mean": 6.86,
+        "n": 1313,
+        "mean": 6.85,
         "below5": 5.2
       },
       "m": {
-        "n": 4340,
+        "n": 4326,
         "mean": 6.25,
-        "below5": 18.0
+        "below5": 18.1
       }
     }
   },
@@ -176,13 +176,13 @@
       "name": "非粤语方言",
       "mean": 7.22,
       "below5": 2.1,
-      "n": 480
+      "n": 485
     },
     {
       "name": "粤语",
-      "mean": 6.51,
-      "below5": 7.2,
-      "n": 2565
+      "mean": 6.5,
+      "below5": 7.3,
+      "n": 2582
     }
   ],
   "lang_diversity": [
@@ -209,12 +209,12 @@
     {
       "name": "闽南语",
       "mean": 7.39,
-      "n": 117
+      "n": 118
     },
     {
       "name": "藏语",
-      "mean": 7.2,
-      "n": 35
+      "mean": 7.17,
+      "n": 36
     },
     {
       "name": "重庆话",
@@ -233,20 +233,20 @@
     },
     {
       "name": "武汉话",
-      "mean": 6.6,
-      "n": 12
+      "mean": 6.64,
+      "n": 13
     }
   ],
   "global_layers": [
     {
       "name": "欧洲 · 非主导语言",
-      "below5": 1.5,
-      "n": 6122
+      "below5": 1.6,
+      "n": 6252
     },
     {
       "name": "欧洲 · 英语",
-      "below5": 3.6,
-      "n": 6048
+      "below5": 3.7,
+      "n": 6273
     },
     {
       "name": "日韩",
@@ -255,32 +255,32 @@
     },
     {
       "name": "华语 · 方言",
-      "below5": 6.4,
-      "n": 3045
+      "below5": 6.5,
+      "n": 3067
     },
     {
       "name": "北美 · 英语",
-      "below5": 8.8,
-      "n": 15681
+      "below5": 8.9,
+      "n": 16399
     },
     {
       "name": "华语 · 普通话",
-      "below5": 24.4,
-      "n": 9746,
+      "below5": 24.5,
+      "n": 9724,
       "outlier": true
     }
   ],
   "dual_director": {
     "hist": {
       "≤−2": 15,
-      "−1": 51,
-      "0": 164,
-      "+1": 143,
-      "+2": 70,
+      "−1": 53,
+      "0": 161,
+      "+1": 147,
+      "+2": 69,
       "+3": 23,
       "≥+4": 10
     },
-    "total": 476,
+    "total": 478,
     "share_positive": 70,
     "mean_diff": 0.65
   },
@@ -413,7 +413,7 @@
     {
       "name": "短片",
       "mean": 7.04,
-      "n": 101,
+      "n": 102,
       "top": [
         {
           "id": "26745394",
@@ -463,7 +463,7 @@
     {
       "name": "剧情",
       "mean": 6.86,
-      "n": 1298,
+      "n": 1302,
       "top": [
         {
           "id": "26672579",

@@ -31,7 +31,7 @@
     "duplicates_removed": 37
   },
   "publication_records": 63025,
-  "sample_fingerprint_sha256": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503",
+  "sample_fingerprint_sha256": "70addfb0d7b53edbdc0d26002b4f50d217902fdf6f0db5e405eb8236ee7c207e",
   "counts": {
     "decade": {
       "2010s": 23114,
@@ -48,12 +48,12 @@
       "Other": 3967
     },
     "language": {
-      "Chinese": 13203,
-      "English": 22914,
-      "European_Languages": 6838,
-      "Japanese": 7266,
-      "Korean": 1802,
-      "Other": 11002
+      "Chinese": 13179,
+      "English": 23913,
+      "European_Languages": 6986,
+      "Japanese": 7702,
+      "Korean": 2101,
+      "Other": 9144
     },
     "source": {
       "douban_all_data": 53058,
@@ -180,5 +180,34 @@
     "applied_by": "scripts/apply_first_listed_region_20260824.py",
     "rows_changed": 801,
     "rule": "first listed country; CJK space-separated lists split; 西德/东德 → Europe; F7 平壤之约 stays East_Asia"
+  },
+  "language_backfill_20260830": {
+    "applied_by": "scripts/apply_language_backfill_20260830.py",
+    "rule": "Douban subject-page 语言 backfill for delivery_20260817 missing column; Tier 2b new hits default-excluded; remaining empty China stamped EMPTY_LANG_DEFAULTED rather than treated as observed Mandarin",
+    "date": "2026-08-30",
+    "overrides_file": "language_backfill_overrides.csv",
+    "overrides_in_file": 2504,
+    "applied": 2385,
+    "skipped_missing_id": 0,
+    "skipped_protected": 1,
+    "dialect_tier1_2a": 30,
+    "tier2b_excluded": 19,
+    "excluded_list": 0,
+    "language_only": 0,
+    "unchanged": 2336,
+    "skipped_wikidata_china_dialect": 118,
+    "china_empty_defaulted": 0,
+    "delivery_china_default_stamped": 0,
+    "china_dialect_after": 3076,
+    "china_mandarin_after": 9715,
+    "china_total_after": 12791
+  },
+  "yinruchenyan_lang_fix_20260830": {
+    "applied_by": "scripts/apply_yinruchenyan_lang_fix_20260830.py",
+    "rule": "《隐入尘烟》(35131346)：delivery_20260817 无语言列，空语言回填默认普通话，Wikidata P364 写成汉语普通话/Mandarin；按豆瓣现页修正为 甘肃方言/汉语普通话（甘肃方言排首），补收为 Tier 2a 方言片",
+    "baseline": "(3067, 2303, 418, 346)",
+    "previous_fingerprint": "51013700ec265c7e5cb2faf1468e2fdb5d153f7223fa05a57012c5408f7fe3bb",
+    "date": "2026-08-30",
+    "synced_fingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1"
   }
 }

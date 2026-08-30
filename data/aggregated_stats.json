@@ -2,7 +2,7 @@
   "meta": {
     "record_count": 63025,
     "minimum_vote_count": 100,
-    "sample_fingerprint": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503"
+    "sample_fingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1"
   },
   "decades": {
     "1990s": {
@@ -440,10 +440,10 @@
   },
   "languages": {
     "Chinese": {
-      "count": 13203,
-      "avg_rating": 6.245,
+      "count": 13181,
+      "avg_rating": 6.2448,
       "median_rating": 6.5,
-      "avg_votes": 22202.91,
+      "avg_votes": 22239.48,
       "top_movies": [
         {
           "title": "张国荣热·情演唱会",
@@ -483,10 +483,10 @@
       ]
     },
     "English": {
-      "count": 22914,
-      "avg_rating": 6.973,
+      "count": 23913,
+      "avg_rating": 6.9451,
       "median_rating": 7.1,
-      "avg_votes": 14611.56,
+      "avg_votes": 15565.09,
       "top_movies": [
         {
           "title": "The Court-Martial of Jackie Robinson",
@@ -526,10 +526,10 @@
       ]
     },
     "European_Languages": {
-      "count": 6838,
-      "avg_rating": 7.1733,
-      "median_rating": 7.3,
-      "avg_votes": 3720.7,
+      "count": 6986,
+      "avg_rating": 7.1647,
+      "median_rating": 7.2,
+      "avg_votes": 3914.85,
       "top_movies": [
         {
           "title": "伊丽莎白",
@@ -569,10 +569,10 @@
       ]
     },
     "Japanese": {
-      "count": 7266,
-      "avg_rating": 7.2016,
+      "count": 7701,
+      "avg_rating": 7.1674,
       "median_rating": 7.3,
-      "avg_votes": 6669.17,
+      "avg_votes": 7148.22,
       "top_movies": [
         {
           "title": "久石让在武道馆：与宫崎骏动画一同走过的25年",
@@ -612,10 +612,10 @@
       ]
     },
     "Korean": {
-      "count": 1802,
-      "avg_rating": 6.4504,
-      "median_rating": 6.6,
-      "avg_votes": 11916.43,
+      "count": 2101,
+      "avg_rating": 6.3985,
+      "median_rating": 6.5,
+      "avg_votes": 11666.06,
       "top_movies": [
         {
           "title": "GOT7的HardCarry",
@@ -655,10 +655,10 @@
       ]
     },
     "Other": {
-      "count": 11002,
-      "avg_rating": 6.5958,
+      "count": 9143,
+      "avg_rating": 6.6407,
       "median_rating": 6.7,
-      "avg_votes": 6785.95,
+      "avg_votes": 2814.45,
       "top_movies": [
         {
           "title": "坂本龙一特别线上钢琴独奏会2022",

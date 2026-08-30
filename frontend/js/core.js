@@ -493,13 +493,6 @@ function renderLocalGallery(movies, title, containerId = 'movie-grid', limit = 1
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const nav = document.querySelector('.volume-page .nav-menu');
-    const active = nav && nav.querySelector('.nav-item.active');
-    if (!nav || !active || window.innerWidth > 900) return;
-    nav.scrollLeft = Math.max(0, active.offsetLeft - (nav.clientWidth - active.clientWidth) / 2);
-});
-
 // Expose to window explicitly
 window.DataService = DataService;
 window.StoryUI = StoryUI;

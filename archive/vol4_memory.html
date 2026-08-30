@@ -3,21 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>卷四：交叉筛选 | 「言」之有物</title>
+    <title>卷四：交叉筛选（归档） | 「言」之有物</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <meta name="description" content="组合年代、地区与语言条件，核对平均分背后的具体电影。回到《「言」之有物》主故事。">
-    <meta property="og:title" content="卷四：交叉筛选 | 「言」之有物">
+    <meta name="description" content="归档副本。组合年代、地区与语言条件，核对平均分背后的具体电影。">
+    <meta property="og:title" content="卷四：交叉筛选（归档） | 「言」之有物">
     <meta property="og:description" content="交叉筛选后查看匹配电影数与高分片目。">
     <meta name="twitter:card" content="summary_large_image">
-    <!-- build:og -->
     <meta property="og:image" content="assets/og-cover.jpg">
-    <!-- endbuild -->
-    <!-- build:css -->
-    <link rel="stylesheet" href="build/style.36d6e4873e.css">
-    <!-- endbuild -->
-    <!-- build:js -->
-    <script defer src="build/vol4.65fffd2020.js"></script>
-    <!-- endbuild -->
+    <!--
+        归档副本 · 卷四：交叉筛选
+        ------------------------------------
+        四个附录分卷已从正式前端下线。首页探索舱已覆盖同一交叉筛选。
+        本页不是主站的一部分，仅供历史留存。
+
+        python serve.py
+        然后访问 http://127.0.0.1:8000/archive/vol4_memory.html
+    -->
+    <base href="../frontend/">
+    <script>
+        (function () {
+            var req = new XMLHttpRequest();
+            req.open('GET', 'build/manifest.json', false);
+            try {
+                req.send();
+                var m = JSON.parse(req.responseText);
+                if (m.style) {
+                    var link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = m.style;
+                    document.head.appendChild(link);
+                }
+            } catch (e) {
+                console.error('无法加载主站 manifest，样式缺失：', e);
+            }
+        })();
+    </script>
+    <script defer src="../archive/volumes/build/vol4.65fffd2020.js"></script>
 </head>
 <body class="volume-page">
     <noscript><p class="noscript-banner">本页面需要启用 JavaScript 才能浏览数据故事。请开启脚本后刷新页面。</p></noscript>
@@ -29,14 +50,15 @@
         </div>
     </div>
     <nav class="sidebar">
-        <div class="sidebar-title">CINEMATIC TASTE</div>
+        <div class="sidebar-title">「言」之有物</div>
+        <div class="sidebar-subtitle">归档副本 · 非正式发布</div>
         <div class="sidebar-subtitle"><span data-publication-count>加载中</span> 部电影评分</div>
         <div class="nav-menu">
-            <a href="index.html" class="nav-item">导言：电影评分星图</a>
-            <a href="vol1_time.html" class="nav-item">Vol I. 年代变化</a>
-            <a href="vol2_geo.html" class="nav-item">Vol II. 地区分布</a>
-            <a href="vol3_lang.html" class="nav-item">Vol III. 语言构成</a>
-            <a href="vol4_memory.html" class="nav-item active">Vol IV. 交叉筛选</a>
+            <a href="index.html" class="nav-item">返回主报道</a>
+            <a href="../archive/vol1_time.html" class="nav-item">Vol I. 年代变化</a>
+            <a href="../archive/vol2_geo.html" class="nav-item">Vol II. 地区分布</a>
+            <a href="../archive/vol3_lang.html" class="nav-item">Vol III. 语言构成</a>
+            <a href="../archive/vol4_memory.html" class="nav-item active">Vol IV. 交叉筛选</a>
         </div>
     </nav>
 

@@ -36,6 +36,7 @@ from dialect_defs import (
     DIALECT_GROUPS, DIALECT_MARKERS_STRICT, MANDARIN_MARKERS,
     OPERA_CONCERT_EXCLUDE_MOVIE_IDS,
     normalize_text, lang_parts, first_tag_is_foreign,
+    is_tier2b_default_excluded,
 )
 from freeze_constants import TIER_BASELINE
 
@@ -106,7 +107,7 @@ def classify_v21(lang, evidence="", movie_id=""):
     else:
         tier = "Tier 2a" if langs and tag_is_dialect(langs[0]) else "Tier 2b"
     # v4.1：Tier 2b 未通过证据审查（无补回证据）→ 默认排除
-    if tier == "Tier 2b" and str(evidence).strip() in ("", "TIER2B_EXCLUDED"):
+    if tier == "Tier 2b" and is_tier2b_default_excluded(evidence):
         return 0, "非方言", found_tags, groups
     return 1, tier, found_tags, groups
 
@@ -388,7 +389,7 @@ def main():
     # 证据漏斗/补判白名单补回 349 部，排除 353 部）→ (3083, 2309, 425, 349)；
     # 2026-08-15 用户人工复核移出《芒种》(1986783) → (3082, 2309, 425, 348)；
     # 2026-08-16 用户人工复核补回 4 部空语言 China 电影 → (3086, 2313, 425, 348)。
-    # 现行数字以 freeze_constants.TIER_BASELINE 为准（v4.5 发布快照）。
+    # 现行数字以 freeze_constants.TIER_BASELINE 为准（v4.6 发布快照）。
     ok = (len(d_rows), t1, t2a, t2b) == TIER_BASELINE
     print("数字一致性: " + ("PASS" if ok else "WARNING — 与 freeze_constants.TIER_BASELINE 不一致，请检查语言字段或白名单"))
 

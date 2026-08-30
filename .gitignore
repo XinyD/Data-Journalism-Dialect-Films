@@ -21,6 +21,9 @@ data/source/
 # Local comment dumps and the delivery bundle (including crawlers) stay local.
 data/cleaned/douban_comments_clean.csv
 data/delivery_20260817/
+data/cleaned/language_backfill_cache.jsonl
+data/cleaned/_*.json
+data/cleaned/_*.txt
 
 # Local scratch, process docs, and tool caches
 _scratch/

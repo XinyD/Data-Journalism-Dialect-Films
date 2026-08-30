@@ -129,7 +129,6 @@ export function initScrollytelling(deps) {
             bar.style.width = `${narrativeProgress(window.scrollY, start, end) * 100}%`;
         }
         if (currentStep) updateChapterNavFill(currentStep);
-        if (window.ScaleScene) window.ScaleScene.onScroll();
     }
 
     function sceneIdOf(step) {
@@ -170,7 +169,6 @@ export function initScrollytelling(deps) {
             deps.renderParticleScene(sceneId);
         }
         if (window.WaveScene) window.WaveScene.onSceneChange(sceneId);
-        if (window.ScaleScene) window.ScaleScene.onSceneChange(sceneId);
         updateProgress();
     }
 

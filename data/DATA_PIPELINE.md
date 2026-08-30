@@ -1,6 +1,8 @@
 # 数据处理与文件映射清单
 
-> 最后更新：2026-08-24（v4.5 第一制片国 · 指纹 ecd258a80e）| 方言电影数据故事项目
+> 最后更新：2026-08-30（v4.6 豆瓣语言回填 + 《隐入尘烟》补收 · 指纹 883fe6f7fb）| 方言电影数据故事项目
+
+> 口径提示：`narrative_facts.json` 的 `regions` 键名「中国大陆」实为 Region=China 全量（第一制片国为中国，含香港、台湾、澳门，n=12,791），与正文「中国（含港澳台）」同一口径；键名沿用历史命名，勿按字面理解。
 
 ## 一、数据流转总览
 
@@ -45,19 +47,21 @@
 
 | 文件 | 说明 | 行数/大小 |
 |------|------|-----------|
-| `derived_movies.csv` | 清洗+派生后的发布数据集（v4.5 发布快照）。过滤漏斗：371,962 → 116,796（年份 1888-2026/评分 0-10/片名有效）→ 63,062（评价人数 ≥100）→ **63,025**（去重 37 部）。派生字段：Decade/Region/Language_Category/Region_Code/Genre_Code/Language_Code/Is_Dialect；v4.1 起新增 **Dialect_Evidence** 列（Tier 2b 证据审查溯源，346 条非空） | 63,025 行 / 48 MB |
+| `derived_movies.csv` | 清洗+派生后的发布数据集（v4.6 发布快照）。过滤漏斗：371,962 → 116,796（年份 1888-2026/评分 0-10/片名有效）→ 63,062（评价人数 ≥100）→ **63,025**（去重 37 部）。派生字段：Decade/Region/Language_Category/Region_Code/Genre_Code/Language_Code/Is_Dialect/Language_Provenance；v4.1 起新增 **Dialect_Evidence** 列（Tier 2b 证据审查溯源；另含 `LANG_BACKFILL_20260830` / `EMPTY_LANG_DEFAULTED` / `LANG_FIX_20260819` / `LANG_FIX_20260830`） | 63,025 行 / 48 MB |
 | `sample_manifest.json` | 数据指纹（SHA-256）、处理阶段计数、纳入标准元信息 | — |
 | `review_queue.csv` | 人工审核排除清单（审计溯源用），记录被剔除影片及原因 | — |
+| `language_backfill_candidates.csv` | v4.6：语言不可信的入样清单（delivery 空列 / 默认普通话 / 2020–2026 其他空语言） | — |
+| `language_backfill_overrides.csv` | v4.6：豆瓣详情页回填的语言覆盖表（replay 链读取） | — |
 
 ### 阶段三：中国区筛选数据 (China Region Data)
 
-当前流程中 China 子集由 `gen_report_strict.py` 在内存中过滤产生（`df[df["Region"] == "China"]`），**不持久化为独立文件**。v4.5 第一制片国口径下该子集为 **12,791 行**（方言 3,045 + 普通话·非方言 9,746，与 manifest counts.region.China 一致）。如需导出，可新增脚本从 `cleaned/derived_movies.csv` 筛选 `Region == "China"` 行。
+当前流程中 China 子集由 `gen_report_strict.py` 在内存中过滤产生（`df[df["Region"] == "China"]`），**不持久化为独立文件**。v4.6 第一制片国口径下该子集为 **12,791 行**（方言 3,067 + 普通话·非方言 9,724，与 manifest counts.region.China 一致）。如需导出，可新增脚本从 `cleaned/derived_movies.csv` 筛选 `Region == "China"` 行。
 
 ### 阶段四：方言电影最终数据 (Dialect Films Data) — `data/dialect_films/`
 
 | 文件 | 说明 |
 |------|------|
-| `report_data_strict.json` | 方言分类结果，含 Tier 1/2a/2b 分层、方言标签、语言列表、占比推断等（~2.8 MB）。**v4.5 发布快照：China 方言片 3,045（Tier 1 2,289 / Tier 2a 410 / Tier 2b 346，判定同 v4.4）**。注意：`derived_movies.csv` 无 Tier 列，Tier 分层由本脚本按 dialect_defs 规则计算并与 Is_Dialect 列交叉校验 |
+| `report_data_strict.json` | 方言分类结果，含 Tier 1/2a/2b 分层、方言标签、语言列表、占比推断等（~2.8 MB）。**v4.6 发布快照：China 方言片 3,067（Tier 1 2,303 / Tier 2a 418 / Tier 2b 346）**。注意：`derived_movies.csv` 无 Tier 列，Tier 分层由本脚本按 dialect_defs 规则计算并与 Is_Dialect 列交叉校验 |
 | `方言片明细报告.csv` | 逐部明细报告：方言片全量 + 普通话对照组分层抽样，含组别、movie_id、片名、年份、评分、类型、Decade、语言字段原文、归一化语言、命中方言标签、方言大区、Tier 层级等 |
 
 ### 前端数据 — `data/`（根级，保持不变）
@@ -169,21 +173,24 @@ python scripts/gen_dialect_report.py
 ## 七、注意事项
 
 1. **方言定义修改**：仅修改 `scripts/dialect_defs.py`，`data_processor.py` 与 `gen_report_strict.py` 共用此 SSOT
-2. **重建后必须重放手工修正链**：重跑 `data_processor.py` 会用 `language_code()` 重算 Is_Dialect/Language_Code，**撤销全部手工修正**（Tier 2b 证据审查 / 空语言回填 / 审计排除名单 / F7 Region 修正 / 戏曲演唱会排除 / 阿嬷语言修正）。重建须加 `--overwrite-tier2b`。推荐一键重放：
+2. **重建后必须重放手工修正链**：重跑 `data_processor.py` 会用 `language_code()` 重算 Is_Dialect/Language_Code，**撤销全部手工修正**（Tier 2b 证据审查 / 空语言回填 / 2020–2026 语言回填 / 审计排除名单 / F7 Region 修正 / 戏曲演唱会排除 / 阿嬷语言修正 / 《隐入尘烟》语言修正）。重建须加 `--overwrite-tier2b`。推荐一键重放：
 
 ```bash
 python scripts/replay_v44_baseline.py --full-rebuild --source data/source/movies_info_merged.csv
 ```
 
-补丁链已含 v4.5 `apply_first_listed_region_20260824.py`；`--full-rebuild` 在断言终态后会自动跑 `rebuild.py`，不必再手工执行一次。
+补丁链已含 v4.5 `apply_first_listed_region_20260824.py`、v4.6 `apply_language_backfill_20260830.py` 与 `apply_yinruchenyan_lang_fix_20260830.py`；`--full-rebuild` 在断言终态后会自动跑 `rebuild.py`，不必再手工执行一次。
 
 手工逐步重放时顺序如下（重跑 fixed_count=0 属正常），然后执行 §六 全链路重生成：
    1. `scripts/apply_tier2b_reclassify_20260815.py`
    2. `scripts/apply_empty_lang_backfill_20260818.py`
-   3. `scripts/apply_audit_exclude_20260818.py`
-   4. `scripts/apply_f7_region_fix_20260818.py --apply`
-   5. `scripts/apply_opera_concert_exclude_20260818.py`
-   6. `scripts/apply_ama_lang_fix_20260819.py`
-   7. `scripts/apply_first_listed_region_20260824.py`（v4.5：空格分隔制片国取首位；`Dialect_Evidence` 不在 `OUTPUT_COLUMNS` 中，本步不改该列）
+   3. `scripts/apply_language_backfill_20260830.py`（v4.6：按 `language_backfill_overrides.csv` 回填豆瓣语言；须先跑 `list_untrusted_languages.py` + `fetch_douban_languages.py`）
+   4. `scripts/apply_audit_exclude_20260818.py`
+   5. `scripts/apply_f7_region_fix_20260818.py --apply`
+   6. `scripts/apply_opera_concert_exclude_20260818.py`
+   7. `scripts/apply_ama_lang_fix_20260819.py`
+   8. `scripts/apply_yinruchenyan_lang_fix_20260830.py`（《隐入尘烟》按豆瓣现页补收为甘肃方言片）
+   9. `scripts/apply_first_listed_region_20260824.py`（v4.5：空格分隔制片国取首位；`Dialect_Evidence` 不在 `OUTPUT_COLUMNS` 中，本步不改该列）
 3. **大文件**：`movies_info.csv`（238 MB）、`movies_info_merged.csv` 与 `derived_movies.csv`（48 MB）移动时需确保磁盘空间
 4. **归档文件**：`archive/` 下的文件为历史产物，不参与当前管线运行，仅供审计溯源
+5. **2020–2026 语言缺列**：`delivery_20260817` 源表无「语言」列。入样候选见 `data/cleaned/language_backfill_candidates.csv`；豆瓣/Wikidata 回填结果见 `language_backfill_overrides.csv`。Wikidata P364 只填充 `Language_Code` 空缺，**不**把非豆瓣标签算进 China 方言。将来交付包若自带语言列，`merge_delivery_data.py` 会映射该列而不再整列置空。抓取缓存 `language_backfill_cache.jsonl` 仅本地保留。剩余空语言与 `EMPTY_LANG_DEFAULTED` 条数以 `sample_manifest.json` 的 `language_backfill_20260830` 块为准。

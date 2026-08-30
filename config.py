@@ -48,6 +48,11 @@ DELIVERY_COMMENTS_CSV = DELIVERY_DIR / "douban_comments_2020_2026.csv"
 # 清洗后短评数据
 DERIVED_COMMENTS_CLEAN = DATA_DIR / "cleaned" / "douban_comments_clean.csv"
 
+# 2020–2026 语言回填（delivery 缺列）：候选清单入库、抓取缓存本地、overrides 入库
+LANGUAGE_BACKFILL_CANDIDATES = DATA_DIR / "cleaned" / "language_backfill_candidates.csv"
+LANGUAGE_BACKFILL_CACHE = DATA_DIR / "cleaned" / "language_backfill_cache.jsonl"
+LANGUAGE_BACKFILL_OVERRIDES = DATA_DIR / "cleaned" / "language_backfill_overrides.csv"
+
 # Import-time mkdir so a fresh checkout can write details shards without a separate bootstrap.
 for directory in (DATA_DIR, MOVIE_DETAILS_DIR):
     directory.mkdir(parents=True, exist_ok=True)

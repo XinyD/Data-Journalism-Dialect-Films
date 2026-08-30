@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方言片详细报告 — 逐部明细与分层统计</title><style>
+    :root{--bg:#f8f9fa;--card:#fff;--text:#1a1a2e;--muted:#6c757d;--border:#dee2e6;--accent:#e63946;
+    --tier1:#2a9d8f;--tier1-bg:#e0f5f2;--info:#118ab2;--info-bg:#e3f2fd;--warn:#f77f00;--warn-bg:#fff3cd;
+    --shadow:0 1px 3px rgba(0,0,0,.08)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);
+    color:var(--text);line-height:1.7;font-size:14px}
+    .container{max-width:940px;margin:0 auto;padding:24px}
+    .header{background:linear-gradient(135deg,#1a1a2e 0%,#0f3460 100%);color:#fff;padding:36px 24px;
+    border-radius:0 0 20px 20px;margin-bottom:28px}
+    .header h1{font-size:23px;margin-bottom:6px}.header .sub{font-size:13px;opacity:.85}
+    .header .badge{display:inline-block;background:var(--accent);padding:3px 10px;border-radius:12px;
+    font-size:11px;font-weight:600;margin-top:8px}
+    .section{background:var(--card);border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+    .section h2{font-size:17px;font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--border)}
+    .section h3{font-size:15px;font-weight:600;margin:14px 0 8px;color:var(--info)}
+    .section h4{font-size:13.5px;font-weight:600;margin:12px 0 6px}
+    table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+    th{background:#f1f3f5;padding:7px 10px;text-align:left;border-bottom:2px solid var(--border)}
+    td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+    .cards{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+    .card{flex:1 1 160px;background:#f8f9fa;border:1px solid var(--border);border-radius:10px;padding:14px}
+    .card .v{font-size:22px;font-weight:700;color:var(--tier1)}
+    .card .k{font-size:12px;color:var(--muted)}
+    .callout{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:13px}
+    .callout-warn{background:var(--warn-bg);border-left:4px solid var(--warn)}
+    .callout-info{background:var(--info-bg);border-left:4px solid var(--info)}
+    ul{padding-left:20px}li{margin-bottom:4px}
+    code{background:#f1f3f5;padding:1px 4px;border-radius:3px;font-size:12px}
+    </style></head><body>
+<div class="header"><div class="container">
+<h1>方言片详细报告 — 逐部明细与分层统计</h1>
+<div class="sub">定义口径 v3（文献综述版） · 判定规则 v2.1（Tier 分层 + 严格中国语言白名单） · 生成日期 2026-08-14</div>
+<span class="badge">逐部明细见 data/方言片明细报告.csv（3,567 行）</span>
+</div></div>
+<div class="container">
+
+<div class="section"><h2>一、总览</h2>
+<div class="cards">
+<div class="card"><div class="v">12,791</div><div class="k">中国电影总数（Region=China）</div></div>
+<div class="card"><div class="v">3,067</div><div class="k">方言片（Is_Dialect=1，占 24.0%）</div></div>
+<div class="card"><div class="v">6.62</div><div class="k">方言片均分（有评分 3,067 部）</div></div>
+<div class="card"><div class="v">6.11</div><div class="k">非方言片均分（有评分 9,724 部）</div></div>
+<div class="card"><div class="v">6.5% / 24.5%</div><div class="k">烂片率(&lt;5分) 方言 / 非方言</div></div>
+</div>
+<div class="callout callout-warn"><strong>占比口径声明</strong>：豆瓣"语言"字段只有标签、无对白时长占比。本报告中所有"方言占比"均为
+<strong>基于标签结构与排序的推断值</strong>（非实测）：Tier 1 ≈100%、Tier 2a &gt;50%、Tier 2b &lt;50%，
+详见《方言电影定义_文献综述与操作标准_v3.html》第五节。</div>
+</div>
+
+<div class="section"><h2>二、Tier 分层分布（对应方言占比推断）</h2>
+<table><thead><tr><th>层级</th><th>数量</th><th>占方言片</th><th>均分</th><th>烂片率</th><th>方言占比（推断）</th></tr></thead>
+<tbody><tr><td><strong>Tier 1</strong></td><td>2,303</td><td>75.1%</td><td>6.53</td><td>6.6%</td><td>≈100%（推断）</td></tr><tr><td><strong>Tier 2a</strong></td><td>418</td><td>13.6%</td><td>6.67</td><td>8.9%</td><td>>50%（推断）</td></tr><tr><td><strong>Tier 2b</strong></td><td>346</td><td>11.3%</td><td>7.12</td><td>2.9%</td><td><50%（推断）</td></tr></tbody></table>
+<ul>
+<li><strong>Tier 1 纯方言片</strong>：语言字段只含方言/少数民族语言标签，无普通话标签 → 最接近学术定义中"全部对白为方言"的纯方言片（李恒 2009 狭义口径），信号最强。</li>
+<li><strong>Tier 2a 方言排首位</strong>：方言+普通话并存、方言居首 → 方言为主导对白（含《秋菊打官司》《小武》等因豆瓣双标注被降级的学术纯方言片）。</li>
+<li><strong>Tier 2b 普通话排首位</strong>：普通话居首、方言显著存在 → 方言为次要成分，解读需最谨慎。</li>
+</ul></div>
+
+<div class="section"><h2>三、方言大区分布</h2>
+<table><thead><tr><th>方言大区</th><th>命中影片数*</th><th>均分</th></tr></thead>
+<tbody><tr><td>粤语（广府片/白话）</td><td>2,590</td><td>6.50</td></tr><tr><td>闽南语（闽台片）</td><td>141</td><td>7.37</td></tr><tr><td>通用汉语方言标签</td><td>123</td><td>7.09</td></tr><tr><td>西南官话（川渝滇黔片）</td><td>105</td><td>6.91</td></tr><tr><td>中国少数民族语言</td><td>83</td><td>7.21</td></tr><tr><td>吴语（江浙片）</td><td>67</td><td>7.35</td></tr><tr><td>中原/兰银官话</td><td>50</td><td>7.11</td></tr><tr><td>东北/冀鲁/胶辽官话</td><td>33</td><td>7.14</td></tr><tr><td>晋语</td><td>22</td><td>7.66</td></tr><tr><td>台语（闽南语台湾变体）</td><td>18</td><td>6.99</td></tr><tr><td>湘语</td><td>16</td><td>7.32</td></tr><tr><td>客家话</td><td>13</td><td>7.76</td></tr><tr><td>江淮官话</td><td>13</td><td>7.32</td></tr><tr><td>北京官话</td><td>10</td><td>7.38</td></tr><tr><td>赣语</td><td>1</td><td>6.70</td></tr></tbody></table>
+<p style="font-size:12px;color:var(--muted)">*一部影片可含多个方言标签，故按大区计数之和大于方言片总数。</p></div>
+
+<div class="section"><h2>四、代表性影片</h2>
+<h4>Tier 1 纯方言片 · 评分 TOP 10</h4><table><thead><tr><th>片名</th><th>年份</th><th>评分</th><th>归一化语言</th><th>Tier</th><th>占比(推断)</th></tr></thead><tbody><tr><td>黄子华栋笃笑之金盆𠺘口</td><td>2018</td><td>9.5</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>越大镬越快乐</td><td>2007</td><td>9.5</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>黄子华栋笃笑之冇炭用</td><td>2003</td><td>9.5</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>黄子华栋笃笑之洗燥</td><td>2012</td><td>9.4</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>黄子华栋笃笑之儿童不宜成人之危</td><td>2006</td><td>9.4</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>集体回忆 - 张国荣</td><td>2007</td><td>9.4</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>棱角杯</td><td>1993</td><td>9.4</td><td>维吾尔语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>无间道</td><td>2003</td><td>9.3</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>南海十三郎</td><td>1997</td><td>9.3</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>娱乐圈血肉史</td><td>1990</td><td>9.3</td><td>粤语</td><td>Tier 1</td><td>≈100%</td></tr></tbody></table>
+<h4>Tier 2a 方言排首位 · 评分 TOP 5</h4><table><thead><tr><th>片名</th><th>年份</th><th>评分</th><th>归一化语言</th><th>Tier</th><th>占比(推断)</th></tr></thead><tbody><tr><td>给阿嬷的情书</td><td>2026</td><td>9.3</td><td>潮汕话 / 普通话 / 泰语 / 英语</td><td>Tier 2a</td><td>&gt;50%</td></tr><tr><td>大话西游之大圣娶亲</td><td>2014</td><td>9.2</td><td>粤语 / 普通话</td><td>Tier 2a</td><td>&gt;50%</td></tr><tr><td>大话西游之月光宝盒</td><td>2014</td><td>9.0</td><td>粤语 / 普通话</td><td>Tier 2a</td><td>&gt;50%</td></tr><tr><td>甜蜜蜜</td><td>2015</td><td>8.9</td><td>粤语 / 普通话 / 英语</td><td>Tier 2a</td><td>&gt;50%</td></tr><tr><td>悲情城市</td><td>1989</td><td>8.9</td><td>闽南语 / 普通话 / 日语 / 上海话 / 粤语</td><td>Tier 2a</td><td>&gt;50%</td></tr></tbody></table>
+<h4>Tier 2b 普通话排首位 · 评分 TOP 5</h4><table><thead><tr><th>片名</th><th>年份</th><th>评分</th><th>归一化语言</th><th>Tier</th><th>占比(推断)</th></tr></thead><tbody><tr><td>鬼子来了</td><td>2000</td><td>9.2</td><td>普通话 / 日语 / 唐山话</td><td>Tier 2b</td><td>&lt;50%</td></tr><tr><td>饮食男女</td><td>1994</td><td>9.1</td><td>普通话 / 闽南语 / 湖南话</td><td>Tier 2b</td><td>&lt;50%</td></tr><tr><td>一一</td><td>2017</td><td>9.1</td><td>普通话 / 闽南语 / 英语 / 日语</td><td>Tier 2b</td><td>&lt;50%</td></tr><tr><td>无间道(正序版)</td><td>2006</td><td>9.1</td><td>普通话 / 粤语 / 英语 / 泰语</td><td>Tier 2b</td><td>&lt;50%</td></tr><tr><td>囚</td><td>2017</td><td>9.1</td><td>普通话 / 东北方言</td><td>Tier 2b</td><td>&lt;50%</td></tr></tbody></table>
+<h4>边界案例抽查（知名影片分类核验）</h4>
+<table><thead><tr><th>片名</th><th>年份</th><th>评分</th><th>归一化语言</th><th>Tier</th><th>占比(推断)</th></tr></thead>
+<tbody><tr><td>小武</td><td>1998</td><td>8.5</td><td>晋语 / 普通话</td><td>Tier 2a</td><td>&gt;50%</td></tr><tr><td>秋菊打官司</td><td>1992</td><td>8.1</td><td>陕西话 / 普通话</td><td>Tier 2a</td><td>&gt;50%</td></tr><tr><td>路边野餐</td><td>2016</td><td>7.9</td><td>贵州方言</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>少年的你</td><td>2019</td><td>8.2</td><td>普通话</td><td>非方言</td><td>普通话主导</td></tr><tr><td>让子弹飞</td><td>2010</td><td>8.7</td><td>普通话 / 四川话 / 山西话</td><td>Tier 2b</td><td>&lt;50%</td></tr><tr><td>火锅英雄</td><td>2016</td><td>7.2</td><td>普通话 / 重庆话</td><td>Tier 2b</td><td>&lt;50%</td></tr><tr><td>无名之辈</td><td>2018</td><td>8.0</td><td>普通话 / 贵州方言</td><td>Tier 2b</td><td>&lt;50%</td></tr><tr><td>爱情神话</td><td>2021</td><td>8.1</td><td>普通话</td><td>非方言</td><td>普通话主导</td></tr><tr><td>三峡好人</td><td>2006</td><td>8.3</td><td>四川话 / 晋语</td><td>Tier 1</td><td>≈100%</td></tr><tr><td>疯狂的石头</td><td>2006</td><td>8.3</td><td>普通话 / 重庆话</td><td>Tier 2b</td><td>&lt;50%</td></tr></tbody></table>
+</div>
+
+<div class="section"><h2>五、普通话对照组（分层抽样 n=500）</h2>
+<div class="cards">
+<div class="card"><div class="v">500</div><div class="k">抽样部数（按年代分层比例分配）</div></div>
+<div class="card"><div class="v">6.15</div><div class="k">抽样均分</div></div>
+<div class="card"><div class="v">23.6%</div><div class="k">抽样烂片率(&lt;5分)</div></div>
+</div>
+<h4>抽样年代分布</h4>
+<table><thead><tr><th>Decade</th><th>部数</th></tr></thead><tbody><tr><td>1990s</td><td>27</td></tr><tr><td>2000s</td><td>65</td></tr><tr><td>2010s</td><td>220</td></tr><tr><td>2020s</td><td>104</td></tr><tr><td>Pre-1990s</td><td>84</td></tr></tbody></table>
+<p style="font-size:12.5px">对照组全量（非方言中国电影）均分 6.11、烂片率 24.5%，
+抽样与其一致即说明分层有效。对照组明细已并入 CSV（组别列 = "对照组"）。</p></div>
+
+<div class="section"><h2>六、语言字段解读说明（重点）</h2>
+<div class="callout callout-info">
+<strong>豆瓣"语言"字段 ≠ 对白占比</strong>。该字段标注影片中<strong>出现过</strong>的语言标签集合：
+(1) 不含时长占比，无法直接度量方言对白的百分比；(2) 标签顺序在多数情况下反映主次，但不作保证；
+(3) 存在双标注（如学术纯方言片《小武》同时标"山西方言/普通话"）与漏标注（少量对白未被标注）两类噪声。
+因此本报告以 <strong>Tier 分层 + 标签排序</strong> 作三档占比推断，并在 CSV 中逐部给出"占比推断依据"。
+</div>
+<ul>
+<li><strong>归一化规则</strong>：汉语普通话/普通话/国语/汉语/中文/Mandarin 统一归并为"普通话"（对照组标准语）；"台湾国语"保留独立标签（官话变体）。</li>
+<li><strong>命中方言标签</strong>：白名单（90+ 标签，17 组）匹配到的原始标签，是 Is_Dialect 判定的直接证据。</li>
+<li><strong>方言大区</strong>：命中标签映射到的方言区（粤语/闽南语/吴语/西南官话/客家话/湘语/赣语/晋语/徽语/平话/官话变体/台语/少数民族语言）。</li>
+<li><strong>对照组污染声明</strong>：对照组影片可能存在未被豆瓣标注的少量方言对白，属平台标注盲区，方向性影响已在定义文档第六节声明。</li>
+</ul></div>
+
+<div class="section"><h2>七、数据文件</h2>
+<ul>
+<li><code>data/方言片明细报告.csv</code> — 逐部明细（方言片全量 + 对照组抽样），字段：组别、movie_id、片名、年份、豆瓣评分、评价人数、类型、Decade、语言字段原文、归一化语言、命中方言标签、方言大区、Tier层级、方言占比（推断）、占比推断依据、来源URL。</li>
+<li><code>方言电影定义_文献综述与操作标准_v3.html</code> — 定义、文献引用与操作化标准（本报告口径依据）。</li>
+</ul></div>
+
+</div></body></html>

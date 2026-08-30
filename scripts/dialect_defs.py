@@ -395,6 +395,23 @@ OPERA_CONCERT_EXCLUDE_MOVIE_IDS = {
     "33412940",  # 《第39届香港电影金像奖颁奖典礼》2020
 }
 
+# Tier 2b（普通话排首 + 方言标签）默认排除的 Dialect_Evidence 取值。
+# LANG_BACKFILL_TIER2B_EXCLUDED：2020–2026 豆瓣语言回填后新发现的 Tier 2b，
+# 不并入原 702 证据池，不计入 TIER2B_EXCLUDED=354。
+TIER2B_EXCLUDE_EVIDENCE = frozenset({
+    "",
+    "TIER2B_EXCLUDED",
+    "LANG_BACKFILL_TIER2B_EXCLUDED",
+})
+
+
+def is_tier2b_default_excluded(evidence: object) -> bool:
+    """True when a Tier 2b row must stay out of the dialect caliber."""
+    if evidence is None or (isinstance(evidence, float) and pd.isna(evidence)):
+        return True
+    return str(evidence).strip() in TIER2B_EXCLUDE_EVIDENCE
+
+
 SIGN_MARKERS = ("手语", "sign language", "台湾手语")
 
 # Opera/theater (NOT a language dialect per se)

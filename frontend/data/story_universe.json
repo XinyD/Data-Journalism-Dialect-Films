@@ -4,14 +4,14 @@
     "provinceCount": 34,
     "minLangCount": 1,
     "source": "derived_movies.csv",
-    "sampleFingerprint": "ecd258a80e818d735b427ed457b816a677e9de36c0ed7379ae36ee156da35503"
+    "sampleFingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1"
   },
   "languages": [
     {
       "id": "粤语",
       "name": "粤语",
-      "n": 2752,
-      "mean": 6.53,
+      "n": 2769,
+      "mean": 6.52,
       "themes": [
         "城市",
         "商业",
@@ -89,7 +89,7 @@
     {
       "id": "闽南语",
       "name": "闽南语",
-      "n": 143,
+      "n": 144,
       "mean": 7.36,
       "themes": [
         "海洋",
@@ -242,8 +242,8 @@
     {
       "id": "藏语",
       "name": "藏语",
-      "n": 43,
-      "mean": 7.27,
+      "n": 44,
+      "mean": 7.24,
       "themes": [
         "高原",
         "信仰",
@@ -395,8 +395,8 @@
     {
       "id": "哈萨克语",
       "name": "哈萨克语",
-      "n": 17,
-      "mean": 7.46,
+      "n": 18,
+      "mean": 7.45,
       "themes": [
         "草原",
         "迁徙",
@@ -627,8 +627,8 @@
     {
       "id": "武汉话",
       "name": "武汉话",
-      "n": 13,
-      "mean": 6.69,
+      "n": 14,
+      "mean": 6.72,
       "themes": [
         "码头",
         "江湖",

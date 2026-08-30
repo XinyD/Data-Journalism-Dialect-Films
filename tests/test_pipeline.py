@@ -357,7 +357,12 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         )
         for stale_title in stale_titles:
             self.assertNotIn(stale_title, html)
-        self.assertIn('「言」之有物：从数据看中国电影的答案', html)
+        self.assertIn('“言”之有物：从数据看中国电影的答案', html)
+        self.assertIn('方言片更少拍成烂片', html)
+        self.assertIn('id="visual-decoder"', html)
+        self.assertIn('id="chart-flop-d"', html)
+        self.assertIn('id="chart-delta-2010s"', html)
+        self.assertIn('id="chart-gl-mandarin"', html)
         self.assertNotIn('方言电影为什么“赢”了？', html)
 
     def test_comparison_scenes_have_direct_reference_lines(self):
@@ -399,10 +404,6 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
             path.read_text(encoding="utf-8")
             for path in [
                 frontend / "index.html",
-                frontend / "vol1_time.html",
-                frontend / "vol2_geo.html",
-                frontend / "vol3_lang.html",
-                frontend / "vol4_memory.html",
                 frontend / "js" / "app.js",
             ]
         )
@@ -415,25 +416,32 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
             "当前筛选分母",
             "而不是全球电影总体",
             "并非完整电影史",
-            "这份数据里",
             "该切片",
             "不能说明",
             "无法说明",
             "并不意味着",
+            "这份数据里",
         ):
             self.assertNotIn(stale_phrase, copy)
         self.assertEqual(copy.count("观察性样本"), 1)
         self.assertIn("方言电影", copy)
 
-    def test_volume_pages_use_scoped_layout_and_valid_chart_encodings(self):
+    def test_volume_pages_are_archived_and_explorer_keeps_filter_contracts(self):
         frontend_dir = TASTE_ROOT / "frontend"
+        archive_dir = TASTE_ROOT / "archive"
         style = (frontend_dir / "style.css").read_text(encoding="utf-8")
-        vol2_js = (frontend_dir / "js" / "vol2.js").read_text(encoding="utf-8")
-        vol3_js = (frontend_dir / "js" / "vol3.js").read_text(encoding="utf-8")
         core_js = (frontend_dir / "js" / "core.js").read_text(encoding="utf-8")
+        vol2_js = (archive_dir / "volumes" / "js" / "vol2.js").read_text(encoding="utf-8")
+        vol3_js = (archive_dir / "volumes" / "js" / "vol3.js").read_text(encoding="utf-8")
         for name in ("vol1_time.html", "vol2_geo.html", "vol3_lang.html", "vol4_memory.html"):
-            html = (frontend_dir / name).read_text(encoding="utf-8")
+            self.assertFalse((frontend_dir / name).exists(), name)
+            html = (archive_dir / name).read_text(encoding="utf-8")
             self.assertIn('<body class="volume-page">', html)
+            self.assertIn("归档副本", html)
+        frozen = archive_dir / "volumes" / "build"
+        self.assertTrue(any(frozen.glob("vol1.*.js")))
+        self.assertTrue(any(frozen.glob("vol4.*.js")))
+        self.assertTrue(any(frozen.glob("echarts-volume.*.js")))
         self.assertIn(".volume-page .sidebar", style)
         self.assertIn(".volume-page .movie-card {\n    min-height: 164px;\n    padding: 20px;\n    cursor: pointer;", style)
         self.assertIn("lowerWhisker", vol2_js)
@@ -451,11 +459,10 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         movie_detail_js = (frontend_dir / "js" / "lib" / "movie-detail.js").read_text(encoding="utf-8")
         self.assertIn("view.getMovieDetails(movie.movieId)", movie_detail_js)
         self.assertIn("DataService.getMovieDetails", core_js)
-        self.assertIn("renderLocalGallery(results, queryTitle, 'movie-grid', 50)", (frontend_dir / "js" / "vol4.js").read_text(encoding="utf-8"))
-        for name in ("index.html", "vol4_memory.html"):
-            html = (frontend_dir / name).read_text(encoding="utf-8")
-            for code in range(6):
-                self.assertIn(f'<option value="{code}">', html)
+        self.assertIn("renderLocalGallery(results, queryTitle, 'movie-grid', 50)", (archive_dir / "volumes" / "js" / "vol4.js").read_text(encoding="utf-8"))
+        html = (frontend_dir / "index.html").read_text(encoding="utf-8")
+        for code in range(6):
+            self.assertIn(f'<option value="{code}">', html)
 
     def test_repository_documents_and_continuously_checks_reproducibility(self):
         readme = (TASTE_ROOT / "README.md").read_text(encoding="utf-8")
@@ -473,13 +480,13 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         self.assertIn("docs/preview.webp", readme)
         self.assertIn(self.manifest["sample_fingerprint_sha256"], readme)
         self.assertIn("方言 6.62，普通话 6.11", readme)
-        self.assertIn("方言 6.4%，普通话 24.4%", readme)
+        self.assertIn("方言 6.5%，普通话 24.5%", readme)
         self.assertIn("方言 9.5%，普通话 11.9%", readme)
         self.assertIn("geo_enrichment.json", readme)
         self.assertIn("visual_land_masks.json", readme)
         self.assertIn("224 标签", readme)
         self.assertIn("15.4%", readme)
-        self.assertIn("239KB", readme)
+        self.assertIn("238KB", readme)
         self.assertNotIn("century-decline", readme)
         self.assertNotIn("max: 2020", readme)
         self.assertNotIn("220 标签", readme)
@@ -505,10 +512,12 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         for name in (
             "apply_tier2b_reclassify_20260815.py",
             "apply_empty_lang_backfill_20260818.py",
+            "apply_language_backfill_20260830.py",
             "apply_audit_exclude_20260818.py",
             "apply_f7_region_fix_20260818.py",
             "apply_opera_concert_exclude_20260818.py",
             "apply_ama_lang_fix_20260819.py",
+            "apply_yinruchenyan_lang_fix_20260830.py",
             "apply_first_listed_region_20260824.py",
         ):
             self.assertIn(name, text)
@@ -726,6 +735,14 @@ class Tier2bEvidenceReviewTests(unittest.TestCase):
         # 无补回证据 → 两个判定函数均默认排除；TIER2B_EXCLUDED 同样排除
         self.assertEqual(classify_v21("汉语普通话 / 粤语")[0], 0)
         self.assertEqual(classify_v21("汉语普通话 / 粤语", "TIER2B_EXCLUDED")[0], 0)
+        self.assertEqual(classify_v21("汉语普通话 / 粤语", "LANG_BACKFILL_TIER2B_EXCLUDED")[0], 0)
+        self.assertEqual(
+            classify_strict({
+                "语言": "汉语普通话 / 粤语",
+                "Dialect_Evidence": "LANG_BACKFILL_TIER2B_EXCLUDED",
+            })["is_dialect"],
+            0,
+        )
         self.assertEqual(classify_v21("汉语普通话 / 粤语", "LLM_JUDGE"),
                          (1, "Tier 2b", ["粤语"], ["粤语（广府片/白话）"]))
         self.assertEqual(classify_strict({"语言": "汉语普通话 / 粤语"})["is_dialect"], 0)
@@ -768,7 +785,7 @@ class Tier2bEvidenceReviewTests(unittest.TestCase):
         self.assertEqual(int(self.frame.loc[recovered, "Is_Dialect"].astype(int).sum()), TIER2B_MANDARIN_FIRST)
         self.assertEqual(int(self.frame.loc[excluded, "Is_Dialect"].astype(int).sum()), 0)
         china = self.frame["Region"] == "China"
-        # 2026-08-19 v4.4：《给阿嬷的情书》语言字段修正后补收（3044→3045）
+        # 2026-08-30 v4.6 豆瓣语言回填 3,066，再补收《隐入尘烟》→ 3,067
         self.assertEqual(int((china & self.frame["Is_Dialect"].astype(int).eq(1)).sum()), CHINA_DIALECT)
         # 用户人工复核决定（2026-08-15）：《芒种》不算方言片
         mz = self.frame[self.frame["movie_id"].astype(str) == "1986783"]
@@ -831,6 +848,113 @@ class OperaConcertExcludeRegressionTests(unittest.TestCase):
         self.assertEqual(classify_v21("粤语", "", "99999999")[0], 1)
 
 
+class LanguageBackfillHelperTests(unittest.TestCase):
+    """2020–2026 语言回填：候选识别与豆瓣 HTML 解析（不触网）。"""
+
+    def test_parse_douban_language_info_panel(self):
+        from language_backfill_lib import (
+            AMA_MOVIE_ID,
+            YINRUCHENYAN_MOVIE_ID,
+            candidate_reason,
+            languages_from_rexxar,
+            parse_douban_language,
+        )
+
+        html = (
+            '<div id="info">'
+            '<span class="pl">语言:</span> 潮汕话 / 汉语普通话 / 泰语 / 英语<br/>'
+            "</div>"
+        )
+        self.assertEqual(
+            parse_douban_language(html),
+            "潮汕话 / 汉语普通话 / 泰语 / 英语",
+        )
+        self.assertEqual(
+            languages_from_rexxar({"languages": ["潮汕话", "汉语普通话", "泰语", "英语"]}),
+            "潮汕话 / 汉语普通话 / 泰语 / 英语",
+        )
+        ama = pd.Series({
+            "movie_id": AMA_MOVIE_ID,
+            "数据来源": "douban_delivery_20260817",
+            "语言": "汉语普通话",
+            "年份": 2026,
+            "Dialect_Evidence": "",
+        })
+        self.assertIsNone(candidate_reason(ama))
+        dust = pd.Series({
+            "movie_id": YINRUCHENYAN_MOVIE_ID,
+            "数据来源": "douban_delivery_20260817",
+            "语言": "汉语普通话",
+            "年份": 2022,
+            "Dialect_Evidence": "",
+        })
+        self.assertIsNone(candidate_reason(dust))
+        delivery_empty = pd.Series({
+            "movie_id": "1",
+            "数据来源": "douban_delivery_20260817",
+            "语言": "",
+            "年份": 2024,
+            "Region": "Europe",
+            "Dialect_Evidence": "",
+        })
+        self.assertEqual(candidate_reason(delivery_empty), "delivery_empty")
+        delivery_default = pd.Series({
+            "movie_id": "2",
+            "数据来源": "douban_delivery_20260817",
+            "语言": "汉语普通话",
+            "年份": 2023,
+            "Region": "China",
+            "Dialect_Evidence": "",
+        })
+        self.assertEqual(candidate_reason(delivery_default), "delivery_default_mandarin")
+        other_empty = pd.Series({
+            "movie_id": "3",
+            "数据来源": "douban_all_data",
+            "语言": "",
+            "年份": 2021,
+            "Region": "North_America",
+            "Dialect_Evidence": "",
+        })
+        self.assertEqual(candidate_reason(other_empty), "empty_other")
+
+    def test_publication_has_language_provenance(self):
+        frame = pd.read_csv(
+            TASTE_ROOT / "data" / "cleaned" / "derived_movies.csv",
+            dtype={"movie_id": "string"},
+            low_memory=False,
+        )
+        self.assertIn("Language_Provenance", frame.columns)
+        allowed = {
+            "douban_observed",
+            "douban_backfill",
+            "empty_default_mandarin",
+            "empty",
+            "wikidata",
+        }
+        self.assertTrue(set(frame["Language_Provenance"].dropna().astype(str)).issubset(allowed))
+        china = frame[frame["Region"] == "China"]
+        empty_china = china["语言"].fillna("").astype(str).str.strip().eq("")
+        self.assertEqual(int(empty_china.sum()), 0)
+        self.assertGreater(
+            int((frame["Dialect_Evidence"].fillna("") == "EMPTY_LANG_DEFAULTED").sum()),
+            0,
+        )
+
+    def test_override_source_infers_unlabeled_rexxar(self):
+        from language_backfill_lib import override_source
+
+        self.assertEqual(override_source({"source": "wikidata_p364"}), "wikidata_p364")
+        self.assertEqual(override_source({"source": "douban_page"}), "douban_page")
+        self.assertEqual(override_source({"status": "ok", "语言": "英语"}), "douban_rexxar")
+
+    def test_infer_language_provenance(self):
+        from data_processor import infer_language_provenance
+
+        self.assertEqual(infer_language_provenance("英语"), "douban_observed")
+        self.assertEqual(infer_language_provenance(""), "empty")
+        self.assertEqual(infer_language_provenance(None), "empty")
+
+
 class AmaLangFixRegressionTests(unittest.TestCase):
     """2026-08-19 v4.4：《给阿嬷的情书》(37116446) 语言字段修正补收。
 
@@ -855,6 +979,34 @@ class AmaLangFixRegressionTests(unittest.TestCase):
         self.assertEqual(int(row["Is_Dialect"]), 1)
         self.assertEqual(int(row["Language_Code"]), 3)
         self.assertIn("LANG_FIX_20260819", str(row["Dialect_Evidence"]))
+
+
+class YinruchenyanLangFixRegressionTests(unittest.TestCase):
+    """2026-08-30：《隐入尘烟》(35131346) 语言字段修正补收。
+
+    delivery_20260817 不含语言列，该片曾被默认成汉语普通话，Wikidata P364
+    又写成「汉语普通话 / Mandarin」；豆瓣实页语言 = 甘肃方言 / 汉语普通话
+    （甘肃方言居首），按白名单应判 Tier 2a、Is_Dialect=1。
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.frame = pd.read_csv(
+            TASTE_ROOT / "data" / "cleaned" / "derived_movies.csv",
+            dtype={"movie_id": "string"},
+            low_memory=False,
+        )
+
+    def test_yinruchenyan_movie_is_dialect_with_correct_lang(self):
+        rows = self.frame[self.frame["movie_id"] == "35131346"]
+        self.assertEqual(len(rows), 1)
+        row = rows.iloc[0]
+        self.assertEqual(row["片名"], "隐入尘烟")
+        self.assertEqual(row["语言"], "甘肃方言 / 汉语普通话")
+        self.assertEqual(int(row["Is_Dialect"]), 1)
+        self.assertEqual(int(row["Language_Code"]), 3)
+        self.assertIn("LANG_FIX_20260830", str(row["Dialect_Evidence"]))
+        self.assertEqual(str(row["Language_Provenance"]), "douban_backfill")
 
 
 class DialectAggregatesTests(unittest.TestCase):
@@ -897,14 +1049,14 @@ class DialectAggregatesTests(unittest.TestCase):
 
     def test_by_decade_key_values(self):
         by_decade = self.payload["by_decade"]
-        self.assertEqual(by_decade["2020s"]["d"], {"n": 57, "mean": 6.34, "below5": 15.8})
-        self.assertEqual(by_decade["2020s"]["delta"], 0.6)
+        self.assertEqual(by_decade["2020s"]["d"], {"n": 79, "mean": 6.31, "below5": 15.2})
+        self.assertEqual(by_decade["2020s"]["delta"], 0.57)
         self.assertEqual(by_decade["2010s"]["delta"], 0.95)
         self.assertEqual(by_decade["1990s"]["delta"], -0.39)
 
     def test_flop_and_type_controlled(self):
-        self.assertEqual(self.payload["flop_overall"], {"d": 6.4, "m": 24.4})
-        self.assertEqual(self.payload["flop_decade"]["2020s"], {"d": 15.8, "m": 32.6})
+        self.assertEqual(self.payload["flop_overall"], {"d": 6.5, "m": 24.5})
+        self.assertEqual(self.payload["flop_decade"]["2020s"], {"d": 15.2, "m": 32.8})
         raw = self.payload["type_controlled"]["raw"]
         self.assertEqual(raw["d"]["mean"], 6.62)
         self.assertEqual(raw["m"]["mean"], 6.11)
@@ -913,15 +1065,15 @@ class DialectAggregatesTests(unittest.TestCase):
             pair = self.payload["type_controlled"][scope]
             self.assertGreater(pair["d"]["mean"], pair["m"]["mean"], scope)
         self.assertEqual(self.payload["type_controlled"]["exclude"]["d"]["mean"], 6.58)
-        self.assertEqual(self.payload["type_controlled"]["drama"]["d"]["mean"], 6.86)
+        self.assertEqual(self.payload["type_controlled"]["drama"]["d"]["mean"], 6.85)
 
     def test_cantonese_and_global_layers(self):
         canto = {item["name"]: item for item in self.payload["cantonese_vs_non"]}
-        self.assertEqual(canto["非粤语方言"]["n"], 480)
-        self.assertEqual(canto["粤语"]["n"], 2565)
+        self.assertEqual(canto["非粤语方言"]["n"], 485)
+        self.assertEqual(canto["粤语"]["n"], 2582)
         layers = {item["name"]: item for item in self.payload["global_layers"]}
         self.assertEqual(layers["华语 · 方言"]["n"], CHINA_DIALECT)
-        self.assertEqual(layers["华语 · 方言"]["below5"], 6.4)
+        self.assertEqual(layers["华语 · 方言"]["below5"], 6.5)
         self.assertEqual(layers["华语 · 普通话"]["n"], CHINA_MANDARIN)
         self.assertTrue(layers["华语 · 普通话"].get("outlier"))
 
@@ -935,8 +1087,8 @@ class DialectAggregatesTests(unittest.TestCase):
 
     def test_dual_director_diversity_genre(self):
         director = self.payload["dual_director"]
-        self.assertEqual(director["total"], 476)
-        self.assertEqual(sum(director["hist"].values()), 476)
+        self.assertEqual(director["total"], 478)
+        self.assertEqual(sum(director["hist"].values()), 478)
         self.assertEqual(director["share_positive"], 70)
         self.assertEqual(director["mean_diff"], 0.65)
         diversity = self.payload["lang_diversity"]
@@ -980,6 +1132,11 @@ class HomepageChinaKpiTests(unittest.TestCase):
         ):
             self.assertIn(f'id="{dynamic_id}"', html)
         self.assertIn("2026 年，一部没有头部 IP、巨额投资与流量明星加持的潮汕方言电影", html)
+        self.assertNotIn("以上是全球刻度。下面进入华语内部。", html)
+        self.assertIn("这五条结合了数据和现实情况，不是纯靠数字得来的。", html)
+        self.assertIn('data-movie-id="35131346" data-lang="dialect"', html)
+        self.assertIn('data-movie-id="26909423" data-lang="mandarin"', html)
+        self.assertNotIn("李睿珺用普通话拍《隐入尘烟》", html)
         self.assertNotIn("后续年份没有进入当前快照", html)
         self.assertNotIn("这是比较门槛，不是数据截止年份", html)
 

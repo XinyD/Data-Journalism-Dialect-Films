@@ -10,11 +10,7 @@ const FLOP_CASE_IDS = ['26796665', '22557335', '6068516', '3874981'];
 const DECADE_VALUES = ['2020s', '2010s', '2000s', '1990s', 'Pre-1990s'];
 const REGION_VALUES = ['North_America', 'Europe', 'East_Asia', 'China', 'Other'];
 const HTML_MANIFEST_KEYS = {
-    'frontend/index.html': ['style', 'echartsMain', 'app'],
-    'frontend/vol1_time.html': ['style', 'echartsVolume', 'vol1'],
-    'frontend/vol2_geo.html': ['style', 'echartsVolume', 'vol2'],
-    'frontend/vol3_lang.html': ['style', 'echartsVolume', 'vol3'],
-    'frontend/vol4_memory.html': ['style', 'vol4']
+    'frontend/index.html': ['style', 'echartsMain', 'app']
 };
 
 function read(relPath) {
@@ -45,17 +41,9 @@ function extractFlopCaseIds(html) {
 }
 
 const indexHtml = read('frontend/index.html');
-const vol4Html = read('frontend/vol4_memory.html');
-const expectedLanguageValues = LANGUAGE_DISPLAY_ORDER.map(code => String(code));
-
-for (const [label, html] of [
-    ['index.html', indexHtml],
-    ['vol4_memory.html', vol4Html]
-]) {
-    assertSame(`${label} filter-language`, extractOptionValues(html, 'filter-language'), expectedLanguageValues);
-    assertSame(`${label} filter-decade`, extractOptionValues(html, 'filter-decade'), DECADE_VALUES);
-    assertSame(`${label} filter-region`, extractOptionValues(html, 'filter-region'), REGION_VALUES);
-}
+assertSame('index.html filter-language', extractOptionValues(indexHtml, 'filter-language'), LANGUAGE_DISPLAY_ORDER.map(code => String(code)));
+assertSame('index.html filter-decade', extractOptionValues(indexHtml, 'filter-decade'), DECADE_VALUES);
+assertSame('index.html filter-region', extractOptionValues(indexHtml, 'filter-region'), REGION_VALUES);
 
 const indexFlopIds = extractFlopCaseIds(indexHtml);
 if (indexFlopIds.length !== FLOP_CASE_IDS.length
@@ -83,7 +71,7 @@ for (const [htmlPath, keys] of Object.entries(HTML_MANIFEST_KEYS)) {
 }
 
 console.log({
-    languageOptions: expectedLanguageValues.map((value, index) => `${value} ${LANGUAGE_LABELS[LANGUAGE_DISPLAY_ORDER[index]]}`),
+    languageOptions: LANGUAGE_DISPLAY_ORDER.map((code, index) => `${code} ${LANGUAGE_LABELS[code]}`),
     decadeOptions: DECADE_VALUES,
     regionOptions: REGION_VALUES,
     flopCaseIds: FLOP_CASE_IDS,

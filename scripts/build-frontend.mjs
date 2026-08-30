@@ -83,13 +83,8 @@ async function bundleCss() {
 const assets = {
     style: await bundleCss(),
     echartsMain: await bundle('frontend/src/echarts-main.js', join(outdir, 'echarts-main.js')),
-    echartsVolume: await bundle('frontend/src/echarts-volume.js', join(outdir, 'echarts-volume.js')),
     app: await bundle('frontend/src/index-main.js', join(outdir, 'app.js')),
-    echoChunk: await bundle('frontend/src/echo-universe-chunk.js', join(outdir, 'echo-universe-chunk.js'), 'esm'),
-    vol1: await bundle('frontend/src/index-vol1.js', join(outdir, 'vol1.js')),
-    vol2: await bundle('frontend/src/index-vol2.js', join(outdir, 'vol2.js')),
-    vol3: await bundle('frontend/src/index-vol3.js', join(outdir, 'vol3.js')),
-    vol4: await bundle('frontend/src/index-vol4.js', join(outdir, 'vol4.js'))
+    echoChunk: await bundle('frontend/src/echo-universe-chunk.js', join(outdir, 'echo-universe-chunk.js'), 'esm')
 };
 
 writeFileSync(join(outdir, 'manifest.json'), `${JSON.stringify(assets, null, 2)}\n`);
@@ -105,46 +100,18 @@ function replaceBlock(htmlPath, marker, content) {
     writeFileSync(full, html);
 }
 
-const mainPages = [
-    'frontend/index.html',
-    'frontend/vol1_time.html',
-    'frontend/vol2_geo.html',
-    'frontend/vol3_lang.html',
-    'frontend/vol4_memory.html'
-];
-
-for (const page of mainPages) {
-    replaceBlock(page, 'build:css', `<link rel="stylesheet" href="${assets.style}">`);
-    replaceBlock(page, 'build:og', [
-        `<meta property="og:image" content="${ogImageUrl}">`,
-        page === 'frontend/index.html'
-            ? `<meta name="twitter:image" content="${ogImageUrl}">`
-            : ''
-    ].filter(Boolean).join('\n    '));
+function replaceScripts(htmlPath, tags) {
+    replaceBlock(htmlPath, 'build:js', tags.join('\n    '));
 }
 
+replaceBlock('frontend/index.html', 'build:css', `<link rel="stylesheet" href="${assets.style}">`);
+replaceBlock('frontend/index.html', 'build:og', [
+    `<meta property="og:image" content="${ogImageUrl}">`,
+    `<meta name="twitter:image" content="${ogImageUrl}">`
+].join('\n    '));
 replaceScripts('frontend/index.html', [
     `<script defer src="${assets.echartsMain}"></script>`,
     `<script defer src="${assets.app}"></script>`
 ]);
-replaceScripts('frontend/vol1_time.html', [
-    `<script defer src="${assets.echartsVolume}"></script>`,
-    `<script defer src="${assets.vol1}"></script>`
-]);
-replaceScripts('frontend/vol2_geo.html', [
-    `<script defer src="${assets.echartsVolume}"></script>`,
-    `<script defer src="${assets.vol2}"></script>`
-]);
-replaceScripts('frontend/vol3_lang.html', [
-    `<script defer src="${assets.echartsVolume}"></script>`,
-    `<script defer src="${assets.vol3}"></script>`
-]);
-replaceScripts('frontend/vol4_memory.html', [
-    `<script defer src="${assets.vol4}"></script>`
-]);
-
-function replaceScripts(htmlPath, tags) {
-    replaceBlock(htmlPath, 'build:js', tags.join('\n    '));
-}
 
 console.log({ siteUrl: siteUrl || '(relative og:image)', ...assets });

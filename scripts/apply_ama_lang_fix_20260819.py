@@ -105,17 +105,18 @@ def main() -> None:
         print("review_queue.csv 已追加补收溯源行")
 
     # ---- 4. 断言 ----
+    # 本步只保证阿嬷行与 Language_Code 不变量。China 方言总数由补丁链终态
+    # （freeze_constants / replay assert_end_state）锁定，后续 LANG_FIX 仍可能 +1。
     china = df[df["Region"] == "China"]
     china_dialect = int(china["Is_Dialect"].sum())
     china_mandarin = int((china["Is_Dialect"] == 0).sum())
-    assert china_dialect == CHINA_DIALECT, f"China 方言片应为 {CHINA_DIALECT}，实测 {china_dialect}"
-    assert china_mandarin == CHINA_MANDARIN, f"普通话·非方言应为 {CHINA_MANDARIN}，实测 {china_mandarin}"
     code2 = df[df["Language_Code"] == 2]
     code3 = df[df["Language_Code"] == 3]
     assert int(code3["Is_Dialect"].sum()) == len(code3) == int(df["Is_Dialect"].sum())
     assert (code2["Is_Dialect"] == 0).all()
     safe_write_csv(df, DERIVED_MOVIES_INFO)
-    print(f"已写回主表：China 方言片 {china_dialect}，普通话·非方言 {china_mandarin}")
+    print(f"已写回主表：China 方言片 {china_dialect}，普通话·非方言 {china_mandarin}"
+          f"（发布终态见 freeze_constants: {CHINA_DIALECT}/{CHINA_MANDARIN}）")
 
     # ---- 5. manifest 指纹与溯源 ----
     fp = publication_fingerprint(df)

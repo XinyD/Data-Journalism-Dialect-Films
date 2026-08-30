@@ -900,3 +900,4 @@
 25849506,热带,2014,,汉语普通话 / 粤语,tier2b补回,LLM_JUDGE 判定 yes(conf=0.7): 穆肃粤语寻子纪录片,2026-08-15,v4.1 Tier2b 证据漏斗（score_tier2b.py + llm_judge_tier2b.py）,,,scripts/llm_judge_tier2b.py
 21327875,台湾人在满洲国,2013,,汉语普通话 / 台语 Taiwanese,tier2b补回,LLM_JUDGE 判定 yes(conf=0.7): 台语历史纪录片,2026-08-15,v4.1 Tier2b 证据漏斗（score_tier2b.py + llm_judge_tier2b.py）,,,scripts/llm_judge_tier2b.py
 37116446,给阿嬷的情书,2026,China,潮汕话 / 汉语普通话 / 泰语 / 英语,语言字段修正补收,delivery_20260817 不含语言列，空语言回填默认普通话致假阴性；豆瓣现页语言字段为 潮汕话/汉语普通话/泰语/英语（潮汕话排首），按现页修正补收,2026-08-19,v4.1 白名单增删流程：数据源事实修正须留痕；潮汕话在 dialect_defs.py 闽南语组白名单内,已处理,2026-08-19,scripts/apply_ama_lang_fix_20260819.py
+35131346,隐入尘烟,2022,China,甘肃方言 / 汉语普通话,语言字段修正补收,delivery_20260817 不含语言列，空语言回填默认普通话后 Wikidata P364 写成汉语普通话/Mandarin；豆瓣现页为 甘肃方言/汉语普通话（甘肃方言排首），按现页修正补收为 Tier 2a 方言片,2026-08-30,v4.1 白名单增删流程：数据源事实修正须留痕；甘肃方言在 dialect_defs.py 中原/兰银官话组白名单内,已处理,2026-08-30,scripts/apply_yinruchenyan_lang_fix_20260830.py

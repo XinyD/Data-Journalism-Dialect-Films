@@ -71,6 +71,7 @@ OUTPUT_COLUMNS = [
     "Genre_Code",
     "Language_Code",
     "Is_Dialect",
+    "Language_Provenance",
     # 新增字段（delivery_20260817 合并后）
     "card_subtitle",
     "rating_star",
@@ -326,6 +327,18 @@ def non_dialect_language_code(value: object) -> int:
     return 5
 
 
+def infer_language_provenance(language: object, source: object = None) -> str:
+    """Mark whether the language field is an observed Douban tag or still empty.
+
+    Patch scripts overwrite this for delivery backfills
+    (``douban_backfill`` / ``empty_default_mandarin``).
+    """
+    text = "" if pd.isna(language) else str(language).strip()
+    if not text or text.lower() == "nan":
+        return "empty"
+    return "douban_observed"
+
+
 def language_code(value: object, region: object = None) -> tuple[int, int]:
     """Return front-end language code and dialect flag.
 
@@ -369,32 +382,39 @@ def atomic_write_csv(frame: pd.DataFrame, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     frame.to_csv(temporary, index=False, encoding="utf-8-sig")
-    try:
-        temporary.replace(path)
-    except PermissionError:
-        import os
-        import stat as stat_mod
-        if path.exists():
-            os.chmod(path, stat_mod.S_IWRITE | stat_mod.S_IREAD)
-            temporary.replace(path)
-        else:
-            raise
+    _atomic_replace(temporary, path)
 
 
 def atomic_write_json(payload: dict, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    _atomic_replace(temporary, path)
+
+
+def _atomic_replace(temporary: Path, path: Path) -> None:
+    """Replace `path` with `temporary`. On Windows, os.replace can fail with
+    WinError 5 if another process holds the destination; fall back to in-place copy.
+    """
+    import os
+    import shutil
+    import stat as stat_mod
+
     try:
         temporary.replace(path)
+        return
     except PermissionError:
-        import os
-        import stat as stat_mod
-        if path.exists():
-            os.chmod(path, stat_mod.S_IWRITE | stat_mod.S_IREAD)
+        pass
+    if path.exists():
+        os.chmod(path, stat_mod.S_IWRITE | stat_mod.S_IREAD)
+        try:
             temporary.replace(path)
-        else:
-            raise
+            return
+        except PermissionError:
+            shutil.copyfile(temporary, path)
+            temporary.unlink(missing_ok=True)
+            return
+    raise PermissionError(f"Cannot replace {path}")
 
 
 def manifest_source_display(source_path: Path, repo_root: Path) -> str:
@@ -507,6 +527,10 @@ def build_publication_sample(
     ]
     sample["Language_Code"] = [pair[0] for pair in language_pairs]
     sample["Is_Dialect"] = [pair[1] for pair in language_pairs]
+    sample["Language_Provenance"] = [
+        infer_language_provenance(lang, src)
+        for lang, src in zip(sample[COLUMNS["language_raw"]], sample[COLUMNS["source"]])
+    ]
 
     sample = sample.sort_values(
         [COLUMNS["year"], COLUMNS["title"], COLUMNS["id"]],
