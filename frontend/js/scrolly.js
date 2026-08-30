@@ -1,5 +1,5 @@
 import { rafThrottle, prefersReducedMotion } from './lib/schedule.js';
-import { chapterFillFromGeometry, isFarJump, narrativeProgress, pickCurrentStep } from './lib/scrolly-select.js';
+import { chapterFillFromGeometry, isFarJump, narrativeProgress, nextStoryStepIndex, pickCurrentStep, storyArrowDelta } from './lib/scrolly-select.js';
 
 const STEP_HYSTERESIS = 0.12;
 const RATIO_THRESHOLDS = [0, 0.08, 0.16, 0.28, 0.4, 0.55, 0.7, 0.85, 1];
@@ -11,6 +11,24 @@ export function chapterLabel(step) {
     if (step.id === 'step-intro') return '引言';
     const heading = step.querySelector('h1, h2');
     return heading ? heading.textContent.trim().slice(0, 18) : step.id;
+}
+
+function isEditableTarget(target) {
+    if (!target) return false;
+    const el = target.nodeType === 1 ? target : target.parentElement;
+    if (!el || typeof el.closest !== 'function') return false;
+    if (el.isContentEditable) return true;
+    const tag = el.tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT'
+        || Boolean(el.closest('input, textarea, select, [contenteditable="true"]'));
+}
+
+function storyOverlayBlocked() {
+    const root = document.documentElement;
+    if (root.classList.contains('explorer-open')) return true;
+    if (root.classList.contains('wave-film-open')) return true;
+    if (root.classList.contains('wave-scene-busy')) return true;
+    return Boolean(document.querySelector('dialog.movie-detail-dialog[open]'));
 }
 
 function getChapterNavFill() {
@@ -233,23 +251,20 @@ export function initScrollytelling(deps) {
             jumpTo(document.getElementById(link.dataset.step));
         });
     }
-    const nav = document.getElementById('chapter-nav');
-    if (nav && list) {
-        nav.addEventListener('keydown', event => {
-            if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return;
-            const links = [...list.querySelectorAll('a[data-step]')];
-            const currentIndex = links.findIndex(link => link.classList.contains('is-current'));
-            if (currentIndex < 0) return;
-            event.preventDefault();
-            const nextIndex = event.key === 'ArrowUp'
-                ? Math.max(0, currentIndex - 1)
-                : Math.min(links.length - 1, currentIndex + 1);
-            const nextLink = links[nextIndex];
-            if (!nextLink || nextIndex === currentIndex) return;
-            nextLink.focus();
-            jumpTo(document.getElementById(nextLink.dataset.step));
-        });
-    }
+    window.addEventListener('keydown', event => {
+        if (event.defaultPrevented || event.repeat) return;
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        const delta = storyArrowDelta(event.key);
+        if (!delta) return;
+        if (isEditableTarget(event.target)) return;
+        if (storyOverlayBlocked()) return;
+        if (pendingPinId) return;
+        const currentIndex = Math.max(0, steps.indexOf(currentStep));
+        const nextIndex = nextStoryStepIndex(currentIndex, delta, steps.length);
+        event.preventDefault();
+        if (nextIndex === currentIndex) return;
+        jumpTo(steps[nextIndex]);
+    });
 
     const onScroll = rafThrottle(() => {
         updateProgress();

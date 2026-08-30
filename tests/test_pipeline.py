@@ -318,9 +318,6 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
             self.assertNotIn(stale_claim, story_js)
         # 封面与方法论页的动态占位 id（运行时由载荷填充，禁止写死）
         for dynamic_id in (
-            "hero-sample-count",
-            "sample-year-range",
-            "minimum-vote-count",
             "source-record-count",
             "methodology-minimum-vote-count",
             "methodology-sample-count",
@@ -357,7 +354,8 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         )
         for stale_title in stale_titles:
             self.assertNotIn(stale_title, html)
-        self.assertIn('「言」之有物：从数据看中国电影的答案', html)
+        self.assertIn('听不懂，也看完了：方言电影四十年', html)
+        self.assertNotIn('「言」之有物：从数据看中国电影的答案', html)
         self.assertNotIn('方言电影为什么“赢”了？', html)
 
     def test_comparison_scenes_have_direct_reference_lines(self):
@@ -389,6 +387,15 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         self.assertIn("const LANGUAGE_DISPLAY_ORDER = [0, 1, 4, 2, 3, 5]", app_js)
         self.assertIn("const languageOrder = LANGUAGE_DISPLAY_ORDER.filter", app_js)
         self.assertIn("verticalGuide(languagePosition(selectedLanguage)", app_js)
+        self.assertNotIn("视觉地区", app_js)
+        self.assertIn("function isStarfieldScene", app_js)
+        self.assertIn("function isHkDialect", app_js)
+        self.assertIn("function isLaterWaveDialect", app_js)
+        self.assertIn("'wave-hk':", app_js)
+        self.assertIn("'mandarin-gap':", app_js)
+        self.assertIn("'china-2010s':", app_js)
+        self.assertIn("'china-2020s':", app_js)
+        self.assertIn("'china-below5':", app_js)
 
     def test_editorial_copy_leads_with_findings_instead_of_repeated_disclaimers(self):
         # 方言主线前端文案守护：禁止旧版重复免责声明短语回归；
@@ -979,9 +986,70 @@ class HomepageChinaKpiTests(unittest.TestCase):
             "china-dialect-high8",
         ):
             self.assertIn(f'id="{dynamic_id}"', html)
-        self.assertIn("2026 年，一部没有头部 IP、巨额投资与流量明星加持的潮汕方言电影", html)
+        self.assertIn("2026 年，潮汕话电影《给阿嬷的情书》进了院线", html)
+        self.assertIn('id="step-8e" data-scene="wave-hk"', html)
+        self.assertIn('id="step-8e-gap" data-scene="mandarin-gap"', html)
+        self.assertIn('id="step-8e-later" data-scene="three-waves"', html)
+        self.assertIn('id="step-8" data-scene="china-2010s"', html)
+        self.assertIn('id="step-8-thin" data-scene="china-2020s"', html)
+        self.assertIn('id="step-5b" data-scene="china-below5"', html)
+        self.assertIn('id="step-8d" data-scene="dual-director"', html)
+        self.assertIn('id="step-8c" data-scene="dialect-flops"', html)
+        self.assertIn('id="step-8f" data-scene="china-high8"', html)
+        self.assertIn('第一部 · 港片那二十年', html)
+        self.assertIn('第二部 · 占比下降以后的口碑', html)
+        self.assertIn('第三部 · 高分方言片的特征', html)
+        self.assertIn('第四部 · 方言电影的大众化路径', html)
+        self.assertIn('id="wave-hk-n"', html)
+        self.assertIn('id="mandarin-gap-n"', html)
+        self.assertIn('id="mainland-d-gap-n"', html)
+        self.assertIn('id="china-dialect-2020-n"', html)
+        self.assertIn('id="china-high8-drama-n"', html)
+        self.assertNotIn("把人写清楚", html)
+        self.assertNotIn("一场、一句", html)
+        self.assertNotIn("分数不会跟着走", html)
+        self.assertNotIn("银幕上的日常", html)
+        self.assertNotIn("《阳光普照》《孤味》写家里的人", html)
+        self.assertNotIn("《路边野餐》写地方上的时间和路", html)
+        self.assertIn("菜头最后一支烟，没有在车里点", html)
+        self.assertIn("四川话才是它本来的腔调", html)
+        self.assertIn("木生 1960 年就死了", html)
+        self.assertIn("谢南枝", html)
+        self.assertNotIn("方言片也会拍砸", html)
+        self.assertNotIn("仍有", html)
+        self.assertIn("不到 5 分的，长这样", html)
+        for stale in (
+            "县太爷和江湖",
+            "一个账房先生的故事",
+            "妈妈做的一碗汤",
+            "后来自己拍的",
+            "台湾也拍出了闽南语电影",
+            "几乎全是素人",
+            "广东话",
+            "第一拨",
+            "2021 到 2025 年没有进入这份快照",
+        ):
+            self.assertNotIn(stale, html)
         self.assertNotIn("后续年份没有进入当前快照", html)
         self.assertNotIn("这是比较门槛，不是数据截止年份", html)
+        for outline_voice in (
+            "先看方言电影怎么走过来",
+            "再看份额变小以后口碑如何",
+            "然后看高分片子有哪些特征",
+            "最后落到",
+            "先从港片广东话讲起",
+            "先回到港片",
+            "份额下降以后，口碑是怎样的",
+            "是不是换了话就好",
+            "怎样进了大众场",
+            "下面四位",
+            "这一部说明",
+            "已经看见的是",
+            "往下还可以对照",
+            "数据不能指出",
+            "这个口径含",
+        ):
+            self.assertNotIn(outline_voice, html)
 
     def test_dialect_mean_fill_uses_china_type_controlled(self):
         app_js = (TASTE_ROOT / "frontend" / "js" / "app.js").read_text(encoding="utf-8")

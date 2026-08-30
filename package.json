@@ -8,7 +8,7 @@
   "scripts": {
     "build": "node scripts/build-frontend.mjs",
     "check": "npm run check:js && npm run check:budget && npm run check:contracts",
-    "test:js": "node --test tests/test_scrolly_select.mjs",
+    "test:js": "node --test tests/test_scrolly_select.mjs tests/test_wave_film_keys.mjs tests/test_wave_film_motifs.mjs tests/test_cover_handoff.mjs",
     "check:js": "node scripts/check-js.mjs",
     "check:budget": "node scripts/check-frontend-budget.mjs",
     "check:contracts": "node scripts/check-contracts.mjs"

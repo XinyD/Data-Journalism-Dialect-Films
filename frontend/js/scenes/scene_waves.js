@@ -1,4 +1,6 @@
 import { escapeHtml } from '../lib/dom.js';
+import { filmStripKeyAction, firstIndexOfWave } from '../lib/wave-film-keys.js';
+import { particleSparkle, sampleFilmMotif } from '../lib/wave-film-motifs.js';
 
 /* Part 3h · 展：从方言星云进入三波电影胶片空间 */
 (function (global) {
@@ -52,44 +54,44 @@ import { escapeHtml } from '../lib/dom.js';
     let enterOrigin = { x: 0, y: 0 };
     let transitionBox = { width: 0, height: 0 };
     let prefetchScheduled = false;
+    let motifCache = { id: '', width: 0, height: 0, count: 0, points: [] };
 
     const COPY_SPECS = {
         1: {
             kicker: 'WAVE 01 · 第一波 · 港片粤语',
-            title: '城市有自己的声音。',
-            body: '一座城市的街道、餐桌与人情，也可以成为电影最动人的部分。'
+            title: '港片里，人开口就是粤语。',
+            body: '街上说粤语，电影里也说。卧底、饭桌、警局，开口就是。'
         },
         2: {
-            kicker: 'WAVE 02 · 第二波 · 西南方言',
-            title: '有些电影，不需要替土地说话。',
-            body: '山路、小镇、沉默的人，本身就是故事的一部分。',
-            aside: '作者表达 · 边缘叙事 · 土地的力量'
+            kicker: 'WAVE 02 · 第二波 · 四川、贵州、云南',
+            title: '后来四川、贵州、云南也有人这样拍。',
+            body: '部数没有港片那么多。多是导演自己要拍的故事，口音也不一样。'
         },
         3: {
-            kicker: 'WAVE 03 · 第三波 · 闽南语新浪潮',
-            title: '故事最后，总要回到某个人身上。',
-            body: '一封信、一间旧屋、一家人的记忆，从一个地方出发，也可以抵达很远的人心里。'
+            kicker: 'WAVE 03 · 第三波 · 闽南语',
+            title: '台湾也有人用闽南语拍电影。',
+            body: '有的拍庙口的少年，有的拍家里的事。'
         }
     };
 
     const FILM_BLURBS = {
-        '1307914': '卧底与警察，走在同一条街上',
-        '1303913': '戏台散了，人还在说粤语',
-        '900054': '一桌菜，把一家人留在饭桌上',
-        '1305690': '无根的人，在城市里流浪',
-        '900089': '过期的罐头，和擦肩而过的人',
-        '900072': '县太爷的戏，也是土地的戏',
-        '27110296': '小城的人，也有自己的江湖',
-        '26337866': '山路把时间绕成一个圈',
-        '26657126': '沉默的人把话说完',
-        '27668250': '雨夜里，有人还在跑',
-        '26633257': '记忆在雾里走回去',
-        '1292434': '一个家庭，把一生慢慢说完',
-        '27059130': '夜里骑车的人，看见了自己',
-        '3993559': '名字被喊出来，土地才还在',
-        '30292777': '父亲的沉默，比阳光更重',
-        '34805873': '一碗汤，把离家的人喊回来',
-        '37116446': '一封信，写给还没离开的人'
+        '1400868': '商场灯串上的一场打斗',
+        '900089': '过期的菠萝罐头',
+        '1303913': '写一个粤剧编剧',
+        '900115': '跑龙套的，也想当好演员',
+        '1307914': '卧底和警察，同一条街',
+        '26337866': '时间会绕回来',
+        '26284621': '云南山路上的追凶',
+        '26633257': '还是贵州',
+        '27110296': '小城里几个人',
+        '900072': '县长和麻匪都说四川话',
+        '27191492': '屋檐下的四个春天',
+        '3737102': '庙口长大的少年',
+        '6829652': '三个人的青春',
+        '27059130': '夜里骑车',
+        '34902639': '中年再聚首的老同学',
+        '34805873': '守着一间小吃店',
+        '37116446': '阿嬷守着的侨批'
     };
 
     const dom = {
@@ -196,7 +198,12 @@ import { escapeHtml } from '../lib/dom.js';
 
     function pickPortalMovie() {
         const rows = (ctx && ctx.particleData) || [];
-        const dialect = rows.filter(row => row.langCode === 3);
+        const later = rows.filter(row => (
+            row.langCode === 3
+            && row.country !== '中国香港'
+            && Number(row.year) >= 2008
+        ));
+        const dialect = later.length ? later : rows.filter(row => row.langCode === 3);
         if (!dialect.length) return null;
         const safe = dialect.filter(row => row.randX >= 56 && row.randX <= 90 && row.randY >= 30 && row.randY <= 70);
         const pool = (safe.length ? safe : dialect).slice().sort((a, b) => String(a.movieId).localeCompare(String(b.movieId)));
@@ -205,7 +212,7 @@ import { escapeHtml } from '../lib/dom.js';
 
     function cacheDom() {
         dom.portal = document.getElementById('wave-portal-particle');
-        dom.hint = document.querySelector('#step-8e .wave-portal-hint');
+        dom.hint = document.querySelector('.wave-portal-hint');
         dom.transition = document.getElementById('wave-transition-canvas');
         dom.film = document.getElementById('wave-film-space');
         dom.scroll = document.getElementById('wave-film-scroll');
@@ -358,7 +365,7 @@ import { escapeHtml } from '../lib/dom.js';
         const frameNo = String(index + 1).padStart(2, '0');
         const waveNo = String(film.wave || 1).padStart(2, '0');
         return `
-            <button type="button" class="wave-film-card${film.hero ? ' is-hero' : ''}" data-movie-id="${escapeHtml(film.id)}" data-index="${index}" data-wave="${film.wave}" title="${escapeHtml(tip)}">
+            <button type="button" class="wave-film-card${film.hero ? ' is-hero' : ''}" data-movie-id="${escapeHtml(film.id)}" data-index="${index}" data-wave="${film.wave}" tabindex="${index === 0 ? '0' : '-1'}" title="${escapeHtml(tip)}">
                 <span class="wave-film-stock">
                     <span class="wave-film-sprocket" aria-hidden="true"></span>
                     <span class="wave-film-gate">
@@ -389,17 +396,38 @@ import { escapeHtml } from '../lib/dom.js';
         `;
     }
 
+    function wavesNavHtml() {
+        const items = [
+            { wave: 1, name: '港片粤语' },
+            { wave: 2, name: '四川、贵州、云南' },
+            { wave: 3, name: '闽南语' }
+        ];
+        return `
+            <nav class="wave-film-waves" aria-label="三波浪潮">
+                ${items.map((item, index) => `
+                    <button type="button" class="wave-film-wave-dot${index === 0 ? ' is-active' : ''}" data-wave="${item.wave}" aria-pressed="${index === 0 ? 'true' : 'false'}">
+                        <span class="wave-film-wave-no">${String(item.wave).padStart(2, '0')}</span>
+                        <span class="wave-film-wave-name">${item.name}</span>
+                    </button>
+                `).join('<span class="wave-film-wave-sep" aria-hidden="true">·</span>')}
+            </nav>
+        `;
+    }
+
     function ensureFilmPages() {
         if (!dom.scroll || dom.scroll.dataset.ready === '1') return;
         deckFilms = buildDeck();
         dom.scroll.innerHTML = `
             <div class="wave-film-copy-stack">
-                ${copyHtml(1, COPY_SPECS[1])}
-                ${copyHtml(2, COPY_SPECS[2])}
-                ${copyHtml(3, COPY_SPECS[3])}
+                ${wavesNavHtml()}
+                <div class="wave-film-copy-frame">
+                    ${copyHtml(1, COPY_SPECS[1])}
+                    ${copyHtml(2, COPY_SPECS[2])}
+                    ${copyHtml(3, COPY_SPECS[3])}
+                </div>
             </div>
             <div class="wave-film-strip-wrap">
-                <div class="wave-film-stage" id="wave-film-stage" tabindex="0" aria-label="三波浪潮电影胶片">
+                <div class="wave-film-stage" id="wave-film-stage" tabindex="0" aria-label="三波浪潮电影胶片，左右方向键选择影片">
                     <div class="wave-film-ribbon" aria-hidden="true"></div>
                     ${deckFilms.map((film, index) => cardHtml(film, index)).join('')}
                 </div>
@@ -407,7 +435,7 @@ import { escapeHtml } from '../lib/dom.js';
                     <span class="wave-return-arrow">↑</span>
                     <span>回到星云</span>
                 </button>
-                <p class="wave-film-browse-hint"><span class="wave-browse-arrows">↔</span>滚动 / 拖动浏览胶片</p>
+                <p class="wave-film-browse-hint"><span class="wave-browse-arrows">← →</span> 选择影片 · 共三波</p>
             </div>
         `;
         dom.scroll.dataset.ready = '1';
@@ -454,6 +482,7 @@ import { escapeHtml } from '../lib/dom.js';
             node.classList.toggle('is-leaving', outgoing);
             node.setAttribute('aria-hidden', incoming || idleActive ? 'false' : 'true');
         });
+        updateWaveNav();
     }
 
     function cancelWaveTransition() {
@@ -548,10 +577,69 @@ import { escapeHtml } from '../lib/dom.js';
             card.style.transform = `translate(-50%, -50%) translate(${pose.x}px, ${pose.y}px) rotate(${pose.rotate}deg) scale(${pose.scale})`;
             card.classList.toggle('is-focus', index === waveScene.focusIndex);
             card.classList.toggle('is-away', !pose.visible);
+            card.tabIndex = index === waveScene.focusIndex ? 0 : -1;
         });
     }
 
-    function setFocusIndex(next) {
+    function focusCurrentCard() {
+        const stage = getStage();
+        const card = stage && stage.querySelector('.wave-film-card.is-focus');
+        if (!card || typeof card.focus !== 'function') return;
+        try {
+            card.focus({ preventScroll: true });
+        } catch (error) {
+            card.focus();
+        }
+    }
+
+    function movieFromFilm(film) {
+        if (!film) return null;
+        const rating = Number.isFinite(Number(film.movie && film.movie.rating))
+            ? Number(film.movie.rating)
+            : (Number(film.rating) || 0);
+        if (film.movie) {
+            if (Number(film.movie.rating) === rating) return film.movie;
+            return Object.assign({}, film.movie, { rating });
+        }
+        return {
+            movieId: film.id,
+            title: film.title,
+            year: film.year,
+            rating,
+            votes: 0,
+            decade: '',
+            genres: '',
+            regionCode: 3,
+            langCode: 3
+        };
+    }
+
+    function openDeckFilm(film) {
+        const movie = movieFromFilm(film);
+        if (!movie || !ctx || !ctx.openMovieDetail) return;
+        ctx.openMovieDetail(movie);
+    }
+
+    function openFocusedFilm() {
+        openDeckFilm(deckFilms[waveScene.focusIndex]);
+    }
+
+    function updateWaveNav() {
+        if (!dom.scroll) return;
+        const active = waveScene.targetWave || waveScene.wave || 1;
+        dom.scroll.querySelectorAll('.wave-film-wave-dot').forEach(button => {
+            const on = Number(button.dataset.wave) === Number(active);
+            button.classList.toggle('is-active', on);
+            button.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+    }
+
+    function jumpToWave(wave) {
+        setFocusIndex(firstIndexOfWave(deckFilms, wave), { focus: true });
+        fadeBrowseHint();
+    }
+
+    function setFocusIndex(next, opts) {
         const count = deckFilms.length;
         if (!count) return;
         const index = Math.max(0, Math.min(count - 1, next));
@@ -565,15 +653,44 @@ import { escapeHtml } from '../lib/dom.js';
         if (nextWave !== waveScene.targetWave || (nextWave !== waveScene.wave && !waveScene.transitionKind)) {
             startWaveTransition(nextWave);
         }
+        if (opts && opts.focus) focusCurrentCard();
     }
 
     function updateBackgroundFocus() {
         const film = deckFilms[waveScene.focusIndex];
         const id = film ? String(film.id) : '';
-        const featured = Boolean(FOCUS_IDS[id]);
-        waveScene.focusId = featured ? id : '';
-        const raw = featured ? 1 : 0;
-        waveScene.backgroundFocus += (raw - waveScene.backgroundFocus) * 0.12;
+        waveScene.focusId = id;
+        const raw = id ? 1 : 0;
+        waveScene.backgroundFocus += (raw - waveScene.backgroundFocus) * 0.2;
+    }
+
+    function getMotifPoints(id, width, height) {
+        const count = isMobile() ? 900 : 2400;
+        if (
+            motifCache.id === id
+            && motifCache.width === width
+            && motifCache.height === height
+            && motifCache.count === count
+        ) {
+            return motifCache.points;
+        }
+        const points = sampleFilmMotif(id, width, height, count);
+        motifCache = { id, width, height, count, points };
+        return points;
+    }
+
+    function applyFilmMotif(goal, particle, width, height) {
+        if (waveScene.transitionKind) return goal;
+        const mix = clamp01(waveScene.backgroundFocus);
+        const id = waveScene.focusId;
+        if (!id || mix < 0.02) return goal;
+        const pts = getMotifPoints(id, width, height);
+        if (!pts.length || (particle.idx || 0) >= pts.length) return goal;
+        const mp = pts[particle.idx];
+        const mixed = mixPts(goal, mp, smooth01(mix));
+        mixed.role = goal.role;
+        mixed.motif = true;
+        return mixed;
     }
 
     function bindFilmInteractions() {
@@ -606,6 +723,15 @@ import { escapeHtml } from '../lib/dom.js';
 
         const back = document.getElementById('wave-return');
         if (back) back.addEventListener('click', () => leaveFilm());
+
+        if (dom.scroll) {
+            dom.scroll.addEventListener('click', event => {
+                const dot = event.target.closest('.wave-film-wave-dot');
+                if (!dot) return;
+                event.preventDefault();
+                jumpToWave(Number(dot.dataset.wave));
+            });
+        }
 
         stage.addEventListener('mousedown', event => {
             if (event.button !== 0) return;
@@ -675,20 +801,7 @@ import { escapeHtml } from '../lib/dom.js';
             }
             const card = event.target.closest('.wave-film-card');
             if (!card) return;
-            const film = lookupFilm(card.dataset.movieId);
-            const movie = film.movie || {
-                movieId: film.id,
-                title: film.title,
-                year: film.year,
-                rating: Number(film.rating) || 0,
-                votes: 0,
-                decade: '',
-                genres: '',
-                regionCode: 3,
-                langCode: 3
-            };
-            if (!Number.isFinite(Number(movie.rating))) movie.rating = Number(film.rating) || 0;
-            if (ctx && ctx.openMovieDetail) ctx.openMovieDetail(movie);
+            openDeckFilm(lookupFilm(card.dataset.movieId));
         });
     }
 
@@ -1121,6 +1234,7 @@ import { escapeHtml } from '../lib/dom.js';
                     ? assignPoint(letPaper, index - l1, home, 'paper')
                     : floaterPoint(home, `${seed}-l`, 38);
             return {
+                idx: index,
                 seed,
                 home,
                 movieId: String(row.movieId || ''),
@@ -1212,7 +1326,7 @@ import { escapeHtml } from '../lib/dom.js';
         return {
             x: lerp(a.x, b.x, t),
             y: lerp(a.y, b.y, t),
-            role: t < 0.5 ? a.role : b.role
+            role: t < 0.5 ? a.role : (b.role || a.role)
         };
     }
 
@@ -1266,25 +1380,30 @@ import { escapeHtml } from '../lib/dom.js';
         const letter = worldPoint(particle, 'letter', unfold);
         const dust = dustPoint(particle, height);
         const gather = gatherPoint(particle, width, height);
+        let goal;
         if (!kind) {
             const mode = MODE_BY_WAVE[waveScene.wave] || 'city';
-            return worldPoint(particle, mode, mode === 'letter' ? unfold : 0);
+            goal = worldPoint(particle, mode, mode === 'letter' ? unfold : 0);
+        } else if (kind === 'city-mountain') {
+            goal = stagedGoal(city, dust, mountain, t, 0.16, 0.52);
+        } else if (kind === 'mountain-city') {
+            goal = stagedGoal(mountain, dust, city, t, 0.14, 0.50);
+        } else if (kind === 'mountain-letter') {
+            if (t < 0.22) goal = mixPts(mountain, dust, smooth01(t / 0.22));
+            else if (t < 0.52) goal = mixPts(dust, worldPoint(particle, 'letter', 0), smooth01((t - 0.22) / 0.3));
+            else goal = letter;
+        } else if (kind === 'letter-mountain') {
+            if (t < 0.22) goal = mixPts(letter, dust, smooth01(t / 0.22));
+            else if (t < 0.52) goal = mixPts(dust, mountain, smooth01((t - 0.22) / 0.3));
+            else goal = mountain;
+        } else if (kind === 'city-letter') {
+            goal = stagedGoal(city, gather, letter, t, 0.18, 0.52);
+        } else if (kind === 'letter-city') {
+            goal = stagedGoal(letter, gather, city, t, 0.18, 0.52);
+        } else {
+            goal = city;
         }
-        if (kind === 'city-mountain') return stagedGoal(city, dust, mountain, t, 0.16, 0.52);
-        if (kind === 'mountain-city') return stagedGoal(mountain, dust, city, t, 0.14, 0.50);
-        if (kind === 'mountain-letter') {
-            if (t < 0.22) return mixPts(mountain, dust, smooth01(t / 0.22));
-            if (t < 0.52) return mixPts(dust, worldPoint(particle, 'letter', 0), smooth01((t - 0.22) / 0.3));
-            return letter;
-        }
-        if (kind === 'letter-mountain') {
-            if (t < 0.22) return mixPts(letter, dust, smooth01(t / 0.22));
-            if (t < 0.52) return mixPts(dust, mountain, smooth01((t - 0.22) / 0.3));
-            return mountain;
-        }
-        if (kind === 'city-letter') return stagedGoal(city, gather, letter, t, 0.18, 0.52);
-        if (kind === 'letter-city') return stagedGoal(letter, gather, city, t, 0.18, 0.52);
-        return city;
+        return applyFilmMotif(goal, particle, width, height);
     }
 
     function drawField(now) {
@@ -1315,12 +1434,15 @@ import { escapeHtml } from '../lib/dom.js';
         updateBackgroundFocus();
         const dt = fieldLastT ? Math.min(0.05, (now - fieldLastT) / 1000) : 0.016;
         fieldLastT = now;
-        const settleTau = waveScene.transitionKind ? FIELD_SETTLE_TRANS : FIELD_SETTLE;
+        const settleTau = waveScene.transitionKind
+            ? FIELD_SETTLE_TRANS
+            : (waveScene.backgroundFocus > 0.2 ? 0.2 : FIELD_SETTLE);
         const settle = 1 - Math.exp(-dt / settleTau);
         const focus = waveScene.backgroundFocus;
         const focusKind = FOCUS_IDS[waveScene.focusId] || '';
         const unfold = letterUnfoldAmount(focusKind, focus);
         const time = now * 0.001;
+        const reduced = prefersReduced();
         const cityBoost = focusKind === 'city' ? focus : 0;
         const mountainBoost = focusKind === 'mountain' ? focus : 0;
         const letterBoost = focusKind === 'letter' ? focus : 0;
@@ -1331,16 +1453,18 @@ import { escapeHtml } from '../lib/dom.js';
             : kind === 'mountain-city'
                 ? clamp01((tp - 0.52) / 0.48)
                 : 1;
+        const marks = [];
         fieldParticles.forEach(particle => {
             const goal = mixFieldGoal(particle, width, height, unfold);
             if (waveScene.leavePull > 0.001) {
                 goal.x = lerp(goal.x, enterOrigin.x, waveScene.leavePull);
                 goal.y = lerp(goal.y, enterOrigin.y, waveScene.leavePull);
             }
+            const isMotif = Boolean(goal.motif);
             const role = goal.role || 'floater';
             let drift = role === 'floater' ? 2.4 : 0.55;
             let speed = 1;
-            if (role === 'street') {
+            if (!isMotif && role === 'street') {
                 goal.x += Math.sin(time * (0.16 + cityBoost * 0.22) + particle.phase) * (14 + cityBoost * 10);
                 drift = 0.28;
             } else if (role === 'skyline') {
@@ -1349,16 +1473,20 @@ import { escapeHtml } from '../lib/dom.js';
                 const layerDrift = role === 'mtnSky' ? 0.15 : (0.12 + (particle.mtnLayer >= 0 ? particle.mtnLayer : 2) * 0.07);
                 drift *= layerDrift + mountainBoost * 0.2;
                 speed = role === 'mtnSky' ? 0.18 : 0.42;
-                if (role === 'nearRidge' && (particle.mtnLayer >= 3)) {
+                if (!isMotif && role === 'nearRidge' && (particle.mtnLayer >= 3)) {
                     goal.x += Math.sin(time * 0.08 + particle.phase) * 3;
                 }
             } else if (role === 'envelope' || role === 'crease' || role === 'paper') {
                 drift *= 0.46;
-                if (letterBoost) {
+                if (!isMotif && letterBoost) {
                     goal.x = lerp(goal.x, width * 0.5, letterBoost * 0.1);
                     goal.y = lerp(goal.y, height * 0.47, letterBoost * 0.1);
                     speed = 0.36;
                 }
+            }
+            if (isMotif) {
+                drift *= 0.08;
+                speed = 0.35;
             }
             if (mountainBoost) speed *= 1 - mountainBoost * 0.48;
             if (letterBoost && role === 'floater') speed *= 1 - letterBoost * 0.55;
@@ -1381,22 +1509,24 @@ import { escapeHtml } from '../lib/dom.js';
                 alpha = 0.16;
                 size = 1.15;
             } else if (role === 'light') {
-                const flicker = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(time * 3.1 + particle.phase));
-                alpha = (0.26 + cityBoost * 0.34) * flicker * lightMul;
-                size = 2.1 + cityBoost * 0.9;
+                const spark = particleSparkle(hash01(particle.seed || 0, 41), time, particle.phase, reduced);
+                alpha = (0.34 + cityBoost * 0.42) * (0.28 + 0.72 * spark.flash) * lightMul;
+                size = (2.25 + cityBoost * 1.15) * (spark.twinkle ? 0.8 + 0.85 * spark.flash : 1);
             } else if (role === 'nearRidge') {
                 const ml = particle.mtnLayer >= 0 ? particle.mtnLayer : 2;
-                const layerAlphas = [0.04, 0.06, 0.1, 0.18, 0.24];
+                const layerAlphas = [0.08, 0.12, 0.18, 0.28, 0.36];
                 const layerSizes = [1.8, 2.2, 2.8, 3.4, 3.8];
                 const ba = layerAlphas[ml] + mountainBoost * 0.08;
                 alpha = ba * (0.5 + 0.5 * (0.45 + 0.55 * Math.sin(time * (0.22 + ml * 0.03) + particle.phase)));
                 size = layerSizes[ml];
             } else if (role === 'mtnSky') {
                 alpha = particle.skyAlpha || 0.04;
-                if (particle.skyType === 'star') {
-                    alpha *= 0.5 + 0.5 * Math.sin(time * 1.2 + particle.phase);
-                }
                 size = particle.skySize || 1;
+                if (particle.skyType === 'star') {
+                    const spark = particleSparkle(hash01(particle.seed || 0, 55), time, particle.phase, reduced);
+                    alpha *= 0.28 + 1.05 * spark.flash;
+                    if (spark.twinkle) size *= 1.15 + spark.flash * 0.9;
+                }
             } else if (role === 'envelope') {
                 alpha = 0.32 + letterBoost * 0.12;
                 size = 3.2;
@@ -1408,43 +1538,81 @@ import { escapeHtml } from '../lib/dom.js';
                 size = 2.8;
             }
             size *= particle.size;
-            /* Per-wave emotional color palette */
             const cm = MODE_BY_WAVE[waveScene.targetWave] || MODE_BY_WAVE[waveScene.wave] || 'city';
+            const spark = particleSparkle(hash01(particle.seed || 0, 61), time, particle.phase, reduced);
             let cr, cg, cb;
-            if (role === 'light' || role === 'street') {
-                cr = 255; cg = 200; cb = 110;
-            } else if (role === 'mtnSky') {
-                cr = 180; cg = 200; cb = 220;
-            } else if (cm === 'mountain' && (role === 'nearRidge' || role === 'farRidge')) {
-                const ml = particle.mtnLayer >= 0 ? particle.mtnLayer : 2;
-                const mtnColors = [[80, 130, 155], [95, 150, 170], [105, 160, 180], [115, 170, 190], [120, 175, 195]];
-                cr = mtnColors[ml][0]; cg = mtnColors[ml][1]; cb = mtnColors[ml][2];
-            } else if (cm === 'letter') {
-                if (role === 'envelope') { cr = 185; cg = 130; cb = 75; }
-                else if (role === 'crease') { cr = 200; cg = 150; cb = 95; }
-                else if (role === 'paper') { cr = 235; cg = 215; cb = 185; }
-                else { cr = 215; cg = 165; cb = 115; }
+            let sparkle = false;
+            let flash = 0;
+            if (isMotif) {
+                if (cm === 'mountain') { cr = 168; cg = 226; cb = 236; }
+                else if (cm === 'letter') { cr = 255; cg = 214; cb = 150; }
+                else { cr = 255; cg = 220; cb = 140; }
+                sparkle = spark.twinkle;
+                flash = spark.flash;
+                alpha = sparkle ? 0.38 + 0.62 * flash : 0.46 + 0.2 * flash;
+                size = (sparkle ? 2.55 : 2.15) * (0.85 + 0.15 * particle.size);
+                if (sparkle) size *= 0.72 + 0.7 * flash;
+                if (sparkle && flash > 0.7) {
+                    cr = 255;
+                    cg = 248;
+                    cb = 230;
+                }
             } else {
-                cr = 210; cg = 160; cb = 70;
+                if (role === 'light' || role === 'street') {
+                    cr = 255; cg = 200; cb = 110;
+                } else if (role === 'mtnSky') {
+                    cr = 180; cg = 200; cb = 220;
+                } else if (cm === 'mountain' && (role === 'nearRidge' || role === 'farRidge')) {
+                    const ml = particle.mtnLayer >= 0 ? particle.mtnLayer : 2;
+                    const mtnColors = [[80, 130, 155], [95, 150, 170], [105, 160, 180], [115, 170, 190], [120, 175, 195]];
+                    cr = mtnColors[ml][0]; cg = mtnColors[ml][1]; cb = mtnColors[ml][2];
+                } else if (cm === 'letter') {
+                    if (role === 'envelope') { cr = 185; cg = 130; cb = 75; }
+                    else if (role === 'crease') { cr = 200; cg = 150; cb = 95; }
+                    else if (role === 'paper') { cr = 235; cg = 215; cb = 185; }
+                    else { cr = 215; cg = 165; cb = 115; }
+                } else {
+                    cr = 210; cg = 160; cb = 70;
+                }
+                if (!kind && waveScene.backgroundFocus > 0.3) alpha *= 0.42;
+                if (role === 'light' && spark.twinkle) {
+                    sparkle = true;
+                    flash = spark.flash;
+                }
             }
-            /* Glow halo for larger particles */
-            if (size > 2.0 && alpha > 0.06) {
-                const glowAlphaMul = cm === 'mountain' ? 0.25 : cm === 'letter' ? 0.15 : 0.20;
-                const glowSizeMul = cm === 'mountain' ? 3.8 : cm === 'letter' ? 2.8 : 3.2;
-                const gs = size * glowSizeMul;
-                const ga = alpha * glowAlphaMul;
-                context.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${ga})`;
-                context.fillRect(x - (gs - size) * 0.5, y - (gs - size) * 0.5, gs, gs);
-            }
-            /* Core particle */
-            const neon = role === 'light' && hash01(particle.seed || 0, 41) > 0.72;
-            context.fillStyle = neon
-                ? `rgba(255, 168, 92, ${alpha})`
-                : role === 'light'
-                    ? `rgba(255, 214, 128, ${alpha})`
-                    : `rgba(${cr}, ${cg}, ${cb}, ${alpha})`;
-            context.fillRect(x, y, size, size);
+            marks.push({
+                x, y, size, alpha, cr, cg, cb, motif: isMotif,
+                sparkle, flash,
+                neon: !isMotif && role === 'light' && hash01(particle.seed || 0, 41) > 0.72,
+                light: !isMotif && role === 'light',
+                glowMul: sparkle ? 0.4 : (cm === 'mountain' ? 0.25 : cm === 'letter' ? 0.18 : 0.22),
+                glowSize: sparkle ? 4.8 : (isMotif ? 3.2 : (cm === 'mountain' ? 3.8 : cm === 'letter' ? 2.8 : 3.2))
+            });
         });
+        const paint = mark => {
+            if (mark.size > 1.6 && mark.alpha > 0.05) {
+                const gs = mark.size * mark.glowSize;
+                const ga = mark.alpha * mark.glowMul * (mark.sparkle ? 0.7 + 0.5 * mark.flash : 1);
+                context.fillStyle = `rgba(${mark.cr}, ${mark.cg}, ${mark.cb}, ${ga})`;
+                context.fillRect(mark.x - (gs - mark.size) * 0.5, mark.y - (gs - mark.size) * 0.5, gs, gs);
+            }
+            context.fillStyle = mark.sparkle && mark.flash > 0.55
+                ? `rgba(255, 252, 240, ${Math.min(1, mark.alpha + 0.2)})`
+                : mark.neon
+                    ? `rgba(255, 176, 96, ${mark.alpha})`
+                    : mark.light
+                        ? `rgba(255, 220, 140, ${mark.alpha})`
+                        : `rgba(${mark.cr}, ${mark.cg}, ${mark.cb}, ${mark.alpha})`;
+            context.fillRect(mark.x, mark.y, mark.size, mark.size);
+        };
+        for (let i = 0; i < marks.length; i += 1) {
+            if (!marks[i].sparkle) paint(marks[i]);
+        }
+        context.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < marks.length; i += 1) {
+            if (marks[i].sparkle) paint(marks[i]);
+        }
+        context.globalCompositeOperation = 'source-over';
         /* Vignette overlay */
         const vigKey = `${width}|${height}`;
         if (!vigGradient || vigGradientKey !== vigKey) {
@@ -1707,6 +1875,7 @@ import { escapeHtml } from '../lib/dom.js';
         layoutShuffle(true);
         updateCopy();
         updateBackgroundFocus();
+        focusCurrentCard();
         if (ctx && ctx.setChartHidden) ctx.setChartHidden(true);
         if (!fieldRaf) startFieldLoop();
     }
@@ -1808,10 +1977,32 @@ import { escapeHtml } from '../lib/dom.js';
             });
         }
         document.addEventListener('keydown', event => {
-            if (event.key !== 'Escape' || waveScene.layer !== 'film') return;
+            if (waveScene.layer !== 'film') return;
+            if (event.altKey || event.ctrlKey || event.metaKey) return;
             const dialog = document.getElementById('movie-detail-dialog');
             if (dialog && dialog.open) return;
-            leaveFilm();
+            const action = filmStripKeyAction(event.key);
+            if (!action) return;
+            if (action.type === 'leave') {
+                event.preventDefault();
+                leaveFilm();
+                return;
+            }
+            if (action.type === 'move') {
+                event.preventDefault();
+                setFocusIndex(waveScene.focusIndex + action.delta, { focus: true });
+                fadeBrowseHint();
+                return;
+            }
+            if (action.type === 'open') {
+                if (event.repeat) return;
+                const target = event.target && event.target.closest
+                    ? event.target.closest('.wave-film-card, .wave-film-wave-dot, .wave-return, a, input, textarea, select')
+                    : null;
+                if (target) return;
+                event.preventDefault();
+                openFocusedFilm();
+            }
         });
     }
 
