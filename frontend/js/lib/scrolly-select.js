@@ -32,22 +32,6 @@ export function narrativeProgress(scrollY, start, end) {
     return Math.max(0, Math.min(1, (Number(scrollY) - Number(start)) / span));
 }
 
-export function storyArrowDelta(key) {
-    if (key === 'ArrowDown' || key === 'ArrowRight') return 1;
-    if (key === 'ArrowUp' || key === 'ArrowLeft') return -1;
-    return 0;
-}
-
-export function nextStoryStepIndex(currentIndex, delta, length) {
-    if (!Number.isInteger(currentIndex) || !Number.isInteger(delta) || !Number.isInteger(length)) {
-        return currentIndex;
-    }
-    if (length <= 0 || delta === 0) return currentIndex;
-    const next = currentIndex + delta;
-    if (next < 0 || next >= length) return currentIndex;
-    return next;
-}
-
 export function chapterFillFromGeometry(steps, currentId) {
     if (!steps.length) return { top: 0, height: 0 };
     const first = steps[0].top;

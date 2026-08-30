@@ -35,7 +35,7 @@ export function enterExplorer() {
     explorerSpace.classList.add('is-on');
     explorerSpace.scrollTop = 0;
 
-    setChapterLabel('筛选电影');
+    setChapterLabel('自由打捞');
 }
 
 export function exitExplorer() {
