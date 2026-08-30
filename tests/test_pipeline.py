@@ -55,6 +55,7 @@ from freeze_constants import (  # noqa: E402
     TIER2B_EXCLUDED,
     TIER2B_MANDARIN_FIRST,
     TIER_BASELINE,
+    OPERA_CONCERT_EXCLUDED,
 )
 from gen_report_strict import classify_strict  # noqa: E402
 from gen_dialect_report import classify_v21  # noqa: E402
@@ -484,12 +485,18 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         self.assertIn("方言 9.5%，普通话 11.9%", readme)
         self.assertIn("geo_enrichment.json", readme)
         self.assertIn("visual_land_masks.json", readme)
-        self.assertIn("224 标签", readme)
+        self.assertIn("226 标签", readme)
         self.assertIn("15.4%", readme)
         self.assertIn("238KB", readme)
         self.assertNotIn("century-decline", readme)
         self.assertNotIn("max: 2020", readme)
         self.assertNotIn("220 标签", readme)
+        self.assertIn("68 项", readme)
+        self.assertNotIn("66 项", readme)
+        self.assertNotIn("61 项", readme)
+        self.assertIn("10 个幂等", readme)
+        self.assertNotIn("9 个幂等", readme)
+        self.assertNotIn("6 个幂等", readme)
         self.assertIn("python rebuild.py", workflow)
         self.assertIn("python -m unittest discover -s tests -v", workflow)
         self.assertIn("git diff --exit-code", workflow)
@@ -544,6 +551,8 @@ class DialectDefinitionTests(unittest.TestCase):
     def test_pure_dialect_tags(self):
         self.assertTrue(has_strict_dialect_tag("粤语"))
         self.assertTrue(has_strict_dialect_tag("四川话"))
+        self.assertTrue(has_strict_dialect_tag("四川乐山话"))
+        self.assertTrue(has_strict_dialect_tag("乐山话"))
         self.assertTrue(has_strict_dialect_tag("闽南语"))
         self.assertTrue(has_strict_dialect_tag("上海话"))
 
@@ -595,7 +604,7 @@ class DialectDefinitionTests(unittest.TestCase):
 
     def test_no_duplicate_markers(self):
         self.assertEqual(len(DIALECT_MARKERS_STRICT), len(set(DIALECT_MARKERS_STRICT)))
-        self.assertEqual(len(DIALECT_MARKERS_STRICT), 224)
+        self.assertEqual(len(DIALECT_MARKERS_STRICT), 226)
 
     def test_dialect_report_baseline_uses_freeze_constants(self):
         source = (TASTE_ROOT / "scripts" / "gen_dialect_report.py").read_text(encoding="utf-8")
@@ -785,7 +794,7 @@ class Tier2bEvidenceReviewTests(unittest.TestCase):
         self.assertEqual(int(self.frame.loc[recovered, "Is_Dialect"].astype(int).sum()), TIER2B_MANDARIN_FIRST)
         self.assertEqual(int(self.frame.loc[excluded, "Is_Dialect"].astype(int).sum()), 0)
         china = self.frame["Region"] == "China"
-        # 2026-08-30 v4.6 豆瓣语言回填 3,066，再补收《隐入尘烟》→ 3,067
+        # 2026-08-30 v4.7 部分豆瓣语言回填终态（未抓到的 China 默认普通话）
         self.assertEqual(int((china & self.frame["Is_Dialect"].astype(int).eq(1)).sum()), CHINA_DIALECT)
         # 用户人工复核决定（2026-08-15）：《芒种》不算方言片
         mz = self.frame[self.frame["movie_id"].astype(str) == "1986783"]
@@ -811,7 +820,7 @@ class Tier2bEvidenceReviewTests(unittest.TestCase):
 
 
 class OperaConcertExcludeRegressionTests(unittest.TestCase):
-    """2026-08-18 戏曲/演唱会审计：49 部非叙事影片排除出方言口径（定义 E4/E9）。"""
+    """2026-08-18 戏曲/演唱会审计：非叙事影片排除出方言口径（定义 E4/E8）。"""
 
     @classmethod
     def setUpClass(cls):
@@ -822,17 +831,17 @@ class OperaConcertExcludeRegressionTests(unittest.TestCase):
         )
 
     def test_exclude_list_completeness(self):
-        # 名单恰 49 部（戏曲 10 + 演唱会 21 + 音乐纪录片 9 + 颁奖典礼 9）
-        self.assertEqual(len(OPERA_CONCERT_EXCLUDE_MOVIE_IDS), 49)
+        self.assertEqual(len(OPERA_CONCERT_EXCLUDE_MOVIE_IDS), OPERA_CONCERT_EXCLUDED)
         for known_id in ("4307305", "1918697", "2305317",  # 戏曲片代表
                          "30468861", "33211868",            # 演唱会代表
-                         "26740516", "30377813"):           # 颁奖典礼代表
+                         "26740516", "30377813",            # 金像奖颁奖典礼
+                         "35322591"):                       # TVB 万千星辉
             self.assertIn(known_id, OPERA_CONCERT_EXCLUDE_MOVIE_IDS)
 
     def test_excluded_movies_not_dialect(self):
         # 名单内影片全部 Is_Dialect=0 且标记 AUDIT_EXCLUDED_OPERA_CONCERT
         rows = self.frame[self.frame["movie_id"].isin(OPERA_CONCERT_EXCLUDE_MOVIE_IDS)]
-        self.assertEqual(len(rows), 49)
+        self.assertEqual(len(rows), OPERA_CONCERT_EXCLUDED)
         self.assertEqual(int(rows["Is_Dialect"].astype(int).sum()), 0)
         self.assertTrue((rows["Dialect_Evidence"].fillna("") == "AUDIT_EXCLUDED_OPERA_CONCERT").all())
         # 名单不出现在任何 Is_Dialect=1 行
@@ -843,6 +852,8 @@ class OperaConcertExcludeRegressionTests(unittest.TestCase):
         # 两个报告判定函数均尊重名单：名单内影片即使语言字段含方言标签也不计方言
         self.assertEqual(classify_strict({"语言": "粤语", "movie_id": "30468861"})["is_dialect"], 0)
         self.assertEqual(classify_v21("粤语", "", "30468861")[0], 0)
+        self.assertEqual(classify_strict({"语言": "粤语", "movie_id": "35322591"})["is_dialect"], 0)
+        self.assertEqual(classify_v21("粤语", "", "35322591")[0], 0)
         # 名单外影片不受影响
         self.assertEqual(classify_strict({"语言": "粤语", "movie_id": "99999999"})["is_dialect"], 1)
         self.assertEqual(classify_v21("粤语", "", "99999999")[0], 1)
@@ -1009,6 +1020,39 @@ class YinruchenyanLangFixRegressionTests(unittest.TestCase):
         self.assertEqual(str(row["Language_Provenance"]), "douban_backfill")
 
 
+class JiaomaLeshanLangFixRegressionTests(unittest.TestCase):
+    """2026-08-30：《椒麻堂会》(27305997) 乐山话白名单补收；
+    《万千星辉颁奖典礼 2020》(35322591) 按 E8 排除。
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.frame = pd.read_csv(
+            TASTE_ROOT / "data" / "cleaned" / "derived_movies.csv",
+            dtype={"movie_id": "string"},
+            low_memory=False,
+        )
+
+    def test_jiaoma_is_tier1_dialect(self):
+        rows = self.frame[self.frame["movie_id"] == "27305997"]
+        self.assertEqual(len(rows), 1)
+        row = rows.iloc[0]
+        self.assertEqual(row["片名"], "椒麻堂会")
+        self.assertEqual(row["语言"], "四川乐山话")
+        self.assertEqual(int(row["Is_Dialect"]), 1)
+        self.assertEqual(int(row["Language_Code"]), 3)
+        self.assertIn("LANG_FIX_20260830", str(row["Dialect_Evidence"]))
+        self.assertNotEqual(str(row["Dialect_Evidence"]), "EMPTY_LANG_DEFAULTED")
+
+    def test_tvb_awards_excluded_e8(self):
+        rows = self.frame[self.frame["movie_id"] == "35322591"]
+        self.assertEqual(len(rows), 1)
+        row = rows.iloc[0]
+        self.assertEqual(int(row["Is_Dialect"]), 0)
+        self.assertEqual(str(row["Dialect_Evidence"]), "AUDIT_EXCLUDED_OPERA_CONCERT")
+        self.assertIn("35322591", OPERA_CONCERT_EXCLUDE_MOVIE_IDS)
+
+
 class DialectAggregatesTests(unittest.TestCase):
     """方言叙事聚合载荷 dialect_aggregates.json（v4.4 基线）。
 
@@ -1049,14 +1093,14 @@ class DialectAggregatesTests(unittest.TestCase):
 
     def test_by_decade_key_values(self):
         by_decade = self.payload["by_decade"]
-        self.assertEqual(by_decade["2020s"]["d"], {"n": 79, "mean": 6.31, "below5": 15.2})
-        self.assertEqual(by_decade["2020s"]["delta"], 0.57)
+        self.assertEqual(by_decade["2020s"]["d"], {"n": 88, "mean": 6.29, "below5": 14.8})
+        self.assertEqual(by_decade["2020s"]["delta"], 0.55)
         self.assertEqual(by_decade["2010s"]["delta"], 0.95)
         self.assertEqual(by_decade["1990s"]["delta"], -0.39)
 
     def test_flop_and_type_controlled(self):
         self.assertEqual(self.payload["flop_overall"], {"d": 6.5, "m": 24.5})
-        self.assertEqual(self.payload["flop_decade"]["2020s"], {"d": 15.2, "m": 32.8})
+        self.assertEqual(self.payload["flop_decade"]["2020s"], {"d": 14.8, "m": 32.9})
         raw = self.payload["type_controlled"]["raw"]
         self.assertEqual(raw["d"]["mean"], 6.62)
         self.assertEqual(raw["m"]["mean"], 6.11)
@@ -1069,8 +1113,8 @@ class DialectAggregatesTests(unittest.TestCase):
 
     def test_cantonese_and_global_layers(self):
         canto = {item["name"]: item for item in self.payload["cantonese_vs_non"]}
-        self.assertEqual(canto["非粤语方言"]["n"], 485)
-        self.assertEqual(canto["粤语"]["n"], 2582)
+        self.assertEqual(canto["非粤语方言"]["n"], 488)
+        self.assertEqual(canto["粤语"]["n"], 2588)
         layers = {item["name"]: item for item in self.payload["global_layers"]}
         self.assertEqual(layers["华语 · 方言"]["n"], CHINA_DIALECT)
         self.assertEqual(layers["华语 · 方言"]["below5"], 6.5)
@@ -1087,9 +1131,9 @@ class DialectAggregatesTests(unittest.TestCase):
 
     def test_dual_director_diversity_genre(self):
         director = self.payload["dual_director"]
-        self.assertEqual(director["total"], 478)
-        self.assertEqual(sum(director["hist"].values()), 478)
-        self.assertEqual(director["share_positive"], 70)
+        self.assertEqual(director["total"], 479)
+        self.assertEqual(sum(director["hist"].values()), 479)
+        self.assertEqual(director["share_positive"], 69)
         self.assertEqual(director["mean_diff"], 0.65)
         diversity = self.payload["lang_diversity"]
         self.assertEqual(len(diversity), 10)
@@ -1139,6 +1183,11 @@ class HomepageChinaKpiTests(unittest.TestCase):
         self.assertNotIn("李睿珺用普通话拍《隐入尘烟》", html)
         self.assertNotIn("后续年份没有进入当前快照", html)
         self.assertNotIn("这是比较门槛，不是数据截止年份", html)
+        self.assertNotIn("1,631", html)
+        self.assertNotIn("全部计入普通话组", html)
+        self.assertNotIn("不参与方言／普通话对比", html)
+        self.assertIn("EMPTY_LANG_DEFAULTED", html)
+        self.assertIn("未抓到的仍默认普通话", html)
 
     def test_dialect_mean_fill_uses_china_type_controlled(self):
         app_js = (TASTE_ROOT / "frontend" / "js" / "app.js").read_text(encoding="utf-8")

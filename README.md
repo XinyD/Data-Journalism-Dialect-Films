@@ -10,14 +10,14 @@
 
 ## 核心发现
 
-| 比较 | 当前发布数据中的结果（v4.6，Region=China，第一制片国） |
+| 比较 | 当前发布数据中的结果（v4.7，Region=China，第一制片国） |
 | --- | --- |
-| 方言 vs 普通话均分 | 方言 6.62，普通话 6.11，差 +0.51 |
+| 方言 vs 普通话均分 | 方言 6.62，普通话 6.11，差 +0.50 |
 | 烂片率（<5 分） | 方言 6.5%，普通话 24.5% |
 | 高分率（≥8 分） | 方言 9.5%，普通话 11.9%——方言守住下限，没有赢在天花板 |
-| 2010 反超 | 1990s 方言落后 0.39；2010s 反超 +0.95；2020s 延续 +0.57 |
+| 2010 反超 | 1990s 方言落后 0.39；2010s 反超 +0.95；2020s 延续 +0.55 |
 | 全球参照 | 方言均分仍低于欧洲 7.16、北美 6.76；「赢」不外溢到欧美 |
-| 同导演 | 478 位双栖导演中 70% 的方言片更高，平均分差 +0.65 |
+| 同导演 | 479 位双栖导演中 69% 的方言片更高，平均分差 +0.65 |
 
 这些结果描述的是当前发布数据中的评分结构。抽样边界、平台用户构成和因果解释集中列在本文的“数据、方法与局限”区以及本 README 的方法部分。
 
@@ -30,6 +30,8 @@
 - **电影详情**：首页粒子和探索舱的电影卡片均可打开简介、导演、语言、评价人数和来源记录。
 
 ## 快速预览
+
+线上页面：<https://XinyD.github.io/Data-Journalism-Dialect-Films/>
 
 预览已生成的数据新闻不需要安装第三方包，只需要 Python 自带的 HTTP 服务器：
 
@@ -136,7 +138,7 @@ data/cleaned/derived_movies.csv
 
 - 63,025 条发布记录；
 - 64 个详情分片；
-- 61 项数据、叙事和页面测试通过；冻结校验含 geo / story_universe 指纹；
+- 68 项数据、叙事和页面测试通过；冻结校验含 geo / story_universe 指纹；
 - 核心发布载荷（含 `geo_enrichment.json`、`story_universe.json`）使用同一数据指纹；
 - 重新生成后 `git diff --exit-code` 无差异。
 
@@ -150,7 +152,7 @@ GitHub Actions 会在每次 Push 和 Pull Request 中自动执行上述重建、
 | 63,025 部电影规范快照 | 是 | `data/cleaned/derived_movies.csv`，使用普通 Git 保存，不依赖 Git LFS |
 | 图表与统计结果 | 是 | 可从规范快照重新生成（`python rebuild.py`） |
 | 电影详情与简介 | 是 | 64 个按电影 ID 分片的 JSON 文件 |
-| 方言手工补丁链 | 是 | 从源重建后须运行 `python scripts/replay_v44_baseline.py`（6 个幂等 apply 脚本） |
+| 方言手工补丁链 | 是 | 从源重建后须运行 `python scripts/replay_v44_baseline.py`（10 个幂等 apply 脚本） |
 | 最初 309,817 条上游原始数据 | 否 | 原始文件在发布后继续变化，已无法与当前报道版本严格对应 |
 | 从数据采集网站重新抓取 | 否 | 仓库不包含抓取器、账号或外部 API 凭据 |
 
@@ -200,12 +202,12 @@ GitHub Actions 会在每次 Push 和 Pull Request 中自动执行上述重建、
 - 条目范围：沿用豆瓣电影频道宽口径，包含长片、短片、纪录片、动画、演出影像及部分电视条目。
 - 统计权重：每部电影等权计入；页面同时披露按评价人数加权的总体均分。
 - 高分参考线：各幕数据卡用 8.5 分；正文方言／普通话高分率用 ≥8.0（9.5% vs 11.9%）。
-- 时间覆盖：2026-08-18 合并 delivery_20260817 后覆盖至 2026 年；2022 年后共 7,190 部，以北美/欧洲/东亚为主，中国大陆占 15.4%；2020s 中国方言片 79 部（v4.6 豆瓣语言回填并补收《隐入尘烟》后；此前因缺列系统性偏低），该年代结论仍应谨慎引用。
+- 时间覆盖：2026-08-18 合并 delivery_20260817 后覆盖至 2026 年；2022 年后共 7,190 部，以北美/欧洲/东亚为主，中国大陆占 15.4%；2020s 中国方言片 88 部（v4.7 部分豆瓣语言回填后；未抓到的仍默认普通话，该年代结论仍应谨慎引用）。
 
 当前发布指纹：
 
 ```text
-883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1
+0ad6ce7886a3a907e9e597048b83da173226ae6076f691a7e2c5083f104f6421
 ```
 
 ## 项目结构
@@ -213,6 +215,8 @@ GitHub Actions 会在每次 Push 和 Pull Request 中自动执行上述重建、
 ```text
 .
 ├── .github/workflows/validate.yml    自动重建与验证
+├── index.html                        GitHub Pages 入口，跳转到 frontend/index.html
+├── .nojekyll                         关闭 Pages 默认 Jekyll，避免漏发文件
 ├── data/                             规范快照与全部发布载荷（含 frontend/geo_enrichment.json、visual_land_masks.json）
 ├── archive/                          下线页面副本（故事宇宙、四个分卷）
 ├── docs/preview.webp                 README 页面预览图
@@ -234,11 +238,11 @@ GitHub Actions 会在每次 Push 和 Pull Request 中自动执行上述重建、
 
 ## 方言分析子系统
 
-v4.6 发布快照（Region=China，第一制片国；判定规则仍为 v4.1）：方言片 **3,067** 部 / 普通话·非方言 9,724 部。2020–2026 入样片已按豆瓣「语言」回填，并按豆瓣现页补收《隐入尘烟》；抓取失败的 China 空语言仍默认普通话，但打上 `EMPTY_LANG_DEFAULTED`，不再与豆瓣实标混在一起（详见《方言电影定义_最终版_v4.1_Final.md》）。
+v4.7 发布快照（Region=China，第一制片国；判定规则仍为 v4.1）：方言片 **3,076** 部 / 普通话·非方言 9,715 部。2020–2026 入样片已按已抓到的豆瓣「语言」回填，并按豆瓣现页补收《隐入尘烟》；白名单增补乐山话后补收《椒麻堂会》，E8 排除《万千星辉颁奖典礼 2020》；尚未抓到的 China 空语言仍默认普通话，打上 `EMPTY_LANG_DEFAULTED`，不再与豆瓣实标混在一起（详见《方言电影定义_最终版_v4.1_Final.md》）。
 
 | 脚本 | 用途 |
 | --- | --- |
-| `scripts/dialect_defs.py` | 方言定义 SSOT（224 标签、17 组），所有脚本的唯一白名单来源 |
+| `scripts/dialect_defs.py` | 方言定义 SSOT（226 标签、17 组），所有脚本的唯一白名单来源 |
 | `scripts/gen_report_strict.py` | 方言片严格分析报告（支持 `--output` CLI 参数） |
 | `scripts/gen_dialect_report.py` | 方言片逐部明细报告 + HTML 输出 |
 | `scripts/analyze_v21_foreign_risk.py` | 外语标签风险分析 |
@@ -246,21 +250,22 @@ v4.6 发布快照（Region=China，第一制片国；判定规则仍为 v4.1）�
 | `scripts/llm_judge_tier2b.py` | Tier 2b 灰区逐部补判（v4.1，`--apply` 生成白名单 `data/tier2b_recovered.csv`） |
 | `scripts/apply_tier2b_reclassify_20260815.py` | Tier 2b 重分类一次性落地脚本（写回 `Dialect_Evidence` 列） |
 | `scripts/apply_empty_lang_backfill_20260818.py` | 空语言 China 电影回填（replay 链；含 v4.1.1 的 8+1+4 修正） |
-| `scripts/list_untrusted_languages.py` | v4.6：列出 delivery 空语言 / 默认普通话 / 其他空语言候选 |
-| `scripts/fetch_douban_languages.py` | v4.6：豆瓣 rexxar 回抓「语言」标签（可 `--only-china`，断点缓存） |
-| `scripts/fetch_wikidata_languages.py` | v4.6：Wikidata P364 补 Language_Code 空缺（不铸造 China 方言） |
-| `scripts/apply_language_backfill_20260830.py` | v4.6：写入语言、重算派生列、新 Tier 2b 默认排除 |
+| `scripts/list_untrusted_languages.py` | v4.6 引入：列出 delivery 空语言 / 默认普通话 / 其他空语言候选 |
+| `scripts/fetch_douban_languages.py` | v4.6 引入：豆瓣 rexxar 回抓「语言」标签（可 `--only-china`，断点缓存） |
+| `scripts/fetch_wikidata_languages.py` | v4.6 引入：Wikidata P364 补 Language_Code 空缺（不铸造 China 方言） |
+| `scripts/apply_language_backfill_20260830.py` | v4.7：写入语言、重算派生列、新 Tier 2b 默认排除 |
 | `scripts/apply_yinruchenyan_lang_fix_20260830.py` | 《隐入尘烟》按豆瓣现页补收为甘肃方言片（replay 链；`LANG_FIX_20260830`） |
+| `scripts/apply_jiaoma_leshan_lang_fix_20260830.py` | 《椒麻堂会》乐山话白名单补收为 Tier 1 方言片（replay 链；`LANG_FIX_20260830`） |
 | `scripts/gen_opera_concert_candidates_20260818.py` | 戏曲/演唱会类误判候选清单生成（审计溯源） |
-| `scripts/apply_opera_concert_exclude_20260818.py` | 49 部戏曲/演唱会类影片排除落地（定义 E4/E8） |
-| `scripts/replay_v44_baseline.py` | 按序重放 v4.4 六步补丁 + v4.5 第一制片国 + v4.6 语言回填 + 《隐入尘烟》补收并断言终态；`--full-rebuild` 可从源一键回到基线（链末会自动跑 `rebuild.py`） |
+| `scripts/apply_opera_concert_exclude_20260818.py` | 50 部戏曲/演唱会类影片排除落地（定义 E4/E8；含 TVB《万千星辉颁奖典礼 2020》） |
+| `scripts/replay_v44_baseline.py` | 按序重放 v4.4 六步补丁 + v4.5 第一制片国 + v4.6/v4.7 语言回填 + 《隐入尘烟》《椒麻堂会》补收并断言终态；`--full-rebuild` 可从源一键回到基线（链末会自动跑 `rebuild.py`） |
 | `scripts/apply_first_listed_region_20260824.py` | v4.5：空格分隔制片国取首位 + 西德/东德归入 Europe（不改 Is_Dialect；已纳入 replay 链） |
 
-方言层级（v4.6 发布快照）：Tier 1 纯方言片（2,303 部）/ Tier 2a 混合方言片-方言排首位（418 部）/ Tier 2b 混合方言片-普通话排首位（346 部，默认排除后经证据漏斗+逐部补判白名单补回；2020–2026 新发现的 Tier 2b 另标 `LANG_BACKFILL_TIER2B_EXCLUDED`，不并入原 702 池。详见《方言电影定义_最终版_v4.1_Final.md》§5.5）。
+方言层级（v4.7 发布快照）：Tier 1 纯方言片（2,309 部）/ Tier 2a 混合方言片-方言排首位（421 部）/ Tier 2b 混合方言片-普通话排首位（346 部，默认排除后经证据漏斗+逐部补判白名单补回；2020–2026 新发现的 Tier 2b 另标 `LANG_BACKFILL_TIER2B_EXCLUDED`，不并入原 702 池。详见《方言电影定义_最终版_v4.1_Final.md》§5.5）。
 
 ## 使用自备上游数据
 
-如果取得了版本明确、字段兼容的 `movies_info.csv`，不要直接依赖 `rebuild.py --from-source` 一键出刊（它会停在 `data_processor`，以免用未打补丁的主表覆盖发布载荷）。正确顺序只需一条命令：补丁链已含 v4.5 Region 修正、v4.6 语言回填与《隐入尘烟》补收，且 `--full-rebuild` 会在断言终态后自动跑 `rebuild.py`。
+如果取得了版本明确、字段兼容的 `movies_info.csv`，不要直接依赖 `rebuild.py --from-source` 一键出刊（它会停在 `data_processor`，以免用未打补丁的主表覆盖发布载荷）。正确顺序只需一条命令：补丁链已含 v4.5 Region 修正、v4.7 语言回填与《隐入尘烟》《椒麻堂会》补收，且 `--full-rebuild` 会在断言终态后自动跑 `rebuild.py`。
 
 ```bash
 python scripts/replay_v44_baseline.py --full-rebuild --source /path/to/movies_info.csv
@@ -274,13 +279,13 @@ python scripts/replay_v44_baseline.py --full-rebuild --source /path/to/movies_in
 - 地区取第一制片国家／地区，合拍片会被归入单一分析地区。
 - 主类型取类型列表第一项。
 - 分析语言组为英语、日语、韩语、普通话、方言、其他六组；方言沿用中国方言清单，其余组按主要语言（片单首位）归组。
-- 2020–2026 `delivery_20260817` 源表无语言列。v4.6 已按豆瓣详情回填入样片；Wikidata P364 只用来降低「其他」组虚高，不改 China 方言口径。仍空的语言保持 `Language_Code=5` / `Language_Provenance=empty`；China 抓取失败者默认普通话并戳 `EMPTY_LANG_DEFAULTED`。
+- 2020–2026 `delivery_20260817` 源表无语言列。v4.7 已按已抓到的豆瓣详情回填入样片（中国候选 1,671 部中 530 条抓取成功）；其余约 1,137 部未抓到的 China 行仍默认普通话并戳 `EMPTY_LANG_DEFAULTED`。Wikidata P364 只用来降低「其他」组虚高，不改 China 方言口径。仍空的非中国片语言保持 `Language_Code=5` / `Language_Provenance=empty`。
 - 页面未进行显著性检验、因果识别或跨平台评分校准。
 - 评分差异可能同时受到年代留存、跨地区传播、类型构成、平台用户与收录门槛影响。
 
-## 私有仓库与 Fork
+## 公开仓库与 Fork
 
-仓库当前为 Private。协作者需要先获得访问权限；是否显示 Fork 按钮取决于 GitHub 的私有仓库权限设置。拥有访问权限后，Clone、Fork 和从规范快照重建均不需要原工作目录。
+仓库已公开。Clone、Fork 和从规范快照重建均不需要原工作目录。GitHub Pages 入口为 <https://XinyD.github.io/Data-Journalism-Dialect-Films/>（根路径会跳转到 `frontend/index.html`）。
 
 ## 数据使用提示
 

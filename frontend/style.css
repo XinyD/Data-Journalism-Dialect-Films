@@ -1732,6 +1732,11 @@ html[data-global-phase="mandarin-outlier"] #step-8b.is-active .mandarin-outlier-
 #step-8c .flop-genre-col {
     max-width: 620px;
 }
+#step-8c .flop-paths {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 #step-8c .flop-genre-col {
     display: flex;
     flex-direction: column;
@@ -1767,7 +1772,7 @@ html[data-global-phase="mandarin-outlier"] #step-8b.is-active .mandarin-outlier-
     transform: none;
 }
 #step-8c .flop-body {
-    margin-bottom: 8px;
+    margin: 0;
 }
 #step-8c .flop-path-tags {
     max-width: none;
@@ -3325,7 +3330,7 @@ html.wave-scene-busy .wave-film-card {
 }
 
 .particle-step .flop-body.flop-path-summary {
-    margin-top: 10px;
+    margin: 0;
     font-size: 0.82rem;
     line-height: 1.55;
     color: #B8B8BE;

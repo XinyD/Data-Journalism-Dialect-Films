@@ -1,7 +1,8 @@
 """Apply the OPERA_CONCERT_EXCLUDE_MOVIE_IDS to the current dataset.
 
-2026-08-18 审计：49 部戏曲片（定义 E4）与演唱会/音乐纪录片/颁奖典礼
+2026-08-18 审计：戏曲片（定义 E4）与演唱会/音乐纪录片/颁奖典礼
 （E8，非叙事影片）因语言字段含粤语/方言标签被误判为方言片。
+名单长度以 dialect_defs.OPERA_CONCERT_EXCLUDE_MOVIE_IDS 为准（现 50 部）。
 本脚本将其 Is_Dialect 置 0 并重算 Language_Code（影片保留在数据集中，
 仍为有效的普通话组样本），Dialect_Evidence 标记 AUDIT_EXCLUDED_OPERA_CONCERT。
 
@@ -48,6 +49,7 @@ def main():
 
     fixed = 0
     healed_code = 0
+    stamped_d0 = 0
     already_d0 = []
     missing = []
     for mid in sorted(OPERA_CONCERT_EXCLUDE_MOVIE_IDS):
@@ -62,6 +64,11 @@ def main():
             if int(df.at[i, "Language_Code"]) == 2 and df.at[i, "Language_Category"] != "Chinese":
                 df.at[i, "Language_Code"] = 1
                 healed_code += 1
+            if "Dialect_Evidence" in df.columns:
+                evidence = str(df.at[i, "Dialect_Evidence"] or "").strip()
+                if evidence != "AUDIT_EXCLUDED_OPERA_CONCERT":
+                    df.at[i, "Dialect_Evidence"] = "AUDIT_EXCLUDED_OPERA_CONCERT"
+                    stamped_d0 += 1
             already_d0.append(mid)
             continue
         df.at[i, "Is_Dialect"] = 0
@@ -83,6 +90,7 @@ def main():
 
     print(f"Fixed {fixed} films (Is_Dialect 1->0)")
     print(f"Healed Language_Code 2->1 (pure-dialect-language rows): {healed_code}")
+    print(f"Stamped AUDIT_EXCLUDED_OPERA_CONCERT on already-D0 rows: {stamped_d0}")
     print(f"Already Is_Dialect=0 (idempotent skip): {len(already_d0)}")
     if missing:
         print(f"WARNING: {len(missing)} ids not found in dataset: {missing}")
@@ -113,6 +121,7 @@ def main():
         "exclude_list_size": len(OPERA_CONCERT_EXCLUDE_MOVIE_IDS),
         "fixed_count": fixed,
         "language_code_healed": healed_code,
+        "stamped_already_d0": stamped_d0,
         "already_d0": already_d0,
         "candidate_list": "data/archive/analysis/opera_concert_exclude_candidates_20260818.csv",
         "backup": BACKUP.name,

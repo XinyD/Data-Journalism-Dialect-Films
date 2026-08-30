@@ -31,7 +31,7 @@
     "duplicates_removed": 37
   },
   "publication_records": 63025,
-  "sample_fingerprint_sha256": "70addfb0d7b53edbdc0d26002b4f50d217902fdf6f0db5e405eb8236ee7c207e",
+  "sample_fingerprint_sha256": "0ad6ce7886a3a907e9e597048b83da173226ae6076f691a7e2c5083f104f6421",
   "counts": {
     "decade": {
       "2010s": 23114,
@@ -109,8 +109,8 @@
   "opera_concert_exclude_20260818": {
     "applied_by": "scripts/apply_opera_concert_exclude_20260818.py",
     "rule": "OPERA_CONCERT_EXCLUDE_MOVIE_IDS: 戏曲片(E4)与演唱会/音乐纪录片/颁奖典礼(E8)排除方言口径",
-    "exclude_list_size": 49,
-    "fixed_count": 0,
+    "exclude_list_size": 50,
+    "fixed_count": 1,
     "already_d0": [
       "10462938",
       "1903720",
@@ -162,11 +162,12 @@
       "4728526",
       "5919317"
     ],
-    "candidate_list": "data/opera_concert_exclude_candidates_20260818.csv",
+    "candidate_list": "data/archive/analysis/opera_concert_exclude_candidates_20260818.csv",
     "backup": "derived_movies_opera_concert_backup_20260818.csv",
     "note": "fixed_count 为本次运行改动数，非累计值；影片保留在数据集中（普通话组）；language_code_healed 为纯方言语言行 Language_Code 2→1 自愈数（对齐 data_processor.language_code 语义）",
     "first_run_fixed_count": 49,
-    "language_code_healed": 0
+    "language_code_healed": 0,
+    "stamped_already_d0": 0
   },
   "ama_lang_fix_20260819": {
     "applied_by": "scripts/apply_ama_lang_fix_20260819.py",
@@ -209,5 +210,12 @@
     "previous_fingerprint": "51013700ec265c7e5cb2faf1468e2fdb5d153f7223fa05a57012c5408f7fe3bb",
     "date": "2026-08-30",
     "synced_fingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1"
+  },
+  "jiaoma_leshan_lang_fix_20260830": {
+    "applied_by": "scripts/apply_jiaoma_leshan_lang_fix_20260830.py",
+    "rule": "《椒麻堂会》(27305997)：语言四川乐山话因白名单缺口被漏判；增补乐山话/四川乐山话后补收为 Tier 1 方言片（LANG_FIX_20260830）",
+    "baseline": "(3076, 2309, 421, 346)",
+    "previous_fingerprint": "70addfb0d7b53edbdc0d26002b4f50d217902fdf6f0db5e405eb8236ee7c207e",
+    "date": "2026-08-30"
   }
 }

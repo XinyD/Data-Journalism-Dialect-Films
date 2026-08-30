@@ -71,7 +71,7 @@ for (const [htmlPath, keys] of Object.entries(HTML_MANIFEST_KEYS)) {
 }
 
 console.log({
-    languageOptions: LANGUAGE_DISPLAY_ORDER.map((code, index) => `${code} ${LANGUAGE_LABELS[code]}`),
+    languageOptions: LANGUAGE_DISPLAY_ORDER.map(code => `${code} ${LANGUAGE_LABELS[code]}`),
     decadeOptions: DECADE_VALUES,
     regionOptions: REGION_VALUES,
     flopCaseIds: FLOP_CASE_IDS,

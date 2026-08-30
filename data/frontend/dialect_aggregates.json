@@ -1,12 +1,12 @@
 {
   "meta": {
     "schemaVersion": 1,
-    "sampleFingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1",
+    "sampleFingerprint": "0ad6ce7886a3a907e9e597048b83da173226ae6076f691a7e2c5083f104f6421",
     "baseline": {
-      "china_dialect": 3067,
-      "china_mandarin": 9724,
+      "china_dialect": 3076,
+      "china_mandarin": 9715,
       "china_total": 12791,
-      "dialect_all_regions": 3360,
+      "dialect_all_regions": 3369,
       "publication_records": 63025
     },
     "methodology": "Region=China；dialect=Is_Dialect==1；below5=豆瓣评分<5占比；yearly 双方n>=5（1990-2020）；lang_diversity min n>=10 top10；genre_avg min n>=30 top8；口径固化自 sync_preview_dialect_v43_20260819.py"
@@ -66,16 +66,16 @@
     },
     "2020s": {
       "d": {
-        "n": 79,
-        "mean": 6.31,
-        "below5": 15.2
+        "n": 88,
+        "mean": 6.29,
+        "below5": 14.8
       },
       "m": {
-        "n": 2019,
+        "n": 2010,
         "mean": 5.74,
-        "below5": 32.8
+        "below5": 32.9
       },
-      "delta": 0.57
+      "delta": 0.55
     }
   },
   "flop_decade": {
@@ -92,8 +92,8 @@
       "m": 36.1
     },
     "2020s": {
-      "d": 15.2,
-      "m": 32.8
+      "d": 14.8,
+      "m": 32.9
     }
   },
   "flop_overall": {
@@ -136,36 +136,36 @@
   "type_controlled": {
     "raw": {
       "d": {
-        "n": 3067,
+        "n": 3076,
         "mean": 6.62,
         "below5": 6.5
       },
       "m": {
-        "n": 9724,
+        "n": 9715,
         "mean": 6.11,
         "below5": 24.5
       }
     },
     "exclude": {
       "d": {
-        "n": 2930,
+        "n": 2939,
         "mean": 6.58,
         "below5": 6.7
       },
       "m": {
-        "n": 8675,
+        "n": 8666,
         "mean": 5.93,
         "below5": 27.1
       }
     },
     "drama": {
       "d": {
-        "n": 1313,
+        "n": 1318,
         "mean": 6.85,
         "below5": 5.2
       },
       "m": {
-        "n": 4326,
+        "n": 4321,
         "mean": 6.25,
         "below5": 18.1
       }
@@ -175,14 +175,14 @@
     {
       "name": "非粤语方言",
       "mean": 7.22,
-      "below5": 2.1,
-      "n": 485
+      "below5": 2.0,
+      "n": 488
     },
     {
       "name": "粤语",
       "mean": 6.5,
       "below5": 7.3,
-      "n": 2582
+      "n": 2588
     }
   ],
   "lang_diversity": [
@@ -208,13 +208,13 @@
     },
     {
       "name": "闽南语",
-      "mean": 7.39,
-      "n": 118
+      "mean": 7.37,
+      "n": 119
     },
     {
       "name": "藏语",
-      "mean": 7.17,
-      "n": 36
+      "mean": 7.11,
+      "n": 37
     },
     {
       "name": "重庆话",
@@ -256,7 +256,7 @@
     {
       "name": "华语 · 方言",
       "below5": 6.5,
-      "n": 3067
+      "n": 3076
     },
     {
       "name": "北美 · 英语",
@@ -266,13 +266,13 @@
     {
       "name": "华语 · 普通话",
       "below5": 24.5,
-      "n": 9724,
+      "n": 9715,
       "outlier": true
     }
   ],
   "dual_director": {
     "hist": {
-      "≤−2": 15,
+      "≤−2": 16,
       "−1": 53,
       "0": 161,
       "+1": 147,
@@ -280,8 +280,8 @@
       "+3": 23,
       "≥+4": 10
     },
-    "total": 478,
-    "share_positive": 70,
+    "total": 479,
+    "share_positive": 69,
     "mean_diff": 0.65
   },
   "genre_avg": [
@@ -463,7 +463,7 @@
     {
       "name": "剧情",
       "mean": 6.86,
-      "n": 1302,
+      "n": 1304,
       "top": [
         {
           "id": "26672579",

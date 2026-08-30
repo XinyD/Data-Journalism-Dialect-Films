@@ -131,8 +131,8 @@ const GLOBAL_LAYER_GROUPS = [
     { index: 0, jsonName: '欧洲 · 非主导语言', label: '欧洲非主导语言', short: '欧非主导', fallback: '1.5%' },
     { index: 1, jsonName: '欧洲 · 英语', label: '英语', short: '英语', fallback: '3.6%' },
     { index: 2, jsonName: '日韩', label: '日韩', short: '日韩', fallback: '5.8%' },
-    { index: 3, jsonName: '华语 · 方言', label: '华语方言', short: '方言', fallback: '6.4%' },
-    { index: 4, jsonName: '华语 · 普通话', label: '华语普通话', short: '普通话', fallback: '24.4%' }
+    { index: 3, jsonName: '华语 · 方言', label: '华语方言', short: '方言', fallback: '6.5%' },
+    { index: 4, jsonName: '华语 · 普通话', label: '华语普通话', short: '普通话', fallback: '24.5%' }
 ];
 const BOUNDARY_LAYER_GROUPS = [
     ...GLOBAL_LAYER_GROUPS.slice(0, 4),

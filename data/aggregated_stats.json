@@ -2,7 +2,7 @@
   "meta": {
     "record_count": 63025,
     "minimum_vote_count": 100,
-    "sample_fingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1"
+    "sample_fingerprint": "0ad6ce7886a3a907e9e597048b83da173226ae6076f691a7e2c5083f104f6421"
   },
   "decades": {
     "1990s": {
@@ -440,10 +440,10 @@
   },
   "languages": {
     "Chinese": {
-      "count": 13181,
-      "avg_rating": 6.2448,
+      "count": 13179,
+      "avg_rating": 6.2449,
       "median_rating": 6.5,
-      "avg_votes": 22239.48,
+      "avg_votes": 22242.56,
       "top_movies": [
         {
           "title": "张国荣热·情演唱会",
@@ -569,10 +569,10 @@
       ]
     },
     "Japanese": {
-      "count": 7701,
-      "avg_rating": 7.1674,
+      "count": 7702,
+      "avg_rating": 7.1675,
       "median_rating": 7.3,
-      "avg_votes": 7148.22,
+      "avg_votes": 7147.55,
       "top_movies": [
         {
           "title": "久石让在武道馆：与宫崎骏动画一同走过的25年",
@@ -655,10 +655,10 @@
       ]
     },
     "Other": {
-      "count": 9143,
-      "avg_rating": 6.6407,
+      "count": 9144,
+      "avg_rating": 6.6405,
       "median_rating": 6.7,
-      "avg_votes": 2814.45,
+      "avg_votes": 2814.35,
       "top_movies": [
         {
           "title": "坂本龙一特别线上钢琴独奏会2022",

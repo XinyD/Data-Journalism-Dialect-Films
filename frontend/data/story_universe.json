@@ -4,13 +4,13 @@
     "provinceCount": 34,
     "minLangCount": 1,
     "source": "derived_movies.csv",
-    "sampleFingerprint": "883fe6f7fbe0fce781e5bbdccfd7a404e827c22b934324bca473248762f989c1"
+    "sampleFingerprint": "0ad6ce7886a3a907e9e597048b83da173226ae6076f691a7e2c5083f104f6421"
   },
   "languages": [
     {
       "id": "粤语",
       "name": "粤语",
-      "n": 2769,
+      "n": 2775,
       "mean": 6.52,
       "themes": [
         "城市",
@@ -89,8 +89,8 @@
     {
       "id": "闽南语",
       "name": "闽南语",
-      "n": 144,
-      "mean": 7.36,
+      "n": 145,
+      "mean": 7.35,
       "themes": [
         "海洋",
         "漂泊",
@@ -242,8 +242,8 @@
     {
       "id": "藏语",
       "name": "藏语",
-      "n": 44,
-      "mean": 7.24,
+      "n": 45,
+      "mean": 7.19,
       "themes": [
         "高原",
         "信仰",

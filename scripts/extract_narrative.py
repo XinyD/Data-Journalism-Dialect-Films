@@ -228,7 +228,7 @@ def main() -> None:
     facts["meta"]["口径说明_20260814"] = (
         "方言定义 v4.1.1 新基线（dialect_defs.py）：方案 A + Tier 2b 证据审查 + 审计排除名单"
         " + 空语言回填（delivery_20260817 合并数据重应用，2026-08-18）"
-        " + v4.6 豆瓣语言回填（2026-08-30；Wikidata 只补 Language_Code 空缺）："
+        " + v4.7 豆瓣语言回填（2026-08-30 部分抓取；未抓到的 China 空语言默认普通话并戳 EMPTY_LANG_DEFAULTED；Wikidata 只补 Language_Code 空缺；乐山话白名单补收《椒麻堂会》、E8 排除《万千星辉颁奖典礼 2020》）："
         f"mandarin_dialect 块为 Region=China 口径（方言{len(dialect):,} / 普通话{len(mandarin):,}，"
         "与 gen_report_strict 报告一致）；languages 块为全量口径（按 Language_Code 分组）。"
     )

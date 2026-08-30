@@ -24,6 +24,7 @@ data/delivery_20260817/
 data/cleaned/language_backfill_cache.jsonl
 data/cleaned/_*.json
 data/cleaned/_*.txt
+data/cleaned/_*.html
 
 # Local scratch, process docs, and tool caches
 _scratch/

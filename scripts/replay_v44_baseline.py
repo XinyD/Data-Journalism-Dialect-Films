@@ -3,8 +3,9 @@
 `data_processor.py` drops `Dialect_Evidence` (it is not in OUTPUT_COLUMNS) and
 recomputes Is_Dialect from language tags, which undoes every manual correction.
 This script reapplies the published patches in documented order
-(v4.4 six-step chain plus v4.5 first-listed region plus v4.6 language backfill
-plus the 2026-08-30 隐入尘烟 language fix) and asserts the frozen end state.
+(v4.4 six-step chain plus v4.5 first-listed region plus v4.6/v4.7 language
+backfill plus the 2026-08-30 隐入尘烟 and 椒麻堂会 language fixes) and asserts
+the frozen end state.
 
 Dialect_Evidence is maintained by this chain, not by data_processor.
 
@@ -49,6 +50,7 @@ PATCH_SCRIPTS = (
     ("apply_opera_concert_exclude_20260818.py", []),
     ("apply_ama_lang_fix_20260819.py", []),
     ("apply_yinruchenyan_lang_fix_20260830.py", []),
+    ("apply_jiaoma_leshan_lang_fix_20260830.py", []),
     ("apply_first_listed_region_20260824.py", []),
 )
 
@@ -134,7 +136,7 @@ def assert_end_state() -> None:
     assert len(DIALECT_AUDIT_EXCLUDE_MOVIE_IDS) == AUDIT_EXCLUDED
 
     print(
-        f"[OK] v4.6+隐入尘烟 baseline: China n={len(china)} D1={actual[0]} "
+        f"[OK] v4.7 baseline: China n={len(china)} D1={actual[0]} "
         f"tiers={actual[1:]}, TIER2B_EXCLUDED={TIER2B_EXCLUDED}, "
         f"opera={OPERA_CONCERT_EXCLUDED}, audit={AUDIT_EXCLUDED}, plan_a={PLAN_A_EXCLUDED}"
     )
