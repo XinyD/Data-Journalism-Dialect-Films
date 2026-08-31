@@ -470,12 +470,11 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         workflow = (TASTE_ROOT / ".github" / "workflows" / "validate.yml").read_text(encoding="utf-8")
         for heading in (
             "## 核心发现",
-            "## 从零重建与验证",
-            "## 哪些内容可以复刻",
-            "## 数据文件",
-            "## 数据口径",
-            "## 方言分析子系统",
-            "## 已知边界",
+            "## 报道结构",
+            "## 数据与方法",
+            "## 本地预览",
+            "## 复现发布快照",
+            "## 项目结构",
         ):
             self.assertIn(heading, readme)
         self.assertIn("docs/preview.webp", readme)
@@ -484,19 +483,14 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         self.assertIn("方言 6.5%，普通话 24.5%", readme)
         self.assertIn("方言 9.5%，普通话 11.9%", readme)
         self.assertIn("geo_enrichment.json", readme)
-        self.assertIn("visual_land_masks.json", readme)
-        self.assertIn("226 标签", readme)
+        self.assertIn("226 个语言标签", readme)
         self.assertIn("15.4%", readme)
-        self.assertIn("238KB", readme)
+        self.assertIn("XinyD.github.io/Data-Journalism-Dialect-Films", readme)
         self.assertNotIn("century-decline", readme)
         self.assertNotIn("max: 2020", readme)
         self.assertNotIn("220 标签", readme)
-        self.assertIn("68 项", readme)
-        self.assertNotIn("66 项", readme)
-        self.assertNotIn("61 项", readme)
-        self.assertIn("10 个幂等", readme)
-        self.assertNotIn("9 个幂等", readme)
-        self.assertNotIn("6 个幂等", readme)
+        self.assertNotIn("## 已知边界", readme)
+        self.assertNotIn("独立发布项目", readme)
         self.assertIn("python rebuild.py", workflow)
         self.assertIn("python -m unittest discover -s tests -v", workflow)
         self.assertIn("git diff --exit-code", workflow)
@@ -511,6 +505,7 @@ class TasteAnalysisPipelineTests(unittest.TestCase):
         homepage = (TASTE_ROOT / "frontend" / "index.html").read_text(encoding="utf-8")
         self.assertIn("build/echarts-main.", homepage)
         self.assertIn("build/app.", homepage)
+
 
     def test_replay_v44_script_documents_the_patch_chain(self):
         path = TASTE_ROOT / "scripts" / "replay_v44_baseline.py"
