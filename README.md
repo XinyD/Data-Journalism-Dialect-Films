@@ -1,6 +1,9 @@
 # 「言」之有物：从数据看中国电影的答案
 
-[![Validate publication](https://github.com/XinyD/Data-Journalism-Dialect-Films/actions/workflows/validate.yml/badge.svg)](https://github.com/XinyD/Data-Journalism-Dialect-Films/actions/workflows/validate.yml)
+<p align="center">
+  <a href="https://XinyD.github.io/Data-Journalism-Dialect-Films/"><img src="https://img.shields.io/badge/在线阅读-粒子数据新闻-E0B45A?style=for-the-badge&labelColor=101218" alt="在线阅读" /></a>
+  <a href="https://github.com/XinyD/Data-Journalism-Dialect-Films/actions/workflows/validate.yml"><img src="https://github.com/XinyD/Data-Journalism-Dialect-Films/actions/workflows/validate.yml/badge.svg" alt="Validate publication" /></a>
+</p>
 
 一篇由 **63,025 部电影**构成的交互式数据新闻。从潮汕方言电影《给阿嬷的情书》出发，追问：观众厌倦了什么，又在为什么买单。
 
@@ -8,11 +11,50 @@
 
 **在线阅读：** <https://XinyD.github.io/Data-Journalism-Dialect-Films/>
 
-![数据新闻首页预览](docs/preview.webp)
+<p align="center">
+  <img src="docs/preview.webp" alt="数据新闻首页预览：六万余部电影铺成粒子宇宙，封面提出问题" width="920" />
+</p>
+<p align="center"><sub>封面。一个点就是一部电影；向下滚动，粒子会随叙事重排。</sub></p>
+
+<table>
+  <tr>
+    <td align="center" width="25%"><strong>63,025</strong><br /><sub>部电影 · 1888–2026</sub></td>
+    <td align="center" width="25%"><strong>3,076</strong><br /><sub>中国方言片</sub></td>
+    <td align="center" width="25%"><strong>+0.50</strong><br /><sub>方言均分优势</sub></td>
+    <td align="center" width="25%"><strong>+0.95</strong><br /><sub>2010s 反超</sub></td>
+  </tr>
+</table>
 
 ## 核心发现
 
 中国区对照（第一出品国为中国；方言 3,076 部，普通话 9,715 部）：
+
+<table>
+  <tr>
+    <th></th>
+    <th align="center">方言 · 3,076 部</th>
+    <th align="center">普通话 · 9,715 部</th>
+    <th align="center">读法</th>
+  </tr>
+  <tr>
+    <td>均分</td>
+    <td align="center"><strong>6.62</strong></td>
+    <td align="center">6.11</td>
+    <td>方言 6.62，普通话 6.11，差 +0.50</td>
+  </tr>
+  <tr>
+    <td>烂片率（低于 5 分）</td>
+    <td align="center"><strong>6.5%</strong></td>
+    <td align="center">24.5%</td>
+    <td>方言 6.5%，普通话 24.5%</td>
+  </tr>
+  <tr>
+    <td>高分率（≥8 分）</td>
+    <td align="center">9.5%</td>
+    <td align="center"><strong>11.9%</strong></td>
+    <td>方言 9.5%，普通话 11.9%。方言守住下限，没有赢在天花板</td>
+  </tr>
+</table>
 
 | 比较 | 结果 |
 | --- | --- |
@@ -23,9 +65,23 @@
 | 全球参照 | 方言均分仍低于欧洲 7.16、北美 6.76 |
 | 同导演 | 479 位双栖导演中 69% 的方言片更高，平均分差 +0.65 |
 
-故事的结论不是「方言本身更高」，而是：认真讲完的故事更少跌破下限。语言不是原因，内容才是。
+<p align="center">
+  <img src="docs/chart-findings.svg" alt="中国区对照图：方言均分 6.62、烂片率 6.5%、高分率 9.5%；普通话均分 6.11、烂片率 24.5%、高分率 11.9%；同导演 69% 方言更高" width="920" />
+</p>
+<p align="center"><sub>金黄是方言，亮蓝是普通话。最醒目的不是均分差 0.50，而是烂片率：6.5% 对 24.5%。</sub></p>
+
+<p align="center">
+  <img src="docs/chart-overtake.svg" alt="分年代均分差：1990s 方言落后 0.39，2010s 反超 +0.95，2020s 延续 +0.55" width="920" />
+</p>
+<p align="center"><sub>方言并不是一开始就领先。换向发生在 2010 年代。</sub></p>
+
+> 故事的结论不是「方言本身更高」，而是：认真讲完的故事更少跌破下限。语言不是原因，内容才是。
 
 ## 报道结构
+
+<p align="center">
+  <img src="docs/story-map.svg" alt="报道六幕：封面与引言、格局、发现、对照、三波浪潮、五维与终章" width="920" />
+</p>
 
 - **封面与引言**：六万余部电影铺成粒子宇宙；从《给阿嬷的情书》提出问题。
 - **格局**：中国在五大产区均分垫底，低于 5 分的比例最高。
@@ -37,6 +93,15 @@
 每幕配有数据卡：筛选、均值、中位数、标准差、四分位数、高分占比，以及随机打捞。粒子和电影卡片均可打开简介、导演、语言、评价人数与来源记录。
 
 ## 数据与方法
+
+```mermaid
+flowchart TD
+    A["371,962 条源记录"] --> B["片名、年份、评分完整<br/>评价人数 ≥ 100"]
+    B --> C["按豆瓣 URL、规范化片名与年份去重"]
+    C --> D["63,025 部发布快照"]
+    D --> E["语言分组：226 个语言标签"]
+    E --> F["中国区对照<br/>方言 3,076 / 普通话 9,715"]
+```
 
 - **样本**：从 371,962 条源记录中保留片名、年份、评分完整且评价人数不少于 100 的条目，再按豆瓣条目 URL、规范化片名与年份去重，得到 **63,025** 部（1888–2026）。
 - **条目范围**：沿用豆瓣电影频道宽口径，含长片、短片、纪录片、动画、演出影像及部分电视条目。
@@ -114,6 +179,9 @@ python -m unittest discover -s tests -v
 ├── scripts/                  清洗、聚合、事实提取与粒子生成
 ├── tests/                    数据与叙事回归测试
 ├── docs/preview.webp         README 预览图
+├── docs/chart-findings.svg   核心发现对照图
+├── docs/chart-overtake.svg   2010 反超图
+├── docs/story-map.svg        报道六幕
 ├── config.py                 仓库内可移植路径
 ├── rebuild.py                一键重建发布载荷
 ├── serve.py                  零依赖本地预览
