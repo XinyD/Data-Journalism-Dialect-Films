@@ -106,7 +106,7 @@ export function initGallery() {
         }
     });
 
-    ['decade', 'region', 'language', 'sort'].forEach(type => {
+    ['decade', 'region', 'language', 'dialect', 'sort'].forEach(type => {
         document.getElementById(`filter-${type}`)?.addEventListener('change', applyGalleryFilters);
     });
 }
@@ -115,16 +115,30 @@ export function applyGalleryFilters() {
     const dec = document.getElementById('filter-decade').value;
     const reg = document.getElementById('filter-region').value;
     const lang = document.getElementById('filter-language').value;
+    const dial = document.getElementById('filter-dialect')?.value || 'All';
     const sorter = SORTERS[document.getElementById('filter-sort')?.value] || null;
-    const matches = window.DataService.filter(dec, reg, lang);
+    const matches = window.DataService.filter(dec, reg, lang, dial);
     galleryFilteredMovies = sorter ? [...matches].sort(sorter) : matches;
     galleryPage = 0;
     renderGalleryPage();
     scrollToGalleryTop();
 }
 
+export function populateDialectFilter(families) {
+    const select = document.getElementById('filter-dialect');
+    if (!select) return;
+    // 家乡话选项取 n>=2 的方言族；只有一部的零星标签仍可经「方言」语言组浏览。
+    families.filter(family => family.n >= 2).forEach(family => {
+        const option = document.createElement('option');
+        option.value = family.name;
+        option.textContent = `${family.name}（${family.n.toLocaleString('zh-CN')} 部）`;
+        select.appendChild(option);
+    });
+    select.closest('.filter-group')?.removeAttribute('hidden');
+}
+
 export function clearGalleryFilters() {
-    ['decade', 'region', 'language'].forEach(type => {
+    ['decade', 'region', 'language', 'dialect'].forEach(type => {
         const select = document.getElementById(`filter-${type}`);
         if (select) select.value = 'All';
     });

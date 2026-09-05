@@ -118,6 +118,8 @@ const DataService = {
     visualMasks: null,
     movieDetails: new Map(),
     detailShardPromises: new Map(),
+    dialectTags: new Map(),
+    dialectFamilies: [],
     loaded: false,
     fetchJson,
 
@@ -304,11 +306,24 @@ const DataService = {
         return this.dataset.filter(m => m.langCode === Number(languageCode));
     },
 
-    filter(decade, region, language) {
+    async loadDialectTags() {
+        if (this.dialectTags.size) return this.dialectFamilies;
+        const payload = await fetchJson('../data/frontend/dialect_tags.json');
+        this.dialectTags = new Map(Object.entries(payload.tags || {}));
+        this.dialectFamilies = Array.isArray(payload.families) ? payload.families : [];
+        return this.dialectFamilies;
+    },
+
+    getDialectTag(movieId) {
+        return this.dialectTags.get(String(movieId || '')) || '';
+    },
+
+    filter(decade, region, language, dialect) {
         return this.dataset.filter(m => {
             if (decade && decade !== 'All' && m.decade !== decade) return false;
             if (region && region !== 'All' && m.region !== region) return false;
             if (language && language !== 'All' && m.langCode !== Number(language)) return false;
+            if (dialect && dialect !== 'All' && this.getDialectTag(m.movieId) !== dialect) return false;
             return true;
         });
     }

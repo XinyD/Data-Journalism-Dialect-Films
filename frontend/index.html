@@ -20,7 +20,7 @@
     <!-- endbuild -->
     <!-- build:js -->
     <script defer src="build/echarts-main.f19d3377a9.js"></script>
-    <script defer src="build/app.35098ad7f2.js"></script>
+    <script defer src="build/app.765ee902ee.js"></script>
     <!-- endbuild -->
 </head>
 <body>
@@ -359,7 +359,7 @@
 
             <div class="explorer-header explorer-header-gallery">
                 <h2>筛选电影，核对每一部</h2>
-                <p>这里收录本报道分析的 <span data-publication-count>加载中</span> 部电影。组合年代、地区与语言条件后，页面会显示结果总数并分页列出全部匹配电影，可按评分、评价人数或年份排序；点击任意电影可核对简介、评分、评价人数与来源记录。</p>
+                <p>这里收录本报道分析的 <span data-publication-count>加载中</span> 部电影。组合年代、地区与语言条件后，页面会显示结果总数并分页列出全部匹配电影，可按评分、评价人数或年份排序；也可以选你的家乡话，从粤语、闽南语到潮汕话，看看你的家乡在银幕上留下过哪些片子。点击任意电影可核对简介、评分、评价人数与来源记录。</p>
             </div>
 
             <div class="filter-bar">
@@ -397,6 +397,12 @@
                         <option value="2">普通话</option>
                         <option value="3">方言</option>
                         <option value="5">其他</option>
+                    </select>
+                </div>
+                <div class="filter-group" hidden>
+                    <label for="filter-dialect">家乡话</label>
+                    <select id="filter-dialect">
+                        <option value="All">全部家乡话</option>
                     </select>
                 </div>
                 <div class="filter-group">

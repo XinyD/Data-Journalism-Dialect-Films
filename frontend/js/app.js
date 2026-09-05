@@ -2,7 +2,7 @@ import { runtime } from './runtime.js';
 import { escapeHtml } from './lib/dom.js';
 import { populateMovieDetail } from './lib/movie-detail.js';
 import { prefersReducedMotion, rafThrottle, debounce } from './lib/schedule.js';
-import { initGallery } from './gallery.js';
+import { initGallery, populateDialectFilter } from './gallery.js';
 import { initChapterNav, initScrollytelling } from './scrolly.js';
 import { initExplorerScene, exitExplorer, isExplorerOpen } from './scenes/explorer_scene.js';
 import { createFlopLinkSync } from './scenes/flop-overlay.js';
@@ -673,6 +673,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateSceneLab('scale');
         })
         .catch(() => console.warn('dialect_aggregates 加载失败，内嵌卡片显示占位值'));
+
+    // 家乡话筛选：加载逐片方言标签，失败则保持该筛选项隐藏
+    window.DataService.loadDialectTags()
+        .then(families => populateDialectFilter(families))
+        .catch(() => console.warn('dialect_tags 加载失败，家乡话筛选保持隐藏'));
 
     window.DataService.fetchJson('../data/narrative_facts.json')
         .then(facts => {
