@@ -1,6 +1,10 @@
 import { runtime } from './runtime.js';
 import { escapeHtml } from './lib/dom.js';
 import { populateMovieDetail } from './lib/movie-detail.js';
+import { summarizeDialectFilms } from './lib/dialect-summary.js';
+
+// 快捷家乡话入口：手工挑选覆盖主要方言区，并保证正文提到的方言都在。
+const CHIP_FAMILIES = ['粤语', '闽南语', '四川话', '重庆话', '上海话', '河南话', '陕西话', '客家话', '潮汕话'];
 
 const REGION_LABELS = {
     North_America: '北美',
@@ -109,9 +113,31 @@ export function initGallery() {
     ['decade', 'region', 'language', 'dialect', 'sort'].forEach(type => {
         document.getElementById(`filter-${type}`)?.addEventListener('change', applyGalleryFilters);
     });
+
+    document.getElementById('dialect-chips')?.addEventListener('click', event => {
+        const chip = event.target.closest('.dialect-chip');
+        if (!chip) return;
+        const select = document.getElementById('filter-dialect');
+        if (!select) return;
+        // 再点一次已选中的 chip 等于取消该家乡话。
+        select.value = select.value === chip.dataset.dialect ? 'All' : chip.dataset.dialect;
+        applyGalleryFilters();
+    });
+
+    // 三波浪潮片单卡的「在画廊看全部」：预设家乡话后进探索舱。
+    // 滚动放到下一帧，此时 explorer_scene 的同事件处理器已把探索舱展开。
+    document.querySelectorAll('.wave-card-more[data-dialect]').forEach(link => {
+        link.addEventListener('click', () => {
+            const select = document.getElementById('filter-dialect');
+            if (!select) return;
+            select.value = link.dataset.dialect;
+            applyGalleryFilters({ scroll: false });
+            requestAnimationFrame(() => scrollToGalleryTop());
+        });
+    });
 }
 
-export function applyGalleryFilters() {
+export function applyGalleryFilters({ scroll = true } = {}) {
     const dec = document.getElementById('filter-decade').value;
     const reg = document.getElementById('filter-region').value;
     const lang = document.getElementById('filter-language').value;
@@ -121,7 +147,35 @@ export function applyGalleryFilters() {
     galleryFilteredMovies = sorter ? [...matches].sort(sorter) : matches;
     galleryPage = 0;
     renderGalleryPage();
-    scrollToGalleryTop();
+    updateDialectSummary(dial);
+    if (scroll) scrollToGalleryTop();
+}
+
+function updateDialectSummary(dialect) {
+    const summary = document.getElementById('gallery-dialect-summary');
+    if (!summary) return;
+    document.querySelectorAll('.dialect-chip').forEach(chip => {
+        chip.classList.toggle('is-active', chip.dataset.dialect === dialect && dialect !== 'All');
+    });
+    if (!dialect || dialect === 'All' || galleryFilteredMovies.length === 0) {
+        summary.hidden = true;
+        return;
+    }
+    const stats = summarizeDialectFilms(galleryFilteredMovies);
+    if (!stats) {
+        summary.hidden = true;
+        return;
+    }
+    const parts = [
+        `<strong>${escapeHtml(dialect)}</strong> ${stats.n.toLocaleString('zh-CN')} 部`,
+        `平均 ${stats.mean.toFixed(2)} 分`
+    ];
+    if (stats.yearMin !== null) parts.push(`${stats.yearMin}–${stats.yearMax} 年`);
+    if (stats.earliest) {
+        parts.push(`最早的一部是《${escapeHtml(stats.earliest.title)}》（${stats.earliest.year}）`);
+    }
+    summary.innerHTML = parts.join(' · ');
+    summary.hidden = false;
 }
 
 export function populateDialectFilter(families) {
@@ -135,6 +189,40 @@ export function populateDialectFilter(families) {
         select.appendChild(option);
     });
     select.closest('.filter-group')?.removeAttribute('hidden');
+
+    renderDialectChips(families);
+    document.querySelectorAll('.wave-card-more[data-dialect]').forEach(link => {
+        link.removeAttribute('hidden');
+    });
+}
+
+function renderDialectChips(families) {
+    const host = document.getElementById('dialect-chips');
+    if (!host) return;
+    const known = new Set(families.map(family => family.name));
+    const names = CHIP_FAMILIES.filter(name => known.has(name));
+    if (!names.length) return;
+    host.innerHTML = names
+        .map(name => `<button type="button" class="dialect-chip" data-dialect="${escapeHtml(name)}">${escapeHtml(name)}</button>`)
+        .join('');
+    host.removeAttribute('hidden');
+}
+
+// 深链支持：#粤语 这类 hash（与章节锚点不冲突，因为方言族不是任何元素 id）。
+export function applyDialectHashPreset() {
+    let wanted = '';
+    try {
+        wanted = decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+        return false;
+    }
+    const select = document.getElementById('filter-dialect');
+    if (!wanted || !select) return false;
+    const has = [...select.options].some(option => option.value === wanted);
+    if (!has) return false;
+    select.value = wanted;
+    applyGalleryFilters({ scroll: false });
+    return true;
 }
 
 export function clearGalleryFilters() {

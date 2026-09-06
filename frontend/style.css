@@ -5305,3 +5305,57 @@ html[data-echo-immersive] #echo-universe #echo-asset-card {
     text-align: center;
     border-bottom: 1px solid rgba(255, 122, 115, 0.35);
 }
+
+/* 家乡话快捷入口 + 方言摘要（探索舱画廊） */
+.dialect-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: var(--spacing-xl);
+}
+.dialect-chips[hidden] { display: none; }
+.dialect-chip {
+    appearance: none;
+    border: 1px solid rgba(212, 165, 116, 0.35);
+    background: transparent;
+    color: #D4A574;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font: 600 0.85rem var(--font-sans);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.dialect-chip:hover {
+    border-color: rgba(212, 165, 116, 0.7);
+    color: #FFD36A;
+}
+.dialect-chip.is-active {
+    background: rgba(212, 165, 116, 0.16);
+    border-color: #d4a574;
+    color: #FFD36A;
+}
+.gallery-dialect-summary {
+    color: #B5B5BB;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: -8px 0 var(--spacing-lg);
+}
+.gallery-dialect-summary[hidden] { display: none; }
+.gallery-dialect-summary strong { color: #FFD36A; font-weight: 700; }
+
+/* 三波浪潮卡直通画廊的链接 */
+.wave-card-more {
+    display: inline-block;
+    margin-top: 14px;
+    font: 600 0.85rem var(--font-sans);
+    color: #D4A574;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212, 165, 116, 0.4);
+    padding-bottom: 2px;
+    cursor: pointer;
+}
+.wave-card-more:hover {
+    color: #FFD36A;
+    border-bottom-color: #FFD36A;
+}
+.wave-card-more[hidden] { display: none; }

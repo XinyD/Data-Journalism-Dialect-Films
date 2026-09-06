@@ -16,11 +16,11 @@
     <meta name="twitter:image" content="assets/og-cover.jpg">
     <!-- endbuild -->
     <!-- build:css -->
-    <link rel="stylesheet" href="build/style.9aefb54962.css">
+    <link rel="stylesheet" href="build/style.befc4ee842.css">
     <!-- endbuild -->
     <!-- build:js -->
     <script defer src="build/echarts-main.f19d3377a9.js"></script>
-    <script defer src="build/app.765ee902ee.js"></script>
+    <script defer src="build/app.a454ffee1d.js"></script>
     <!-- endbuild -->
 </head>
 <body>
@@ -105,16 +105,19 @@
                         <h4>第一波 · 港片粤语</h4>
                         <div class="era">1985–2005</div>
                         <div id="wave-hk"></div>
+                        <a class="wave-card-more" href="#glass-section" data-dialect="粤语" hidden>在画廊看全部粤语片 →</a>
                     </div>
                     <div class="wave-card w2">
                         <h4>第二波 · 四川、贵州、云南</h4>
                         <div class="era">2010–2020</div>
                         <div id="wave-sw"></div>
+                        <a class="wave-card-more" href="#glass-section" data-dialect="四川话" hidden>在画廊看四川话片 →</a>
                     </div>
                     <div class="wave-card w3">
                         <h4>第三波 · 闽南语</h4>
                         <div class="era">2010–2020</div>
                         <div id="wave-mn"></div>
+                        <a class="wave-card-more" href="#glass-section" data-dialect="闽南语" hidden>在画廊看全部闽南语片 →</a>
                     </div>
                 </div>
                 <p class="scene-hook">到了 2010 年代，方言片在中国电影里占的比例，更小了。</p>
@@ -361,6 +364,9 @@
                 <h2>筛选电影，核对每一部</h2>
                 <p>这里收录本报道分析的 <span data-publication-count>加载中</span> 部电影。组合年代、地区与语言条件后，页面会显示结果总数并分页列出全部匹配电影，可按评分、评价人数或年份排序；也可以选你的家乡话，从粤语、闽南语到潮汕话，看看你的家乡在银幕上留下过哪些片子。点击任意电影可核对简介、评分、评价人数与来源记录。</p>
             </div>
+
+            <div class="dialect-chips" id="dialect-chips" hidden aria-label="家乡话快捷入口"></div>
+            <p class="gallery-dialect-summary" id="gallery-dialect-summary" hidden></p>
 
             <div class="filter-bar">
                 <button type="button" class="filter-toggle" id="filter-toggle" aria-expanded="false" aria-controls="filter-controls">筛选</button>
