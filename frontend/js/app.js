@@ -6,11 +6,12 @@ import { initGallery } from './gallery.js';
 import { initChapterNav, initScrollytelling } from './scrolly.js';
 import { initExplorerScene, exitExplorer, isExplorerOpen } from './scenes/explorer_scene.js';
 import { createFlopLinkSync } from './scenes/flop-overlay.js';
-import { createPrologueMotionLayer, syncCoverReveal } from './scenes/prologue.js';
+import { createPrologueMotionLayer, createTooltipDwell, syncCoverReveal } from './scenes/prologue.js';
 
 let particleChart = null;
 let particleData = [];
 let plottedSeriesData = [];
+let particleTooltipDwell = null;
 let visualKeepIsMobile = false;
 let prologueMotionLayer = null;
 let universeMotionOverlay = false;
@@ -2654,6 +2655,79 @@ function initPrologueMotionLayer() {
     prologueMotionLayer.resize();
 }
 
+function findParticleUnderPointer(offsetX, offsetY, radiusPx) {
+    if (!particleChart || !plottedSeriesData.length) return null;
+    let best = null;
+    let bestDist = radiusPx * radiusPx;
+    for (let seriesIndex = 0; seriesIndex < plottedSeriesData.length; seriesIndex += 1) {
+        const rows = plottedSeriesData[seriesIndex];
+        if (!rows.length) continue;
+        const affine = seriesPixelAffine(seriesIndex);
+        if (!affine) continue;
+        const { origin, sx, sy, tx, ty } = affine;
+        for (let i = 0; i < rows.length; i += 1) {
+            const value = scatterItemValue(rows[i]);
+            if (!value) continue;
+            // Faded comparison series carry value[4] === 0; they are not hover targets.
+            if (value.length > 4 && Number(value[4]) === 0) continue;
+            const dx = origin[0] + value[0] * sx + value[1] * tx - offsetX;
+            const dy = origin[1] + value[0] * sy + value[1] * ty - offsetY;
+            const dist = dx * dx + dy * dy;
+            if (dist <= bestDist) {
+                bestDist = dist;
+                best = { seriesIndex, dataIndex: i };
+            }
+        }
+    }
+    return best;
+}
+
+function showParticleTip(key) {
+    if (!particleChart || typeof key !== 'string') return;
+    const [seriesIndex, dataIndex] = key.split(':').map(Number);
+    if (!Number.isInteger(seriesIndex) || !Number.isInteger(dataIndex)) return;
+    particleChart.dispatchAction({ type: 'showTip', seriesIndex, dataIndex });
+}
+
+function hideParticleTip() {
+    if (!particleChart) return;
+    particleChart.dispatchAction({ type: 'hideTip' });
+}
+
+function initParticleTooltipDwell(container) {
+    // The chart's own tooltip follows the pointer on every mousemove, so a grazing
+    // pass pops a card over the prose. Drive it from a dwell controller instead:
+    // nothing appears until the pointer rests on one particle.
+    particleTooltipDwell = createTooltipDwell({
+        onShow: key => showParticleTip(key),
+        onHide: hideParticleTip
+    });
+    // Not rAF-throttled on purpose: a throttled handler drops events that arrive
+    // within a pending frame, and a dropped pointer-leave would leave the dwell
+    // timer running so the card appears after the reader has moved away.
+    const onMove = event => {
+        if (!particleTooltipDwell) return;
+        if (!particleChart || prologueMotionBusy() || isMobileViewport()) {
+            particleTooltipDwell.hide();
+            return;
+        }
+        const hit = findParticleUnderPointer(event.offsetX, event.offsetY, 16);
+        if (!hit) {
+            particleTooltipDwell.hide();
+            return;
+        }
+        // The controller compares keys with ===; a fresh object would always differ.
+        particleTooltipDwell.pointerMove(
+            `${hit.seriesIndex}:${hit.dataIndex}`,
+            event.clientX,
+            event.clientY
+        );
+    };
+    container.addEventListener('mousemove', onMove, { passive: true });
+    container.addEventListener('mouseleave', () => particleTooltipDwell.hide());
+    window.addEventListener('scroll', () => particleTooltipDwell.hide(), { passive: true });
+}
+
 function initParticleEngine() {
     const container = document.getElementById('chart-container');
     particleChart = echarts.init(container, 'dark');
@@ -2672,6 +2746,7 @@ function initParticleEngine() {
         if (movie) openPickedParticle(movie);
     });
     initPrologueMotionLayer();
+    initParticleTooltipDwell(container);
     setPrologueState(PROLOGUE_STATES.WORLD_MAP);
     renderParticleScene('universe');
     startUniverseLoop();
@@ -3728,6 +3803,10 @@ function renderParticleScene(sceneId, { animate } = {}) {
     }
     option.tooltip = {
         trigger: 'item',
+        // Hover is driven by initParticleTooltipDwell; letting ECharts also follow
+        // the pointer would show the card immediately and defeat the dwell delay.
+        // Manually dispatched showTip/hideTip still work with triggerOn 'none'.
+        triggerOn: 'none',
         confine: true,
         backgroundColor: 'rgba(5, 5, 7, 0.94)',
         borderColor: 'rgba(255,255,255,0.2)',
