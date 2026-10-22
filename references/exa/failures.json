@@ -1,0 +1,6 @@
+[
+  {
+    "query": "dialect map interactive linguistic atlas visualization project",
+    "error": "Request failed with status code 402: {\"requestId\":\"c26a342c104ae0cebb600ad2f733a8b8\",\"error\":\"You have exceeded your credits limit. Please top up to keep using Exa at dashboard.exa.ai\",\"tag\":\"NO_MORE_CREDITS\"}"
+  }
+]
