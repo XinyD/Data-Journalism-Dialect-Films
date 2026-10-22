@@ -28,8 +28,12 @@ docs/history/
 drafts/
 data/archive/probes/
 archive/reports/
+# Browser-check screenshots stay local: ad-hoc shots in the repo root, plus
+# named captures anywhere.
+/*.png
 screenshot_*.png
 preview_*.png
+.playwright-mcp/
 *.bak
 *.dialect-backup
 .qoder/
