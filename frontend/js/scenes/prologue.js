@@ -16,6 +16,81 @@ export function syncCoverReveal(forceReady = false) {
     }
 }
 
+// Hover cards must not pop over the prose while reading: they only appear after
+// the pointer rests on one particle for TOOLTIP_DWELL_MS, and any scroll cancels.
+// A resting hand still emits mousemove events from tremor, so the anchor only
+// moves once the pointer leaves TOOLTIP_MOVE_TOLERANCE_PX.
+export const TOOLTIP_DWELL_MS = 1000;
+export const TOOLTIP_MOVE_TOLERANCE_PX = 6;
+
+export function dwellAnchorUpdate(anchor, index, clientX, clientY, tolerancePx) {
+    if (anchor && anchor.index === index) {
+        const dx = clientX - anchor.x;
+        const dy = clientY - anchor.y;
+        if (dx * dx + dy * dy <= tolerancePx * tolerancePx) return anchor;
+    }
+    return { index, x: clientX, y: clientY };
+}
+
+export function createTooltipDwell({
+    dwellMs = TOOLTIP_DWELL_MS,
+    tolerancePx = TOOLTIP_MOVE_TOLERANCE_PX,
+    onShow = () => {},
+    onHide = () => {}
+} = {}) {
+    let timer = 0;
+    let anchor = null;
+    let shownKey = null;
+
+    function cancelTimer() {
+        if (!timer) return;
+        clearTimeout(timer);
+        timer = 0;
+    }
+
+    function hide() {
+        cancelTimer();
+        anchor = null;
+        if (shownKey === null) return;
+        shownKey = null;
+        onHide();
+    }
+
+    function settle(key) {
+        timer = 0;
+        if (!anchor || anchor.index !== key || shownKey === key) return;
+        shownKey = key;
+        onShow(key, anchor.x, anchor.y);
+    }
+
+    // key is any value comparable with ===; null/undefined means "no particle".
+    function pointerMove(key, clientX, clientY) {
+        if (key === null || key === undefined) {
+            hide();
+            return;
+        }
+        if (shownKey === key) return;
+        if (shownKey !== null) {
+            shownKey = null;
+            cancelTimer();
+            onHide();
+        }
+        const next = dwellAnchorUpdate(anchor, key, clientX, clientY, tolerancePx);
+        const moved = next !== anchor;
+        anchor = next;
+        // Resting on the same spot keeps the running timer rather than restarting it.
+        if (!moved) return;
+        cancelTimer();
+        timer = setTimeout(() => settle(key), dwellMs);
+    }
+
+    return {
+        pointerMove,
+        hide,
+        isShowing: () => shownKey !== null
+    };
+}
+
 export function parseRgba(color) {
     if (Array.isArray(color)) {
         return [

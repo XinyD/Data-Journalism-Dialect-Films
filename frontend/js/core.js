@@ -522,6 +522,10 @@ window.fetchJson = fetchJson;
 window.ANALYSIS_LANGUAGE_LABELS = ANALYSIS_LANGUAGE_LABELS;
 window.openSharedMovieDetail = openSharedMovieDetail;
 window.renderLocalGallery = renderLocalGallery;
+// vol1/2/3.js read these as bare globals; without the window bridge every volume
+// page throws "getBaseChartOption is not defined" before drawing a chart.
+window.getBaseChartOption = getBaseChartOption;
+window.TOKENS = TOKENS;
 
 function installGlobalErrorHandlers() {
     window.addEventListener('error', event => {
